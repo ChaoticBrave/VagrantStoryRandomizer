@@ -11,16 +11,10 @@ As mentioned earlier, this tool can only randomize enemies right now.
 
 Enemies can also only be changed to those which can be found within the same area. For example, Snowfly Forest opponents can only be swapped with other Snowfly Forest opponents.   
 # Credits
-ChaoticBrave: For making the randomizer of course!
-
-Valendian: For the extensive knowledge in Vagrant Story's file systems, as well as creating the superb VSTOOLS package.
-
-Michael Collins: For creating the masterful GodHands tool.
-
-Christo: For the idea of creating a randomizer in the first place.
-
-CUE: For the psx-mode2 tool. The project would've been lost without it.
-
-gingerbeardman: For letting me use his translation of psx-mode2.
-
-NoharOSP: For being at hand to test this locally.
+-ChaoticBrave: For making the randomizer of course!
+-Valendian: For the extensive knowledge in Vagrant Story's file systems, as well as creating the superb VSTOOLS package.
+-Michael Collins: For creating the masterful GodHands tool.
+-Christo: For the idea of creating a randomizer in the first place.
+-CUE: For the psx-mode2 tool. The project would've been lost without it.
+-gingerbeardman: For letting me use his translation of psx-mode2.
+-NoharOSP: For being at hand to test this locally.
