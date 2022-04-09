@@ -2,6 +2,10 @@
 A tool which will randomize a copy of Vagrant Story.
 
 At the moment, this is in the form of a Python file which has been converted to an executable file. It will also only randomize the enemies right now. Item randomization is the next area which is to be addressed.
+## To Do
+* Randomize the random drops which enemies have, as well as the rates as and when they drop them.
+* Randomize the loot which is in the treasure chests. This will include making entirely new weapons. Get hyped.
+* Randomize the rooms. This one's a bit more "pie in the sky" and will warrant a bigger crew.
 ## Using this GitHub project
 Many can find these GitHubs tedious, myself included. The "Releases" folder exists for those who just want to extract the ZIP and get into the action. For those who wish to make their own alterations, the Python file has been included.
 
