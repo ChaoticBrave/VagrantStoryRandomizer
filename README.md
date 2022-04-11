@@ -16,6 +16,8 @@ If you wish to convert an altered py file into an exe, make sure that your exe i
 As mentioned earlier, this tool can only randomize enemies right now. 
 
 Enemies can also only be changed to those which can be found within the same area. For example, Snowfly Forest opponents can only be swapped with other Snowfly Forest opponents.   
+
+As of right now, it looks as though rooms with treasure chests in them won't be altered. This will be fixed as soon as possible. Open chests with caution at the moment!
 ## Credits
 * ChaoticBrave: For making the randomizer of course!
 * Valendian: For the extensive knowledge in Vagrant Story's file systems, as well as creating the superb VSTOOLS and GodHands packages.
