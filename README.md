@@ -3,9 +3,9 @@ A tool which will randomize a copy of Vagrant Story.
 
 At the moment, this is in the form of a Python file which has been converted to an executable file. It will also only randomize the enemies right now. Item randomization is the next area which is to be addressed.
 ## Updates
-* Made an experimental build which randomizes each enemy's random drop. May need to be finalized to work around dummied items.
+* Rooms with treasure chests will randomize enemies now. Both stable and experimental builds exist which implement these changes. The experimental build randomizes each enemy's random drop. It may need to be finalized to work around dummied items.
 ## To Do
-* Randomize the random drops which enemies have, as well as the rates as and when they drop them.
+* Randomize the random drops which enemies have, as well as the rates as and when they drop them. This is partially complete, but the fact that dummied items are included may produce unexpected results. To be tested. 
 * Randomize the loot which is in the treasure chests. This will include making entirely new weapons. Get hyped.
 * Randomize the rooms. This one's a bit more "pie in the sky" and will warrant a bigger crew.
 ## Using this GitHub project
@@ -15,9 +15,7 @@ If you wish to convert an altered py file into an exe, make sure that your exe i
 ## Limitations
 As mentioned earlier, this tool can only randomize enemies right now. 
 
-Enemies can also only be changed to those which can be found within the same area. For example, Snowfly Forest opponents can only be swapped with other Snowfly Forest opponents.   
-
-As of right now, it looks as though rooms with treasure chests in them won't be altered. This will be fixed as soon as possible. Open chests with caution at the moment!
+Enemies can also only be changed to those which can be found within the same area. For example, Snowfly Forest opponents can only be swapped with other Snowfly Forest opponents.
 ## Credits
 * ChaoticBrave: For making the randomizer of course!
 * Valendian: For the extensive knowledge in Vagrant Story's file systems, as well as creating the superb VSTOOLS and GodHands packages.
