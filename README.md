@@ -2,6 +2,8 @@
 A tool which will randomize a copy of Vagrant Story.
 
 At the moment, this is in the form of a Python file which has been converted to an executable file. It will also only randomize the enemies right now. Item randomization is the next area which is to be addressed.
+
+A randomized game has been proven to work with both Beetle PSX and DuckStation. 
 ## Updates
 * Rooms with treasure chests will randomize enemies now. Both stable and experimental builds exist which implement these changes. The experimental build randomizes each enemy's random drop. It may need to be finalized to work around dummied items.
 ## To Do
