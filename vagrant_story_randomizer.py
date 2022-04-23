@@ -82,7 +82,16 @@ for index in range(len(map_list)):
                     while item == mm[byte]:
                         item = random.randint(0, (para2 - 1))
                 mm[byte] = item
-            os.system('start /min cmd /c ' + '"psx-mode2-en.exe "' + game + '" /MAP/' + mapd + ' "' + map_dir + mapd + '"" ')
+            for byte in range((size - 9), ((size - (38 * int(quo_numer / 40))) - 40), -40):
+                ind_item = random.randint(0, 511)
+                if ind_item > 255:
+                    mm[byte + 1] = 1
+                    ind_item -= 256
+                mm[byte] = int(f'0x{ind_item:x}', 0)
+            for byte in range((size - 5), ((size - (38 * int(quo_numer / 40))) - 40), -40):
+                odds = random.randint(1, 100)
+                mm[byte] = odds    
+            os.system('start /min cmd /c ' + '"psxinject "' + game + '" /MAP/' + mapd + ' "' + map_dir + mapd + '"" ')
             mm.close()
 print("Randomization complete!")
-time.sleep(3) 
+time.sleep(3)
