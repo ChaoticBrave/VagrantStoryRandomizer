@@ -5,8 +5,9 @@ At the moment, this is in the form of a Python file which has been converted to 
 
 A randomized game has been proven to work with both Beetle PSX and DuckStation. 
 ## Releases
-* Both stable and experimental builds can be found here:
+Both stable and experimental builds can be found here:
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
+
 ## Updates
 * MEGA is now being used to contain releases. They are becoming too large to upload to GitHub even as .zip files.
 * psxinject is now the tool of choice when replacing .mpd files in the Vagrant Story .bin file with the randomized ones. This decision was made to prevent the project from relying on as many closed source software as possible.
