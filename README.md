@@ -6,6 +6,7 @@ At the moment, this is in the form of a Python file which has been converted to 
 A randomized game has been proven to work with both Beetle PSX and DuckStation. 
 ## Releases
 Both stable and experimental builds can be found here:
+
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
 ## Updates
@@ -28,9 +29,11 @@ Enemies can also only be changed to those which can be found within the same are
 If you queries about the project, the best places to contact me are either my Discord server or my Twitter DMs.
 
 Discord:
+
 https://discord.gg/xmgKtf2tN6
 
 Twitter:
+
 https://twitter.com/ChaoticBrave
 
 ## Credits
