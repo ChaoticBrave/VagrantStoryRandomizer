@@ -38,7 +38,7 @@ print("Instructions:")
 print("1) Insert your Vagrant Story bin file into the unzipped randomizer folder.")
 print("2) Open vagrant_story_randomizer.")
 print("3) Enter the name of your Vagrant Story bin file.")
-print("4) Let the randomizer run. It will tell you when the process is completed, then close itself after 3 seconds.")
+print("4) Let the randomizer run. It will tell you when the process is completed for each stage, then close itself after 3 seconds.")
 print("============================")
 game = input("Please enter the ROM file name: ")
 while (is_vs == False):
@@ -90,8 +90,105 @@ for index in range(len(map_list)):
                 mm[byte] = int(f'0x{ind_item:x}', 0)
             for byte in range((size - 5), ((size - (38 * int(quo_numer / 40))) - 40), -40):
                 odds = random.randint(1, 100)
-                mm[byte] = odds       
-            os.system('start /min cmd /c ' + '"psx-mode2-en.exe "' + game + '" /MAP/' + mapd + ' "' + map_dir + mapd + '"" ')
+                mm[byte] = odds    
+            os.system('start /min cmd /c ' + '"psxinject "' + game + '" /MAP/' + mapd + ' "' + map_dir + mapd + '"" ')
             mm.close()
+print("Enemy randomization completed.")
+print("Now randomizing chests...")
+for mapd in has_chest:
+    with open(map_dir + mapd, "r+b") as f:
+        mm = mmap.mmap(f.fileno(), 0)
+        size = int(((os.path.getsize(map_dir + mapd)) - 544) - 1)
+        if mm[size + 1] == 3:
+            rand_w = random.randint(1, 90)
+            for byte in range(size + 5, size + 7):
+                mm[byte] = rand_w
+            rand_wt = random.randint(1, 10)
+            mm[size + 8] = rand_wt
+            rand_dpm = hex(random.randint(41, 250) * 100)
+            int_rand_dpm = int(rand_dpm, 0)
+            rand_dp = hex(random.randint(41, (int_rand_dpm / 100)) * 100)
+            rand_dpm_str1 = rand_dpm[0] + rand_dpm[1] + rand_dpm[2] + rand_dpm[3]
+            rand_dpm_str2 = rand_dpm[0] + rand_dpm[1] + rand_dpm[4] + rand_dpm[5]
+            rand_dp_str1 = rand_dp[0] + rand_dp[1] + rand_dp[2] + rand_dp[3]
+            rand_dp_str2 = rand_dp[0] + rand_dp[1] + rand_dp[4] + rand_dp[5]
+            mm[size + 10] = int(rand_dpm_str1, 0)
+            mm[size + 9] = int(rand_dpm_str2, 0)
+            rand_ppm = random.randint(100, 250)
+            mm[size + 11] = rand_ppm
+            mm[size + 14] = int(rand_dp_str1, 0)
+            mm[size + 13] = int(rand_dp_str2, 0)
+            rand_pp = random.randint(1, rand_ppm)
+            mm[size + 15] = rand_pp
+            for byte in range(size + 17, size + 19):
+                mm[byte] =  random.randint(0, 255)
+            rand_co = random.randint(1, 5)
+            mm[size + 20] = rand_co
+            rand_sta = random.randint(1, 4)
+            rand_typ = random.randint(1, 3)
+            rand_sta_typ = (4 * rand_sta) + rand_typ  
+            mm[size + 21] = rand_sta_typ
+            for byte in range(size + 25, size + 27):
+                mm[byte] = random.randint(5, 15)
+            mm[size + 28] = random.randint(1, 7)
+            for byte in range(size + 29, size + 34):
+                mm[byte] = random.randint(0, 255)
+            for byte in range(size + 37, size + 43):
+                mm[byte] = random.randint(0, 255)
+            mm[size + 45] = random.randint(1, 7)
+            gr_nam = random.randint(1, 511)
+            if gr_nam > 255:
+                mm[size + 50] = 1
+                mm[size + 49] = gr_nam - 256
+            else:
+                mm[size + 49] = gr_nam
+                mm[size + 50] = 0
+            mm[size + 51] = random.randint(1, 31)
+            mm[size + 52] = random.randint(1, 4)
+            if mm[size + 53] > 0:
+                gem1_nam = random.randint(1, 511)
+                if gem1_nam > 255:
+                    mm[size + 66] = 1
+                    mm[size + 65] = gem1_nam - 256
+                else:
+                    mm[size + 65] = gem1_nam
+                    mm[size + 66] = 0
+                mm[size + 67] = random.randint(1, 43)
+                for byte in range(size + 70, size + 78):
+                    mm[byte] = random.randint(0, 255)
+                for byte in range(size + 81, size + 87):
+                    mm[byte] = random.randint(0, 255)
+                if mm[size + 53] > 1:
+                    gem2_nam = random.randint(1, 511)
+                    if gem2_nam > 255:
+                        mm[size + 94] = 1
+                        mm[size + 93] = gem2_nam - 256
+                    else:
+                        mm[size + 93] = gem2_nam
+                        mm[size + 94] = 0    
+                    mm[size + 95] = random.randint(1, 43)
+                    for byte in range(size + 98, size + 106):
+                        mm[byte] = random.randint(0, 255)
+                    for byte in range(size + 109, size + 115):
+                        mm[byte] = random.randint(0, 255)
+                    if mm[size + 53] > 2:
+                        gem3_nam = random.randint(1, 511)
+                        if gem3_nam > 255:
+                            mm[size + 117] = 1
+                            mm[size + 116] = gem3_nam - 256
+                        else:
+                            mm[size + 116] = gem3_nam
+                            mm[size + 117] = 0
+                        mm[size + 118] = random.randint(1, 43)
+                        for byte in range(size + 121, size + 129):
+                            mm[byte] = random.randint(0, 255)
+                        for byte in range(size + 132, size + 138):
+                            mm[byte] = random.randint(0, 255)    
+                for byte in range(size + 54, size + 56):
+                    mm[byte] =  random.randint(0, 255)
+                for byte in range(size + 58, size + 60):
+                    mm[byte] =  random.randint(0, 255)
+        os.system('start /min cmd /c ' + '"psxinject "' + game + '" /MAP/' + mapd + ' "' + map_dir + mapd + '"" ')
+        mm.close()
 print("Randomization complete!")
 time.sleep(3) 
