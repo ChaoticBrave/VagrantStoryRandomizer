@@ -13,7 +13,7 @@ https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 * MEGA is now being used to contain releases. They are becoming too large to upload to GitHub even as .zip files.
 * psxinject is now the tool of choice when replacing .mpd files in the Vagrant Story .bin file with the randomized ones. This decision was made to prevent the project from relying on as many closed source software as possible.
 * Stable builds can now randomize enemy drops. It appears as though having dummied items is inconsequential. Let me know if this is not the case though.
-* Experimental builds can now randomize the weapons which appear in treasure chests. 
+* Experimental builds can now randomize individual blades for weapons when crafting. A fix has also been applied to an error where Dark and Evil values for gems which chest weapons use won't randomize. You will find this fix in the v0.30 zip in the Experimental Builds folder in the MEGA link.   
 ## To Do
 * Randomize the rest of the loot which is in the treasure chests.
 * Randomize the rooms. This one's a bit more "pie in the sky" and will warrant a bigger crew.
@@ -22,7 +22,7 @@ Many can find these GitHubs tedious, myself included. The "Releases" section exi
 
 If you wish to convert an altered py file into an exe, make sure that your exe is in the same directory as the ZONES and MAPS directories, as well as a psxinject exe file and its necessary dll files after conversion in order for it to work. 
 ## Limitations
-As mentioned earlier, this tool can only randomize enemies, their random drops and, in the case of experimental builds, weapons in chests right now. 
+As mentioned earlier, this tool can only randomize enemies, their random drops and, in the case of experimental builds, weapons and blades in chests right now. 
 
 Enemies can also only be changed to those which can be found within the same area. For example, Snowfly Forest opponents can only be swapped with other Snowfly Forest opponents.
 ## Contact
