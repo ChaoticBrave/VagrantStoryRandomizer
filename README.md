@@ -24,6 +24,8 @@ If you wish to convert an altered py file into an exe, make sure that your exe i
 ## Limitations
 As mentioned earlier, this tool can only randomize enemies, their random drops and, in the case of experimental builds, weapons and blades in chests right now. 
 
+Grips in chests will not be updated. This is because, as far as I know, no grips are in any of the chests.
+
 Enemies can also only be changed to those which can be found within the same area. For example, Snowfly Forest opponents can only be swapped with other Snowfly Forest opponents.
 ## Contact
 If you queries about the project, the best places to contact me are either my Discord server or my Twitter DMs.
