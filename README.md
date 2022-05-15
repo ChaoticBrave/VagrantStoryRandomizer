@@ -13,10 +13,12 @@ https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 * MEGA is now being used to contain releases. They are becoming too large to upload to GitHub even as .zip files.
 * psxinject is now the tool of choice when replacing .mpd files in the Vagrant Story .bin file with the randomized ones. This decision was made to prevent the project from relying on as many closed source software as possible.
 * Stable builds can now randomize enemy drops. It appears as though having dummied items is inconsequential. Let me know if this is not the case though.
-* Experimental builds can now randomize individual blades for weapons when crafting. A fix has also been applied to an error where Dark and Evil values for gems which chest weapons use won't randomize. You will find this fix in the v0.30 zip in the Experimental Builds folder in the MEGA link.   
+* Experimental builds can now randomize Shields in treasure chests as well as their Gems. A fix has also been applied to an error where the item types for individual Blades won't randomize. The names, graphics and item types for Weapon Blades have also been given more independence. You will find this build in the v0.40 zip in the Experimental Builds folder in the MEGA link.   
 ## To Do
 * Randomize the rest of the loot which is in the treasure chests.
 * Randomize the rooms. This one's a bit more "pie in the sky" and will warrant a bigger crew.
+* Randomize more of the boss drops.
+* Randomize your player character. Again, this one's a bit more "pie in the sky".
 ## Using this GitHub project
 Many can find these GitHubs tedious, myself included. The "Releases" section exists for those who just want to extract the ZIP and get into the action. For those who wish to make their own alterations, the Python files has been included.
 
