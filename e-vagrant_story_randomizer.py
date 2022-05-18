@@ -287,7 +287,63 @@ for mapd in has_chest:
                 mm[byte] = random.randint(0, 255)    
             for byte in range(size + 273, size + 280):
                 mm[byte] = random.randint(0, 255)
-            mm[size + 281] = random.randint(1, 7)    
+            mm[size + 281] = random.randint(1, 7)
+        if mm[size + 369] == 3:
+            mm[size + 373] = random.randint(1, 255)
+            if mm[size + 376] == 2:
+                mm[size + 374] = random.randint(17, 32)
+            if mm[size + 376] == 3:
+                mm[size + 374] = random.randint(33, 48)
+            if mm[size + 376] == 4:
+                mm[size + 374] = random.randint(49, 64)
+            if mm[size + 376] == 5:
+                mm[size + 374] = random.randint(65, 80)
+            rand_dpm = hex(random.randint(41, 250) * 100)
+            int_rand_dpm = int(rand_dpm, 0)
+            rand_dp = hex(random.randint(41, (int_rand_dpm / 100)) * 100)
+            rand_dpm_str1 = rand_dpm[0] + rand_dpm[1] + rand_dpm[2] + rand_dpm[3]
+            rand_dpm_str2 = rand_dpm[0] + rand_dpm[1] + rand_dpm[4] + rand_dpm[5]
+            rand_dp_str1 = rand_dp[0] + rand_dp[1] + rand_dp[2] + rand_dp[3]
+            rand_dp_str2 = rand_dp[0] + rand_dp[1] + rand_dp[4] + rand_dp[5]
+            mm[size + 378] = int(rand_dpm_str1, 0)
+            mm[size + 377] = int(rand_dpm_str2, 0)
+            mm[size + 382] = int(rand_dp_str1, 0)
+            mm[size + 381] = int(rand_dp_str2, 0)
+            for byte in range(size + 386, size + 389):
+                mm[byte] = random.randint(0, 255)
+            for byte in range(size + 390, size + 399):
+                mm[byte] = random.randint(0, 255)
+            for byte in range(size + 401, size + 408):
+                mm[byte] = random.randint(0, 255)
+            mm[size + 409] = random.randint(1, 7)
+        if mm[size + 413] == 3:
+            mm[size + 417] = random.randint(1, 255)
+            if mm[size + 420] == 2:
+                mm[size + 418] = random.randint(17, 32)
+            if mm[size + 420] == 3:
+                mm[size + 418] = random.randint(33, 48)
+            if mm[size + 420] == 4:
+                mm[size + 418] = random.randint(49, 64)
+            if mm[size + 420] == 5:
+                mm[size + 418] = random.randint(65, 80)
+            rand_dpm = hex(random.randint(41, 250) * 100)
+            int_rand_dpm = int(rand_dpm, 0)
+            rand_dp = hex(random.randint(41, (int_rand_dpm / 100)) * 100)
+            rand_dpm_str1 = rand_dpm[0] + rand_dpm[1] + rand_dpm[2] + rand_dpm[3]
+            rand_dpm_str2 = rand_dpm[0] + rand_dpm[1] + rand_dpm[4] + rand_dpm[5]
+            rand_dp_str1 = rand_dp[0] + rand_dp[1] + rand_dp[2] + rand_dp[3]
+            rand_dp_str2 = rand_dp[0] + rand_dp[1] + rand_dp[4] + rand_dp[5]
+            mm[size + 422] = int(rand_dpm_str1, 0)
+            mm[size + 421] = int(rand_dpm_str2, 0)
+            mm[size + 426] = int(rand_dp_str1, 0)
+            mm[size + 425] = int(rand_dp_str2, 0)
+            for byte in range(size + 430, size + 433):
+                mm[byte] = random.randint(0, 255)
+            for byte in range(size + 434, size + 443):
+                mm[byte] = random.randint(0, 255)
+            for byte in range(size + 445, size + 452):
+                mm[byte] = random.randint(0, 255)
+            mm[size + 453] = random.randint(1, 7)      
         os.system('start /min cmd /c ' + '"psxinject "' + game + '" /MAP/' + mapd + ' "' + map_dir + mapd + '"" ')
         mm.close()
 print("Randomization complete!")
