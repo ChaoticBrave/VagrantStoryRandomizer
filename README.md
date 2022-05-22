@@ -13,7 +13,7 @@ https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 * MEGA is now being used to contain releases. They are becoming too large to upload to GitHub even as .zip files.
 * psxinject is now the tool of choice when replacing .mpd files in the Vagrant Story .bin file with the randomized ones. This decision was made to prevent the project from relying on as many closed source software as possible.
 * Stable builds can now randomize enemy drops. It appears as though having dummied items is inconsequential. Let me know if this is not the case though.
-* Experimental builds can now randomize Armor in treasure chests as well as their Gems. You will find this build in the v0.50 zip in the Experimental Builds folder in the MEGA link.   
+* Experimental builds can now randomize Accessories in treasure chests. You will find this build in the v0.60 zip in the Experimental Builds folder in the MEGA link.   
 ## To Do
 * Randomize the rest of the loot which is in the treasure chests.
 * Randomize the rooms. This one's a bit more "pie in the sky" and will warrant a bigger crew.
@@ -24,7 +24,7 @@ Many can find these GitHubs tedious, myself included. The "Releases" section exi
 
 If you wish to convert an altered py file into an exe, make sure that your exe is in the same directory as the ZONES and MAPS directories, as well as a psxinject exe file and its necessary dll files after conversion in order for it to work. 
 ## Limitations
-As mentioned earlier, this tool can only randomize enemies, their random drops and, in the case of experimental builds, Weapons, Blades, Shields and Armor in chests right now. 
+As mentioned earlier, this tool can only randomize enemies, their random drops and, in the case of experimental builds, Weapons, Blades, Shields, Armor and Accessories in chests right now. 
 
 Grips in chests will not be updated. This is because, as far as I know, no Grips are in any of the chests.
 
