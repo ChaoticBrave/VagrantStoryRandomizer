@@ -344,6 +344,15 @@ for mapd in has_chest:
             for byte in range(size + 445, size + 452):
                 mm[byte] = random.randint(0, 255)
             mm[size + 453] = random.randint(1, 7)      
+        if mm[size + 457] == 3:
+            mm[size + 461] = random.randint(1, 255)
+            mm[size + 462] = random.randint(97, 127)
+            for byte in range(size + 474, size + 477):
+                mm[byte] = random.randint(0, 255)
+            for byte in range(size + 478, size + 487):
+                mm[byte] = random.randint(0, 255)
+            for byte in range(size + 489, size + 496):
+                mm[byte] = random.randint(0, 255)      
         os.system('start /min cmd /c ' + '"psxinject "' + game + '" /MAP/' + mapd + ' "' + map_dir + mapd + '"" ')
         mm.close()
 print("Randomization complete!")
