@@ -353,7 +353,21 @@ for mapd in has_chest:
                 mm[byte] = random.randint(0, 255)
             for byte in range(size + 489, size + 496):
                 mm[byte] = random.randint(0, 255)      
+        if mm[size + 501] == 3:
+            gem_nam = random.randint(1, 511)
+            if gem_nam > 255:
+                mm[size + 506] = 1
+                mm[size + 505] = gem_nam - 256
+            else:
+                mm[size + 505] = gem_nam
+                mm[size + 506] = 0
+            mm[size + 507] = random.randint(1, 43)
+            for byte in range(size + 510, size + 519):
+                mm[byte] = random.randint(0, 255)
+            for byte in range(size + 521, size + 528):
+                mm[byte] = random.randint(0, 255)
         os.system('start /min cmd /c ' + '"psxinject "' + game + '" /MAP/' + mapd + ' "' + map_dir + mapd + '"" ')
         mm.close()
+print("Chest randomization completed.")
 print("Randomization complete!")
-time.sleep(3) 
+time.sleep(3)              
