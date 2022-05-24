@@ -28,7 +28,7 @@ Grips in chests will not be updated. This is because, as far as I know, no Grips
 
 Enemies can also only be changed to those which can be found within the same area. For example, Snowfly Forest opponents can only be swapped with other Snowfly Forest opponents.
 
-Player character randomization was previously in the To Do list. Upon further testing, this will not be possible for the foreseeable future. If only because randomized characters are glitchy outside of battle mode. If anyone's still interested though, they will added in a later experimental build.
+Player character randomization was previously in the To Do list. Upon further testing, this will not be possible for the foreseeable future. If only because randomized characters are glitchy outside of battle mode. Should anyone still be interested though, they will added in a later experimental build.
 ## Contact
 If you queries about the project, the best places to contact me are either my Discord server or my Twitter DMs.
 
