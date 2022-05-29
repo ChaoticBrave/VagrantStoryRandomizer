@@ -29,6 +29,7 @@ l20 = ["MAP360.MPD", "MAP362.MPD", "MAP365.MPD", "MAP366.MPD", "MAP367.MPD", "MA
 l21 = ["MAP382.MPD", "MAP383.MPD", "MAP384.MPD", "MAP385.MPD", "MAP386.MPD", "MAP387.MPD", "MAP388.MPD", "MAP389.MPD", "MAP390.MPD", "MAP391.MPD", "MAP392.MPD", "MAP394.MPD", "MAP395.MPD", "MAP396.MPD", "MAP397.MPD", "MAP398.MPD", "MAP399.MPD", "MAP402.MPD", "MAP403.MPD", "MAP404.MPD", "MAP405.MPD", "MAP407.MPD"]
 map_list = [l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11, l12, l13, l14, l15, l16, l17, l18, l19, l20, l21]
 has_chest = ["MAP018.MPD", "MAP027.MPD", "MAP409.MPD", "MAP025.MPD", "MAP026.MPD", "MAP408.MPD", "MAP032.MPD", "MAP033.MPD", "MAP037.MPD", "MAP045.MPD", "MAP050.MPD", "MAP079.MPD", "MAP081.MPD", "MAP095.MPD", "MAP124.MPD", "MAP142.MPD", "MAP175.MPD", "MAP176.MPD", "MAP177.MPD", "MAP202.MPD", "MAP203.MPD", "MAP350.MPD", "MAP227.MPD", "MAP241.MPD", "MAP240.MPD", "MAP254.MPD", "MAP255.MPD", "MAP259.MPD", "MAP261.MPD", "MAP270.MPD", "MAP276.MPD", "MAP289.MPD", "MAP292.MPD", "MAP295.MPD", "MAP306.MPD", "MAP352.MPD", "MAP358.MPD", "MAP326.MPD", "MAP331.MPD", "MAP333.MPD", "MAP336.MPD", "MAP345.MPD", "MAP347.MPD", "MAP381.MPD", "MAP380.MPD", "MAP379.MPD", "MAP378.MPD", "MAP397.MPD", "MAP399.MPD", "MAP405.MPD", "MAP407.MPD"]
+has_key_or_sig = ["MAP270.MPD", "MAP254.MPD", "MAP255.MPD", "MAP227.MPD", "MAP259.MPD", "MAP142.MPD", "MAP241.MPD", "MAP345.MPD"]
 com = "8376858345484948"
 is_vs = False
 start_range = 0
@@ -366,6 +367,33 @@ for mapd in has_chest:
                 mm[byte] = random.randint(0, 255)
             for byte in range(size + 521, size + 528):
                 mm[byte] = random.randint(0, 255)
+        if mm[size + 535] == 3 and mapd not in has_key_or_sig:
+            cons_nam = random.randint(1, 511)
+            if cons_nam > 255:
+                mm[size + 534] = 1
+                mm[size + 533] = cons_nam - 256
+            else:
+                mm[size + 533] = cons_nam
+                mm[size + 534] = 0
+            mm[size + 536] = random.randint(1, 255)
+        if mm[size + 539] == 3 and mapd not in has_key_or_sig:
+            cons_nam = random.randint(1, 511)
+            if cons_nam > 255:
+                mm[size + 538] = 1
+                mm[size + 537] = cons_nam - 256
+            else:
+                mm[size + 537] = cons_nam
+                mm[size + 538] = 0
+            mm[size + 540] = random.randint(1, 255)
+        if mm[size + 543] == 3 and mapd not in has_key_or_sig:
+            cons_nam = random.randint(1, 511)
+            if cons_nam > 255:
+                mm[size + 542] = 1
+                mm[size + 541] = cons_nam - 256
+            else:
+                mm[size + 541] = cons_nam
+                mm[size + 542] = 0
+            mm[size + 544] = random.randint(1, 255)
         os.system('start /min cmd /c ' + '"psxinject "' + game + '" /MAP/' + mapd + ' "' + map_dir + mapd + '"" ')
         mm.close()
 print("Chest randomization completed.")
