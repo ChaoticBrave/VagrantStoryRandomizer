@@ -10,7 +10,7 @@ Both stable and experimental builds can be found here:
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
 ## Updates
-* All chest items will be randomized now. You can find this build in the Stable Builds folder in the MEGA link; it will be named Vagrant_Story_Randomizer_v.80. It appears as though having dummied items is inconsequential. Let me know if this is not the case though. This build  
+* All chest items will be randomized now. You can find this build in the Stable Builds folder in the MEGA link; it will be named Vagrant_Story_Randomizer_v.80. Any consumable items needed to progress through the story are not randomized. It appears as though having dummied items is inconsequential. Let me know if this is not the case though. 
 ## To Do
 * Randomize the rooms. This one's a bit more "pie in the sky" and will warrant a bigger crew.
 * Make each different part of the randomizer a function where the user decides what should be randomized or not.
