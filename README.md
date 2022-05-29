@@ -1,7 +1,7 @@
 # Vagrant Story Randomizer
 A tool which will randomize a copy of Vagrant Story.
 
-At the moment, this is in the form of a Python file which has been converted to an executable file. Right now, it will randomize the enemies, their drops, and in the case of experimental builds, weapons in chests.
+At the moment, this is in the form of a Python file which has been converted to an executable file. Right now, it will randomize the enemies, their drops and chest items.
 
 A randomized game has been proven to work with both Beetle PSX and DuckStation. 
 ## Releases
@@ -10,19 +10,16 @@ Both stable and experimental builds can be found here:
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
 ## Updates
-* MEGA is now being used to contain releases. They are becoming too large to upload to GitHub even as .zip files.
-* psxinject is now the tool of choice when replacing .mpd files in the Vagrant Story .bin file with the randomized ones. This decision was made to prevent the project from relying on as many closed source software as possible.
-* Stable builds can now randomize enemy drops. It appears as though having dummied items is inconsequential. Let me know if this is not the case though.
-* Experimental builds can now randomize Gems in treasure chests. You will find this build in the v0.70 zip in the Experimental Builds folder in the MEGA link.   
+* All chest items will be randomized now. You can find this build in the Stable Builds folder in the MEGA link; it will be named Vagrant_Story_Randomizer_v.80. It appears as though having dummied items is inconsequential. Let me know if this is not the case though. This build  
 ## To Do
-* Randomize the rest of the loot which is in the treasure chests.
 * Randomize the rooms. This one's a bit more "pie in the sky" and will warrant a bigger crew.
+* Make each different part of the randomizer a function where the user decides what should be randomized or not.
 ## Using this GitHub project
 Many can find these GitHubs tedious, myself included. The "Releases" section exists for those who just want to extract the ZIP and get into the action. For those who wish to make their own alterations, the Python files has been included.
 
 If you wish to convert an altered py file into an exe, make sure that your exe is in the same directory as the ZONES and MAPS directories, as well as a psxinject exe file and its necessary dll files after conversion in order for it to work. 
 ## Limitations
-As mentioned earlier, this tool can only randomize enemies, their random drops and, in the case of experimental builds, Weapons, Blades, Shields, Armor, Accessories and Gems in chests right now. 
+As mentioned earlier, this tool can only randomize enemies, their random drops and chests items right now. 
 
 Grips in chests will not be updated. This is because, as far as I know, no Grips are in any of the chests.
 
