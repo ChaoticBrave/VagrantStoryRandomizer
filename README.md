@@ -11,9 +11,11 @@ https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
 ## Updates
 * All chest items will be randomized now. You can find this build in the Stable Builds folder in the MEGA link; it will be named Vagrant_Story_Randomizer_v0.80. Any consumable items needed to progress through the story are not randomized. It appears as though having dummied items is inconsequential. Let me know if this is not the case though. 
+* After snooping through more of the game's file, room randomization is more feasible than I thought. Though it might take a while for me to produce a suitable structure.
 ## To Do
-* Randomize the rooms. This one's a bit more "pie in the sky" and will warrant a bigger crew.
+* Randomize the rooms.
 * Make each different part of the randomizer a function where the user decides what should be randomized or not.
+* Adapt the tool to use C++.
 ## Using this GitHub project
 Many can find these GitHubs tedious, myself included. The "Releases" section exists for those who just want to extract the ZIP and get into the action. For those who wish to make their own alterations, the Python files has been included.
 
