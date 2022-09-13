@@ -8,23 +8,23 @@ Both stable and experimental builds can be found here:
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
 ## Updates
-* The randomizer has now been ported to C++. Some errors which were recently discovered with the Python version have also been fixed in this version. You will also get a choice as to what you want randomized. The source code can be found in the "source" folder. A version which uses C++ can be found in the Stable Build folder using the MEGA link.
-* After snooping through more of the game's file, room randomization is more feasible than I thought. Though it might take a while for me to produce a suitable structure.
+* The randomizer has now been ported to C++. Some errors which were recently discovered with the Python version have also been fixed in this version. You will also get a choice as to what you want randomized. The source code can be found in the "stable" folder in "source". A version which uses C++ can be found in the Stable Build folder using the MEGA link.
+* An experimental build which has room randomization is now available. You will find it in the Experimental Build folder using the MEGA link, and the source code for it in the "experimental" folder in "source". Keep in mind that it's still experimental. Most of the randomized rooms will crash. Because of this, I strongly suggest backing up your Vagrant Story BIN/CUE. 
 ## To Do
-* Randomize the rooms.
+* Stabilize the rooms randomizer.
 * Give the randomizer a proper GUI.
 ## Using this GitHub project
 Many can find these GitHubs tedious, myself included. The "Releases" section exists for those who just want to extract the ZIP and get into the action. For those who wish to make their own alterations, the C++ files have been included.
 
 If you make any alterations to the source code and you want to bring your project to life, make sure that your exe is in the same directory as the ZONES and MAPS directories, as well as a psxinject exe file and its necessary dll files after conversion in order for it to work. 
 ## Limitations
-As mentioned earlier, this tool can only randomize enemies, their random drops and chests items right now. 
-
 Grips in chests will not be updated. This is because, as far as I know, no Grips are in any of the chests.
 
 Enemies can also only be changed to those which can be found within the same area. For example, Snowfly Forest opponents can only be swapped with other Snowfly Forest opponents.
 
 Player character randomization was previously in the To Do list. Upon further testing, this will not be possible for the foreseeable future. If only because randomized characters are glitchy outside of battle mode. Should anyone still be interested though, this will be added in a later experimental build.
+
+Most randomized rooms in experimental builds will cause the game to crash. I will look into a fix. For now, use the room randomizer at your own risk, and backup your BIN/CUE of Vagrant Story.
 ## Contact
 If you queries about the project, the best places to contact me are either my Discord server or my Twitter DMs.
 
