@@ -44,3 +44,4 @@ https://twitter.com/ChaoticBrave
 * gingerbeardman: For letting me use his translation of psx-mode2 for the earlier builds.
 * cebix: Creator of psximager, which is used for mpd file replacement in builds starting from v0.20.
 * NoharOSP: For being at hand to test this locally.
+* mayaktheunholy: For discovering several errors with pre-0.85 builds
