@@ -8,7 +8,7 @@ Both stable and experimental builds can be found here:
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
 ## Updates
-* The randomizer has now been ported to C++. Some errors which were recently discovered with the Python version have also been fixed in this version. You will also get a choice as to what you want randomized. The source code can be found in the "stable" folder in "source". A version which uses C++ can be found in the Stable Build folder using the MEGA link.
+* The 0.85 stable build has been uploaded to the MEGA link. This build has a variety of fixes for bugs which could render the game unusable. Because of this, it is highly recommended that you do not use any stable version before 0.85. 
 * An experimental build which has room randomization is now available. You will find it in the Experimental Build folder using the MEGA link, and the source code for it in the "experimental" folder in "source". Keep in mind that it's still experimental. Most of the randomized rooms will crash. Because of this, I strongly suggest backing up your Vagrant Story BIN/CUE. 
 ## To Do
 * Stabilize the rooms randomizer.
