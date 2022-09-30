@@ -11,13 +11,16 @@ class Reference_Files
 {
 private:
 	void loadFiles();
-	
+
 	string com;
 	list<string> zones;
+	vector<int> map_sum;
 	vector<string> has_chest;
 	list<string> has_key_or_sig;
+	vector<string> has_boss;
 	vector<vector<string>> map_list;
-	string tool = "psxinject.exe ";
+	vector<vector<string>> map_id;
+	string tool = "psinject\\psxinject.exe ";
 
 
 	vector<string> l1;
@@ -42,14 +45,17 @@ private:
 	vector<string> l20;
 	vector<string> l21;
 
+	
 public:
 	Reference_Files();
 	string getCom();
 	string getTool();
 	vector<vector<string>> getMapList();
+	vector<vector<string>> getIdList();
 	list<string> getZones();
+	list<string> getKSCheck();
+	vector<int> getMapSum();
 	vector<string> getIndivZone(vector<string> aZoneList);
 	vector<string> getChestCheck();
-	list<string> getKSCheck();
+	vector<string> getBossRooms();
 };
-
