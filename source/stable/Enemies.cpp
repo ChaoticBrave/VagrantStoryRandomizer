@@ -24,6 +24,7 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision)
     vector<string> ivm = *mlp;
     vector<string>::iterator ivmp = ivm.begin();
     vector<string> cc = aRF.getChestCheck();
+    vector<string> bc = aRF.getBossRooms();
     vector<string>::iterator ccb = cc.begin();
     vector<string>::iterator cce = cc.end();
 
@@ -67,10 +68,12 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision)
     string m_file;
     string file;
     string cur_map;
+    string cur_zone;
     
 
     for (int i = 0; i < aRF.getMapList().size(); i++) {
         file = aGame.getStringPath() + "\\ZONES\\" + *zp;
+        cur_zone = *zp;
         map.open(file, ios::in | ios::out | ios::binary | ios::ate);
         map.seekg(13, ios::beg);
         map.tellg();
@@ -91,71 +94,85 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision)
         hparnum << std::hex << shc;
         hparnum >> parnum;
         para_2 = parnum / 1132;
+        if (cur_zone == "ZONE009.ZND") {
+            para_2 -= 2;
+        }
+        if (cur_zone == "ZONE013.ZND" || cur_zone == "ZONE028.ZND" || cur_zone == "ZONE050.ZND") {
+            para_2 -= 1;
+        }
         hparnum.clear();
         std::advance(zp, 1);
         for (int mi = 0; mi < aRF.getIndivZone(*mlp).size(); mi++) {
             m_file = aGame.getStringPath() + "\\MAPS\\" + *ivmp;
             cur_map = *ivmp;
-            acmap.open(m_file, ios::in | ios::out | ios::binary | ios::ate);
-            size = acmap.tellg();          
-            if (find(begin(cc), end(cc), *ivmp) != end(cc)) {
-                size = round((size - 544) - 1);
-            }
-            else {
-                size -= 1;
-            }
-            acmap.seekg(36, ios::beg);
-            map_loc = acmap.tellg();
-            quo_numer = acmap.get();
-            acmap.seekg(37, ios::beg);
-            map_loc = acmap.tellg();
-            if (acmap.get() > 0) {
-                quo_numer += 256;
-            }
-            for (int b = size - 35; b > (size - (38 * round(quo_numer / 40)) - 40); b -= 40) {
-                ene_dist = std::uniform_int_distribution<>(0, (para_2 - 1));
-                ene = ene_dist(gener);
-                acmap.seekg(b, ios::beg);
-                ene_at = acmap.tellg();
-                ene_loc = acmap.get();
-                if (ene == ene_loc) {
-                    while (ene == ene_loc) {
-                        ene_dist = std::uniform_int_distribution<>(0, (para_2 - 1));
-                        ene = ene_dist(gener);
-                    }
+            if (find(begin(bc), end(bc), cur_map) == end(bc)) {
+                acmap.open(m_file, ios::in | ios::out | ios::binary | ios::ate);
+                size = acmap.tellg();
+                if (find(begin(cc), end(cc), cur_map) != end(cc)) {
+                    size = round((size - 544) - 1);
                 }
-                ch_val = new char(ene);
-                acmap.seekp(b, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-            }
-            if (aDecision == "Y") {
-                for (int b = size - 9; b > ((size - (38 * round(quo_numer / 40))) - 40); b -= 40) {
-                    item_dist = std::uniform_int_distribution<>(0, 511);
-                    ind_item = item_dist(gener);
-                    if (ind_item > 255) {
-                        acmap.seekp(b + 1, ios::beg);
-                        ch_val = new char(1);
+                else {
+                    size -= 1;
+                }
+                acmap.seekg(36, ios::beg);
+                map_loc = acmap.tellg();
+                quo_numer = acmap.get();
+                acmap.seekg(37, ios::beg);
+                map_loc = acmap.tellg();
+                if (acmap.get() > 0) {
+                    quo_numer += 256;
+                }
+                for (int b = size - 35; b > (size - (38 * round(quo_numer / 40)) - 40); b -= 40) {
+                    ene_dist = std::uniform_int_distribution<>(0, (para_2 - 1));
+                    ene = ene_dist(gener);
+                    acmap.seekg(b, ios::beg);
+                    ene_at = acmap.tellg();
+                    ene_loc = acmap.get();
+                    if (cur_zone == "ZONE028.ZND" && ene == 15) {
+                        while (cur_zone == "ZONE028.ZND" && ene == 15) {
+                            ene_dist = std::uniform_int_distribution<>(0, (para_2 - 1));
+                            ene = ene_dist(gener);
+                        }
+                    }
+                    if (ene == ene_loc) {
+                        while (ene == ene_loc) {
+                            ene_dist = std::uniform_int_distribution<>(0, (para_2 - 1));
+                            ene = ene_dist(gener);
+                        }
+                    }
+                    ch_val = new char(ene);
+                    acmap.seekp(b, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                }
+                if (aDecision == "Y") {
+                    for (int b = size - 9; b > ((size - (38 * round(quo_numer / 40))) - 40); b -= 40) {
+                        item_dist = std::uniform_int_distribution<>(0, 511);
+                        ind_item = item_dist(gener);
+                        if (ind_item > 255) {
+                            acmap.seekp(b + 1, ios::beg);
+                            ch_val = new char(1);
+                            acmap.write(ch_val, 1);
+                            ind_item -= 256;
+                            delete ch_val;
+                        }
+                        ch_val = new char(ind_item);
+                        acmap.seekp(b, ios::beg);
                         acmap.write(ch_val, 1);
-                        ind_item -= 256;
                         delete ch_val;
                     }
-                    ch_val = new char(ind_item);
-                    acmap.seekp(b, ios::beg);
-                    acmap.write(ch_val, 1);
-                    delete ch_val;
+                    for (int b = size - 5; b > ((size - (38 * round(quo_numer / 40))) - 40); b -= 40) {
+                        odds_dist = std::uniform_int_distribution<>(1, 100);
+                        odds = odds_dist(gener);
+                        ch_val = new char(odds);
+                        acmap.seekp(b, ios::beg);
+                        acmap.write(ch_val, 1);
+                        delete ch_val;
+                    }
                 }
-                for (int b = size - 5; b > ((size - (38 * round(quo_numer / 40))) - 40); b -= 40) {
-                    odds_dist = std::uniform_int_distribution<>(1, 100);
-                    odds = odds_dist(gener);
-                    ch_val = new char(odds);
-                    acmap.seekp(b, ios::beg);
-                    acmap.write(ch_val, 1);
-                    delete ch_val;
-                }
+                system((aRF.getTool() + " '" + aGame.getWhole().string() + "' /MAP/" + cur_map + " '" + m_file + "'").c_str());
+                acmap.close();
             }
-            system((aRF.getTool() + " '" + aGame.getWhole().string() + "' /MAP/" + cur_map + " '" + m_file + "'").c_str());
-            acmap.close();
             std::advance(ivmp, 1);
         }
         std::advance(mlp, 1);
