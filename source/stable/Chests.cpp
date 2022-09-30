@@ -73,6 +73,18 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame) {
     std::uniform_int_distribution<> dist_18;
     std::uniform_int_distribution<> dist_19 = std::uniform_int_distribution<>(97, 127);
     std::uniform_int_distribution<> dist_20 = std::uniform_int_distribution<>(323, 511);
+    std::uniform_int_distribution<> dist_21 = std::uniform_int_distribution<>(1, 40);
+    std::uniform_int_distribution<> dist_22 = std::uniform_int_distribution<>(1, 30);
+    std::uniform_int_distribution<> dist_23 = std::uniform_int_distribution<>(248, 255);
+    std::uniform_int_distribution<> dist_24 = std::uniform_int_distribution<>(1, 6);
+    std::uniform_int_distribution<> dist_25 = std::uniform_int_distribution<>(250, 254);
+    std::uniform_int_distribution<> dist_26 = std::uniform_int_distribution<>(5, 25);
+    std::uniform_int_distribution<> dist_27 = std::uniform_int_distribution<>(3, 20);
+    std::uniform_int_distribution<> dist_28 = std::uniform_int_distribution<>(252, 254);
+    std::uniform_int_distribution<> dist_29 = std::uniform_int_distribution<>(1, 25);
+    std::uniform_int_distribution<> dist_30 = std::uniform_int_distribution<>(1, 20);
+    std::uniform_int_distribution<> dist_31 = std::uniform_int_distribution<>(3, 19);
+    std::uniform_int_distribution<> dist_32 = std::uniform_int_distribution<>(252, 255);
 
     char* ch_val;
     char rand_dpm[20];
@@ -209,16 +221,30 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame) {
             acmap.seekp(size + 15, ios::beg);
             acmap.write(ch_val, 1);
             delete ch_val;
-            for (int b = 17; b < 20; b++) {
-                acmap.seekg(size + b, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                prop = dist_8(gener);
-                ch_val = new char(prop);
-                acmap.seekp(size + b, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-            }
+            acmap.seekg(size + 17, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            prop = dist_21(gener);
+            ch_val = new char(prop);
+            acmap.seekp(size + 17, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
+            acmap.seekg(size + 18, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            prop = dist_22(gener);
+            ch_val = new char(prop);
+            acmap.seekp(size + 18, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
+            acmap.seekg(size + 19, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            prop = dist_23(gener) - 255;
+            ch_val = new char(prop);
+            acmap.seekp(size + 19, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
             acmap.seekg(size + 20, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
@@ -490,16 +516,30 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame) {
                     }
                 }
             }
-            for (int b = 54; b < 57; b++) {
-                acmap.seekg(size + b, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                prop = dist_8(gener);
-                ch_val = new char(prop);
-                acmap.seekp(size + b, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-            }
+            acmap.seekg(size + 54, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            prop = dist_24(gener);
+            ch_val = new char(prop);
+            acmap.seekp(size + 54, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
+            acmap.seekg(size + 55, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            prop = dist_9(gener);
+            ch_val = new char(prop);
+            acmap.seekp(size + 55, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
+            acmap.seekg(size + 56, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            prop = dist_25(gener) - 255;
+            ch_val = new char(prop);
+            acmap.seekp(size + 56, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
             for (int b = 58; b < 61; b++) {
                 acmap.seekg(size + b, ios::beg);
                 map_loc = acmap.tellg();
@@ -630,16 +670,30 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame) {
             acmap.seekp(size + 187, ios::beg);
             acmap.write(ch_val, 1);
             delete ch_val;
-            for (int b = 189; b < 192; b++) {
-                acmap.seekg(size + b, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                prop = dist_8(gener);
-                ch_val = new char(prop);
-                acmap.seekp(size + b, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-            }
+            acmap.seekg(size + 189, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            prop = dist_21(gener);
+            ch_val = new char(prop);
+            acmap.seekp(size + 189, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
+            acmap.seekg(size + 190, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            prop = dist_22(gener);
+            ch_val = new char(prop);
+            acmap.seekp(size + 190, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
+            acmap.seekg(size + 191, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            prop = dist_23(gener) - 255;
+            ch_val = new char(prop);
+            acmap.seekp(size + 191, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
             acmap.seekg(size + 192, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
@@ -982,16 +1036,30 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame) {
                     }
                 }
             }
-            for (int b = 258; b < 261; b++) {
-                acmap.seekg(size + b, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                prop = dist_8(gener);
-                ch_val = new char(prop);
-                acmap.seekp(size + b, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-            }
+            acmap.seekg(size + 258, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            prop = dist_26(gener);
+            ch_val = new char(prop);
+            acmap.seekp(size + 258, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
+            acmap.seekg(size + 259, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            prop = dist_27(gener);
+            ch_val = new char(prop);
+            acmap.seekp(size + 259, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
+            acmap.seekg(size + 260, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            prop = dist_28(gener) - 255;
+            ch_val = new char(prop);
+            acmap.seekp(size + 260, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
             for (int b = 262; b < 271; b++) {
                 acmap.seekg(size + b, ios::beg);
                 map_loc = acmap.tellg();
@@ -1121,17 +1189,31 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame) {
             acmap.seekp(size + 381, ios::beg);
             acmap.write(ch_val, 1);
             delete ch_val;
-            for (int b = 386; b < 389; b++) {
-                acmap.seekg(size + b, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                prop = dist_8(gener);
-                ch_val = new char(prop);
-                acmap.seekp(size + b, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-            }
-            for (int b = 391; b < 399; b++) {
+            acmap.seekg(size + 386, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            prop = dist_30(gener);
+            ch_val = new char(prop);
+            acmap.seekp(size + 386, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
+            acmap.seekg(size + 387, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            prop = dist_31(gener);
+            ch_val = new char(prop);
+            acmap.seekp(size + 387, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
+            acmap.seekg(size + 388, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            prop = dist_32(gener) - 255;
+            ch_val = new char(prop);
+            acmap.seekp(size + 388, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
+            for (int b = 390; b < 399; b++) {
                 acmap.seekg(size + b, ios::beg);
                 map_loc = acmap.tellg();
                 to_ass = acmap.get();
@@ -1261,16 +1343,30 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame) {
             acmap.seekp(size + 425, ios::beg);
             acmap.write(ch_val, 1);
             delete ch_val;
-            for (int b = 430; b < 433; b++) {
-                acmap.seekg(size + b, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                prop = dist_8(gener);
-                ch_val = new char(prop);
-                acmap.seekp(size + b, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-            }
+            acmap.seekg(size + 430, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            prop = dist_30(gener);
+            ch_val = new char(prop);
+            acmap.seekp(size + 430, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
+            acmap.seekg(size + 431, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            prop = dist_31(gener);
+            ch_val = new char(prop);
+            acmap.seekp(size + 431, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
+            acmap.seekg(size + 432, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            prop = dist_32(gener) - 255;
+            ch_val = new char(prop);
+            acmap.seekp(size + 432, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
             for (int b = 434; b < 443; b++) {
                 acmap.seekg(size + b, ios::beg);
                 map_loc = acmap.tellg();
@@ -1320,7 +1416,17 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame) {
             acmap.seekp(size + 462, ios::beg);
             acmap.write(ch_val, 1);
             delete ch_val;
-            for (int b = 474; b < 478; b++) {
+            for (int b = 474; b < 477; b++) {
+                acmap.seekg(size + b, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                prop = dist_29(gener);
+                ch_val = new char(prop);
+                acmap.seekp(size + b, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+            }
+            for (int b = 478; b < 487; b++) {
                 acmap.seekg(size + b, ios::beg);
                 map_loc = acmap.tellg();
                 to_ass = acmap.get();
@@ -1330,17 +1436,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame) {
                 acmap.write(ch_val, 1);
                 delete ch_val;
             }
-            for (int b = 478; b < 488; b++) {
-                acmap.seekg(size + b, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                prop = dist_8(gener);
-                ch_val = new char(prop);
-                acmap.seekp(size + b, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-            }
-            for (int b = 489; b < 497; b++) {
+            for (int b = 489; b < 496; b++) {
                 acmap.seekg(size + b, ios::beg);
                 map_loc = acmap.tellg();
                 to_ass = acmap.get();
