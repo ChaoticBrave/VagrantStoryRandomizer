@@ -48,3 +48,4 @@ https://www.tumblr.com/chaoticbraves-workshop
 * cebix: Creator of psximager, which is used for mpd file replacement in builds starting from v0.3.0.0.
 * NoharOSP: For being at hand to test this locally.
 * mayaktheunholy: For discovering several errors with pre-0.5.1.0 builds.
+* OddKara: Inspired me to do location-based randomizing rather than a room-by-room direction.
