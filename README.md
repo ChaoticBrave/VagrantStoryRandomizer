@@ -8,7 +8,7 @@ Both stable and experimental builds can be found here:
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
 ## Updates
-* Grips in chests can now be randomized. After spending so long thinking that the game had no grips in chests, I was proven wrong by a buddy of mine, benjamin champion, on the Vagrant Story speedrun Discord server. Shows that I've should've been more dilligent when looking into each chest's contents. 
+* Grips in chests can now be randomized. After spending so long thinking that the game had no grips in chests, I was proven wrong by a buddy of mine, benjamin champion, on the Vagrant Story speedrun Discord server. Shows that I've should've been more diligent when looking into each chest's contents. 
 ## To Do
 * Give the randomizer a proper GUI.
 ## Using this GitHub project
