@@ -6,11 +6,12 @@
 #include <stdio.h>
 #include <filesystem>
 #include <stddef.h> 
-
 #include "Reference_Files.h"
 #include "Add_Game.h"
 #include "Enemies.h"
 #include "Chests.h"
+#include "Rooms.h"
+
 
 using namespace std;
 using std::filesystem::current_path;
@@ -41,6 +42,7 @@ int main() {
     string decision_e;
     string decision_d;
     string decision_c;
+    string decision_r;
 
     while (decision_e != "Y" && decision_e != "N") {
         decision_e = "";
@@ -80,6 +82,22 @@ int main() {
         Chests che_ran = Chests();
         che_ran.mapIterate(ref, adder);
         cout << "Chest randomization completed." << endl;
+    }
+
+    while (decision_r != "Y" && decision_r != "N") {
+        decision_r = "";
+        cout << "Would you like to randomize area progression? (Y/N)" << endl;
+        getline(cin, decision_r);
+        if (decision_r != "Y" && decision_r != "N") {
+            cout << "Please input 'Y' or 'N' " << endl;
+        }
+    }
+
+    if (decision_r == "Y") {
+        cout << "Please wait..." << endl;
+        Rooms room_ran = Rooms();
+        room_ran.roomIterate(ref, adder);
+        cout << "Room randomization completed." << endl;
     }
 
     cout << "Randomization complete!" << endl;
