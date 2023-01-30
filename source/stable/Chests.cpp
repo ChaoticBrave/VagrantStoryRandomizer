@@ -56,7 +56,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame) {
     std::uniform_int_distribution<> dist_1 = std::uniform_int_distribution<>(1, 255);
     std::uniform_int_distribution<> dist_2 = std::uniform_int_distribution<>(1, 90);
     std::uniform_int_distribution<> dist_3 = std::uniform_int_distribution<>(1, 10);
-    std::uniform_int_distribution<> dist_4 = std::uniform_int_distribution<>(41, 250);
+    std::uniform_int_distribution<> dist_4 = std::uniform_int_distribution<>(41, 327);
     std::uniform_int_distribution<> dist_5;
     std::uniform_int_distribution<> dist_6 = std::uniform_int_distribution<>(100, 250);
     std::uniform_int_distribution<> dist_7;
@@ -85,11 +85,11 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame) {
     std::uniform_int_distribution<> dist_30 = std::uniform_int_distribution<>(1, 20);
     std::uniform_int_distribution<> dist_31 = std::uniform_int_distribution<>(3, 19);
     std::uniform_int_distribution<> dist_32 = std::uniform_int_distribution<>(252, 255);
+    std::uniform_int_distribution<> dist_33 = std::uniform_int_distribution<>(0, 2);
 
     char* ch_val;
     char rand_dpm[20];
     char rand_dp[20];
-    char rand_ppm[20];
 
     std::stringstream ss_rand_dpm;
     std::stringstream hs_rand_dpm;
@@ -756,6 +756,94 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame) {
             acmap.seekp(size + 217, ios::beg);
             acmap.write(ch_val, 1);
             delete ch_val;                    
+        }
+        acmap.seekg(size + 221, ios::beg);
+        map_loc = acmap.tellg();
+        to_ass = acmap.get();
+        if (to_ass == 3) {
+            acmap.seekg(size + 225, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            prop = dist_14(gener);
+            if (prop > 255) {
+                prop -= 256;
+                ch_val = new char(prop);
+                acmap.seekp(size + 225, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                ch_val = new char(1);
+            }
+            else {
+                ch_val = new char(prop);
+                acmap.seekp(size + 225, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                ch_val = new char(0);
+            }
+            acmap.seekg(size + 226, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            acmap.seekp(size + 226, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
+            acmap.seekg(size + 227, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            prop = dist_15(gener);
+            ch_val = new char(prop);
+            acmap.seekp(size + 227, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
+            acmap.seekg(size + 228, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            prop = dist_10(gener);
+            ch_val = new char(prop);
+            acmap.seekp(size + 228, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
+            acmap.seekg(size + 229, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            prop = dist_33(gener);
+            ch_val = new char(prop);
+            acmap.seekp(size + 229, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
+            acmap.seekg(size + 230, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            prop = dist_24(gener);
+            ch_val = new char(prop);
+            acmap.seekp(size + 230, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
+            acmap.seekg(size + 231, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            prop = dist_9(gener);
+            ch_val = new char(prop);
+            acmap.seekp(size + 231, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
+            acmap.seekg(size + 232, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            prop = dist_25(gener) - 255;
+            ch_val = new char(prop);
+            acmap.seekp(size + 232, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
+            for (int b = 234; b < 237; b++) {
+                acmap.seekg(size + b, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                prop = dist_8(gener);
+                ch_val = new char(prop);
+                acmap.seekp(size + b, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+            }
         }
         acmap.seekg(size + 241, ios::beg);
         map_loc = acmap.tellg();
