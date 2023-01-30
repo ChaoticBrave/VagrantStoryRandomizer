@@ -38,7 +38,6 @@ path Add_Game::getWhole() {
 void Add_Game::validate(fstream& aGame, Reference_Files aRef) {
     bool is_vs = false;
     string rom_com;
-    struct stat buffer;
     streampos address;
     int add_val;
     while (is_vs == false) {
@@ -67,5 +66,3 @@ void Add_Game::validate(fstream& aGame, Reference_Files aRef) {
         }
     }
 }
-   
-
