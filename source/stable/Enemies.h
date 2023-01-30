@@ -29,4 +29,3 @@ public:
 	Enemies();
 	void mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision);
 };
-
