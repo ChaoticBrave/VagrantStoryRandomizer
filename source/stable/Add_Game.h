@@ -32,4 +32,3 @@ public:
 	path getWhole();
 	void validate(fstream& aGame, Reference_Files aRef);
 };
-
