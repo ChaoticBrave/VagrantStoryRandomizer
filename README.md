@@ -8,7 +8,7 @@ Both stable and experimental builds can be found here:
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
 ## Updates
-* Grips in chests can now be randomized. After spending so long thinking that the game had no grips in chests, I was proven wrong by a buddy of mine, benjamin champion, on the Vagrant Story speedrun Discord server. Shows that I've should've been more diligent when looking into each chest's contents. 
+* A bug fix has been provided to a issue in the Catacombs. Rooms would freeze if slots which initially had Ghosts were changed. v0.7.1.0 has it so that these Ghosts are not randomized to retain stability. If there are other areas with similar oddities, let me know on the Discord link below.
 ## To Do
 * Give the randomizer a proper GUI.
 ## Using this GitHub project
@@ -47,4 +47,4 @@ https://www.tumblr.com/chaoticbraves-workshop
 * mayaktheunholy: For discovering several errors with pre-0.5.1.0 builds.
 * OddKara: Inspired me to do location-based randomizing rather than a room-by-room direction.
 * benjamin champion: Discovered that grips can be randomized in chests.
-
+* Taterz: Discovered the Ghost crashes in the Catacombs.
