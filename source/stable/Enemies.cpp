@@ -122,33 +122,35 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision)
                         quo_numer += 256;
                     }
                     for (int b = size - 35; b > (size - (38 * round(quo_numer / 40)) - 40); b -= 40) {
-                        ene_dist = std::uniform_int_distribution<>(0, (para_2 - 1));
-                        ene = ene_dist(gener);
                         acmap.seekg(b, ios::beg);
                         ene_at = acmap.tellg();
                         ene_loc = acmap.get();
-                        if (cur_zone == "ZONE028.ZND" && ene == 15) {
-                            while (cur_zone == "ZONE028.ZND" && ene == 15) {
-                                ene_dist = std::uniform_int_distribution<>(0, (para_2 - 1));
-                                ene = ene_dist(gener);
+                        ene_dist = std::uniform_int_distribution<>(0, (para_2 - 1));
+                        if ((cur_zone == "ZONE013.ZND" && (ene_loc == 0 || ene_loc == 1 || ene_loc == 2 || ene_loc == 3)) == false) {
+                            ene = ene_dist(gener);
+                            if (cur_zone == "ZONE028.ZND" && ene == 15) {
+                                while (cur_zone == "ZONE028.ZND" && ene == 15) {
+                                    ene_dist = std::uniform_int_distribution<>(0, (para_2 - 1));
+                                    ene = ene_dist(gener);
+                                }
                             }
-                        }
-                        if (cur_zone == "ZONE049.ZND" && ene == 6) {
-                            while (cur_zone == "ZONE028.ZND" && ene == 6) {
-                                ene_dist = std::uniform_int_distribution<>(0, (para_2 - 1));
-                                ene = ene_dist(gener);
+                            if (cur_zone == "ZONE049.ZND" && ene == 6) {
+                                while (cur_zone == "ZONE028.ZND" && ene == 6) {
+                                    ene_dist = std::uniform_int_distribution<>(0, (para_2 - 1));
+                                    ene = ene_dist(gener);
+                                }
                             }
-                        }
-                        if (ene == ene_loc) {
-                            while (ene == ene_loc) {
-                                ene_dist = std::uniform_int_distribution<>(0, (para_2 - 1));
-                                ene = ene_dist(gener);
+                            if (ene == ene_loc) {
+                                while (ene == ene_loc) {
+                                    ene_dist = std::uniform_int_distribution<>(0, (para_2 - 1));
+                                    ene = ene_dist(gener);
+                                }
                             }
+                            ch_val = new char(ene);
+                            acmap.seekp(b, ios::beg);
+                            acmap.write(ch_val, 1);
+                            delete ch_val;
                         }
-                        ch_val = new char(ene);
-                        acmap.seekp(b, ios::beg);
-                        acmap.write(ch_val, 1);
-                        delete ch_val;
                     }
                     if (aDecision == "Y") {
                         for (int b = size - 9; b > ((size - (38 * round(quo_numer / 40))) - 40); b -= 40) {
