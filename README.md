@@ -8,7 +8,7 @@ Both stable and experimental builds can be found here:
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
 ## Updates
-* A bug fix has been provided to a issue in the Catacombs. Rooms would freeze if slots which initially had Ghosts were changed. v0.7.1.0 has it so that these Ghosts are not randomized to retain stability. If there are other areas with similar oddities, let me know on the Discord link below.
+* A bug fix has been provided to other issues in the Catacombs. For further stability, v0.7.2.0 has it so that enemies that didn't start out as Ghosts will not become Ghosts as they appear to cause game freezes. The Rodent-Ridden Chamber also seems to take issue with its enemies being randomized, so that algorithm will not be applied to it. If there are other areas with similar oddities, let me know on the Discord link below.
 ## To Do
 * Give the randomizer a proper GUI.
 ## Using this GitHub project
