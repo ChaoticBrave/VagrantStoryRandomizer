@@ -1,3 +1,6 @@
+#define WIN32_LEAN_AND_MEAN
+
+#include <afxwin.h>
 #include <iostream>
 #include <list>
 #include <filesystem>
@@ -8,6 +11,7 @@
 #include <sstream>
 #include <iomanip>
 #include "Chests.h"
+#include <algorithm>
 
 using namespace std;
 
@@ -1677,7 +1681,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame) {
             acmap.write(ch_val, 1);
             delete ch_val;
         }
-        system((aRF.getTool() + " '" + aGame.getWhole().string() + "' /MAP/" + cur_map + " '" + m_file + "'").c_str());
+        WinExec((aRF.getTool() + " '" + aGame.getWhole().string() + "' /MAP/" + cur_map + " '" + m_file + "'").c_str(), SW_HIDE);
         acmap.close();
         std::advance(mlp, 1);
     }
