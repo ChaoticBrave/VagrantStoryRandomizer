@@ -32,7 +32,12 @@ void Add_Game::giveName() {
 }
 
 path Add_Game::getWhole() {
-    return getStringPath() + "\\" + getFileName();
+    if (guiValidatorUsed == true) {
+        return file_name;
+    }
+    else {
+        return getStringPath() + "\\" + getFileName();
+    }
 }
 
 void Add_Game::validate(fstream& aGame, Reference_Files aRef) {
@@ -66,3 +71,37 @@ void Add_Game::validate(fstream& aGame, Reference_Files aRef) {
         }
     }
 }
+
+bool Add_Game::guiValidate(fstream& aGame, Reference_Files aRef, string aPath) {
+    guiValidatorUsed = false;
+    bool is_vs = false;
+    string rom_com = "";
+    streampos address;
+    int add_val;
+    aGame.open(aPath, ios::in | ios::out | ios::binary | ios::ate);
+    if (!aGame) {
+        aGame.close();
+        return is_vs;
+    }
+    else {
+        for (int o = 37696; o < 37704; o++) {
+            aGame.seekg(o, ios::beg);
+            address = aGame.tellg();
+            add_val = aGame.get();
+            rom_com += to_string(add_val);
+        }
+        if (rom_com == aRef.getCom()) {
+            is_vs = true;
+            guiValidatorUsed = true;
+            file_name = aPath;
+            aGame.close();
+            return is_vs;
+        }
+        else {
+            aGame.close();
+            return is_vs;
+        }
+    }
+}
+   
+
