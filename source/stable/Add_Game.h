@@ -31,4 +31,7 @@ public:
 	void giveName();
 	path getWhole();
 	void validate(fstream& aGame, Reference_Files aRef);
+	bool guiValidate(fstream& aGame, Reference_Files aRef, string aPath);
+	bool guiValidatorUsed;
 };
+
