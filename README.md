@@ -8,9 +8,12 @@ Both stable and experimental builds can be found here:
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
 ## Updates
-* A bug fix has been provided to other issues in the Catacombs. For further stability, v0.7.2.0 has it so that enemies that didn't start out as Ghosts will not become Ghosts as they appear to cause game freezes. The Rodent-Ridden Chamber also seems to take issue with its enemies being randomized, so that algorithm will not be applied to it. If there are other areas with similar oddities, let me know on the Discord link below.
+* This is it my friends, we now have a GUI available for the randomizer! It's basic, but it hopefully gets the job done. The console version is still available via early versions on the MEGA link. If there are any issues with the GUI, please let me know through the Discord link below.
 ## To Do
-* Give the randomizer a proper GUI.
+* Make the enemy drops randomizer independent from the enemy randomizer.
+* Randomize enemy stats.
+* Randomize Ashley's starting data.
+* Last ditch effort to change which models enemies and Ashley use, 
 ## Using this GitHub project
 Many can find these GitHubs tedious, myself included. The "Releases" section exists for those who just want to extract the ZIP and get into the action. For those who wish to make their own alterations, the C++ files have been included.
 
