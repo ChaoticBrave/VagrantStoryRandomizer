@@ -8,7 +8,7 @@ Both stable and experimental builds can be found here:
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
 ## Updates
-* This is it my friends, we now have a GUI available for the randomizer! It's basic, but it hopefully gets the job done. The console version is still available via early versions on the MEGA link. If there are any issues with the GUI, please let me know through the Discord link below.
+* This is it my friends, we now have a GUI available for the randomizer! It's basic, but it hopefully gets the job done. The console version is still available via early versions on the MEGA. If there are any issues with the GUI, please let me know through the Discord link below.
 ## To Do
 * Make the enemy drops randomizer independent from the enemy randomizer.
 * Randomize enemy stats.
