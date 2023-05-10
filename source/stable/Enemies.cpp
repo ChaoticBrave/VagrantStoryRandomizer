@@ -1,3 +1,6 @@
+#define WIN32_LEAN_AND_MEAN
+
+#include <afxwin.h>
 #include <iostream>
 #include <list>
 #include <filesystem>
@@ -8,6 +11,7 @@
 #include <sstream>
 #include <iomanip>
 #include <algorithm>
+//#include <windows.h>
 
 
 using namespace std;
@@ -183,7 +187,8 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision)
                             delete ch_val;
                         }
                     }
-                    system((aRF.getTool() + " '" + aGame.getWhole().string() + "' /MAP/" + cur_map + " '" + m_file + "'").c_str());
+                    WinExec((aRF.getTool() + " '" + aGame.getWhole().string() + "' /MAP/" + cur_map + " '" + m_file + "'").c_str(), SW_HIDE);
+                    //system((aRF.getTool() + " '" + aGame.getWhole().string() + "' /MAP/" + cur_map + " '" + m_file + "'").c_str());
                     acmap.close();
                 }
             }
