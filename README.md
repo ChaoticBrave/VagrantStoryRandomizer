@@ -13,7 +13,7 @@ https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 * Make the enemy drops randomizer independent from the enemy randomizer.
 * Randomize enemy stats.
 * Randomize Ashley's starting data.
-* Last ditch effort to change which models enemies and Ashley use, 
+* Last-ditch effort to change which models enemies and Ashley use, 
 ## Using this GitHub project
 Many can find these GitHubs tedious, myself included. The "Releases" section exists for those who just want to extract the ZIP and get into the action. For those who wish to make their own alterations, the C++ files have been included.
 
