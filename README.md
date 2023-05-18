@@ -8,7 +8,7 @@ Both stable and experimental builds can be found here:
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
 ## Updates
-* This is it my friends, we now have a GUI available for the randomizer! It's basic, but it hopefully gets the job done. The console version is still available via early versions on the MEGA. If there are any issues with the GUI, please let me know through the Discord link below.
+* You should no longer need mfc140ud.dll to run the randomizer.
 ## To Do
 * Make the enemy drops randomizer independent from the enemy randomizer.
 * Randomize enemy stats.
@@ -51,3 +51,4 @@ https://www.tumblr.com/chaoticbraves-workshop
 * OddKara: Inspired me to do location-based randomizing rather than a room-by-room direction.
 * benjamin champion: Discovered that grips can be randomized in chests.
 * Taterz: Discovered the Ghost crashes in the Catacombs.
+* Optrin: For discovering dll dependency errors.
