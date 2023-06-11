@@ -1,3 +1,7 @@
+#define WIN32_LEAN_AND_MEAN
+
+#include <afxwin.h>
+#include <algorithm>
 #include <iostream>
 #include <list>
 #include <filesystem>
@@ -14,7 +18,7 @@ using namespace std;
 Rooms::Rooms() {
 }
 
-void Rooms::roomIterate(Reference_Files aRF, Add_Game& aGame) {
+void Rooms::roomIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen) {
     list<string> z = aRF.getZones();
     list<string>::iterator zp = z.begin();
 	
@@ -48,10 +52,6 @@ void Rooms::roomIterate(Reference_Files aRF, Add_Game& aGame) {
 	string::iterator ivwmp = ivwm.begin();
 	vector<int> visited;
 
-	std::random_device ran;
-
-	std::mt19937 gener(ran());
-
 	fstream acmap;
 	fstream acmap_d;
 
@@ -71,7 +71,7 @@ void Rooms::roomIterate(Reference_Files aRF, Add_Game& aGame) {
 			m_file = aGame.getStringPath() + "\\MAPS\\" + *wmp;
 			cur_map = *wmp;
 			acmap.open(m_file, ios::in | ios::out | ios::binary | ios::ate);
-			zone_point_r = dist(gener);
+			zone_point_r = dist(aGen);
 			if ((aRF.getZonesOfChoice().at(zone_point_r) == 32 && aRF.getMapsOfChoice().at(zone_point_r) == 5) && (cur_map == aGame.getStringPath() + "\\MAPS\\" + "MAP025.MPD" || cur_map == aGame.getStringPath() + "\\MAPS\\" + "MAP239.MPD" || cur_map == aGame.getStringPath() + "\\MAPS\\" + "MAP342.MPD" || cur_map == aGame.getStringPath() + "\\MAPS\\" + "MAP112.MPD")) {
 				map_point = 7;
 				coor_point = "100044";
@@ -178,7 +178,7 @@ void Rooms::roomIterate(Reference_Files aRF, Add_Game& aGame) {
 				acmap.write(ch_val, 1);
 			}
 			delete ch_val;
-			system((aRF.getTool() + " '" + aGame.getWhole().string() + "' /MAP/" + cur_map + " '" + m_file + "'").c_str());
+			WinExec((aRF.getTool() + " '" + aGame.getWhole().string() + "' /MAP/" + cur_map + " '" + m_file + "'").c_str(), SW_HIDE);
 			acmap.close();
 			visited.push_back(zone_point);
 			aRF.delZone(zone_point_r);
