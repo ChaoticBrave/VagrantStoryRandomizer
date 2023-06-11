@@ -27,5 +27,5 @@ private:
 
 public:
 	Chests();
-	void mapIterate(Reference_Files aRF, Add_Game& aGame);
+	void mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen);
 };
