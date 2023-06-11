@@ -1,8 +1,10 @@
+
 #include <string>
 #include <vector>
 #include <filesystem>
 #include <iostream>
 #include <fstream>
+#include <random>
 
 #include "Add_Game.h"
 #include "Reference_Files.h"
@@ -38,6 +40,30 @@ path Add_Game::getWhole() {
     else {
         return getStringPath() + "\\" + getFileName();
     }
+}
+
+void Add_Game::makeGen(string aSeed) {
+    auto const seed = std::random_device()();
+    std::mt19937 gener(seed);
+    baseGener = gener;
+    if (aSeed == "Y") {
+        freopen("seed.txt", "w", stdout);
+        cout << seed << endl;
+    }
+}
+
+void Add_Game::makeGenPlus(string aSeed, int aGivenSeed) {
+    auto const seed = aGivenSeed;
+    std::mt19937 gener(seed);
+    baseGener = gener;
+    if (aSeed == "Y") {
+        freopen("seed.txt", "w", stdout);
+        cout << seed << endl;
+    }
+}
+
+std::mt19937 Add_Game::getGen() {
+    return baseGener;
 }
 
 void Add_Game::validate(fstream& aGame, Reference_Files aRef) {
