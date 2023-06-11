@@ -8,9 +8,11 @@ Both stable and experimental builds can be found here:
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
 ## Updates
-* You should no longer need mfc140ud.dll to run the randomizer.
+* Several bug fixes have been applied. Specifically for crashes in the Sanctum, Abandoned Mines B1, and Town Center. 
+* There are now options to save and enter seeds. Feel free to use this to share seeds with friends. 
 ## To Do
 * Make the enemy drops randomizer independent from the enemy randomizer.
+* Provide an option to clear an entered seed.
 * Randomize enemy stats.
 * Randomize Ashley's starting data.
 * Last-ditch effort to change which models enemies and Ashley use, 
@@ -47,8 +49,9 @@ https://www.tumblr.com/chaoticbraves-workshop
 * gingerbeardman: For letting me use his translation of psx-mode2 for the earlier builds.
 * cebix: Creator of psximager, which is used for mpd file replacement in builds starting from v0.3.0.0.
 * NoharOSP: For being at hand to test this locally.
+* The Xenogears Perfect Works Build team: For very kindly providing the patcher code which is used in the GUI.
 * mayaktheunholy: For discovering several errors with pre-0.5.1.0 builds.
 * OddKara: Inspired me to do location-based randomizing rather than a room-by-room direction.
 * benjamin champion: Discovered that grips can be randomized in chests.
-* Taterz: Discovered the Ghost crashes in the Catacombs.
-* Optrin: For discovering dll dependency errors.
+* Taterz: Discovered the Ghost crashes in the Catacombs, as well as several other bugs.
+* Optrin: For discovering dll dependency errors and several other bugs.
