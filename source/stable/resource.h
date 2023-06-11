@@ -22,6 +22,7 @@
 #define IDC_STATIC                      -1
 #define IDM_CHOOSE_PARA                9002
 #define IDM_RANDOMIZE				   9003
+#define IDM_GETSEED					   9004
 
 // Next default values for new objects
 // 
