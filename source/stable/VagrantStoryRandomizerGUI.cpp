@@ -38,29 +38,39 @@ HWND chests;
 HWND rooms;
 HWND drops;
 HWND randomizeButton;
+HWND seedButton;
 HWND window;
 HWND getCon = GetConsoleWindow();
 DWORD dwStyle = WS_SYSMENU | WS_CAPTION | WS_MINIMIZEBOX;
 std::vector<HWND> butRos;
+Add_Game ag = Add_Game();
 int xCor = 640;
 int yCor = 380;
-Add_Game ag = Add_Game();
+int seedBoxID;
+int cusSeedI = NULL;
 void placeButtons();
 void setWin(HWND hWnd);
 void makeButtons(HWND hWnd);
 void ranBoxLock();
 void relock();
 void checkBoxLock();
+void clearText();
 bool gamePathFound = false;
 bool pa_enemies = false;
 bool pa_chests = false;
 bool pa_rooms = false;
 bool pa_drops = false;
+bool cusSeedU = false;
 string choice;
+string seedChoice;
+string cusSeedS;
 fstream game;
+fstream seedFile;
 Reference_Files rf = Reference_Files();
-void clearText();
 RECT rcWindow;
+std::mt19937 gen;
+std::mt19937 finGen;
+//int seedBox();
 
 
 // Forward declarations of functions included in this code module:
@@ -68,6 +78,8 @@ ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
+
+
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
@@ -262,28 +274,112 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             case IDM_RANDOMIZE:
             {
                 bool changed = false;
+                //seedBox() {
+                seedBoxID = MessageBox(hWnd, L"Would you like to save the seed used?", L"Save Seed?", MB_YESNO);
+                switch (seedBoxID)
+                {
+                case IDYES:
+                    seedChoice = "Y";
+                    break;
+                case IDNO:
+                    seedChoice = "N";
+                    break;
+                }
+                    //return seedBoxID;
+                //}
+                if (cusSeedU == true) {
+                    ag.makeGenPlus(seedChoice, cusSeedI);
+                }
+                else {
+                    ag.makeGen(seedChoice);
+                }
+                finGen = ag.getGen();
+                if (seedChoice == "Y") {
+                    MessageBox(hWnd, L"Seed saved to 'seed.txt'.", L"Seed Saved", MB_OK);
+                }
                 if (pa_enemies) {
                     changed = true;
                     Enemies ene_ran = Enemies();
                     SetCursor(LoadCursor(NULL, IDC_WAIT));
-                    ene_ran.mapIterate(rf, ag, choice);
+                    ene_ran.mapIterate(rf, ag, choice, finGen);
                 }
                 if (pa_chests) {
                     changed = true;
                     Chests che_ran = Chests();
                     SetCursor(LoadCursor(NULL, IDC_WAIT));
-                    che_ran.mapIterate(rf, ag);
+                    che_ran.mapIterate(rf, ag, finGen);
                 }
                 if (pa_rooms) {
                     changed = true;
                     Rooms roo_ran = Rooms();
                     SetCursor(LoadCursor(NULL, IDC_WAIT));
-                    roo_ran.roomIterate(rf, ag);
+                    roo_ran.roomIterate(rf, ag, finGen);
                 }
                 if (changed == true)
                 {
                     MessageBox(hWnd, L"Randomization completed!", L"Success", MB_OK);
                     relock();
+                }
+            }
+            break;
+            case IDM_GETSEED:
+            {
+                OPENFILENAMEA opse;
+                ZeroMemory(&opse, sizeof(opse));
+                streampos address;
+                int lastPoint;
+                int penPoint;
+                int seedPoint;
+                int rawSeedPoint;
+                int dest;
+                string num;
+                opse.lStructSize = sizeof(opse);
+                opse.hwndOwner = hWnd;
+                opse.lpstrFilter = "Text File (*.txt)\0*.txt\0";
+                opse.Flags = OFN_DONTADDTORECENT | OFN_ENABLESIZING | OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST;
+                opse.nMaxFile = MAX_PATH;
+                char sesi[MAX_PATH];
+                opse.lpstrFile = sesi;
+                opse.lpstrFile[0] = '\0';
+                opse.nFilterIndex = 1;
+                if (GetOpenFileNameA(&opse)) {
+                    string seedPath = opse.lpstrFile;
+                    seedFile.open(seedPath, ios::in | ios::out | ios::binary | ios::ate);
+                    dest = seedFile.tellg();
+                    seedFile.seekg(-1, ios::end);
+                    address = seedFile.tellg();
+                    lastPoint = seedFile.get();
+                    seedFile.seekg(-2, ios::end);
+                    address = seedFile.tellg();
+                    penPoint = seedFile.get();
+                    if ((penPoint == 13 && lastPoint == 10) == true) {
+                        cusSeedI = NULL;
+                        cusSeedS = "";
+                        for (int p = 0; p < dest - 2; p++) {
+                            seedFile.seekg(p, sizeof(opse) - sizeof(opse));
+                            address = seedFile.tellg();
+                            rawSeedPoint = seedFile.get();
+                            if (rawSeedPoint >= 48 && rawSeedPoint <= 57) {
+                                seedPoint = rawSeedPoint - 48;
+                                num = std::to_string(seedPoint);
+                                cusSeedS = cusSeedS + num;
+                            }
+                        }
+                        if (cusSeedS != "") {
+                            cusSeedI = stoi(cusSeedS);
+                            MessageBox(hWnd, L"The given seed will be used.", L"Seed Stored", MB_OK);
+                            cusSeedU = true;
+                        }
+                        else {
+                            MessageBox(hWnd, L"The seed must only contain numbers.", L"Error", MB_ICONERROR);
+                            cusSeedU = false;
+                        }
+                    }
+                    else {
+                        MessageBox(hWnd, L"The seed is not valid.", L"Error", MB_ICONERROR);
+                        cusSeedU = false;
+                    }
+                    seedFile.close();
                 }
             }
             break;
@@ -349,6 +445,7 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 void placeButtons() {
     butRos.emplace_back(openGame);
     butRos.emplace_back(randomizeButton);
+    butRos.emplace_back(seedButton);
     butRos.emplace_back(enemies);
     butRos.emplace_back(chests);
     butRos.emplace_back(rooms);
@@ -357,7 +454,8 @@ void placeButtons() {
 
 void makeButtons(HWND hWnd) {
     openGame = CreateWindow(L"BUTTON", L"Open Game", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * 0.15), (int)(yCor * 0.05), 90, 25, hWnd, (HMENU)101, hInst, NULL);
-    randomizeButton = CreateWindow(L"BUTTON", L"Randomize", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * 0.15), (int)(yCor * 0.35), 90, 25, hWnd, (HMENU)9003, hInst, NULL);
+    randomizeButton = CreateWindow(L"BUTTON", L"Randomize", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * 0.15), (int)(yCor * 0.45), 90, 25, hWnd, (HMENU)9003, hInst, NULL);
+    seedButton = CreateWindow(L"BUTTON", L"Enter Seed", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * 0.15), (int)(yCor * 0.35), 90, 25, hWnd, (HMENU)9004, hInst, NULL);
     enemies = CreateWindow(L"BUTTON", L"Enemies", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.0325), (int)(yCor * 0.15), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
     chests = CreateWindow(L"BUTTON", L"Chests", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.25), (int)(yCor * 0.15), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
     rooms = CreateWindow(L"BUTTON", L"Area Progression", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.25), (int)(yCor * 0.25), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
@@ -366,7 +464,7 @@ void makeButtons(HWND hWnd) {
 
 void ranBoxLock() {
     bool checkFound = false;
-    for (int i = 2; i < butRos.size() - 1; i++) {
+    for (int i = 3; i < butRos.size() - 1; i++) {
         LRESULT boxticked = SendMessage(butRos[i], BM_GETCHECK, NULL, NULL);
         if (boxticked == BST_CHECKED) {
             checkFound = true;
@@ -388,16 +486,16 @@ void checkBoxLock() {
     bool found;
     if (gamePathFound) {
         found = true;
-        for (int i = 2; i < butRos.size() - 1; i++) {
+        for (int i = 3; i < butRos.size() - 1; i++) {
             EnableWindow(butRos[i], found);
         }
     }
     else {
         found = false;
-        for (int i = 2; i < butRos.size(); i++) {
+        for (int i = 3; i < butRos.size(); i++) {
            LRESULT untick = SendMessage(butRos[i], BM_SETCHECK, BST_UNCHECKED, NULL);
         }
-        for (int i = 2; i < butRos.size(); i++) {
+        for (int i = 3; i < butRos.size(); i++) {
             EnableWindow(butRos[i], found);
         }
     }
