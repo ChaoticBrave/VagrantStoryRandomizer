@@ -130,7 +130,7 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
                         ene_at = acmap.tellg();
                         ene_loc = acmap.get();
                         ene_dist = std::uniform_int_distribution<>(0, (para_2 - 1));
-                        if ((cur_zone == "ZONE013.ZND" && (ene_loc == 0 || ene_loc == 1 || ene_loc == 2 || ene_loc == 3 || ene_loc == 4)) || (cur_zone == "ZONE015.ZND" && ene_loc == 0) == false) {
+                        if ((cur_zone == "ZONE013.ZND" && (ene_loc == 0 || ene_loc == 1 || ene_loc == 2 || ene_loc == 3 || ene_loc == 4)) == false && (cur_zone == "ZONE015.ZND" && (ene_loc == 0)) == false) {
                             ene = ene_dist(aGen);
                             if (cur_zone == "ZONE013.ZND" && ene <= 4) {
                                 ene_dist = std::uniform_int_distribution<>(5, (para_2 - 1));
