@@ -8,8 +8,7 @@ Both stable and experimental builds can be found here:
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
 ## Updates
-* Several bug fixes have been applied. Specifically for crashes in the Sanctum, Abandoned Mines B1, and Town Center. 
-* There are now options to save and enter seeds. Feel free to use this to share seeds with friends. 
+* An issue where the Sanctum and Catacombs changed enemies which were initially Ghosts has been fixed. If other enemies are fought in their places, the game will freeze. Ever since that issue was discovered, the randomizer was supposed to prevent from Ghosts from being changed. However, up until this release, a coding error prevented such an operation from working properly.
 ## To Do
 * Make the enemy drops randomizer independent from the enemy randomizer.
 * Provide an option to clear an entered seed.
