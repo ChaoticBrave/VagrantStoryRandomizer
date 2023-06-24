@@ -8,7 +8,8 @@ Both stable and experimental builds can be found here:
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
 ## Updates
-* An issue where the Sanctum and Catacombs changed enemies which were initially Ghosts has been fixed. If other enemies are fought in their places, the game will freeze. Ever since that issue was discovered, the randomizer was supposed to prevent from Ghosts from being changed. However, up until this release, a coding error prevented such an operation from working properly.
+* A bug where the randomizer would crash when given seeds of a greater value than 2,147,483,647 has been given. Objects needed to solve puzzles will also no longer be randomized.
+* There has also been an issue pop up where enemies will not be randomized in particular rooms. Most notably in Abandoned Mines B1. I like to think I've fixed based on what GodHands has shown when the randomizer has been ran with exemplar seeds, but I'd appreciate the clarity there.   
 ## To Do
 * Make the enemy drops randomizer independent from the enemy randomizer.
 * Provide an option to clear an entered seed.
