@@ -47,7 +47,7 @@ Add_Game ag = Add_Game();
 int xCor = 640;
 int yCor = 380;
 int seedBoxID;
-int cusSeedI = NULL;
+unsigned int cusSeedI = NULL;
 void placeButtons();
 void setWin(HWND hWnd);
 void makeButtons(HWND hWnd);
@@ -366,7 +366,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                             }
                         }
                         if (cusSeedS != "") {
-                            cusSeedI = stoi(cusSeedS);
+                            istringstream iss(cusSeedS);
+                            iss >> cusSeedI;
+                            //cusSeedI = stoi(cusSeedS);
+                            //string strseed = to_string(cusSeedI);
                             MessageBox(hWnd, L"The given seed will be used.", L"Seed Stored", MB_OK);
                             cusSeedU = true;
                         }
