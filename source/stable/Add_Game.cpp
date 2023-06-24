@@ -53,7 +53,8 @@ void Add_Game::makeGen(string aSeed) {
 }
 
 void Add_Game::makeGenPlus(string aSeed, int aGivenSeed) {
-    auto const seed = aGivenSeed;
+    unsigned int finSeed = aGivenSeed;
+    auto const seed = finSeed;
     std::mt19937 gener(seed);
     baseGener = gener;
     if (aSeed == "Y") {
