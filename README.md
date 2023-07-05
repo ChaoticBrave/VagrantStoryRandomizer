@@ -8,8 +8,8 @@ Both stable and experimental builds can be found here:
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
 ## Updates
-* A bug where the randomizer would crash when given seeds of a greater value than 2,147,483,647 has been given. Objects needed to solve puzzles will also no longer be randomized.
-* There has also been an issue pop up where enemies will not be randomized in particular rooms. Most notably in Abandoned Mines B1. I like to think I've fixed based on what GodHands has shown when the randomizer has been ran with exemplar seeds, but I'd appreciate the clarity there.   
+* Fixed several bugs. The first is one where Snowfly Forest can load up the Time Trial version of the Earth Dragon; which will lead to two versions appearing and potentially locking up the game. Secondly, more Town Center East areas will no longer lock up. Thirdly, models for equipment will now only be type-specific. For example, Shields can now only use Shield models. Finally, if Keys and Sigils will appear in chests, the quantity will now only be 1.
+* A few bugs may still persist. These include one where some chests aren't randomized, one where two pieces of equipment will craft into junk which can't be used, and one where bosses will re-appear if you enter the room they were in when you beaten them. Let me know if you run into any of these as neither GodHands nor debugging have led me to sufficient solutions as of yet. 
 ## To Do
 * Make the enemy drops randomizer independent from the enemy randomizer.
 * Provide an option to clear an entered seed.
