@@ -8,14 +8,16 @@ Both stable and experimental builds can be found here:
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
 ## Updates
-* Fixed several bugs. The first is one where Snowfly Forest can load up the Time Trial version of the Earth Dragon; which will lead to two versions appearing and potentially locking up the game. Secondly, more Town Center East areas will no longer lock up. Thirdly, models for equipment will now only be type-specific. For example, Shields can now only use Shield models. Finally, if Keys and Sigils will appear in chests, the quantity will now only be 1.
-* A few bugs may still persist. These include one where some chests aren't randomized, one where two pieces of equipment will craft into junk which can't be used, and one where bosses will re-appear if you enter the room they were in when you beaten them. Let me know if you run into any of these as neither GodHands nor debugging have led me to sufficient solutions as of yet. 
+* A Trello now exists for the project. Check "To Do" for more details.
 ## To Do
 * Make the enemy drops randomizer independent from the enemy randomizer.
 * Provide an option to clear an entered seed.
 * Randomize enemy stats.
 * Randomize Ashley's starting data.
-* Last-ditch effort to change which models enemies and Ashley use, 
+* Last-ditch effort to change which models enemies and Ashley use,
+
+If you wish to keep up-to-date with this project and what will be updated short-term, a link to the Trello can be found below:
+https://trello.com/b/BZRfh8ht/vagrant-story-randomizer
 ## Using this GitHub project
 Many can find these GitHubs tedious, myself included. The "Releases" section exists for those who just want to extract the ZIP and get into the action. For those who wish to make their own alterations, the C++ files have been included.
 
