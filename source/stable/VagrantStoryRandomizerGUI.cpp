@@ -37,6 +37,8 @@ HWND enemies;
 HWND chests;
 HWND rooms;
 HWND drops;
+HWND balance;
+HWND keep;
 HWND randomizeButton;
 HWND seedButton;
 HWND window;
@@ -47,6 +49,9 @@ Add_Game ag = Add_Game();
 int xCor = 640;
 int yCor = 380;
 int seedBoxID;
+int runEne;
+int runChe;
+int runRoo;
 unsigned int cusSeedI = NULL;
 void placeButtons();
 void setWin(HWND hWnd);
@@ -60,8 +65,12 @@ bool pa_enemies = false;
 bool pa_chests = false;
 bool pa_rooms = false;
 bool pa_drops = false;
+bool pa_balance = false;
+bool pa_keep = false;
 bool cusSeedU = false;
-string choice;
+string choiceD;
+string choiceB;
+string choiceK;
 string seedChoice;
 string cusSeedS;
 fstream game;
@@ -164,7 +173,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    //WS_OVERLAPPEDWINDOW
 
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, dwStyle,
-      CW_USEDEFAULT, 0, 320, 240, nullptr, nullptr, hInstance, nullptr);
+      CW_USEDEFAULT, 0, 320, 280, nullptr, nullptr, hInstance, nullptr);
 
    if (!hWnd)
    {
@@ -240,21 +249,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             {
                 LRESULT eneticked = SendMessage(enemies, BM_GETCHECK, NULL, NULL);
                 LRESULT droticked = SendMessage(drops, BM_GETCHECK, NULL, NULL);
+                LRESULT blcticked = SendMessage(balance, BM_GETCHECK, NULL, NULL);
+                LRESULT keeticked = SendMessage(keep, BM_GETCHECK, NULL, NULL);
                 LRESULT cheticked = SendMessage(chests, BM_GETCHECK, NULL, NULL);
                 LRESULT rooticked = SendMessage(rooms, BM_GETCHECK, NULL, NULL);
                 if (eneticked == BST_CHECKED) {
                     pa_enemies = true;
-                    EnableWindow(butRos[butRos.size() - 1], true);
+                    EnableWindow(butRos[butRos.size() - 3], true);
                 }
                 else {
                     pa_enemies = false;
-                    EnableWindow(butRos[butRos.size() - 1], false);
+                    EnableWindow(butRos[butRos.size() - 3], false);
                 }
                 if (cheticked == BST_CHECKED) {
                     pa_chests = true;
+                    EnableWindow(butRos[butRos.size() - 2], true);
+                    EnableWindow(butRos[butRos.size() - 1], true);
                 }
                 else {
                     pa_chests = false;
+                    EnableWindow(butRos[butRos.size() - 2], false);
+                    EnableWindow(butRos[butRos.size() - 1], false);
                 }
                 if (rooticked == BST_CHECKED) {
                     pa_rooms = true;
@@ -263,10 +278,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     pa_rooms = false;
                 }
                 if (droticked == BST_CHECKED && eneticked == BST_CHECKED) {
-                    choice = "Y";
+                    choiceD = "Y";
                 }
                 else {
-                    choice = "N";
+                    choiceD = "N";
+                }
+                if (blcticked == BST_CHECKED && cheticked == BST_CHECKED) {
+                    choiceB = "Y";
+                }
+                else {
+                    choiceB = "N";
+                }
+                if (keeticked == BST_CHECKED && cheticked == BST_CHECKED) {
+                    choiceK = "Y";
+                }
+                else {
+                    choiceK = "N";
                 }
                 ranBoxLock();
             }
@@ -297,26 +324,42 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 if (seedChoice == "Y") {
                     MessageBox(hWnd, L"Seed saved to 'seed.txt'.", L"Seed Saved", MB_OK);
                 }
-                if (pa_enemies) {
+                if (pa_rooms) {
                     changed = true;
-                    Enemies ene_ran = Enemies();
+                    remove("rooCmd.cmd");
+                    Rooms roo_ran = Rooms();
                     SetCursor(LoadCursor(NULL, IDC_WAIT));
-                    ene_ran.mapIterate(rf, ag, choice, finGen);
+                    SetWindowTextA(hWnd, "Randomizing Rooms...");
+                    roo_ran.roomIterate(rf, ag, finGen);
+                    runChe = system("cmd.exe /c rooCmd.cmd");
+                    remove("rooCmd.cmd");
+                    SetWindowTextA(hWnd, "Rooms Randomized");
                 }
                 if (pa_chests) {
                     changed = true;
+                    remove("cheCmd.cmd");
                     Chests che_ran = Chests();
                     SetCursor(LoadCursor(NULL, IDC_WAIT));
-                    che_ran.mapIterate(rf, ag, finGen);
+                    SetWindowTextA(hWnd, "Randomizing Chests...");
+                    che_ran.mapIterate(rf, ag, finGen, choiceB, choiceK);
+                    runChe = system("cmd.exe /c cheCmd.cmd");
+                    remove("cheCmd.cmd");
+                    SetWindowTextA(hWnd, "Chests Randomized");
                 }
-                if (pa_rooms) {
+                if (pa_enemies) {
                     changed = true;
-                    Rooms roo_ran = Rooms();
+                    remove("eneCmd.cmd");
+                    Enemies ene_ran = Enemies();
                     SetCursor(LoadCursor(NULL, IDC_WAIT));
-                    roo_ran.roomIterate(rf, ag, finGen);
+                    SetWindowTextA(hWnd, "Randomizing Enemies...");
+                    ene_ran.mapIterate(rf, ag, choiceD, finGen);
+                    runEne = system("cmd.exe /c eneCmd.cmd");
+                    remove("eneCmd.cmd");
+                    SetWindowTextA(hWnd, "Enemies Randomized");
                 }
                 if (changed == true)
                 {
+                    SetWindowTextA(hWnd, "Vagrant Story Randomizer");
                     MessageBox(hWnd, L"Randomization completed!", L"Success", MB_OK);
                     relock();
                 }
@@ -355,7 +398,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     if ((penPoint == 13 && lastPoint == 10) == true) {
                         cusSeedI = NULL;
                         cusSeedS = "";
-                        for (int p = 0; p < dest - 2; p++) {
+                        for (int p = 0; p < dest - 3; p++) {
                             seedFile.seekg(p, sizeof(opse) - sizeof(opse));
                             address = seedFile.tellg();
                             rawSeedPoint = seedFile.get();
@@ -453,21 +496,25 @@ void placeButtons() {
     butRos.emplace_back(chests);
     butRos.emplace_back(rooms);
     butRos.emplace_back(drops);
+    butRos.emplace_back(balance);
+    butRos.emplace_back(keep);
 }
 
 void makeButtons(HWND hWnd) {
     openGame = CreateWindow(L"BUTTON", L"Open Game", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * 0.15), (int)(yCor * 0.05), 90, 25, hWnd, (HMENU)101, hInst, NULL);
-    randomizeButton = CreateWindow(L"BUTTON", L"Randomize", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * 0.15), (int)(yCor * 0.45), 90, 25, hWnd, (HMENU)9003, hInst, NULL);
-    seedButton = CreateWindow(L"BUTTON", L"Enter Seed", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * 0.15), (int)(yCor * 0.35), 90, 25, hWnd, (HMENU)9004, hInst, NULL);
+    randomizeButton = CreateWindow(L"BUTTON", L"Randomize", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * 0.15), (int)(yCor * 0.55), 90, 25, hWnd, (HMENU)9003, hInst, NULL);
+    seedButton = CreateWindow(L"BUTTON", L"Enter Seed", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * 0.15), (int)(yCor * 0.45), 90, 25, hWnd, (HMENU)9004, hInst, NULL);
     enemies = CreateWindow(L"BUTTON", L"Enemies", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.0325), (int)(yCor * 0.15), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
     chests = CreateWindow(L"BUTTON", L"Chests", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.25), (int)(yCor * 0.15), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
-    rooms = CreateWindow(L"BUTTON", L"Area Progression", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.25), (int)(yCor * 0.25), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
+    rooms = CreateWindow(L"BUTTON", L"Area Progression", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.0325), (int)(yCor * 0.35), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
     drops = CreateWindow(L"BUTTON", L"Drops", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.0325), (int)(yCor * 0.25), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
+    balance = CreateWindow(L"BUTTON", L"Balance Item Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.25), (int)(yCor * 0.25), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
+    keep = CreateWindow(L"BUTTON", L"Keep Item Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.25), (int)(yCor * 0.35), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
 }
 
 void ranBoxLock() {
     bool checkFound = false;
-    for (int i = 3; i < butRos.size() - 1; i++) {
+    for (int i = 3; i < butRos.size() - 3; i++) {
         LRESULT boxticked = SendMessage(butRos[i], BM_GETCHECK, NULL, NULL);
         if (boxticked == BST_CHECKED) {
             checkFound = true;
@@ -489,7 +536,7 @@ void checkBoxLock() {
     bool found;
     if (gamePathFound) {
         found = true;
-        for (int i = 3; i < butRos.size() - 1; i++) {
+        for (int i = 3; i < butRos.size() - 3; i++) {
             EnableWindow(butRos[i], found);
         }
     }

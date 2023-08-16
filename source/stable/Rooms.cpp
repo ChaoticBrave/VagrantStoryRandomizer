@@ -65,6 +65,9 @@ void Rooms::roomIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen)
 
 	std::uniform_int_distribution<> dist;
 
+	std::ofstream rooBat;
+	rooBat.open("rooCmd.cmd", std::ios::trunc);
+
     for (int i = 0; i < aRF.getWarpMaps().size() - 1; i++) {
 		if (i != 5 && i != 6) {
 			dist = std::uniform_int_distribution<>(0, aRF.getZonesOfChoice().size() - 1);
@@ -178,7 +181,7 @@ void Rooms::roomIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen)
 				acmap.write(ch_val, 1);
 			}
 			delete ch_val;
-			WinExec((aRF.getTool() + " '" + aGame.getWhole().string() + "' /MAP/" + cur_map + " '" + m_file + "'").c_str(), SW_HIDE);
+			rooBat << (aRF.getTool() + " '" + aGame.getWhole().string() + "' /MAP/" + cur_map + " '" + m_file + "'") << std::endl;
 			acmap.close();
 			visited.push_back(zone_point);
 			aRF.delZone(zone_point_r);
@@ -187,4 +190,5 @@ void Rooms::roomIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen)
 		}
 		std::advance(wmp, 1);
     }
+	rooBat.close();
 }

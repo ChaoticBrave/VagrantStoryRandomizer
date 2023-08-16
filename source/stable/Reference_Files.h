@@ -3,6 +3,8 @@
 #include <vector>
 #include <iostream>
 #include <list>
+#include <algorithm>
+#include <random>
 
 using namespace std;
 
@@ -25,6 +27,7 @@ private:
 	vector<int> warps;
 	vector<int> zoc;
 	vector<int> moc;
+	vector<int> untitleds;
 	vector<string> coc;
 	string tool = "psinject\\psxinject.exe ";
 	vector<string> crashRooms;
@@ -64,6 +67,7 @@ public:
 	vector<int> getWarps();
 	vector<int> getZonesOfChoice();
 	vector<int> getMapsOfChoice();
+	vector<int> getUntitleds();
 	vector<string> getCoordinatesOfChoice();
 	vector<string> getIndivZone(vector<string> aZoneList);
 	vector<string> getChestCheck();

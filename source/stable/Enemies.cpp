@@ -1,5 +1,6 @@
 #define WIN32_LEAN_AND_MEAN
 
+
 #include <afxwin.h>
 #include <iostream>
 #include <list>
@@ -32,6 +33,26 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
     vector<string> ccr = aRF.getCrashRooms();
     vector<string>::iterator ccb = cc.begin();
     vector<string>::iterator cce = cc.end();
+    vector<int> unt = aRF.getUntitleds();
+    vector<string> finishedMaps;
+
+    string sh1;
+    string sh2;
+    string shc;
+    string sqn;
+    string m_file;
+    string file;
+    string cur_map;
+    string cur_zone;
+    string sCmdPath;
+    string tool = aRF.getTool();
+
+    //wstring wToolPath = wstring(tool.begin(), tool.end());
+    //wstring wCmdPath;
+
+    //LPCWSTR toolPath = wToolPath.c_str();
+
+    //LPWSTR cmdPath;
 
     fstream acmap;
     streampos map_fin;
@@ -40,6 +61,7 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
     streampos dr_at;
     streampos odds_at;
 
+
     int size;
     int parnum;
     int quo_numer;
@@ -47,10 +69,13 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
     int ene_loc;
     int ind_item;
     int odds;
+    int choice;
 
     char * ch_val;
     char hhex_1[20];
     char hhex_2[20];
+
+    //wchar_t wCmd[20];
 
     std::stringstream sti;
     std::stringstream hquo_numer;
@@ -60,18 +85,19 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
     std::uniform_int_distribution<> ene_dist;
     std::uniform_int_distribution<> item_dist;
     std::uniform_int_distribution<> odds_dist;
+    std::uniform_int_distribution<> picker;
     std::stringstream h1;
     std::stringstream h2;
+
+    //std::ofstream mapoutput;
+    //mapoutput.open("rooms.txt", std::ios_base::app);
+
+    //STARTUPINFO info = { sizeof(info) };
+    //PROCESS_INFORMATION processInfo;
     
-    string sh1;
-    string sh2;
-    string shc;
-    string sqn;
-    string m_file;
-    string file;
-    string cur_map;
-    string cur_zone;
-    
+    std::ofstream eneBat;
+    eneBat.open("eneCmd.cmd", std::ios::trunc);
+        
 
     for (int i = 0; i < aRF.getMapList().size(); i++) {
         file = aGame.getStringPath() + "\\ZONES\\" + *zp;
@@ -141,21 +167,115 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
                                 ene = ene_dist(aGen);
                             }
                             if (cur_zone == "ZONE028.ZND" && ene == 15) {
-                                while (cur_zone == "ZONE028.ZND" && ene == 15) {
-                                    ene_dist = std::uniform_int_distribution<>(0, (para_2 - 1));
+                                picker = std::uniform_int_distribution<>(1, 2);
+                                choice = picker(aGen);
+                                if (choice == 1) {
+                                    ene_dist = std::uniform_int_distribution<>(0, 14);
+                                    ene = ene_dist(aGen);
+                                }
+                                else {
+                                    ene_dist = std::uniform_int_distribution<>(16, (para_2 - 1));
+                                    ene = ene_dist(aGen);
+                                }
+                            }
+                            if (cur_zone == "ZONE040.ZND" && (ene == 4 || ene == 5)) {
+                                picker = std::uniform_int_distribution<>(1, 2);
+                                choice = picker(aGen);
+                                if (choice == 1) {
+                                    ene_dist = std::uniform_int_distribution<>(0, 3);
+                                    ene = ene_dist(aGen);
+                                }
+                                else {
+                                    ene_dist = std::uniform_int_distribution<>(6, (para_2 - 1));
+                                    ene = ene_dist(aGen);
+                                }
+                            }
+                            if (cur_zone == "ZONE053.ZND" && ene == 4) {
+                                picker = std::uniform_int_distribution<>(1, 2);
+                                choice = picker(aGen);
+                                if (choice == 1) {
+                                    ene_dist = std::uniform_int_distribution<>(0, 3);
+                                    ene = ene_dist(aGen);
+                                }
+                                else {
+                                    ene_dist = std::uniform_int_distribution<>(5, (para_2 - 1));
                                     ene = ene_dist(aGen);
                                 }
                             }
                             if (cur_zone == "ZONE049.ZND" && ene == 6) {
-                                while (cur_zone == "ZONE049.ZND" && ene == 6) {
-                                    ene_dist = std::uniform_int_distribution<>(0, (para_2 - 1));
+                                picker = std::uniform_int_distribution<>(1, 2);
+                                choice = picker(aGen);
+                                if (choice == 1) {
+                                    ene_dist = std::uniform_int_distribution<>(0, 5);
+                                    ene = ene_dist(aGen);
+                                }
+                                else {
+                                    ene_dist = std::uniform_int_distribution<>(7, (para_2 - 1));
+                                    ene = ene_dist(aGen);
+                                }
+                            }
+                            if (cur_zone == "ZONE054.ZND" && ene == 1) {
+                                picker = std::uniform_int_distribution<>(1, 2);
+                                choice = picker(aGen);
+                                if (choice == 1) {
+                                    ene = 0;
+                                }
+                                else {
+                                    ene_dist = std::uniform_int_distribution<>(2, (para_2 - 1));
+                                    ene = ene_dist(aGen);
+                                }
+                            }
+                            if (cur_zone == "ZONE056.ZND" && (ene == 8 || ene == 7 || ene == 9)) {
+                                picker = std::uniform_int_distribution<>(1, 2);
+                                choice = picker(aGen);
+                                if (choice == 1) {
+                                    ene_dist = std::uniform_int_distribution<>(0, 6);
+                                    ene = ene_dist(aGen);
+                                }
+                                else {
+                                    ene_dist = std::uniform_int_distribution<>(10, (para_2 - 1));
                                     ene = ene_dist(aGen);
                                 }
                             }
                             if (ene == ene_loc) {
-                                while (ene == ene_loc) {
-                                    ene_dist = std::uniform_int_distribution<>(0, (para_2 - 1));
+                                if (ene_loc == 0) {
+                                    ene_dist = std::uniform_int_distribution<>(1, (para_2 - 1));
                                     ene = ene_dist(aGen);
+                                }
+                                else if (ene_loc == (para_2 - 1)) {
+                                    ene_dist = std::uniform_int_distribution<>(0, (para_2 - 2));
+                                    ene = ene_dist(aGen);
+                                }
+                                else {
+                                    picker = std::uniform_int_distribution<>(1, 2);
+                                    choice = picker(aGen);
+                                    if (ene_loc == 1) {
+                                        if (choice == 1) {
+                                            ene = 0;
+                                        }
+                                        else {
+                                            ene_dist = std::uniform_int_distribution<>(2, (para_2 - 1));
+                                            ene = ene_dist(aGen);
+                                        }
+                                    }
+                                    else if (ene_loc == (para_2 - 2)) {
+                                        if (choice == 1) {
+                                            ene_dist = std::uniform_int_distribution<>(0, (para_2 - 3));
+                                        }
+                                        else {
+                                            ene = (para_2 - 1);
+                                        }
+                                    }
+                                    else {
+                                        if (choice == 1) {
+                                            ene_dist = std::uniform_int_distribution<>(0, (ene_loc - 1));
+                                            ene = ene_dist(aGen);
+                                        }
+                                        else {
+                                            ene_dist = std::uniform_int_distribution<>((ene_loc + 1), (para_2 - 1));
+                                            ene = ene_dist(aGen);
+                                        }
+                                    }
                                 }
                             }
                             ch_val = new char(ene);
@@ -165,16 +285,18 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
                         }
                     }
                     if (aDecision == "Y") {
+                        item_dist = std::uniform_int_distribution<>(323, 489);
                         for (int b = size - 9; b > ((size - (38 * round(quo_numer / 40))) - 40); b -= 40) {
-                            item_dist = std::uniform_int_distribution<>(0, 511);
-                            ind_item = item_dist(aGen);
-                            if (ind_item > 255) {
-                                acmap.seekp(b + 1, ios::beg);
-                                ch_val = new char(1);
-                                acmap.write(ch_val, 1);
-                                ind_item -= 256;
-                                delete ch_val;
+                            ind_item = item_dist(aGen) - 256;
+                            if (std::find(unt.begin(), unt.end(), ind_item) != unt.end()) {
+                                while (std::find(unt.begin(), unt.end(), ind_item) != unt.end()) {
+                                    ind_item = item_dist(aGen) - 256;
+                                }
                             }
+                            acmap.seekp(b + 1, ios::beg);
+                            ch_val = new char(1);
+                            acmap.write(ch_val, 1);
+                            delete ch_val;
                             ch_val = new char(ind_item);
                             acmap.seekp(b, ios::beg);
                             acmap.write(ch_val, 1);
@@ -189,8 +311,31 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
                             delete ch_val;
                         }
                     }
-                    WinExec((aRF.getTool() + " '" + aGame.getWhole().string() + "' /MAP/" + cur_map + " '" + m_file + "'").c_str(), SW_HIDE);
+
+                    //sCmdPath = (aRF.getTool() + " '" + aGame.getWhole().string() + "' /MAP/" + cur_map + " '" + m_file + "'");
+                    //mbstowcs(wCmd, sCmdPath.c_str(), sCmdPath.length());
+                    //cmdPath = wCmd;
+                    //Try CreateProcessA
+                    //if (CreateProcessA(toolPath, cmdPath, NULL, NULL, TRUE, NORMAL_PRIORITY_CLASS | 
+                      //  CREATE_NO_WINDOW, NULL, NULL, &info, &processInfo))
+                    //{
+                      // WaitForSingleObject(processInfo.hProcess, INFINITE);
+                       //CloseHandle(processInfo.hProcess);
+                       //CloseHandle(processInfo.hThread);
+                    //}
+                    //Try CreateProcessA
+                    //if (CreateProcess(toolPath, cmdPath, NULL, NULL, TRUE, NORMAL_PRIORITY_CLASS |
+                       // CREATE_NO_WINDOW, NULL, NULL, &info, &processInfo))
+                    //{
+                       // WaitForSingleObject(processInfo.hProcess, INFINITE);
+                       // CloseHandle(processInfo.hProcess);
+                       // CloseHandle(processInfo.hThread);
+                   // }
+                    //delete wCmd;
+                    //delete cmdPath;
+                    //WinExec((aRF.getTool() + " '" + aGame.getWhole().string() + "' /MAP/" + cur_map + " '" + m_file + "'").c_str(), SW_HIDE);
                     //system((aRF.getTool() + " '" + aGame.getWhole().string() + "' /MAP/" + cur_map + " '" + m_file + "'").c_str());
+                    eneBat << (aRF.getTool() + " '" + aGame.getWhole().string() + "' /MAP/" + cur_map + " '" + m_file + "'") << std::endl;
                     acmap.close();
                 }
             }
@@ -202,4 +347,5 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
             ivmp = ivm.begin();
         }
     }
+    eneBat.close();
 }
