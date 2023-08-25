@@ -8,15 +8,10 @@ Both stable and experimental builds can be found here:
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
 ## Updates
-v0.8.6.0 is ready. Several changes are in this one which are as follows:
-* Any items which were called "untitled" were starting to become nuisances, so they will no longer appear in chests nor as drops.
-* Enemies will now only drop consumable items and their own equipment.
-* Time Trial copies of bosses will no longer appear.
-* Equipment types will only use names within their pools. For example, blades will only use names of blades. This should hopefully deal with problems when crafting where empty combinations are "eating" donors.
-* There are now options to balance randomized equipment stats and leave the stats intact.
-* There should be no more cases where the randomizer outright skips operations. The main cost is that a console window will show up when executing each option you select. It won't be for very long though.
+The latest experimental build from a year ago now has MSVCP140D.dll included. It will be v.0.5.0.2 in the Experimental folder.
 
-There have been reports of graphical glitches in Undercity West and compatibility issues with Linux systems. Using what I know, I hope that the changes above will be rid of these issues as well. I can't be too sure though, so please keep me informed if these problems persist.
+It's been brought to my attention that there has been a bug with seed saving where characters will be cut off when using a custom seed. I apologise and this will be fixed as soon as possible. Please refrain from using the "Enter Seed" button for now.
+
 ## To Do
 * Make the enemy drops randomizer independent from the enemy randomizer.
 * Provide an option to clear an entered seed.
