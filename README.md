@@ -8,9 +8,9 @@ Both stable and experimental builds can be found here:
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
 ## Updates
-The latest experimental build from a year ago now has MSVCP140D.dll included. It will be v.0.5.0.2 in the Experimental folder.
-
-It's been brought to my attention that there has been a bug with seed saving where characters will be cut off when using a custom seed. I apologise and this will be fixed as soon as possible. Please refrain from using the "Enter Seed" button for now.
+* A bug where custom seeds being added have their final character erased when stored has now been fixed.
+* When the chest randomizer produces a Grimoire, there will now only be one.
+* When consumable items are randomized, the quantity can now only go as high as 100.
 
 ## To Do
 * Make the enemy drops randomizer independent from the enemy randomizer.
