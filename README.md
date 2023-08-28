@@ -30,6 +30,14 @@ https://trello.com/b/BZRfh8ht/vagrant-story-randomizer
 Many can find these GitHubs tedious, myself included. The "Releases" section exists for those who just want to extract the ZIP and get into the action. For those who wish to make their own alterations, the C++ files have been included.
 
 If you make any alterations to the source code and you want to bring your project to life, make sure that your exe is in the same directory as the ZONES and MAPS directories, as well as a psxinject exe file and its necessary dll files after conversion in order for it to work. 
+## What are the parameters available?
+* Enemies: Randomizes the enemy placements within an area.
+* Chests: Randomizes the contents of a chest.
+* Drops: Randomizes what each enemy drops. This will only apply to the random drops of an enemy. Guaranteed drops are unaltered to prevent softlocks.
+* Balance Item Stats: Makes the randomized stats of weapons, blades, grips, gems, shields, and armour in chests less extreme.
+* Area Progression: Randomizes where you go next depending on the area you're in.
+* Keep Item Stats: Prevents the stats of weapons, blades, grips, gems, shields, and armour in chests from being randomized.  
+
 ## Limitations
 Enemies can also only be changed to those which can be found within the same area. For example, Snowfly Forest opponents can only be swapped with other Snowfly Forest opponents.
 

@@ -398,7 +398,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     if ((penPoint == 13 && lastPoint == 10) == true) {
                         cusSeedI = NULL;
                         cusSeedS = "";
-                        for (int p = 0; p < dest - 3; p++) {
+                        for (int p = 0; p < dest - 1; p++) {
                             seedFile.seekg(p, sizeof(opse) - sizeof(opse));
                             address = seedFile.tellg();
                             rawSeedPoint = seedFile.get();

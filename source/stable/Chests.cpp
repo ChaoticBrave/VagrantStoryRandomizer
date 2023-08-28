@@ -57,7 +57,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
     streampos map_loc;
 
 
-    std::uniform_int_distribution<> dist_1 = std::uniform_int_distribution<>(1, 255);
+    std::uniform_int_distribution<> dist_1 = std::uniform_int_distribution<>(1, 100);
     std::uniform_int_distribution<> dist_2 = std::uniform_int_distribution<>(1, 90);
     std::uniform_int_distribution<> dist_3 = std::uniform_int_distribution<>(1, 10);
     std::uniform_int_distribution<> dist_4 = std::uniform_int_distribution<>(41, 327);
@@ -2151,7 +2151,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             acmap.seekg(size + 536, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
-            if (misc_item >= 202 && misc_item <= 233) {
+            if (misc_item >= 130 && misc_item <= 233) {
                 prop = 1;
             }
             else {
@@ -2190,7 +2190,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             acmap.seekg(size + 540, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
-            if (misc_item >= 202 && misc_item <= 233) {
+            if (misc_item >= 130 && misc_item <= 233) {
                 prop = 1;
             }
             else {
@@ -2229,7 +2229,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             acmap.seekg(size + 544, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
-            if (misc_item >= 202 && misc_item <= 233) {
+            if (misc_item >= 130 && misc_item <= 233) {
                 prop = 1;
             }
             else {
