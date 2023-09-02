@@ -7,6 +7,9 @@ Both stable and experimental builds can be found here:
 
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
+## WARNING
+You must put the Vagrant Story BIN/CUE pair you're using in the same directory as the randomizer. 
+
 ## Updates
 * A bug where custom seeds being added have their final character erased when stored has now been fixed.
 * When the chest randomizer produces a Grimoire, there will now only be one.
