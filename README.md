@@ -7,17 +7,14 @@ Both stable and experimental builds can be found here:
 
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
-## WARNING
-You must put the Vagrant Story BIN/CUE pair you're using in the same directory as the randomizer. 
-
 ## Updates
-* A bug where custom seeds being added have their final character erased when stored has now been fixed.
-* When the chest randomizer produces a Grimoire, there will now only be one.
-* When consumable items are randomized, the quantity can now only go as high as 100.
+* Your BIN/CUE pair for the game no longer needs to be in the same folder as the randomizer for it to work.
+* You can clear any seed which you've stored in the randomizer from its memory.
+* You can restore your game back to a vanilla state if you wish to.
+* There are now tool tips explaining what each parameter does.
 
 ## To Do
 * Make the enemy drops randomizer independent from the enemy randomizer.
-* Provide an option to clear an entered seed.
 * Randomize enemy stats.
 * Randomize Ashley's starting data.
 * Last-ditch effort to change which models enemies and Ashley use,
