@@ -67,6 +67,7 @@ void Rooms::roomIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen)
 
 	std::ofstream rooBat;
 	rooBat.open("rooCmd.cmd", std::ios::trunc);
+	rooBat << ("cd " + aGame.getStringPath() + " \n");
 
     for (int i = 0; i < aRF.getWarpMaps().size() - 1; i++) {
 		if (i != 5 && i != 6) {

@@ -1,5 +1,7 @@
 // VagrantStoryRandomizerGUI.cpp : Defines the entry point for the application.
 //
+#pragma comment(linker,"\"/manifestdependency:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
+
 #include <afxwin.h>
 #include "framework.h"
 #include "VagrantStoryRandomizerGUI.h"
@@ -20,6 +22,8 @@
 #include "Chests.h"
 #include "Rooms.h"
 #include <chrono>
+#include <commctrl.h>
+
 
 
 
@@ -40,7 +44,9 @@ HWND drops;
 HWND balance;
 HWND keep;
 HWND randomizeButton;
+HWND revertButton;
 HWND seedButton;
+HWND cSeedButton;
 HWND window;
 HWND getCon = GetConsoleWindow();
 DWORD dwStyle = WS_SYSMENU | WS_CAPTION | WS_MINIMIZEBOX;
@@ -56,10 +62,12 @@ unsigned int cusSeedI = NULL;
 void placeButtons();
 void setWin(HWND hWnd);
 void makeButtons(HWND hWnd);
+void toolTipMaker(HWND hWnd);
 void ranBoxLock();
 void relock();
 void checkBoxLock();
-void clearText();
+HWND CreateToolTip(HWND hParent, HWND hText, HINSTANCE hInst, PTSTR ptText);
+HWND toolGen(char* text, HWND hWnd, HWND hText);
 bool gamePathFound = false;
 bool pa_enemies = false;
 bool pa_chests = false;
@@ -73,13 +81,25 @@ string choiceB;
 string choiceK;
 string seedChoice;
 string cusSeedS;
+string strForPath;
+string cur_map;
+string m_file;
+vector<string> ivm;
+vector<string>::iterator ivmp;
+vector<string>::iterator wmp;
+vector<vector<string>> mlForEne;
+vector<vector<string>>::iterator mlpForEne;
+vector<string> ml;
+vector<string> wm;
+vector<string>::iterator mlp;
 fstream game;
 fstream seedFile;
 Reference_Files rf = Reference_Files();
 RECT rcWindow;
 std::mt19937 gen;
 std::mt19937 finGen;
-//int seedBox();
+std::ofstream vanBat;
+TOOLINFO paraInfo;
 
 
 // Forward declarations of functions included in this code module:
@@ -174,11 +194,11 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, dwStyle,
       CW_USEDEFAULT, 0, 320, 280, nullptr, nullptr, hInstance, nullptr);
-
    if (!hWnd)
    {
       return FALSE;
    }
+   //StartCommonControls(ICC_TAB_CLASSES);
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
 
@@ -208,6 +228,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         ranBoxLock();
         checkBoxLock();
+        toolTipMaker(hWnd);
         break;
     }
     case WM_COMMAND:
@@ -365,6 +386,49 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 }
             }
             break;
+            case IDM_REVERT:
+            {
+                vanBat.open("vanCmd.cmd", std::ios::trunc);
+                ml = rf.getChestCheck();
+                mlp = ml.begin();
+                vanBat << ("cd " + ag.getStringPath() + " \n");
+                for (int mi = 0; mi < ml.size(); mi++) {
+                    m_file = ag.getStringPath() + "\\BACKUP\\" + *mlp;
+                    cur_map = *mlp;
+                    vanBat << (rf.getTool() + " '" + ag.getWhole().string() + "' /MAP/" + cur_map + " '" + m_file + "'") << std::endl;
+                    std::advance(mlp, 1);
+                }
+                mlForEne = rf.getMapList();
+                mlpForEne = mlForEne.begin();
+                vector<string> ivm = *mlpForEne;
+                vector<string>::iterator ivmp = ivm.begin();
+                for (int i = 0; i < mlForEne.size(); i++) {
+                    for (int mi = 0; mi < rf.getIndivZone(*mlpForEne).size(); mi++) {
+                        m_file = ag.getStringPath() + "\\BACKUP\\" + *ivmp;
+                        cur_map = *ivmp;
+                        vanBat << (rf.getTool() + " '" + ag.getWhole().string() + "' /MAP/" + cur_map + " '" + m_file + "'") << std::endl;
+                        std::advance(ivmp, 1);
+                    }
+                    std::advance(mlpForEne, 1);
+                    if (i != (mlForEne.size()) - 1) {
+                        ivm = *mlpForEne;
+                        ivmp = ivm.begin();
+                    }
+                }
+                wm = rf.getWarpMaps();
+                wmp = wm.begin();
+                for (int i = 0; i < wm.size() - 1; i++) {
+                    m_file = ag.getStringPath() + "\\BACKUP\\" + *wmp;
+                    cur_map = *wmp;
+                    vanBat << (rf.getTool() + " '" + ag.getWhole().string() + "' /MAP/" + cur_map + " '" + m_file + "'") << std::endl;
+                    std::advance(wmp, 1);
+                }
+                vanBat.close();
+                runChe = system("cmd.exe /c vanCmd.cmd");
+                remove("vanCmd.cmd");
+                MessageBox(hWnd, L"Game unrandomized!", L"Success", MB_OK);
+            }
+            break;
             case IDM_GETSEED:
             {
                 OPENFILENAMEA opse;
@@ -411,8 +475,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                         if (cusSeedS != "") {
                             istringstream iss(cusSeedS);
                             iss >> cusSeedI;
-                            //cusSeedI = stoi(cusSeedS);
-                            //string strseed = to_string(cusSeedI);
                             MessageBox(hWnd, L"The given seed will be used.", L"Seed Stored", MB_OK);
                             cusSeedU = true;
                         }
@@ -427,6 +489,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     }
                     seedFile.close();
                 }
+            }
+            break;
+            case IDM_CLEARSEED:
+            {
+                cusSeedI = NULL;
+                cusSeedS = "";
+                MessageBox(hWnd, L"Any given seeds have been cleared.", L"Seed Cleared", MB_OK);
+                cusSeedU = false;
             }
             break;
             case IDM_ABOUT:
@@ -488,10 +558,50 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
     return (INT_PTR)FALSE;
 }
 
+HWND CreateToolTip(HWND hParent, HWND hText, HINSTANCE hInst, PTSTR ptText) {
+    if (!hParent || !hText || !ptText)
+    {
+        return NULL;
+    }
+
+    HWND hwndTip = CreateWindowEx(NULL, TOOLTIPS_CLASS, NULL,
+        WS_POPUP | TTS_ALWAYSTIP,
+        CW_USEDEFAULT, CW_USEDEFAULT,
+        CW_USEDEFAULT, CW_USEDEFAULT,
+        hParent, NULL,
+        hInst, NULL);
+
+    if (!hwndTip)
+    {
+        return NULL;
+    }
+
+    paraInfo.cbSize = sizeof(paraInfo);
+    paraInfo.hwnd = hParent;
+    paraInfo.hinst = hInst;
+    paraInfo.uFlags = TTF_IDISHWND | TTF_SUBCLASS;
+    paraInfo.uId = (UINT_PTR)hText;
+    paraInfo.lpszText = ptText;
+    GetClientRect(hParent, &paraInfo.rect);
+    SendMessage(hwndTip, TTM_ADDTOOL, 0, (LPARAM)&paraInfo);
+    SendMessage(hwndTip, TTM_SETMAXTIPWIDTH, 0, 255);
+    return hwndTip;
+}
+
+HWND toolGen(char* text, HWND hWnd, HWND hText) {
+    wchar_t wtext[256];
+    mbstowcs(wtext, text, strlen(text) + 1);
+    LPWSTR ptr = wtext;
+    HWND hWndTT = CreateToolTip(hWnd, hText, hInst, ptr);
+    return hWndTT;
+}
+
 void placeButtons() {
     butRos.emplace_back(openGame);
     butRos.emplace_back(randomizeButton);
     butRos.emplace_back(seedButton);
+    butRos.emplace_back(cSeedButton);
+    butRos.emplace_back(revertButton);
     butRos.emplace_back(enemies);
     butRos.emplace_back(chests);
     butRos.emplace_back(rooms);
@@ -502,8 +612,10 @@ void placeButtons() {
 
 void makeButtons(HWND hWnd) {
     openGame = CreateWindow(L"BUTTON", L"Open Game", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * 0.15), (int)(yCor * 0.05), 90, 25, hWnd, (HMENU)101, hInst, NULL);
-    randomizeButton = CreateWindow(L"BUTTON", L"Randomize", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * 0.15), (int)(yCor * 0.55), 90, 25, hWnd, (HMENU)9003, hInst, NULL);
-    seedButton = CreateWindow(L"BUTTON", L"Enter Seed", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * 0.15), (int)(yCor * 0.45), 90, 25, hWnd, (HMENU)9004, hInst, NULL);
+    randomizeButton = CreateWindow(L"BUTTON", L"Randomize", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * 0.075), (int)(yCor * 0.55), 90, 25, hWnd, (HMENU)9003, hInst, NULL);
+    seedButton = CreateWindow(L"BUTTON", L"Enter Seed", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * 0.075), (int)(yCor * 0.45), 90, 25, hWnd, (HMENU)9004, hInst, NULL);
+    cSeedButton = CreateWindow(L"BUTTON", L"Clear Seed", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * 0.225), (int)(yCor * 0.45), 90, 25, hWnd, (HMENU)9005, hInst, NULL);
+    revertButton = CreateWindow(L"BUTTON", L"Revert to Vanilla", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * 0.225), (int)(yCor * 0.55), 90, 25, hWnd, (HMENU)9006, hInst, NULL);
     enemies = CreateWindow(L"BUTTON", L"Enemies", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.0325), (int)(yCor * 0.15), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
     chests = CreateWindow(L"BUTTON", L"Chests", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.25), (int)(yCor * 0.15), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
     rooms = CreateWindow(L"BUTTON", L"Area Progression", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.0325), (int)(yCor * 0.35), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
@@ -512,9 +624,68 @@ void makeButtons(HWND hWnd) {
     keep = CreateWindow(L"BUTTON", L"Keep Item Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.25), (int)(yCor * 0.35), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
 }
 
+void toolTipMaker(HWND hWnd) {
+    char open[] =
+        "Load up a copy of Vagrant Story and get\n"
+        "started.";
+    HWND openTip = toolGen(open, hWnd, openGame);
+    char randomize[] =
+        "Get randomizing once you've picked some\n"
+        "paramaters.";
+    HWND randoTip = toolGen(randomize, hWnd, randomizeButton);
+    char entSeed[] =
+        "Input your own seed for the randomizer\n"
+        "to use.";
+    HWND seedTip = toolGen(entSeed, hWnd, seedButton);
+    char jaffa[] =
+        "Clear the seed which you have stored.";
+    HWND jaffaTip = toolGen(jaffa, hWnd, cSeedButton);
+    char revert[] =
+        "Revert your randomized game back to\n"
+        "the original unrandomized state.";
+    HWND revTip = toolGen(revert, hWnd, revertButton);
+    char eneDesc[] =
+        "Randomizes the places of enemies within\n"
+        "a particular area in the game.";
+    HWND eneTip = toolGen(eneDesc, hWnd, enemies);  
+    char cheDesc[] =
+        "Randomizes the contents and item stats\n" 
+        "inside a chest.";
+    HWND cheTip = toolGen(cheDesc, hWnd, chests);
+    char rooDesc[] =
+        "Randomizes the progression of the game.\n"
+        "Specific areas will take you to a new\n"
+        "place entirely once you reach the end of\n"
+        "them.";
+    HWND rooTip = toolGen(rooDesc, hWnd, rooms);
+    char dropDesc[] =
+        "You can only access this once you\n"
+        "decide to randomize enemies.\n"
+        "This will let you randomize what an\n"
+        "enemy's random drop is. 100% drops\n"
+        "are kept as is to prevent softlocks.";
+    HWND dropTip = toolGen(dropDesc, hWnd, drops);
+    char balDesc[] =
+        "You can only access this once you\n"
+        "decide to randomize chests.\n"
+        "This will make the randomized stats of\n"
+        "items more balanced and like what\n"
+        "you'd expect in the original game.";
+    HWND balTip = toolGen(balDesc, hWnd, balance);
+    char keepDesc[] =
+        "You can only access this once you\n"
+        "decide to randomize chests.\n"
+        "This will let you keep the\n"
+        "stats of items as they\n"
+        "were in the original game.\n";
+        "They will be ignored when\n"
+        "chests are being randomized.";
+    HWND keepTip = toolGen(keepDesc, hWnd, keep);
+}
+
 void ranBoxLock() {
     bool checkFound = false;
-    for (int i = 3; i < butRos.size() - 3; i++) {
+    for (int i = 4; i < butRos.size() - 3; i++) {
         LRESULT boxticked = SendMessage(butRos[i], BM_GETCHECK, NULL, NULL);
         if (boxticked == BST_CHECKED) {
             checkFound = true;
@@ -536,16 +707,16 @@ void checkBoxLock() {
     bool found;
     if (gamePathFound) {
         found = true;
-        for (int i = 3; i < butRos.size() - 3; i++) {
+        for (int i = 4; i < butRos.size() - 3; i++) {
             EnableWindow(butRos[i], found);
         }
     }
     else {
         found = false;
-        for (int i = 3; i < butRos.size(); i++) {
+        for (int i = 4; i < butRos.size(); i++) {
            LRESULT untick = SendMessage(butRos[i], BM_SETCHECK, BST_UNCHECKED, NULL);
         }
-        for (int i = 3; i < butRos.size(); i++) {
+        for (int i = 4; i < butRos.size(); i++) {
             EnableWindow(butRos[i], found);
         }
     }

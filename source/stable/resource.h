@@ -23,6 +23,8 @@
 #define IDM_CHOOSE_PARA                9002
 #define IDM_RANDOMIZE				   9003
 #define IDM_GETSEED					   9004
+#define IDM_CLEARSEED				   9005
+#define IDM_REVERT  				   9006
 
 // Next default values for new objects
 // 

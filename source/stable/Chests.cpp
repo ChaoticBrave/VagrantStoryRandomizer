@@ -119,6 +119,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
 
     std::ofstream cheBat;
     cheBat.open("cheCmd.cmd", std::ios::trunc);
+    cheBat << ("cd " + aGame.getStringPath() + " \n");
 
     for (int mi = 0; mi < ml.size(); mi++) {
         m_file = aGame.getStringPath() + "\\MAPS\\" + *mlp;

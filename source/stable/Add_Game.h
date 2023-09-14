@@ -3,6 +3,7 @@
 #include <vector>
 #include <filesystem>
 #include <fstream>
+#include <random>
 
 #include "Reference_Files.h"
 
@@ -19,6 +20,7 @@ private:
 	string file_name;
 	string w_name;
 	std::mt19937 baseGener;
+	string injectPath;
 
 
 public:
@@ -37,5 +39,8 @@ public:
 	void makeGen(string aSeed);
 	void makeGenPlus(string aSeed, int aGivenSeed);
 	std::mt19937 getGen();
+	string getInjectPath();
+	void makeInjectPath(string aPath);
+
 };
 

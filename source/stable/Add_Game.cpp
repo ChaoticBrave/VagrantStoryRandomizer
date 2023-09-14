@@ -28,10 +28,23 @@ string Add_Game::getFileName() {
     return file_name;
 }
 
+string Add_Game::getInjectPath() {
+    return injectPath;
+}
+
 void Add_Game::giveName() {
     file_name = "";
     cout << "Please enter the ROM file name: " << endl;
     getline(cin, file_name);
+}
+
+void Add_Game::makeInjectPath(string aPath) {
+    injectPath = aPath;
+    for (std::string::size_type i = 0; i < injectPath.size(); i++) {
+        if (injectPath[i] == *" ") {
+            injectPath.insert(i, "^");
+        }
+    }
 }
 
 path Add_Game::getWhole() {
@@ -131,5 +144,7 @@ bool Add_Game::guiValidate(fstream& aGame, Reference_Files aRef, string aPath) {
         }
     }
 }
+
+
    
 

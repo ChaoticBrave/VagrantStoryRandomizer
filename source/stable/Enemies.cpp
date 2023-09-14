@@ -97,6 +97,7 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
     
     std::ofstream eneBat;
     eneBat.open("eneCmd.cmd", std::ios::trunc);
+    eneBat << ("cd " + aGame.getStringPath() + " \n");
         
 
     for (int i = 0; i < aRF.getMapList().size(); i++) {
@@ -311,30 +312,6 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
                             delete ch_val;
                         }
                     }
-
-                    //sCmdPath = (aRF.getTool() + " '" + aGame.getWhole().string() + "' /MAP/" + cur_map + " '" + m_file + "'");
-                    //mbstowcs(wCmd, sCmdPath.c_str(), sCmdPath.length());
-                    //cmdPath = wCmd;
-                    //Try CreateProcessA
-                    //if (CreateProcessA(toolPath, cmdPath, NULL, NULL, TRUE, NORMAL_PRIORITY_CLASS | 
-                      //  CREATE_NO_WINDOW, NULL, NULL, &info, &processInfo))
-                    //{
-                      // WaitForSingleObject(processInfo.hProcess, INFINITE);
-                       //CloseHandle(processInfo.hProcess);
-                       //CloseHandle(processInfo.hThread);
-                    //}
-                    //Try CreateProcessA
-                    //if (CreateProcess(toolPath, cmdPath, NULL, NULL, TRUE, NORMAL_PRIORITY_CLASS |
-                       // CREATE_NO_WINDOW, NULL, NULL, &info, &processInfo))
-                    //{
-                       // WaitForSingleObject(processInfo.hProcess, INFINITE);
-                       // CloseHandle(processInfo.hProcess);
-                       // CloseHandle(processInfo.hThread);
-                   // }
-                    //delete wCmd;
-                    //delete cmdPath;
-                    //WinExec((aRF.getTool() + " '" + aGame.getWhole().string() + "' /MAP/" + cur_map + " '" + m_file + "'").c_str(), SW_HIDE);
-                    //system((aRF.getTool() + " '" + aGame.getWhole().string() + "' /MAP/" + cur_map + " '" + m_file + "'").c_str());
                     eneBat << (aRF.getTool() + " '" + aGame.getWhole().string() + "' /MAP/" + cur_map + " '" + m_file + "'") << std::endl;
                     acmap.close();
                 }
