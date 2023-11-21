@@ -74,4 +74,5 @@ https://ko-fi.com/chaoticbrave
 * Taterz: Discovered the Ghost crashes in the Catacombs, as well as several other bugs.
 * Optrin: For discovering dll dependency errors and several other bugs.
 * Another_Bloody_Wolf: For discovering the "untitled", enemy drop and Time Trial boss bugs, as well for suggesting the stat balance idea.
-* Overlord Kego: For suggesting the option to keep randomized equipment stats.   
+* Overlord Kego: For suggesting the option to keep randomized equipment stats.
+* vagrant18: For suggesting the equipment consistency option.
