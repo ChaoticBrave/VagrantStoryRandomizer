@@ -10,7 +10,7 @@ https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 ## Updates
 * More stats are included in the "Keep Item Stats" option; chiefly the equipment material and weapon target sphere.
 * An option has also been added where a randomized item will use that item's name and model. For example, a randomized Arbalest will use that name, item category, and the appropriate model.
-* The "Revert to Vanilla" option should actually work properly now.
+* The "Revert to Vanilla" option should actually work properly now. The files in the MAPS folder will all use the original content and not just the BIN file.
 * I now have a Ko-fi. A link has been given in the contact section. This is purely optional and will not dictate the project going forward. It's a tipping jar and nothing further.
 
 ## To Do
