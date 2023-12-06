@@ -7,17 +7,14 @@ Both stable and experimental builds can be found here:
 
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
-## WARNING
-You must put the Vagrant Story BIN/CUE pair you're using in the same directory as the randomizer. 
-
 ## Updates
-* A bug where custom seeds being added have their final character erased when stored has now been fixed.
-* When the chest randomizer produces a Grimoire, there will now only be one.
-* When consumable items are randomized, the quantity can now only go as high as 100.
+* More stats are included in the "Keep Item Stats" option; chiefly the equipment material and weapon target sphere.
+* An option has also been added where a randomized item will use that item's name and model. For example, a randomized Arbalest will use that name, item category, and the appropriate model.
+* The "Revert to Vanilla" option should actually work properly now. The files in the MAPS folder will all use the original content and not just the BIN file.
+* I now have a Ko-fi. A link has been given in the contact section. This is purely optional and will not dictate the project going forward. It's a tipping jar and nothing further.
 
 ## To Do
 * Make the enemy drops randomizer independent from the enemy randomizer.
-* Provide an option to clear an entered seed.
 * Randomize enemy stats.
 * Randomize Ashley's starting data.
 * Last-ditch effort to change which models enemies and Ashley use,
@@ -43,11 +40,12 @@ Player character randomization was previously in the To Do list. Upon further te
 
 Certain locations are randomized rather than being on a room-by-room basis due to issues with how coordinates are translated from the ROM to the RAM. Because of this, only a selected few areas can be warped to with the locations randomizer. Locations which end with a door locked by a key, sigil, or have a cutscene transition won't be randomized as the game will not register the changes made by the tool. 
 ## Contact
-If you queries about the project, the best places to contact me are either my Discord server or my Twitter DMs.
+If you queries about the project, the best places to contact me are either one of my two Discord servers or my Twitter DMs.
 
 Discord:
 
-https://discord.gg/xmgKtf2tN6
+* Personal Discord: https://discord.gg/xmgKtf2tN6
+* Kingdom of Ivalice: https://discord.gg/WZ2DbjHXJF
 
 Twitter:
 
@@ -56,6 +54,10 @@ https://twitter.com/ChaoticBrave
 Tumblr:
 
 https://www.tumblr.com/chaoticbraves-workshop
+
+Ko-fi:
+
+https://ko-fi.com/chaoticbrave
 
 ## Credits
 * ChaoticBrave: For making the randomizer of course!
@@ -72,4 +74,5 @@ https://www.tumblr.com/chaoticbraves-workshop
 * Taterz: Discovered the Ghost crashes in the Catacombs, as well as several other bugs.
 * Optrin: For discovering dll dependency errors and several other bugs.
 * Another_Bloody_Wolf: For discovering the "untitled", enemy drop and Time Trial boss bugs, as well for suggesting the stat balance idea.
-* Overlord Kego: For suggesting the option to keep randomized equipment stats.   
+* Overlord Kego: For suggesting the option to keep randomized equipment stats.
+* vagrant18: For suggesting the equipment consistency option.
