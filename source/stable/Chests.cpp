@@ -19,7 +19,7 @@ Chests::Chests() {
 
 }
 
-void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen, string aChoice, string secondChoice) {
+void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen, string aChoice, string secondChoice, string thirdChoice) {
     vector<string> ml = aRF.getChestCheck();
     vector<string>::iterator mlp = ml.begin();
     list<string> mlks = aRF.getKSCheck();
@@ -46,6 +46,10 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
     int size;
     int to_ass;
     int prop;
+    int bla_nam;
+    int gri_nam;
+    int shi_nam;
+    int arm_nam;
     int int_rand_dpm;
     int pp;
     int ppm;
@@ -107,6 +111,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
     std::uniform_int_distribution<> dist_48 = std::uniform_int_distribution<>(0, 25);
     std::uniform_int_distribution<> dist_49 = std::uniform_int_distribution<>(0, 15);
 
+
     char* ch_val;
     char rand_dpm[20];
     char rand_dp[20];
@@ -135,7 +140,9 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             map_loc = acmap.tellg();
             to_ass = acmap.get();
             prop = dist_2(aGen);
-            //prop = dist_1(aGen);
+            if (thirdChoice == "Y") {
+                bla_nam = prop;
+            }
             ch_val = new char(prop);
             acmap.seekp(size + 5, ios::beg);
             acmap.write(ch_val, 1);
@@ -143,7 +150,12 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             acmap.seekg(size + 6, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
-            prop = dist_2(aGen);
+            if (thirdChoice == "Y") {
+                prop = bla_nam;
+            }
+            else {
+                prop = dist_2(aGen);
+            }
             ch_val = new char(prop);
             acmap.seekp(size + 6, ios::beg);
             acmap.write(ch_val, 1);
@@ -151,14 +163,50 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             acmap.seekg(size + 7, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
-            prop = dist_2(aGen);
+            if (thirdChoice == "Y") {
+                prop = bla_nam;
+            }
+            else {
+                prop = dist_2(aGen);
+            }
             ch_val = new char(prop);
             acmap.seekp(size + 7, ios::beg);
             acmap.write(ch_val, 1);
             acmap.seekg(size + 8, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
-            prop = dist_3(aGen);
+            if (thirdChoice == "Y") {
+                if (bla_nam >= 1 && bla_nam <= 12) {
+                    prop = 1;
+                }
+                if (bla_nam >= 13 && bla_nam <= 24) {
+                    prop = 2;
+                }
+                if (bla_nam >= 25 && bla_nam <= 34) {
+                    prop = 3;
+                }
+                if (bla_nam >= 35 && bla_nam <= 50) {
+                    prop = 4;
+                }
+                if (bla_nam >= 51 && bla_nam <= 56) {
+                    prop = 5;
+                }
+                if (bla_nam >= 57 && bla_nam <= 62) {
+                    prop = 6;
+                }
+                if (bla_nam >= 63 && bla_nam <= 69) {
+                    prop = 7;
+                }
+                if (bla_nam >= 70 && bla_nam <= 82) {
+                    prop = 8;
+                }
+                if (bla_nam >= 83 && bla_nam <= 90) {
+                    prop = 9;
+                }
+            }
+            else {
+                prop = dist_3(aGen);
+            }
             ch_val = new char(prop);
             acmap.seekp(size + 8, ios::beg);
             acmap.write(ch_val, 1);
@@ -271,15 +319,15 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                 acmap.seekp(size + 19, ios::beg);
                 acmap.write(ch_val, 1);
                 delete ch_val;
+                acmap.seekg(size + 20, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                prop = dist_9(aGen);
+                ch_val = new char(prop);
+                acmap.seekp(size + 20, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
             }
-            acmap.seekg(size + 20, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            prop = dist_9(aGen);
-            ch_val = new char(prop);
-            acmap.seekp(size + 20, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
             prop = (4 * dist_10(aGen)) + dist_11(aGen);
             acmap.seekg(size + 21, ios::beg);
             map_loc = acmap.tellg();
@@ -299,16 +347,14 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                     acmap.write(ch_val, 1);
                     delete ch_val;
                 }
-            }
-            acmap.seekg(size + 28, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            prop = dist_13(aGen);
-            ch_val = new char(prop);
-            acmap.seekp(size + 28, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            if (secondChoice == "N") {
+                acmap.seekg(size + 28, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                prop = dist_13(aGen);
+                ch_val = new char(prop);
+                acmap.seekp(size + 28, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
                 for (int b = 29; b < 35; b++) {
                     acmap.seekg(size + b, ios::beg);
                     map_loc = acmap.tellg();
@@ -351,40 +397,27 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                     acmap.write(ch_val, 1);
                     delete ch_val;
                 }
+                acmap.seekg(size + 45, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                prop = dist_13(aGen);
+                ch_val = new char(prop);
+                acmap.seekp(size + 45, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
             }
-            acmap.seekg(size + 45, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            prop = dist_13(aGen);
-            ch_val = new char(prop);
-            acmap.seekp(size + 45, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
             acmap.seekg(size + 49, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
             prop = dist_19(aGen);
+            if (thirdChoice == "Y") {
+                gri_nam = prop;
+            }
             ch_val = new char(prop);
             acmap.seekp(size + 49, ios::beg);
             acmap.write(ch_val, 1);
             delete ch_val;
             ch_val = new char(0);
-            /*prop = dist_14(aGen);
-            if (prop > 255) {
-                prop -= 256;
-                ch_val = new char(prop);
-                acmap.seekp(size + 49, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                ch_val = new char(1);
-            }
-            else {
-                ch_val = new char(prop);
-                acmap.seekp(size + 49, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                ch_val = new char(0);
-            }*/
             acmap.seekg(size + 50, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
@@ -394,7 +427,12 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             acmap.seekg(size + 51, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
-            prop = dist_15(aGen);
+            if (thirdChoice == "Y") {
+                prop = gri_nam - 95;
+            }
+            else {
+                prop = dist_15(aGen);
+            }
             ch_val = new char(prop);
             acmap.seekp(size + 51, ios::beg);
             acmap.write(ch_val, 1);
@@ -402,7 +440,23 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             acmap.seekg(size + 52, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
-            prop = dist_10(aGen);
+            if (thirdChoice == "Y") {
+                if (gri_nam >= 96 && gri_nam <= 104) {
+                    prop = 1;
+                }
+                if (gri_nam >= 105 && gri_nam <= 114) {
+                    prop = 2;
+                }
+                if (gri_nam >= 115 && gri_nam <= 120) {
+                    prop = 3;
+                }
+                if (gri_nam >= 121 && gri_nam <= 126) {
+                    prop = 4;
+                }
+            }
+            else {
+                prop = dist_10(aGen);
+            }
             ch_val = new char(prop);
             acmap.seekp(size + 52, ios::beg);
             acmap.write(ch_val, 1);
@@ -751,6 +805,9 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             map_loc = acmap.tellg();
             to_ass = acmap.get();
             prop = dist_2(aGen);
+            if (thirdChoice == "Y") {
+                bla_nam = prop;
+            }
             ch_val = new char(prop);
             acmap.seekp(size + 177, ios::beg);
             acmap.write(ch_val, 1);
@@ -758,7 +815,12 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             acmap.seekg(size + 178, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
-            prop = dist_2(aGen);
+            if (thirdChoice == "Y") {
+                prop = bla_nam;
+            }
+            else {
+                prop = dist_2(aGen);
+            }
             ch_val = new char(prop);
             acmap.seekp(size + 178, ios::beg);
             acmap.write(ch_val, 1);
@@ -766,7 +828,12 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             acmap.seekg(size + 179, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
-            prop = dist_2(aGen);
+            if (thirdChoice == "Y") {
+                prop = bla_nam;
+            }
+            else {
+                prop = dist_2(aGen);
+            }
             ch_val = new char(prop);
             acmap.seekp(size + 179, ios::beg);
             acmap.write(ch_val, 1);
@@ -774,7 +841,38 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             acmap.seekg(size + 180, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
-            prop = dist_3(aGen);
+            if (thirdChoice == "Y") {
+                if (bla_nam >= 1 && bla_nam <= 12) {
+                    prop = 1;
+                }
+                if (bla_nam >= 13 && bla_nam <= 24) {
+                    prop = 2;
+                }
+                if (bla_nam >= 25 && bla_nam <= 34) {
+                    prop = 3;
+                }
+                if (bla_nam >= 35 && bla_nam <= 50) {
+                    prop = 4;
+                }
+                if (bla_nam >= 51 && bla_nam <= 56) {
+                    prop = 5;
+                }
+                if (bla_nam >= 57 && bla_nam <= 62) {
+                    prop = 6;
+                }
+                if (bla_nam >= 63 && bla_nam <= 69) {
+                    prop = 7;
+                }
+                if (bla_nam >= 70 && bla_nam <= 82) {
+                    prop = 8;
+                }
+                if (bla_nam >= 83 && bla_nam <= 90) {
+                    prop = 9;
+                }
+            }
+            else {
+                prop = dist_3(aGen);
+            }
             ch_val = new char(prop);
             acmap.seekp(size + 180, ios::beg);
             acmap.write(ch_val, 1);
@@ -887,15 +985,15 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                 acmap.seekp(size + 191, ios::beg);
                 acmap.write(ch_val, 1);
                 delete ch_val;
+                acmap.seekg(size + 192, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                prop = dist_9(aGen);
+                ch_val = new char(prop);
+                acmap.seekp(size + 192, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
             }
-            acmap.seekg(size + 192, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            prop = dist_9(aGen);
-            ch_val = new char(prop);
-            acmap.seekp(size + 192, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
             prop = (4 * dist_10(aGen)) + dist_11(aGen);
             acmap.seekg(size + 193, ios::beg);
             map_loc = acmap.tellg();
@@ -915,16 +1013,14 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                     acmap.write(ch_val, 1);
                     delete ch_val;
                 }
-            }
-            acmap.seekg(size + 200, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            prop = dist_13(aGen);
-            ch_val = new char(prop);
-            acmap.seekp(size + 200, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            if (secondChoice == "N") {
+                acmap.seekg(size + 200, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                prop = dist_13(aGen);
+                ch_val = new char(prop);
+                acmap.seekp(size + 200, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
                 for (int b = 201; b < 207; b++) {
                     acmap.seekg(size + b, ios::beg);
                     map_loc = acmap.tellg();
@@ -967,15 +1063,15 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                     acmap.write(ch_val, 1);
                     delete ch_val;
                 }
-            }
-            acmap.seekg(size + 217, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            prop = dist_13(aGen);
-            ch_val = new char(prop);
-            acmap.seekp(size + 217, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;                    
+                acmap.seekg(size + 217, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                prop = dist_13(aGen);
+                ch_val = new char(prop);
+                acmap.seekp(size + 217, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+            }                   
         }
         acmap.seekg(size + 221, ios::beg);
         map_loc = acmap.tellg();
@@ -985,6 +1081,9 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             map_loc = acmap.tellg();
             to_ass = acmap.get();
             prop = dist_19(aGen);
+            if (thirdChoice == "Y") {
+                gri_nam = prop;
+            }
             ch_val = new char(prop);
             acmap.seekp(size + 225, ios::beg);
             acmap.write(ch_val, 1);
@@ -999,7 +1098,12 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             acmap.seekg(size + 227, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
-            prop = dist_15(aGen);
+            if (thirdChoice == "Y") {
+                prop = gri_nam - 95;
+            }
+            else {
+                prop = dist_15(aGen);
+            }
             ch_val = new char(prop);
             acmap.seekp(size + 227, ios::beg);
             acmap.write(ch_val, 1);
@@ -1007,7 +1111,23 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             acmap.seekg(size + 228, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
-            prop = dist_10(aGen);
+            if (thirdChoice == "Y") {
+                if (gri_nam >= 96 && gri_nam <= 104) {
+                    prop = 1;
+                }
+                if (gri_nam >= 105 && gri_nam <= 114) {
+                    prop = 2;
+                }
+                if (gri_nam >= 115 && gri_nam <= 120) {
+                    prop = 3;
+                }
+                if (gri_nam >= 121 && gri_nam <= 126) {
+                    prop = 4;
+                }
+            }
+            else {
+                prop = dist_10(aGen);
+            }
             ch_val = new char(prop);
             acmap.seekp(size + 228, ios::beg);
             acmap.write(ch_val, 1);
@@ -1070,6 +1190,9 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             map_loc = acmap.tellg();
             to_ass = acmap.get();
             prop = dist_40(aGen);
+            if (thirdChoice == "Y") {
+                shi_nam = prop;
+            }
             ch_val = new char(prop);
             acmap.seekp(size + 245, ios::beg);
             acmap.write(ch_val, 1);
@@ -1077,7 +1200,12 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             acmap.seekg(size + 246, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
-            prop = dist_17(aGen);
+            if (thirdChoice == "Y") {
+                prop = shi_nam - 126;
+            }
+            else {
+                prop = dist_17(aGen);
+            }
             ch_val = new char(prop);
             acmap.seekp(size + 246, ios::beg);
             acmap.write(ch_val, 1);
@@ -1085,7 +1213,12 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             acmap.seekg(size + 247, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
-            prop = dist_17(aGen);
+            if (thirdChoice == "Y") {
+                prop = shi_nam - 126;
+            }
+            else {
+                prop = dist_17(aGen);
+            }
             ch_val = new char(prop);
             acmap.seekp(size + 247, ios::beg);
             acmap.write(ch_val, 1);
@@ -1535,69 +1668,100 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                     acmap.seekp(size + b, ios::beg);
                     acmap.write(ch_val, 1);
                     delete ch_val;
+                }
+                acmap.seekg(size + 281, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                prop = dist_13(aGen);
+                ch_val = new char(prop);
+                acmap.seekp(size + 281, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
             }
-            }
-            acmap.seekg(size + 281, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            prop = dist_13(aGen);
-            ch_val = new char(prop);
-            acmap.seekp(size + 281, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
         }
         acmap.seekg(size + 369, ios::beg);
         map_loc = acmap.tellg();
         to_ass = acmap.get();
         if (to_ass == 3) {
-            acmap.seekg(size + 373, ios::beg);
+            acmap.seekg(size + 376, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
+            acmap.seekg(size + 373, ios::beg);
+            map_loc = acmap.tellg();
             if (to_ass == 2) {
+                to_ass = acmap.get();
                 prop = dist_41(aGen);
+                if (thirdChoice == "Y") {
+                    arm_nam = prop;
+                }
                 ch_val = new char(prop);
                 acmap.seekp(size + 373, ios::beg);
                 acmap.write(ch_val, 1);
                 delete ch_val;
-                acmap.seekg(size + 376, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                dist_18 = std::uniform_int_distribution<>(17, 32);
+                //acmap.seekg(size + 376, ios::beg);
+                //map_loc = acmap.tellg();
+                //to_ass = acmap.get();
+                if (thirdChoice == "N") {
+                    dist_18 = std::uniform_int_distribution<>(17, 32);
+                }
             }
             else if (to_ass == 3) {
+                to_ass = acmap.get();
                 prop = dist_42(aGen);
+                if (thirdChoice == "Y") {
+                    arm_nam = prop;
+                }
                 ch_val = new char(prop);
                 acmap.seekp(size + 373, ios::beg);
                 acmap.write(ch_val, 1);
                 delete ch_val;
-                acmap.seekg(size + 376, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                dist_18 = std::uniform_int_distribution<>(33, 48);
+                //acmap.seekg(size + 376, ios::beg);
+                //map_loc = acmap.tellg();
+                //to_ass = acmap.get();
+                if (thirdChoice == "N") {
+                    dist_18 = std::uniform_int_distribution<>(33, 48);
+                }
             }
             else if (to_ass == 4) {
+                to_ass = acmap.get();
                 prop = dist_43(aGen);
+                if (thirdChoice == "Y") {
+                    arm_nam = prop;
+                }
                 ch_val = new char(prop);
                 acmap.seekp(size + 373, ios::beg);
                 acmap.write(ch_val, 1);
                 delete ch_val;
-                acmap.seekg(size + 376, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                dist_18 = std::uniform_int_distribution<>(49, 64);
+                //acmap.seekg(size + 376, ios::beg);
+                //map_loc = acmap.tellg();
+                //to_ass = acmap.get();
+                if (thirdChoice == "N") {
+                    dist_18 = std::uniform_int_distribution<>(49, 64);
+                }
             }
             else if (to_ass == 5) {
+                to_ass = acmap.get();
                 prop = dist_44(aGen);
+                if (thirdChoice == "Y") {
+                    arm_nam = prop;
+                }
                 ch_val = new char(prop);
                 acmap.seekp(size + 373, ios::beg);
                 acmap.write(ch_val, 1);
                 delete ch_val;
-                acmap.seekg(size + 376, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                dist_18 = std::uniform_int_distribution<>(65, 80);
+                //acmap.seekg(size + 376, ios::beg);
+                //map_loc = acmap.tellg();
+                //to_ass = acmap.get();
+                if (thirdChoice == "N") {
+                    dist_18 = std::uniform_int_distribution<>(65, 80);
+                }
             }
-            prop = dist_18(aGen);
+            if (thirdChoice == "Y") {
+                prop = arm_nam - 126;
+            }
+            else {
+                prop = dist_18(aGen);
+            }
             ch_val = new char(prop);
             acmap.seekg(size + 374, ios::beg);
             map_loc = acmap.tellg();
@@ -1737,68 +1901,97 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                     acmap.write(ch_val, 1);
                     delete ch_val;
                 }
+                acmap.seekg(size + 409, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                prop = dist_13(aGen);
+                ch_val = new char(prop);
+                acmap.seekp(size + 409, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
             }
-            acmap.seekg(size + 409, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            prop = dist_13(aGen);
-            ch_val = new char(prop);
-            acmap.seekp(size + 409, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
         }
         acmap.seekg(size + 413, ios::beg);
         map_loc = acmap.tellg();
         to_ass = acmap.get();
         if (to_ass == 3) {
-            acmap.seekg(size + 417, ios::beg);
+            acmap.seekg(size + 420, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
+            acmap.seekg(size + 417, ios::beg);
+            map_loc = acmap.tellg();
             if (to_ass == 2) {
+                to_ass = acmap.get();
                 prop = dist_41(aGen);
+                if (thirdChoice == "Y") {
+                    arm_nam = prop;
+                }
                 ch_val = new char(prop);
                 acmap.seekp(size + 417, ios::beg);
                 acmap.write(ch_val, 1);
                 delete ch_val;
-                acmap.seekg(size + 420, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                dist_18 = std::uniform_int_distribution<>(17, 32);
+                //acmap.seekg(size + 420, ios::beg);
+                //map_loc = acmap.tellg();
+                //to_ass = acmap.get();
+                if (thirdChoice == "N") {
+                    dist_18 = std::uniform_int_distribution<>(17, 32);
+                }
             }
             else if (to_ass == 3) {
+                to_ass = acmap.get();
                 prop = dist_42(aGen);
+                if (thirdChoice == "Y") {
+                    arm_nam = prop;
+                }
                 ch_val = new char(prop);
                 acmap.seekp(size + 417, ios::beg);
                 acmap.write(ch_val, 1);
                 delete ch_val;
-                acmap.seekg(size + 420, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
+                //acmap.seekg(size + 420, ios::beg);
+                //map_loc = acmap.tellg();
+                //to_ass = acmap.get();
                 dist_18 = std::uniform_int_distribution<>(33, 48);
             }
             else if (to_ass == 4) {
+                to_ass = acmap.get();
                 prop = dist_43(aGen);
+                if (thirdChoice == "Y") {
+                    arm_nam = prop;
+                }
                 ch_val = new char(prop);
                 acmap.seekp(size + 417, ios::beg);
                 acmap.write(ch_val, 1);
                 delete ch_val;
-                acmap.seekg(size + 420, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                dist_18 = std::uniform_int_distribution<>(49, 64);
+                //acmap.seekg(size + 420, ios::beg);
+                //map_loc = acmap.tellg();
+                //to_ass = acmap.get();
+                if (thirdChoice == "N") {
+                    dist_18 = std::uniform_int_distribution<>(49, 64);
+                }
             }
             else if (to_ass == 5) {
+                to_ass = acmap.get();
                 prop = dist_44(aGen);
+                if (thirdChoice == "Y") {
+                    arm_nam = prop;
+                }
                 ch_val = new char(prop);
                 acmap.seekp(size + 417, ios::beg);
                 acmap.write(ch_val, 1);
                 delete ch_val;
-                acmap.seekg(size + 420, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                dist_18 = std::uniform_int_distribution<>(65, 80);
+                //acmap.seekg(size + 420, ios::beg);
+                //map_loc = acmap.tellg();
+                //to_ass = acmap.get();
+                if (thirdChoice == "N") {
+                    dist_18 = std::uniform_int_distribution<>(65, 80);
+                }
             }
-            prop = dist_18(aGen);
+            if (thirdChoice == "Y") {
+                prop = arm_nam - 126;
+            }
+            else {
+                prop = dist_18(aGen);
+            }
             ch_val = new char(prop);
             acmap.seekg(size + 418, ios::beg);
             map_loc = acmap.tellg();
@@ -1939,15 +2132,15 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                     acmap.write(ch_val, 1);
                     delete ch_val;
                 }
+                acmap.seekg(size + 453, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                prop = dist_13(aGen);
+                ch_val = new char(prop);
+                acmap.seekp(size + 453, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
             }
-            acmap.seekg(size + 453, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            prop = dist_13(aGen);
-            ch_val = new char(prop);
-            acmap.seekp(size + 453, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
         }
         acmap.seekg(size + 457, ios::beg);
         map_loc = acmap.tellg();
@@ -1957,6 +2150,9 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             map_loc = acmap.tellg();
             to_ass = acmap.get();
             prop = dist_45(aGen);
+            if (thirdChoice == "Y") {
+                arm_nam = prop;
+            }
             ch_val = new char(prop);
             acmap.seekp(size + 461, ios::beg);
             acmap.write(ch_val, 1);
@@ -1964,7 +2160,12 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             acmap.seekg(size + 462, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
-            prop = dist_22(aGen);
+            if (thirdChoice == "Y") {
+                prop = arm_nam - 222;
+            }
+            else {
+                prop = dist_22(aGen);
+            }
             ch_val = new char(prop);
             acmap.seekp(size + 462, ios::beg);
             acmap.write(ch_val, 1);
