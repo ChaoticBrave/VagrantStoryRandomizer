@@ -38,11 +38,16 @@ void Reference_Files::loadFiles() {
 	l20 = { "MAP360.MPD", "MAP362.MPD", "MAP365.MPD", "MAP366.MPD", "MAP367.MPD", "MAP368.MPD", "MAP369.MPD", "MAP371.MPD", "MAP373.MPD", "MAP375.MPD", "MAP377.MPD", "MAP378.MPD", "MAP379.MPD", "MAP380.MPD", "MAP381.MPD" };
 	l21 = { "MAP382.MPD", "MAP383.MPD", "MAP384.MPD", "MAP385.MPD", "MAP386.MPD", "MAP387.MPD", "MAP388.MPD", "MAP389.MPD", "MAP390.MPD", "MAP391.MPD", "MAP392.MPD", "MAP394.MPD", "MAP395.MPD", "MAP396.MPD", "MAP397.MPD", "MAP398.MPD", "MAP399.MPD", "MAP402.MPD", "MAP403.MPD", "MAP404.MPD", "MAP405.MPD", "MAP407.MPD" };
 	map_list = { l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11, l12, l13, l14, l15, l16, l17, l18, l19, l20, l21 };
-	warp_maps = { "MAP025.MPD", "MAP283.MPD", "MAP226.MPD", "MAP112.MPD", "MAP239.MPD", "MAP166.MPD", "MAP224.MPD", "MAP342.MPD", "MAP171.MPD" };
-	warps = { 56540, 47384, 50644, 49588, 50656, 54328, 55092, 50792, 53976 };
-	zoc = { 13, 32, 40, 29, 51, 49, 53, 30, 24 };
-	moc = { 0, 5, 21, 2, 3, 0, 0, 0, 8 };
-	coc = { "680008", "690044", "130044", "980016", "670008", "030052", "030052", "680008", "420004" };
+	warp_maps = { "MAP025.MPD", "MAP283.MPD", "MAP226.MPD", "MAP112.MPD", "MAP239.MPD", "MAP166.MPD", "MAP224.MPD", "MAP171.MPD" };
+	ret_maps = { "MAP028.MPD", "MAP152.MPD", "MAP200.MPD", "MAP126.MPD", "MAP287.MPD", "MAP247.MPD", "MAP311.MPD", "MAP087.MPD" };
+	warps = { 56540, 47384, 50644, 49588, 50656, 54328, 55092, 53976 };
+	ret_warps = { 51152, 54484, 47404, 49652, 47212, 52688, 47384, 41360 };
+	zoc = { 13, 32, 40, 29, 51, 49, 53, 24 };
+	ret_zoc = { 11, 50, 48, 28, 48, 32, 48, 39 };
+	moc = { 0, 5, 21, 2, 3, 0, 0, 8 };
+	ret_moc = { 0, 23, 6, 7, 19, 19, 4, 0 };
+	coc = { "680008", "690044", "130044", "980016", "670008", "030052", "030052", "420004" };
+	ret_coc = { "070088", "030052", "670008", "440008", "030040", "640060", "720008", "970008" };
 	has_chest = { "MAP018.MPD", "MAP027.MPD", "MAP409.MPD", "MAP025.MPD", "MAP026.MPD", "MAP408.MPD", "MAP032.MPD", "MAP033.MPD", "MAP037.MPD", "MAP045.MPD", "MAP050.MPD", "MAP079.MPD", "MAP081.MPD", "MAP095.MPD", "MAP124.MPD", "MAP142.MPD", "MAP175.MPD", "MAP176.MPD", "MAP177.MPD", "MAP202.MPD", "MAP203.MPD", "MAP350.MPD", "MAP227.MPD", "MAP241.MPD", "MAP240.MPD", "MAP254.MPD", "MAP255.MPD", "MAP259.MPD", "MAP261.MPD", "MAP270.MPD", "MAP276.MPD", "MAP289.MPD", "MAP292.MPD", "MAP295.MPD", "MAP306.MPD", "MAP352.MPD", "MAP358.MPD", "MAP326.MPD", "MAP331.MPD", "MAP333.MPD", "MAP336.MPD", "MAP345.MPD", "MAP347.MPD", "MAP381.MPD", "MAP380.MPD", "MAP379.MPD", "MAP378.MPD", "MAP397.MPD", "MAP399.MPD", "MAP405.MPD", "MAP407.MPD" };
 	has_key_or_sig = { "MAP270.MPD", "MAP254.MPD", "MAP255.MPD", "MAP227.MPD", "MAP259.MPD", "MAP142.MPD", "MAP241.MPD", "MAP345.MPD" };
 	has_boss = { "MAP025.MPD", "MAP026.MPD", "MAP060.MPD", "MAP061.MPD", "MAP150.MPD", "MAP266.MPD", "MAP277.MPD", "MAP282.MPD", "MAP223.MPD", "MAP201.MPD", "MAP203.MPD", "MAP124.MPD", "MAP286.MPD", "MAP298.MPD", "MAP290.MPD", "MAP248.MPD", "MAP249.MPD", "MAP252.MPD", "MAP366.MPD", "MAP371.MPD", "MAP235.MPD", "MAP312.MPD", "MAP257.MPD", "MAP334.MPD", "MAP340.MPD", "MAP140.MPD", "MAP142.MPD", "MAP145.MPD", "MAP069.MPD", "MAP067.MPD", "MAP063.MPD", "MAP079.MPD", "MAP090.MPD", "MAP083.MPD", "MAP094.MPD", "MAP096.MPD", "MAP350.MPD", "MAP344.MPD", "MAP377.MPD", "MAP383.MPD", "MAP387.MPD", "MAP392.MPD", "MAP396.MPD", "MAP404.MPD", "MAP356.MPD", "MAP408.MPD" };
@@ -104,18 +109,33 @@ vector<int> Reference_Files::getRawZones() {
 
 vector<string> Reference_Files::getWarpMaps() {
 	return warp_maps;
+
+}vector<string> Reference_Files::getRetWarpMaps() {
+	return ret_maps;
 }
 
 vector<int> Reference_Files::getWarps() {
 	return warps;
 }
 
+vector<int> Reference_Files::getRetWarps() {
+	return ret_warps;
+}
+
 vector<int> Reference_Files::getZonesOfChoice() {
 	return zoc;
 }
 
+vector<int> Reference_Files::getRetZonesOfChoice() {
+	return ret_zoc;
+}
+
 vector<int> Reference_Files::getMapsOfChoice() {
 	return moc;
+}
+
+vector<int> Reference_Files::getRetMapsOfChoice() {
+	return ret_moc;
 }
 
 vector<int> Reference_Files::getUntitleds() {
@@ -126,12 +146,24 @@ vector<string> Reference_Files::getCoordinatesOfChoice() {
 	return coc;
 }
 
+vector<string> Reference_Files::getRetCoordinatesOfChoice() {
+	return ret_coc;
+}
+
 void Reference_Files::delZone(int anIndex) {
 	zoc.erase(std::next(zoc.begin(), anIndex));
 }
 
 void Reference_Files::delMap(int anIndex) {
 	moc.erase(std::next(moc.begin(), anIndex));
+}
+
+void Reference_Files::delRetMap(int anIndex) {
+	ret_maps.erase(std::next(ret_maps.begin(), anIndex));
+}
+
+void Reference_Files::delRetDoor(int anIndex) {
+	ret_warps.erase(std::next(ret_warps.begin(), anIndex));
 }
 
 void Reference_Files::delCoordinate(int anIndex) {

@@ -56,6 +56,7 @@ Add_Game ag = Add_Game();
 int xCor = 640;
 int yCor = 380;
 int seedBoxID;
+int vanBoxID;
 int runEne;
 int runChe;
 int runRoo;
@@ -67,6 +68,7 @@ void toolTipMaker(HWND hWnd);
 void ranBoxLock();
 void relock();
 void checkBoxLock();
+void revertCode(HWND hWnd);
 HWND CreateToolTip(HWND hParent, HWND hText, HINSTANCE hInst, PTSTR ptText);
 HWND toolGen(char* text, HWND hWnd, HWND hText);
 bool gamePathFound = false;
@@ -360,6 +362,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 if (seedChoice == "Y") {
                     MessageBox(hWnd, L"Seed saved to 'seed.txt'.", L"Seed Saved", MB_OK);
                 }
+                vanBoxID = MessageBox(hWnd, L"Would you like to randomize a fresh game?", L"Use vanilla version?", MB_YESNO);
+                switch (vanBoxID)
+                {
+                case IDYES:
+                    revertCode(hWnd);
+                    break;
+                case IDNO:
+                    break;
+                }
                 if (pa_rooms) {
                     changed = true;
                     remove("rooCmd.cmd");
@@ -403,47 +414,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             break;
             case IDM_REVERT:
             {
-                vanBat.open("vanCmd.cmd", std::ios::trunc);
-                ml = rf.getChestCheck();
-                mlp = ml.begin();
-                vanBat << ("cd " + ag.getStringPath() + " \n");
-                for (int mi = 0; mi < ml.size(); mi++) {
-                    m_file = ag.getStringPath() + "\\BACKUP\\" + *mlp;
-                    cur_map = *mlp;
-                    vanBat << (rf.getTool() + " '" + ag.getWhole().string() + "' /MAP/" + cur_map + " '" + m_file + "'") << std::endl;
-                    std::advance(mlp, 1);
-                }
-                mlForEne = rf.getMapList();
-                mlpForEne = mlForEne.begin();
-                vector<string> ivm = *mlpForEne;
-                vector<string>::iterator ivmp = ivm.begin();
-                for (int i = 0; i < mlForEne.size(); i++) {
-                    for (int mi = 0; mi < rf.getIndivZone(*mlpForEne).size(); mi++) {
-                        m_file = ag.getStringPath() + "\\BACKUP\\" + *ivmp;
-                        cur_map = *ivmp;
-                        vanBat << (rf.getTool() + " '" + ag.getWhole().string() + "' /MAP/" + cur_map + " '" + m_file + "'") << std::endl;
-                        std::advance(ivmp, 1);
-                    }
-                    std::advance(mlpForEne, 1);
-                    if (i != (mlForEne.size()) - 1) {
-                        ivm = *mlpForEne;
-                        ivmp = ivm.begin();
-                    }
-                }
-                wm = rf.getWarpMaps();
-                wmp = wm.begin();
-                for (int i = 0; i < wm.size() - 1; i++) {
-                    m_file = ag.getStringPath() + "\\BACKUP\\" + *wmp;
-                    cur_map = *wmp;
-                    vanBat << (rf.getTool() + " '" + ag.getWhole().string() + "' /MAP/" + cur_map + " '" + m_file + "'") << std::endl;
-                    std::advance(wmp, 1);
-                }
-                vanBat << ("xcopy /s /y \"" + ag.getStringPath() + "\\BACKUP\\\" \"" + ag.getStringPath() + "\\MAPS\\\"") << std::endl;
-                vanBat << ("PAUSE");
-                vanBat.close();
-                runChe = system("cmd.exe /c vanCmd.cmd");
-                remove("vanCmd.cmd");
-                MessageBox(hWnd, L"Game unrandomized!", L"Success", MB_OK);
+                revertCode(hWnd);
             }
             break;
             case IDM_GETSEED:
@@ -754,4 +725,48 @@ void checkBoxLock() {
             EnableWindow(butRos[i], found);
         }
     }
+}
+
+void revertCode(HWND hWnd) {
+    vanBat.open("vanCmd.cmd", std::ios::trunc);
+    ml = rf.getChestCheck();
+    mlp = ml.begin();
+    vanBat << ("cd " + ag.getStringPath() + " \n");
+    for (int mi = 0; mi < ml.size(); mi++) {
+        m_file = ag.getStringPath() + "\\BACKUP\\" + *mlp;
+        cur_map = *mlp;
+        vanBat << (rf.getTool() + " '" + ag.getWhole().string() + "' /MAP/" + cur_map + " '" + m_file + "'") << std::endl;
+        std::advance(mlp, 1);
+    }
+    mlForEne = rf.getMapList();
+    mlpForEne = mlForEne.begin();
+    vector<string> ivm = *mlpForEne;
+    vector<string>::iterator ivmp = ivm.begin();
+    for (int i = 0; i < mlForEne.size(); i++) {
+        for (int mi = 0; mi < rf.getIndivZone(*mlpForEne).size(); mi++) {
+            m_file = ag.getStringPath() + "\\BACKUP\\" + *ivmp;
+            cur_map = *ivmp;
+            vanBat << (rf.getTool() + " '" + ag.getWhole().string() + "' /MAP/" + cur_map + " '" + m_file + "'") << std::endl;
+            std::advance(ivmp, 1);
+        }
+        std::advance(mlpForEne, 1);
+        if (i != (mlForEne.size()) - 1) {
+            ivm = *mlpForEne;
+            ivmp = ivm.begin();
+        }
+    }
+    wm = rf.getWarpMaps();
+    wmp = wm.begin();
+    for (int i = 0; i < wm.size() - 1; i++) {
+        m_file = ag.getStringPath() + "\\BACKUP\\" + *wmp;
+        cur_map = *wmp;
+        vanBat << (rf.getTool() + " '" + ag.getWhole().string() + "' /MAP/" + cur_map + " '" + m_file + "'") << std::endl;
+        std::advance(wmp, 1);
+    }
+    vanBat << ("xcopy /s /y \"" + ag.getStringPath() + "\\BACKUP\\\" \"" + ag.getStringPath() + "\\MAPS\\\"") << std::endl;
+    //vanBat << ("PAUSE");
+    vanBat.close();
+    runChe = system("cmd.exe /c vanCmd.cmd");
+    remove("vanCmd.cmd");
+    MessageBox(hWnd, L"Game unrandomized!", L"Success", MB_OK);
 }

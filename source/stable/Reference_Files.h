@@ -23,12 +23,18 @@ private:
 	list<string> has_key_or_sig;
 	vector<string> has_boss;
 	vector<string> warp_maps;
+	vector<string> ret_maps;
+	vector<string> alt_ret_maps;
 	vector<vector<string>> map_list;
 	vector<int> warps;
+	vector<int> ret_warps;
 	vector<int> zoc;
+	vector<int> ret_zoc;
 	vector<int> moc;
+	vector<int> ret_moc;
 	vector<int> untitleds;
 	vector<string> coc;
+	vector<string> ret_coc;
 	string tool = "psinject\\psxinject.exe ";
 	vector<string> crashRooms;
 	vector<string> l1;
@@ -64,11 +70,16 @@ public:
 	list<string> getKSCheck();
 	vector<int> getMapSum();
 	vector<string> getWarpMaps();
+	vector<string> getRetWarpMaps();
 	vector<int> getWarps();
+	vector<int> getRetWarps();
 	vector<int> getZonesOfChoice();
+	vector<int> getRetZonesOfChoice();
 	vector<int> getMapsOfChoice();
+	vector<int> getRetMapsOfChoice();
 	vector<int> getUntitleds();
 	vector<string> getCoordinatesOfChoice();
+	vector<string> getRetCoordinatesOfChoice();
 	vector<string> getIndivZone(vector<string> aZoneList);
 	vector<string> getChestCheck();
 	vector<string> getBossRooms();
@@ -76,6 +87,8 @@ public:
 	void delZone(int anIndex);
 	void delMap(int anIndex);
 	void delCoordinate(int anIndex);
+	void delRetMap(int anIndex);
+	void delRetDoor(int anIndex);
 	vector<string> getCrashRooms();
 };
 
