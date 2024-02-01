@@ -3,21 +3,24 @@ A tool which will randomize a copy of Vagrant Story. Right now, it will randomiz
 
 A randomized game has been proven to work with both Beetle PSX and DuckStation. 
 ## Releases
-Both stable and experimental builds can be found here:
+If you want the latest build, use the Latest folder.
+
+Both old stable and experimental builds can be found here:
 
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
 ## Updates
-* More stats are included in the "Keep Item Stats" option; chiefly the equipment material and weapon target sphere.
-* An option has also been added where a randomized item will use that item's name and model. For example, a randomized Arbalest will use that name, item category, and the appropriate model.
-* The "Revert to Vanilla" option should actually work properly now. The files in the MAPS folder will all use the original content and not just the BIN file.
-* I now have a Ko-fi. A link has been given in the contact section. This is purely optional and will not dictate the project going forward. It's a tipping jar and nothing further.
+* Backwards travel for the area randomizer has been made more consistent. For example, if the next area after the Wine Cellar was Snowfly Forest, you can go back to the former through the latter. Though issues with the door code has meant that the Temple of Kiltia can no longer be a randomized destination. It will be missed...
+* Blades will no longer use materials which can't be used with them, like Wood. This means less graphic glitches, hooray!
+* Weapons will also now be randomized in a way where Grips will be set to those which can be combined with their paired Blade. This should make crafting a more consistent experience.
+* You will also now be given the option to revert to the vanilla file system before you randomize. This will mean less buttons you have to press if you want a fresh randomized game.
 
 ## To Do
 * Make the enemy drops randomizer independent from the enemy randomizer.
 * Randomize enemy stats.
 * Randomize Ashley's starting data.
-* Last-ditch effort to change which models enemies and Ashley use,
+* Find a way to randomize enemy models.
+* Last-ditch effort to change which models Ashley uses.
 
 If you wish to keep up-to-date with this project and what will be updated short-term, a link to the Trello can be found below:
 https://trello.com/b/BZRfh8ht/vagrant-story-randomizer
@@ -62,7 +65,7 @@ https://ko-fi.com/chaoticbrave
 ## Credits
 * ChaoticBrave: For making the randomizer of course!
 * Valendian: For the extensive knowledge in Vagrant Story's file systems, as well as creating the superb VSTOOLS and GodHands packages.
-* Christo: For the idea of creating a randomizer in the first place.
+* Christo: For the idea of creating a randomizer in the first place. Also provided masses of feedback regarding how Blades and Grips are handled.
 * CUE: For the psx-mode2 tool in the earlier builds. The project would've been lost without it.
 * gingerbeardman: For letting me use his translation of psx-mode2 for the earlier builds.
 * cebix: Creator of psximager, which is used for mpd file replacement in builds starting from v0.3.0.0.
