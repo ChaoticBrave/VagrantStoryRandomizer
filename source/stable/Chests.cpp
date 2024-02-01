@@ -116,6 +116,8 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
     std::uniform_int_distribution<> dist_52 = std::uniform_int_distribution<>(105, 114);
     std::uniform_int_distribution<> dist_53 = std::uniform_int_distribution<>(115, 120);
     std::uniform_int_distribution<> dist_54 = std::uniform_int_distribution<>(121, 126);
+    std::uniform_int_distribution<> dist_55 = std::uniform_int_distribution<>(0, 128);
+    std::uniform_int_distribution<> dist_56 = std::uniform_int_distribution<>(0, 25);
 
 
     char* ch_val;
@@ -1217,6 +1219,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
         acmap.seekg(size + 241, ios::beg);
         map_loc = acmap.tellg();
         to_ass = acmap.get();
+        //Shields
         if (to_ass == 3) {
             acmap.seekg(size + 245, ios::beg);
             map_loc = acmap.tellg();
@@ -1246,10 +1249,10 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             map_loc = acmap.tellg();
             to_ass = acmap.get();
             if (thirdChoice == "Y") {
-                prop = shi_nam - 126;
+                prop = shi_nam - 31;
             }
             else {
-                prop = dist_17(aGen);
+                prop = dist_17(aGen) + 95;
             }
             ch_val = new char(prop);
             acmap.seekp(size + 247, ios::beg);
@@ -1386,7 +1389,22 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                 acmap.write(ch_val, 1);
                 delete ch_val;
                 if (secondChoice == "N") {
-                    for (int b = 290; b < 299; b++) {
+                    for (int b = 290; b < 293; b++) {
+                        acmap.seekg(size + b, ios::beg);
+                        map_loc = acmap.tellg();
+                        to_ass = acmap.get();
+                        if (aChoice == "N") {
+                            prop = dist_55(aGen);
+                        }
+                        else {
+                            prop = dist_56(aGen);
+                        }
+                        ch_val = new char(prop);
+                        acmap.seekp(size + b, ios::beg);
+                        acmap.write(ch_val, 1);
+                        delete ch_val;
+                    }
+                    for (int b = 293; b < 299; b++) {
                         acmap.seekg(size + b, ios::beg);
                         map_loc = acmap.tellg();
                         to_ass = acmap.get();
@@ -1396,20 +1414,10 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                         else {
                             choice = dist_37(aGen);
                             if (choice == 1) {
-                                if (b > 292) {
-                                    prop = dist_46(aGen);
-                                }
-                                else {
-                                    prop = dist_49(aGen);
-                                }
+                                prop = dist_46(aGen);
                             }
                             if (choice == 2) {
-                                if (b > 292) {
-                                    prop = dist_47(aGen);
-                                }
-                                else {
-                                    prop = dist_14(aGen);
-                                }
+                                prop = dist_47(aGen);
                             }
                         }
                         ch_val = new char(prop);
