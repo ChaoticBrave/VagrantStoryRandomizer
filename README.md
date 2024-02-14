@@ -10,10 +10,9 @@ Both old stable and experimental builds can be found here:
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
 ## Updates
-* Backwards travel for the area randomizer has been made more consistent. For example, if the next area after the Wine Cellar was Snowfly Forest, you can go back to the former through the latter. Though issues with the door code has meant that the Temple of Kiltia can no longer be a randomized destination. It will be missed...
-* Blades will no longer use materials which can't be used with them, like Wood. This means less graphic glitches, hooray!
-* Weapons will also now be randomized in a way where Grips will be set to those which can be combined with their paired Blade. This should make crafting a more consistent experience.
-* You will also now be given the option to revert to the vanilla file system before you randomize. This will mean less buttons you have to press if you want a fresh randomized game.
+* Shields will now only refer to Shield models. No more cases of the Holy Win being a Shield!
+* The Beast's Domain is now being counted as a boss room due to how there is a forced fight with Lizardmen. Being a boss room means the enemies won't be randomized.
+* Shields no longer use negative values for Blunt, Edged and Piercing stats due to how they show up as positive in menus.
 
 ## To Do
 * Make the enemy drops randomizer independent from the enemy randomizer.
