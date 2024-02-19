@@ -499,47 +499,49 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             map_loc = acmap.tellg();
             p_53 = acmap.get();
             if (p_53 > 0) {
-                acmap.seekg(size + 65, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                prop = dist_36(aGen);
-                if (prop == 47) {
-                    choice = dist_37(aGen);
-                    if (choice == 1) {
-                        prop = dist_38(aGen);
+                if (secondChoice == "N" || size + 63 == 3) {
+                    acmap.seekg(size + 65, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    prop = dist_36(aGen);
+                    if (prop == 47) {
+                        choice = dist_37(aGen);
+                        if (choice == 1) {
+                            prop = dist_38(aGen);
+                        }
+                        if (choice == 2) {
+                            prop = dist_39(aGen);
+                        }
                     }
-                    if (choice == 2) {
-                        prop = dist_39(aGen);
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 65, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    ch_val = new char(1);
+                    acmap.seekg(size + 66, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    acmap.seekp(size + 66, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    acmap.seekg(size + 67, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    prop = dist_35(aGen);
+                    if (prop == 43) {
+                        choice = dist_37(aGen);
+                        if (choice == 1) {
+                            prop = dist_16(aGen);
+                        }
+                        if (choice == 2) {
+                            prop = dist_34(aGen);
+                        }
                     }
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 67, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
                 }
-                ch_val = new char(prop);
-                acmap.seekp(size + 65, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                ch_val = new char(1);
-                acmap.seekg(size + 66, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                acmap.seekp(size + 66, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                acmap.seekg(size + 67, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                prop = dist_35(aGen);
-                if (prop == 43) {
-                    choice = dist_37(aGen);
-                    if (choice == 1) {
-                        prop = dist_16(aGen);
-                    }
-                    if (choice == 2) {
-                        prop = dist_34(aGen);
-                    }
-                }
-                ch_val = new char(prop);
-                acmap.seekp(size + 67, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
                 if (secondChoice == "N") {
                     for (int b = 70; b < 79; b++) {
                         acmap.seekg(size + b, ios::beg);
@@ -595,47 +597,49 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                     }
                 }
                 if (p_53 > 1) {
-                    acmap.seekg(size + 93, ios::beg);
-                    map_loc = acmap.tellg();
-                    to_ass = acmap.get();
-                    prop = dist_36(aGen);
-                    if (prop == 47) {
-                        choice = dist_37(aGen);
-                        if (choice == 1) {
-                            prop = dist_38(aGen);
+                    if (secondChoice == "N" || size + 91 == 3) {
+                        acmap.seekg(size + 93, ios::beg);
+                        map_loc = acmap.tellg();
+                        to_ass = acmap.get();
+                        prop = dist_36(aGen);
+                        if (prop == 47) {
+                            choice = dist_37(aGen);
+                            if (choice == 1) {
+                                prop = dist_38(aGen);
+                            }
+                            if (choice == 2) {
+                                prop = dist_39(aGen);
+                            }
                         }
-                        if (choice == 2) {
-                            prop = dist_39(aGen);
+                        ch_val = new char(prop);
+                        acmap.seekp(size + 93, ios::beg);
+                        acmap.write(ch_val, 1);
+                        delete ch_val;
+                        ch_val = new char(1);
+                        acmap.seekg(size + 94, ios::beg);
+                        map_loc = acmap.tellg();
+                        to_ass = acmap.get();
+                        acmap.seekp(size + 94, ios::beg);
+                        acmap.write(ch_val, 1);
+                        delete ch_val;
+                        acmap.seekg(size + 95, ios::beg);
+                        map_loc = acmap.tellg();
+                        to_ass = acmap.get();
+                        prop = dist_35(aGen);
+                        if (prop == 43) {
+                            choice = dist_37(aGen);
+                            if (choice == 1) {
+                                prop = dist_16(aGen);
+                            }
+                            if (choice == 2) {
+                                prop = dist_34(aGen);
+                            }
                         }
+                        ch_val = new char(prop);
+                        acmap.seekp(size + 95, ios::beg);
+                        acmap.write(ch_val, 1);
+                        delete ch_val;
                     }
-                    ch_val = new char(prop);
-                    acmap.seekp(size + 93, ios::beg);
-                    acmap.write(ch_val, 1);
-                    delete ch_val;
-                    ch_val = new char(1);
-                    acmap.seekg(size + 94, ios::beg);
-                    map_loc = acmap.tellg();
-                    to_ass = acmap.get();
-                    acmap.seekp(size + 94, ios::beg);
-                    acmap.write(ch_val, 1);
-                    delete ch_val;
-                    acmap.seekg(size + 95, ios::beg);
-                    map_loc = acmap.tellg();
-                    to_ass = acmap.get();
-                    prop = dist_35(aGen);
-                    if (prop == 43) {
-                        choice = dist_37(aGen);
-                        if (choice == 1) {
-                            prop = dist_16(aGen);
-                        }
-                        if (choice == 2) {
-                            prop = dist_34(aGen);
-                        }
-                    }
-                    ch_val = new char(prop);
-                    acmap.seekp(size + 95, ios::beg);
-                    acmap.write(ch_val, 1);
-                    delete ch_val;
                     if (secondChoice == "N") {
                         for (int b = 98; b < 107; b++) {
                             acmap.seekg(size + b, ios::beg);
@@ -691,47 +695,49 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                         }
                     }
                     if (p_53 > 2) {
-                        acmap.seekg(size + 121, ios::beg);
-                        map_loc = acmap.tellg();
-                        to_ass = acmap.get();
-                        prop = dist_36(aGen);
-                        if (prop == 47) {
-                            choice = dist_37(aGen);
-                            if (choice == 1) {
-                                prop = dist_38(aGen);
+                        if (secondChoice == "N" || size + 119 == 3) {
+                            acmap.seekg(size + 121, ios::beg);
+                            map_loc = acmap.tellg();
+                            to_ass = acmap.get();
+                            prop = dist_36(aGen);
+                            if (prop == 47) {
+                                choice = dist_37(aGen);
+                                if (choice == 1) {
+                                    prop = dist_38(aGen);
+                                }
+                                if (choice == 2) {
+                                    prop = dist_39(aGen);
+                                }
                             }
-                            if (choice == 2) {
-                                prop = dist_39(aGen);
+                            ch_val = new char(prop);
+                            acmap.seekp(size + 121, ios::beg);
+                            acmap.write(ch_val, 1);
+                            delete ch_val;
+                            ch_val = new char(1);
+                            acmap.seekg(size + 122, ios::beg);
+                            map_loc = acmap.tellg();
+                            to_ass = acmap.get();
+                            acmap.seekp(size + 122, ios::beg);
+                            acmap.write(ch_val, 1);
+                            delete ch_val;
+                            acmap.seekg(size + 123, ios::beg);
+                            map_loc = acmap.tellg();
+                            to_ass = acmap.get();
+                            prop = dist_35(aGen);
+                            if (prop == 43) {
+                                choice = dist_37(aGen);
+                                if (choice == 1) {
+                                    prop = dist_16(aGen);
+                                }
+                                if (choice == 2) {
+                                    prop = dist_34(aGen);
+                                }
                             }
+                            ch_val = new char(prop);
+                            acmap.seekp(size + 123, ios::beg);
+                            acmap.write(ch_val, 1);
+                            delete ch_val;
                         }
-                        ch_val = new char(prop);
-                        acmap.seekp(size + 121, ios::beg);
-                        acmap.write(ch_val, 1);
-                        delete ch_val;
-                        ch_val = new char(1);
-                        acmap.seekg(size + 122, ios::beg);
-                        map_loc = acmap.tellg();
-                        to_ass = acmap.get();
-                        acmap.seekp(size + 122, ios::beg);
-                        acmap.write(ch_val, 1);
-                        delete ch_val;
-                        acmap.seekg(size + 123, ios::beg);
-                        map_loc = acmap.tellg();
-                        to_ass = acmap.get();
-                        prop = dist_35(aGen);
-                        if (prop == 43) {
-                            choice = dist_37(aGen);
-                            if (choice == 1) {
-                                prop = dist_16(aGen);
-                            }
-                            if (choice == 2) {
-                                prop = dist_34(aGen);
-                            }
-                        }
-                        ch_val = new char(prop);
-                        acmap.seekp(size + 123, ios::beg);
-                        acmap.write(ch_val, 1);
-                        delete ch_val;
                         if (secondChoice == "N") {
                             for (int b = 126; b < 135; b++) {
                                 acmap.seekg(size + b, ios::beg);
@@ -1347,47 +1353,49 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             map_loc = acmap.tellg();
             p_257 = acmap.get();
             if (p_257 > 0) {
-                acmap.seekg(size + 285, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                prop = dist_36(aGen);
-                if (prop == 47) {
-                    choice = dist_37(aGen);
-                    if (choice == 1) {
-                        prop = dist_38(aGen);
+                if (secondChoice == "N" || size + 283 == 3) {
+                    acmap.seekg(size + 285, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    prop = dist_36(aGen);
+                    if (prop == 47) {
+                        choice = dist_37(aGen);
+                        if (choice == 1) {
+                            prop = dist_38(aGen);
+                        }
+                        if (choice == 2) {
+                            prop = dist_39(aGen);
+                        }
                     }
-                    if (choice == 2) {
-                        prop = dist_39(aGen);
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 285, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    ch_val = new char(1);
+                    acmap.seekg(size + 286, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    acmap.seekp(size + 286, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    acmap.seekg(size + 287, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    prop = dist_35(aGen);
+                    if (prop == 43) {
+                        choice = dist_37(aGen);
+                        if (choice == 1) {
+                            prop = dist_16(aGen);
+                        }
+                        if (choice == 2) {
+                            prop = dist_34(aGen);
+                        }
                     }
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 287, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
                 }
-                ch_val = new char(prop);
-                acmap.seekp(size + 285, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                ch_val = new char(1);
-                acmap.seekg(size + 286, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                acmap.seekp(size + 286, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                acmap.seekg(size + 287, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                prop = dist_35(aGen);
-                if (prop == 43) {
-                    choice = dist_37(aGen);
-                    if (choice == 1) {
-                        prop = dist_16(aGen);
-                    }
-                    if (choice == 2) {
-                        prop = dist_34(aGen);
-                    }
-                }
-                ch_val = new char(prop);
-                acmap.seekp(size + 287, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
                 if (secondChoice == "N") {
                     for (int b = 290; b < 293; b++) {
                         acmap.seekg(size + b, ios::beg);
@@ -1448,47 +1456,50 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                     }
                 }
                 if (p_257 > 1) {
-                    acmap.seekg(size + 313, ios::beg);
-                    map_loc = acmap.tellg();
-                    to_ass = acmap.get();
-                    prop = dist_36(aGen);
-                    if (prop == 47) {
-                        choice = dist_37(aGen);
-                        if (choice == 1) {
-                            prop = dist_38(aGen);
+                    if (secondChoice == "N" || size + 311 == 3) {
+                        acmap.seekg(size + 313, ios::beg);
+                        map_loc = acmap.tellg();
+                        to_ass = acmap.get();
+                        prop = dist_36(aGen);
+                        if (prop == 47) {
+                            choice = dist_37(aGen);
+                            if (choice == 1) {
+                                prop = dist_38(aGen);
+                            }
+                            if (choice == 2) {
+                                prop = dist_39(aGen);
+                            }
                         }
-                        if (choice == 2) {
-                            prop = dist_39(aGen);
+                        ch_val = new char(prop);
+                        acmap.seekp(size + 313, ios::beg);
+                        acmap.write(ch_val, 1);
+                        delete ch_val;
+                        ch_val = new char(1);
+                        acmap.seekg(size + 314, ios::beg);
+                        map_loc = acmap.tellg();
+                        to_ass = acmap.get();
+                        acmap.seekp(size + 314, ios::beg);
+                        acmap.write(ch_val, 1);
+                        delete ch_val;
+                        acmap.seekg(size + 315, ios::beg);
+                        map_loc = acmap.tellg();
+                        to_ass = acmap.get();
+                        prop = dist_35(aGen);
+                        if (prop == 43) {
+                            choice = dist_37(aGen);
+                            if (choice == 1) {
+                                prop = dist_16(aGen);
+                            }
+                            if (choice == 2) {
+                                prop = dist_34(aGen);
+                            }
                         }
+                        ch_val = new char(prop);
+                        acmap.seekp(size + 315, ios::beg);
+                        acmap.write(ch_val, 1);
+                        delete ch_val;
                     }
-                    ch_val = new char(prop);
-                    acmap.seekp(size + 313, ios::beg);
-                    acmap.write(ch_val, 1);
-                    delete ch_val;
-                    ch_val = new char(1);
-                    acmap.seekg(size + 314, ios::beg);
-                    map_loc = acmap.tellg();
-                    to_ass = acmap.get();
-                    acmap.seekp(size + 314, ios::beg);
-                    acmap.write(ch_val, 1);
-                    delete ch_val;
-                    acmap.seekg(size + 315, ios::beg);
-                    map_loc = acmap.tellg();
-                    to_ass = acmap.get();
-                    prop = dist_35(aGen);
-                    if (prop == 43) {
-                        choice = dist_37(aGen);
-                        if (choice == 1) {
-                            prop = dist_16(aGen);
-                        }
-                        if (choice == 2) {
-                            prop = dist_34(aGen);
-                        }
-                    }
-                    ch_val = new char(prop);
-                    acmap.seekp(size + 315, ios::beg);
-                    acmap.write(ch_val, 1);
-                    delete ch_val;
+
                     if (secondChoice == "N") {
                         for (int b = 318; b < 327; b++) {
                             acmap.seekg(size + b, ios::beg);
@@ -1544,47 +1555,49 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                         }
                     }
                     if (p_257 > 2) {
-                        acmap.seekg(size + 341, ios::beg);
-                        map_loc = acmap.tellg();
-                        to_ass = acmap.get();
-                        prop = dist_36(aGen);
-                        if (prop == 47) {
-                            choice = dist_37(aGen);
-                            if (choice == 1) {
-                                prop = dist_38(aGen);
+                        if (secondChoice == "N" || size + 339 == 3) {
+                            acmap.seekg(size + 341, ios::beg);
+                            map_loc = acmap.tellg();
+                            to_ass = acmap.get();
+                            prop = dist_36(aGen);
+                            if (prop == 47) {
+                                choice = dist_37(aGen);
+                                if (choice == 1) {
+                                    prop = dist_38(aGen);
+                                }
+                                if (choice == 2) {
+                                    prop = dist_39(aGen);
+                                }
                             }
-                            if (choice == 2) {
-                                prop = dist_39(aGen);
+                            ch_val = new char(prop);
+                            acmap.seekp(size + 341, ios::beg);
+                            acmap.write(ch_val, 1);
+                            delete ch_val;
+                            ch_val = new char(1);
+                            acmap.seekg(size + 342, ios::beg);
+                            map_loc = acmap.tellg();
+                            to_ass = acmap.get();
+                            acmap.seekp(size + 342, ios::beg);
+                            acmap.write(ch_val, 1);
+                            delete ch_val;
+                            acmap.seekg(size + 343, ios::beg);
+                            map_loc = acmap.tellg();
+                            to_ass = acmap.get();
+                            prop = dist_35(aGen);
+                            if (prop == 43) {
+                                choice = dist_37(aGen);
+                                if (choice == 1) {
+                                    prop = dist_16(aGen);
+                                }
+                                if (choice == 2) {
+                                    prop = dist_34(aGen);
+                                }
                             }
+                            ch_val = new char(prop);
+                            acmap.seekp(size + 343, ios::beg);
+                            acmap.write(ch_val, 1);
+                            delete ch_val;
                         }
-                        ch_val = new char(prop);
-                        acmap.seekp(size + 341, ios::beg);
-                        acmap.write(ch_val, 1);
-                        delete ch_val;
-                        ch_val = new char(1);
-                        acmap.seekg(size + 342, ios::beg);
-                        map_loc = acmap.tellg();
-                        to_ass = acmap.get();
-                        acmap.seekp(size + 342, ios::beg);
-                        acmap.write(ch_val, 1);
-                        delete ch_val;
-                        acmap.seekg(size + 343, ios::beg);
-                        map_loc = acmap.tellg();
-                        to_ass = acmap.get();
-                        prop = dist_35(aGen);
-                        if (prop == 43) {
-                            choice = dist_37(aGen);
-                            if (choice == 1) {
-                                prop = dist_16(aGen);
-                            }
-                            if (choice == 2) {
-                                prop = dist_34(aGen);
-                            }
-                        }
-                        ch_val = new char(prop);
-                        acmap.seekp(size + 343, ios::beg);
-                        acmap.write(ch_val, 1);
-                        delete ch_val;
                         if (secondChoice == "N") {
                             for (int b = 346; b < 355; b++) {
                                 acmap.seekg(size + b, ios::beg);
