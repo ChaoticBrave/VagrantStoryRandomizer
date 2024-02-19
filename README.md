@@ -10,9 +10,7 @@ Both old stable and experimental builds can be found here:
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
 ## Updates
-* Shields will now only refer to Shield models. No more cases of the Holy Win being a Shield!
-* The Beast's Domain is now being counted as a boss room due to how there is a forced fight with Lizardmen. Being a boss room means the enemies won't be randomized.
-* Shields no longer use negative values for Blunt, Edged and Piercing stats due to how they show up as positive in menus.
+* A bug has been fixed where the chest in Rust in Piece wasn't being randomized and producing garbage data.
 
 ## To Do
 * Make the enemy drops randomizer independent from the enemy randomizer.
