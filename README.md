@@ -10,7 +10,7 @@ Both old stable and experimental builds can be found here:
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
 ## Updates
-* A bug has been fixed where the chest in Rust in Piece wasn't being randomized and producing garbage data.
+* A bug has been fixed where the "Keep Item Stats" parameter produces half-finished Gems in Weapons and Shields.
 
 ## To Do
 * Make the enemy drops randomizer independent from the enemy randomizer.
