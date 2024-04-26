@@ -1,5 +1,3 @@
-#pragma once
-
 #include <iostream>
 #include <string>
 #include <vector>
@@ -19,8 +17,9 @@ class Rooms
 {
 private:
 	fstream zone;
+	fstream arm;
 
 public:
 	Rooms();
-	void roomIterate(Reference_Files aRF, Add_Game& aGame);
+	void roomIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen);
 };

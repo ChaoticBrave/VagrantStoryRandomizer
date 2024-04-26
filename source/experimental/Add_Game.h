@@ -3,6 +3,7 @@
 #include <vector>
 #include <filesystem>
 #include <fstream>
+#include <random>
 
 #include "Reference_Files.h"
 
@@ -18,6 +19,8 @@ private:
 	path cp;
 	string file_name;
 	string w_name;
+	std::mt19937 baseGener;
+	string injectPath;
 
 
 public:
@@ -31,5 +34,13 @@ public:
 	void giveName();
 	path getWhole();
 	void validate(fstream& aGame, Reference_Files aRef);
+	bool guiValidate(fstream& aGame, Reference_Files aRef, string aPath);
+	bool guiValidatorUsed;
+	void makeGen(string aSeed);
+	void makeGenPlus(string aSeed, int aGivenSeed);
+	std::mt19937 getGen();
+	string getInjectPath();
+	void makeInjectPath(string aPath);
+
 };
 

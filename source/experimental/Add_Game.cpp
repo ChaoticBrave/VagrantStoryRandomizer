@@ -1,8 +1,11 @@
+#pragma warning(disable:4996)
+
 #include <string>
 #include <vector>
 #include <filesystem>
 #include <iostream>
 #include <fstream>
+#include <random>
 
 #include "Add_Game.h"
 #include "Reference_Files.h"
@@ -25,20 +28,62 @@ string Add_Game::getFileName() {
     return file_name;
 }
 
+string Add_Game::getInjectPath() {
+    return injectPath;
+}
+
 void Add_Game::giveName() {
     file_name = "";
     cout << "Please enter the ROM file name: " << endl;
     getline(cin, file_name);
 }
 
+void Add_Game::makeInjectPath(string aPath) {
+    injectPath = aPath;
+    for (std::string::size_type i = 0; i < injectPath.size(); i++) {
+        if (injectPath[i] == *" ") {
+            injectPath.insert(i, "^");
+        }
+    }
+}
+
 path Add_Game::getWhole() {
-    return getStringPath() + "\\" + getFileName();
+    if (guiValidatorUsed == true) {
+        return file_name;
+    }
+    else {
+        return getStringPath() + "\\" + getFileName();
+    }
+}
+
+void Add_Game::makeGen(string aSeed) {
+    auto const seed = std::random_device()();
+    std::mt19937 gener(seed);
+    baseGener = gener;
+    if (aSeed == "Y") {
+        freopen("seed.txt", "w", stdout);
+        cout << seed << endl;
+    }
+}
+
+void Add_Game::makeGenPlus(string aSeed, int aGivenSeed) {
+    unsigned int finSeed = aGivenSeed;
+    auto const seed = finSeed;
+    std::mt19937 gener(seed);
+    baseGener = gener;
+    if (aSeed == "Y") {
+        freopen("seed.txt", "w", stdout);
+        cout << seed << endl;
+    }
+}
+
+std::mt19937 Add_Game::getGen() {
+    return baseGener;
 }
 
 void Add_Game::validate(fstream& aGame, Reference_Files aRef) {
     bool is_vs = false;
     string rom_com;
-    struct stat buffer;
     streampos address;
     int add_val;
     while (is_vs == false) {
@@ -67,5 +112,39 @@ void Add_Game::validate(fstream& aGame, Reference_Files aRef) {
         }
     }
 }
+
+bool Add_Game::guiValidate(fstream& aGame, Reference_Files aRef, string aPath) {
+    guiValidatorUsed = false;
+    bool is_vs = false;
+    string rom_com = "";
+    streampos address;
+    int add_val;
+    aGame.open(aPath, ios::in | ios::out | ios::binary | ios::ate);
+    if (!aGame) {
+        aGame.close();
+        return is_vs;
+    }
+    else {
+        for (int o = 37696; o < 37704; o++) {
+            aGame.seekg(o, ios::beg);
+            address = aGame.tellg();
+            add_val = aGame.get();
+            rom_com += to_string(add_val);
+        }
+        if (rom_com == aRef.getCom()) {
+            is_vs = true;
+            guiValidatorUsed = true;
+            file_name = aPath;
+            aGame.close();
+            return is_vs;
+        }
+        else {
+            aGame.close();
+            return is_vs;
+        }
+    }
+}
+
+
    
 
