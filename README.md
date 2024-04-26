@@ -3,20 +3,20 @@ A tool which will randomize a copy of Vagrant Story. Right now, it will randomiz
 
 A randomized game has been proven to work with both Beetle PSX and DuckStation. 
 ## Releases
-If you want the latest build, use the Latest folder.
+If you want the latest build, use the Latest folder. The latest experimental build will be in the Experimental Builds folder.
 
 Both old stable and experimental builds can be found here:
 
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
 ## Updates
-* A bug has been fixed where the "Keep Item Stats" parameter produces half-finished Gems in Weapons and Shields.
+* The randomized weapon names, models and types are consistent by default. The option to make them inconsistent is available though.
+* For the first time in ages, there is an experimental build. This one will randomize the models which an enemy uses. For the time being, an enemy can only use the model of that which it shares a weapon with. No enemy can use Rosencrantz though as he can crash the game. What a harlot! If you think this could be made more ambitious, or even needs to be scaled back, then let me know. It will be v0.8.86.1 in the Experimental Builds folder.
 
 ## To Do
 * Make the enemy drops randomizer independent from the enemy randomizer.
 * Randomize enemy stats.
 * Randomize Ashley's starting data.
-* Find a way to randomize enemy models.
 * Last-ditch effort to change which models Ashley uses.
 
 If you wish to keep up-to-date with this project and what will be updated short-term, a link to the Trello can be found below:
