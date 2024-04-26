@@ -148,7 +148,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             map_loc = acmap.tellg();
             to_ass = acmap.get();
             prop = dist_2(aGen);
-            if (thirdChoice == "Y") {
+            if (thirdChoice == "N") {
                 bla_nam = prop;
             }
             ch_val = new char(prop);
@@ -158,7 +158,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             acmap.seekg(size + 6, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
-            if (thirdChoice == "Y") {
+            if (thirdChoice == "N") {
                 prop = bla_nam;
             }
             else {
@@ -171,7 +171,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             acmap.seekg(size + 7, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
-            if (thirdChoice == "Y") {
+            if (thirdChoice == "N") {
                 prop = bla_nam;
             }
             else {
@@ -183,7 +183,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             acmap.seekg(size + 8, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
-            if (thirdChoice == "Y") {
+            if (thirdChoice == "N") {
                 if (bla_nam >= 1 && bla_nam <= 12) {
                     prop = 1;
                 }
@@ -418,7 +418,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             acmap.seekg(size + 49, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
-            if (thirdChoice == "Y") {
+            if (thirdChoice == "N") {
                 if (cho_grip >= 1 && cho_grip <= 3) {
                     prop = dist_51(aGen);
                 }
@@ -450,7 +450,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             acmap.seekg(size + 51, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
-            if (thirdChoice == "Y") {
+            if (thirdChoice == "N") {
                 prop = gri_nam - 95;
             }
             else {
@@ -463,7 +463,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             acmap.seekg(size + 52, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
-            if (thirdChoice == "Y") {
+            if (thirdChoice == "N") {
                 if (gri_nam >= 96 && gri_nam <= 104) {
                     prop = 1;
                 }
@@ -845,7 +845,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             map_loc = acmap.tellg();
             to_ass = acmap.get();
             prop = dist_2(aGen);
-            if (thirdChoice == "Y") {
+            if (thirdChoice == "N") {
                 bla_nam = prop;
             }
             ch_val = new char(prop);
@@ -855,7 +855,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             acmap.seekg(size + 178, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
-            if (thirdChoice == "Y") {
+            if (thirdChoice == "N") {
                 prop = bla_nam;
             }
             else {
@@ -868,7 +868,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             acmap.seekg(size + 179, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
-            if (thirdChoice == "Y") {
+            if (thirdChoice == "N") {
                 prop = bla_nam;
             }
             else {
@@ -881,7 +881,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             acmap.seekg(size + 180, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
-            if (thirdChoice == "Y") {
+            if (thirdChoice == "N") {
                 if (bla_nam >= 1 && bla_nam <= 12) {
                     prop = 1;
                 }
@@ -1121,7 +1121,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             map_loc = acmap.tellg();
             to_ass = acmap.get();
             prop = dist_19(aGen);
-            if (thirdChoice == "Y") {
+            if (thirdChoice == "N") {
                 gri_nam = prop;
             }
             ch_val = new char(prop);
@@ -1138,7 +1138,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             acmap.seekg(size + 227, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
-            if (thirdChoice == "Y") {
+            if (thirdChoice == "N") {
                 prop = gri_nam - 95;
             }
             else {
@@ -1151,7 +1151,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             acmap.seekg(size + 228, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
-            if (thirdChoice == "Y") {
+            if (thirdChoice == "N") {
                 if (gri_nam >= 96 && gri_nam <= 104) {
                     prop = 1;
                 }
@@ -1231,7 +1231,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             map_loc = acmap.tellg();
             to_ass = acmap.get();
             prop = dist_40(aGen);
-            if (thirdChoice == "Y") {
+            if (thirdChoice == "N") {
                 shi_nam = prop;
             }
             ch_val = new char(prop);
@@ -1241,7 +1241,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             acmap.seekg(size + 246, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
-            if (thirdChoice == "Y") {
+            if (thirdChoice == "N") {
                 prop = shi_nam - 126;
             }
             else {
@@ -1254,7 +1254,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             acmap.seekg(size + 247, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
-            if (thirdChoice == "Y") {
+            if (thirdChoice == "N") {
                 prop = shi_nam - 31;
             }
             else {
@@ -1744,60 +1744,60 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             if (to_ass == 2) {
                 to_ass = acmap.get();
                 prop = dist_41(aGen);
-                if (thirdChoice == "Y") {
+                if (thirdChoice == "N") {
                     arm_nam = prop;
                 }
                 ch_val = new char(prop);
                 acmap.seekp(size + 373, ios::beg);
                 acmap.write(ch_val, 1);
                 delete ch_val;
-                if (thirdChoice == "N") {
+                if (thirdChoice == "Y") {
                     dist_18 = std::uniform_int_distribution<>(17, 32);
                 }
             }
             else if (to_ass == 3) {
                 to_ass = acmap.get();
                 prop = dist_42(aGen);
-                if (thirdChoice == "Y") {
+                if (thirdChoice == "N") {
                     arm_nam = prop;
                 }
                 ch_val = new char(prop);
                 acmap.seekp(size + 373, ios::beg);
                 acmap.write(ch_val, 1);
                 delete ch_val;
-                if (thirdChoice == "N") {
+                if (thirdChoice == "Y") {
                     dist_18 = std::uniform_int_distribution<>(33, 48);
                 }
             }
             else if (to_ass == 4) {
                 to_ass = acmap.get();
                 prop = dist_43(aGen);
-                if (thirdChoice == "Y") {
+                if (thirdChoice == "N") {
                     arm_nam = prop;
                 }
                 ch_val = new char(prop);
                 acmap.seekp(size + 373, ios::beg);
                 acmap.write(ch_val, 1);
                 delete ch_val;
-                if (thirdChoice == "N") {
+                if (thirdChoice == "Y") {
                     dist_18 = std::uniform_int_distribution<>(49, 64);
                 }
             }
             else if (to_ass == 5) {
                 to_ass = acmap.get();
                 prop = dist_44(aGen);
-                if (thirdChoice == "Y") {
+                if (thirdChoice == "N") {
                     arm_nam = prop;
                 }
                 ch_val = new char(prop);
                 acmap.seekp(size + 373, ios::beg);
                 acmap.write(ch_val, 1);
                 delete ch_val;
-                if (thirdChoice == "N") {
+                if (thirdChoice == "Y") {
                     dist_18 = std::uniform_int_distribution<>(65, 80);
                 }
             }
-            if (thirdChoice == "Y") {
+            if (thirdChoice == "N") {
                 prop = arm_nam - 126;
             }
             else {
@@ -1964,21 +1964,21 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             if (to_ass == 2) {
                 to_ass = acmap.get();
                 prop = dist_41(aGen);
-                if (thirdChoice == "Y") {
+                if (thirdChoice == "N") {
                     arm_nam = prop;
                 }
                 ch_val = new char(prop);
                 acmap.seekp(size + 417, ios::beg);
                 acmap.write(ch_val, 1);
                 delete ch_val;
-                if (thirdChoice == "N") {
+                if (thirdChoice == "Y") {
                     dist_18 = std::uniform_int_distribution<>(17, 32);
                 }
             }
             else if (to_ass == 3) {
                 to_ass = acmap.get();
                 prop = dist_42(aGen);
-                if (thirdChoice == "Y") {
+                if (thirdChoice == "N") {
                     arm_nam = prop;
                 }
                 ch_val = new char(prop);
@@ -1990,32 +1990,32 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             else if (to_ass == 4) {
                 to_ass = acmap.get();
                 prop = dist_43(aGen);
-                if (thirdChoice == "Y") {
+                if (thirdChoice == "N") {
                     arm_nam = prop;
                 }
                 ch_val = new char(prop);
                 acmap.seekp(size + 417, ios::beg);
                 acmap.write(ch_val, 1);
                 delete ch_val;
-                if (thirdChoice == "N") {
+                if (thirdChoice == "Y") {
                     dist_18 = std::uniform_int_distribution<>(49, 64);
                 }
             }
             else if (to_ass == 5) {
                 to_ass = acmap.get();
                 prop = dist_44(aGen);
-                if (thirdChoice == "Y") {
+                if (thirdChoice == "N") {
                     arm_nam = prop;
                 }
                 ch_val = new char(prop);
                 acmap.seekp(size + 417, ios::beg);
                 acmap.write(ch_val, 1);
                 delete ch_val;
-                if (thirdChoice == "N") {
+                if (thirdChoice == "Y") {
                     dist_18 = std::uniform_int_distribution<>(65, 80);
                 }
             }
-            if (thirdChoice == "Y") {
+            if (thirdChoice == "N") {
                 prop = arm_nam - 126;
             }
             else {
@@ -2179,7 +2179,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             map_loc = acmap.tellg();
             to_ass = acmap.get();
             prop = dist_45(aGen);
-            if (thirdChoice == "Y") {
+            if (thirdChoice == "N") {
                 arm_nam = prop;
             }
             ch_val = new char(prop);
@@ -2189,7 +2189,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             acmap.seekg(size + 462, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
-            if (thirdChoice == "Y") {
+            if (thirdChoice == "N") {
                 prop = arm_nam - 222;
             }
             else {

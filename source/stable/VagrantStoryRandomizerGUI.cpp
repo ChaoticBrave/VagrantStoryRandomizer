@@ -617,7 +617,7 @@ void makeButtons(HWND hWnd) {
     drops = CreateWindow(L"BUTTON", L"Drops", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.275), (int)(yCor * 0.20), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
     balance = CreateWindow(L"BUTTON", L"Balance Item Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.275), (int)(yCor * 0.325), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
     keep = CreateWindow(L"BUTTON", L"Keep Item Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.0325), (int)(yCor * 0.3825), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
-    consEqu = CreateWindow(L"BUTTON", L"Consistent Gear", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.275), (int)(yCor * 0.3825), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
+    consEqu = CreateWindow(L"BUTTON", L"Inconsistent Gear", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.275), (int)(yCor * 0.3825), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
 }
 
 void toolTipMaker(HWND hWnd) {
@@ -679,12 +679,11 @@ void toolTipMaker(HWND hWnd) {
     HWND keepTip = toolGen(keepDesc, hWnd, keep);
     char consDesc[] =
         "Equipment names, types and models\n"
-        "will become consistent with one\n"
+        "will not be consistent with one\n"
         "another.\n"
-        "For example, the Arbalest will\n"
-        "always be a Crossbow with the\n"
-        "model it has in the vanilla\n"
-        "game.";
+        "For example, the Arbalest could\n"
+        "be a Great Sword with a Dagger\n"
+        "model.";
     HWND consTip = toolGen(consDesc, hWnd, consEqu);
 }
 
