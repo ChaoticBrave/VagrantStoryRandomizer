@@ -61,6 +61,7 @@ int vanBoxID;
 int runEne;
 int runChe;
 int runRoo;
+int point;
 unsigned int cusSeedI = NULL;
 void placeButtons();
 void setWin(HWND hWnd);
@@ -88,11 +89,14 @@ string choiceM;
 string choiceB;
 string choiceK;
 string choiceC;
+string choiceChe;
+string choiceA;
 string seedChoice;
 string cusSeedS;
 string strForPath;
 string cur_map;
 string m_file;
+string choices;
 vector<string> ivm;
 vector<string>::iterator ivmp;
 vector<string>::iterator wmp;
@@ -311,18 +315,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     EnableWindow(butRos[butRos.size() - 3], true);
                     EnableWindow(butRos[butRos.size() - 2], true);
                     EnableWindow(butRos[butRos.size() - 1], true);
+                    choiceChe = "Y";
                 }
                 else {
                     pa_chests = false;
                     EnableWindow(butRos[butRos.size() - 3], false);
                     EnableWindow(butRos[butRos.size() - 2], false);
                     EnableWindow(butRos[butRos.size() - 1], false);
+                    choiceChe = "N";
                 }
                 if (rooticked == BST_CHECKED) {
                     pa_rooms = true;
+                    choiceA = "Y";
                 }
                 else {
                     pa_rooms = false;
+                    choiceA = "N";
                 }
                 if (droticked == BST_CHECKED && eneticked == BST_CHECKED) {
                     choiceD = "Y";
@@ -355,6 +363,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             {
                 bool changed = false;
                 //seedBox() {
+                choices = "." + choiceM + choiceE + choiceChe + choiceA + choiceD + choiceB + choiceK + choiceC;
                 seedBoxID = MessageBox(hWnd, L"Would you like to save the seed used?", L"Save Seed?", MB_YESNO);
                 switch (seedBoxID)
                 {
@@ -368,10 +377,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     //return seedBoxID;
                 //}
                 if (cusSeedU == true) {
-                    ag.makeGenPlus(seedChoice, cusSeedI);
+                    ag.makeGenPlus(seedChoice, cusSeedI, choices);
                 }
                 else {
-                    ag.makeGen(seedChoice);
+                    ag.makeGen(seedChoice, choices);
                 }
                 finGen = ag.getGen();
                 if (seedChoice == "Y") {
@@ -478,6 +487,54 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                         if (cusSeedS != "") {
                             istringstream iss(cusSeedS);
                             iss >> cusSeedI;
+                            seedFile.seekg(-10, ios::end);
+                            address = seedFile.tellg();
+                            point = seedFile.get();
+                            if (point == 89) {
+                                LRESULT tickemod = SendMessage(eneMod, BM_SETCHECK, BST_CHECKED, 0);
+                            }
+                            seedFile.seekg(-9, ios::end);
+                            address = seedFile.tellg();
+                            point = seedFile.get();
+                            if (point == 89) {
+                                LRESULT tickene = SendMessage(enemies, BM_SETCHECK, BST_CHECKED, 0);
+                            }
+                            seedFile.seekg(-8, ios::end);
+                            address = seedFile.tellg();
+                            point = seedFile.get();
+                            if (point == 89) {
+                                LRESULT tickche = SendMessage(chests, BM_SETCHECK, BST_CHECKED, 0);
+                            }
+                            seedFile.seekg(-7, ios::end);
+                            address = seedFile.tellg();
+                            point = seedFile.get();
+                            if (point == 89) {
+                                LRESULT tickroo = SendMessage(rooms, BM_SETCHECK, BST_CHECKED, 0);
+                            }
+                            seedFile.seekg(-6, ios::end);
+                            address = seedFile.tellg();
+                            point = seedFile.get();
+                            if (point == 89) {
+                                LRESULT tickdro = SendMessage(drops, BM_SETCHECK, BST_CHECKED, 0);
+                            }
+                            seedFile.seekg(-5, ios::end);
+                            address = seedFile.tellg();
+                            point = seedFile.get();
+                            if (point == 89) {
+                                LRESULT tickbal = SendMessage(balance, BM_SETCHECK, BST_CHECKED, 0);
+                            }
+                            seedFile.seekg(-4, ios::end);
+                            address = seedFile.tellg();
+                            point = seedFile.get();
+                            if (point == 89) {
+                                LRESULT tickkee = SendMessage(keep, BM_SETCHECK, BST_CHECKED, 0);
+                            }
+                            seedFile.seekg(-3, ios::end);
+                            address = seedFile.tellg();
+                            point = seedFile.get();
+                            if (point == 89) {
+                                LRESULT tickcon = SendMessage(consEqu, BM_SETCHECK, BST_CHECKED, 0);
+                            }
                             MessageBox(hWnd, L"The given seed will be used.", L"Seed Stored", MB_OK);
                             cusSeedU = true;
                         }

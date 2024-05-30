@@ -28,23 +28,10 @@ string Add_Game::getFileName() {
     return file_name;
 }
 
-string Add_Game::getInjectPath() {
-    return injectPath;
-}
-
 void Add_Game::giveName() {
     file_name = "";
     cout << "Please enter the ROM file name: " << endl;
     getline(cin, file_name);
-}
-
-void Add_Game::makeInjectPath(string aPath) {
-    injectPath = aPath;
-    for (std::string::size_type i = 0; i < injectPath.size(); i++) {
-        if (injectPath[i] == *" ") {
-            injectPath.insert(i, "^");
-        }
-    }
 }
 
 path Add_Game::getWhole() {
@@ -56,24 +43,26 @@ path Add_Game::getWhole() {
     }
 }
 
-void Add_Game::makeGen(string aSeed) {
+void Add_Game::makeGen(string aSeed, string choices) {
     auto const seed = std::random_device()();
     std::mt19937 gener(seed);
     baseGener = gener;
     if (aSeed == "Y") {
         freopen("seed.txt", "w", stdout);
-        cout << seed << endl;
+        cout << seed;
+        cout << choices << endl;
     }
 }
 
-void Add_Game::makeGenPlus(string aSeed, int aGivenSeed) {
+void Add_Game::makeGenPlus(string aSeed, int aGivenSeed, string choices) {
     unsigned int finSeed = aGivenSeed;
     auto const seed = finSeed;
     std::mt19937 gener(seed);
     baseGener = gener;
     if (aSeed == "Y") {
         freopen("seed.txt", "w", stdout);
-        cout << seed << endl;
+        cout << seed;
+        cout << choices << endl;
     }
 }
 
