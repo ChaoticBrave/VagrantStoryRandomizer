@@ -10,8 +10,7 @@ Both old stable and experimental builds can be found here:
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
 ## Updates
-* The randomized weapon names, models and types are consistent by default. The option to make them inconsistent is available though.
-* For the first time in ages, there is an experimental build. This one will randomize the models which an enemy uses. For the time being, an enemy can only use the model of that which it shares a weapon with. No enemy can use Rosencrantz though as he can crash the game. What a harlot! If you think this could be made more ambitious, or even needs to be scaled back, then let me know. It will be v0.8.86.1 in the Experimental Builds folder.
+* For both stable and experimental builds, parameter choices will now be saved as part of the seed. The stable version is in "Latest" using the MEGA link, while the experimental version is in the dedicated "Experimental" folder.
 
 ## To Do
 * Make the enemy drops randomizer independent from the enemy randomizer.
@@ -31,7 +30,9 @@ If you make any alterations to the source code and you want to bring your projec
 * Drops: Randomizes what each enemy drops. This will only apply to the random drops of an enemy. Guaranteed drops are unaltered to prevent softlocks.
 * Balance Item Stats: Makes the randomized stats of weapons, blades, grips, gems, shields, and armour in chests less extreme.
 * Area Progression: Randomizes where you go next depending on the area you're in.
-* Keep Item Stats: Prevents the stats of weapons, blades, grips, gems, shields, and armour in chests from being randomized.  
+* Keep Item Stats: Prevents the stats of weapons, blades, grips, gems, shields, and armour in chests from being randomized.
+* Enemy Models (experimental only): Allows you to change which models an enemy uses. Though the randomized model has to be able to use the original enemy's weapon.
+* Inconsistent Gear: Makes equipment type, name, and models inconsistent between one another.
 
 ## Limitations
 Enemies can also only be changed to those which can be found within the same area. For example, Snowfly Forest opponents can only be swapped with other Snowfly Forest opponents.
