@@ -10,13 +10,11 @@ Both old stable and experimental builds can be found here:
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
 ## Updates
-* For both stable and experimental builds, parameter choices will now be saved as part of the seed. The stable version is in "Latest" using the MEGA link, while the experimental version is in the dedicated "Experimental" folder.
+* For experimental builds, there is now an enemy stat randomizer. Seed parameters will get accepted properly by the randomizer, and you will no longer get prompted when a reversion to the vanilla maps and zones is done. The "Enemy Drops" parameter is also independent from the regular "Enemies" parameter. The new build can be found in the experimental folder.
 
 ## To Do
-* Make the enemy drops randomizer independent from the enemy randomizer.
-* Randomize enemy stats.
+* Add an option to balance random enemy stats.
 * Randomize Ashley's starting data.
-* Last-ditch effort to change which models Ashley uses.
 
 If you wish to keep up-to-date with this project and what will be updated short-term, a link to the Trello can be found below:
 https://trello.com/b/BZRfh8ht/vagrant-story-randomizer
@@ -32,6 +30,7 @@ If you make any alterations to the source code and you want to bring your projec
 * Area Progression: Randomizes where you go next depending on the area you're in.
 * Keep Item Stats: Prevents the stats of weapons, blades, grips, gems, shields, and armour in chests from being randomized.
 * Enemy Models (experimental only): Allows you to change which models an enemy uses. Though the randomized model has to be able to use the original enemy's weapon.
+* Enemy Stats (experimental only): Allows you to randomize the various stats and equipment of an enemy.
 * Inconsistent Gear: Makes equipment type, name, and models inconsistent between one another.
 
 ## Limitations
@@ -45,6 +44,7 @@ If you queries about the project, the best places to contact me are either one o
 
 Discord:
 
+* Mullenkamp: https://discord.gg/PfbZAkTeCN
 * Personal Discord: https://discord.gg/xmgKtf2tN6
 * Kingdom of Ivalice: https://discord.gg/WZ2DbjHXJF
 
