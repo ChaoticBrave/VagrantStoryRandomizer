@@ -15,12 +15,12 @@
 #include <iostream>
 #include <list>
 #include <fstream>
-#include <stdio.h>
 #include <stddef.h>
 #include <commdlg.h>
 #include "Enemies.h"
 #include "Chests.h"
 #include "Rooms.h"
+#include "Ashley.h"
 #include <chrono>
 #include <commctrl.h>
 
@@ -44,6 +44,13 @@ HWND drops;
 HWND balance;
 HWND keep;
 HWND consEqu;
+HWND eneMod;
+HWND eneStat;
+HWND balEneStat;
+HWND ashley;
+HWND balAshley;
+HWND fandango;
+//HWND cusAsh;
 HWND randomizeButton;
 HWND revertButton;
 HWND seedButton;
@@ -60,6 +67,8 @@ int vanBoxID;
 int runEne;
 int runChe;
 int runRoo;
+int runAsh;
+int point;
 unsigned int cusSeedI = NULL;
 void placeButtons();
 void setWin(HWND hWnd);
@@ -73,25 +82,42 @@ HWND CreateToolTip(HWND hParent, HWND hText, HINSTANCE hInst, PTSTR ptText);
 HWND toolGen(char* text, HWND hWnd, HWND hText);
 bool gamePathFound = false;
 bool pa_enemies = false;
+bool pa_models = false;
+bool pa_stats = false;
+bool pa_balstats = false;
 bool pa_chests = false;
 bool pa_rooms = false;
 bool pa_drops = false;
 bool pa_balance = false;
 bool pa_keep = false;
 bool pa_cons = false;
+bool pa_ashley = false;
+bool pa_balAshley = false;
+bool pa_fandango = false;
+//bool pa_cusAsh = false;
 bool cusSeedU = false;
-string choiceE;
-string choiceChe;
-string choiceA;
+bool freshPick = false;
 string choiceD;
+string choiceE;
+string choiceM;
+string choiceSt;
 string choiceB;
+string choiceBe;
 string choiceK;
 string choiceC;
+string choiceChe;
+string choiceA;
+string choiceAsh;
+string choiceBalAsh;
+string choiceFan;
+//string choiceCusAsh;
 string seedChoice;
 string cusSeedS;
 string strForPath;
 string cur_map;
+string cur_zone;
 string m_file;
+string z_file;
 string choices;
 vector<string> ivm;
 vector<string>::iterator ivmp;
@@ -100,6 +126,8 @@ vector<vector<string>> mlForEne;
 vector<vector<string>>::iterator mlpForEne;
 vector<string> ml;
 vector<string> wm;
+list<string> ez;
+list<string>::iterator ezp;
 vector<string>::iterator mlp;
 fstream game;
 fstream seedFile;
@@ -205,7 +233,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    //WS_OVERLAPPEDWINDOW
 
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, dwStyle,
-      CW_USEDEFAULT, 0, 350, 350, nullptr, nullptr, hInstance, nullptr);
+      CW_USEDEFAULT, 0, 350, 450, nullptr, nullptr, hInstance, nullptr);
    if (!hWnd)
    {
       return FALSE;
@@ -285,30 +313,62 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 LRESULT blcticked = SendMessage(balance, BM_GETCHECK, NULL, NULL);
                 LRESULT keeticked = SendMessage(keep, BM_GETCHECK, NULL, NULL);
                 LRESULT consticked = SendMessage(consEqu, BM_GETCHECK, NULL, NULL);
+                LRESULT modticked = SendMessage(eneMod, BM_GETCHECK, NULL, NULL);
+                LRESULT statticked = SendMessage(eneStat, BM_GETCHECK, NULL, NULL);
+                LRESULT balstatticked = SendMessage(balEneStat, BM_GETCHECK, NULL, NULL);
                 LRESULT cheticked = SendMessage(chests, BM_GETCHECK, NULL, NULL);
                 LRESULT rooticked = SendMessage(rooms, BM_GETCHECK, NULL, NULL);
+                LRESULT ashticked = SendMessage(ashley, BM_GETCHECK, NULL, NULL);
+                LRESULT balAshticked = SendMessage(balAshley, BM_GETCHECK, NULL, NULL);
+                LRESULT fanTicked = SendMessage(fandango, BM_GETCHECK, NULL, NULL);
+                //LRESULT cusTicked = SendMessage(cusAsh, BM_GETCHECK, NULL, NULL);
+
                 if (eneticked == BST_CHECKED) {
                     pa_enemies = true;
-                    EnableWindow(butRos[butRos.size() - 4], true);
                     choiceE = "Y";
                 }
                 else {
                     pa_enemies = false;
-                    EnableWindow(butRos[butRos.size() - 4], false);
                     choiceE = "N";
+                }
+                if (modticked == BST_CHECKED) {
+                    pa_models = true;
+                    choiceM = "Y";
+                }
+                else {
+                    pa_models = false;
+                    choiceM = "N";
+                }
+                if (statticked == BST_CHECKED) {
+                    pa_stats = true;
+                    EnableWindow(butRos[butRos.size() - 1], true);
+                    choiceSt = "Y";
+                }
+                else {
+                    pa_stats = false;
+                    EnableWindow(butRos[butRos.size() - 1], false);
+                    choiceSt = "N";
+                }
+                if (balstatticked == BST_CHECKED) {
+                    pa_balstats = true;
+                    choiceBe = "Y";
+                }
+                else {
+                    pa_balstats = false;
+                    choiceBe = "N";
                 }
                 if (cheticked == BST_CHECKED) {
                     pa_chests = true;
+                    EnableWindow(butRos[butRos.size() - 4], true);
                     EnableWindow(butRos[butRos.size() - 3], true);
                     EnableWindow(butRos[butRos.size() - 2], true);
-                    EnableWindow(butRos[butRos.size() - 1], true);
                     choiceChe = "Y";
                 }
                 else {
                     pa_chests = false;
+                    EnableWindow(butRos[butRos.size() - 4], false);
                     EnableWindow(butRos[butRos.size() - 3], false);
                     EnableWindow(butRos[butRos.size() - 2], false);
-                    EnableWindow(butRos[butRos.size() - 1], false);
                     choiceChe = "N";
                 }
                 if (rooticked == BST_CHECKED) {
@@ -319,10 +379,48 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     pa_rooms = false;
                     choiceA = "N";
                 }
-                if (droticked == BST_CHECKED && eneticked == BST_CHECKED) {
+                if (ashticked == BST_CHECKED) {
+                    pa_ashley = true;
+                    choiceAsh = "Y";
+                    EnableWindow(butRos[butRos.size() - 6], true);
+                    EnableWindow(butRos[butRos.size() - 5], true);
+                }
+                else {
+                    pa_ashley = false;
+                    choiceAsh = "N";
+                    EnableWindow(butRos[butRos.size() - 6], false);
+                    EnableWindow(butRos[butRos.size() - 5], false);
+                }
+                if (balAshticked == BST_CHECKED) {
+                    pa_balAshley = true;
+                    choiceBalAsh = "Y";
+                }
+                else {
+                    pa_balAshley = false;
+                    choiceBalAsh = "N";
+                }
+                if (fanTicked == BST_CHECKED) {
+                    pa_fandango = true;
+                    choiceFan = "Y";
+                }
+                else {
+                    pa_fandango = false;
+                    choiceFan = "N";
+                }
+                //if (cusTicked == BST_CHECKED) {
+                    //pa_cusAsh = true;
+                    //choiceCusAsh = "Y";
+                //}
+                //else {
+                    //pa_cusAsh = false;
+                    //choiceCusAsh = "N";
+                //}
+                if (droticked == BST_CHECKED) {
+                    pa_drops = true;
                     choiceD = "Y";
                 }
                 else {
+                    pa_drops = false;
                     choiceD = "N";
                 }
                 if (blcticked == BST_CHECKED && cheticked == BST_CHECKED) {
@@ -350,7 +448,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             {
                 bool changed = false;
                 //seedBox() {
-                choices = "." + choiceE + choiceChe + choiceA + choiceD + choiceB + choiceK + choiceC;
+                choices = "." + choiceFan + choiceBalAsh + choiceAsh + choiceBe + choiceSt + choiceM + choiceE + choiceChe + choiceA + choiceD + choiceB + choiceK + choiceC;
                 seedBoxID = MessageBox(hWnd, L"Would you like to save the seed used?", L"Save Seed?", MB_YESNO);
                 switch (seedBoxID)
                 {
@@ -377,10 +475,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 switch (vanBoxID)
                 {
                 case IDYES:
+                    freshPick = true;
                     revertCode(hWnd);
                     break;
                 case IDNO:
                     break;
+                }
+                if (pa_ashley) {
+                    changed = true;
+                    remove("ashCmd.cmd");
+                    Ashley ash_maker = Ashley();
+                    SetCursor(LoadCursor(NULL, IDC_WAIT));
+                    SetWindowTextA(hWnd, "Randomizing Ashley...");
+                    ash_maker.statIterate(rf, ag, finGen, choiceBalAsh, choiceFan);
+                    runAsh = system("cmd.exe /c ashCmd.cmd");
+                    remove("ashCmd.cmd");
+                    SetWindowTextA(hWnd, "Ashley Randomized");
                 }
                 if (pa_rooms) {
                     changed = true;
@@ -389,7 +499,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     SetCursor(LoadCursor(NULL, IDC_WAIT));
                     SetWindowTextA(hWnd, "Randomizing Rooms...");
                     roo_ran.roomIterate(rf, ag, finGen);
-                    runChe = system("cmd.exe /c rooCmd.cmd");
+                    runRoo = system("cmd.exe /c rooCmd.cmd");
                     remove("rooCmd.cmd");
                     SetWindowTextA(hWnd, "Rooms Randomized");
                 }
@@ -404,13 +514,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     remove("cheCmd.cmd");
                     SetWindowTextA(hWnd, "Chests Randomized");
                 }
-                if (pa_enemies) {
+                if (pa_enemies || pa_models || pa_stats || pa_drops) {
                     changed = true;
                     remove("eneCmd.cmd");
                     Enemies ene_ran = Enemies();
                     SetCursor(LoadCursor(NULL, IDC_WAIT));
                     SetWindowTextA(hWnd, "Randomizing Enemies...");
-                    ene_ran.mapIterate(rf, ag, choiceD, finGen);
+                    ene_ran.mapIterate(rf, ag, choiceD, finGen, choiceM, choiceE, choiceSt, choiceBe);
                     runEne = system("cmd.exe /c eneCmd.cmd");
                     remove("eneCmd.cmd");
                     SetWindowTextA(hWnd, "Enemies Randomized");
@@ -437,7 +547,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 int penPoint;
                 int seedPoint;
                 int rawSeedPoint;
-                int point;
                 int dest;
                 string num;
                 opse.lStructSize = sizeof(opse);
@@ -475,48 +584,193 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                         if (cusSeedS != "") {
                             istringstream iss(cusSeedS);
                             iss >> cusSeedI;
+                            seedFile.seekg(-15, ios::end);
+                            address = seedFile.tellg();
+                            point = seedFile.get();
+                            if (point == 89) {
+                                LRESULT tickefandango = SendMessage(fandango, BM_SETCHECK, BST_CHECKED, 0);
+                                LRESULT tickeash = SendMessage(ashley, BM_SETCHECK, BST_CHECKED, 0);
+                                pa_balAshley = true;
+                                choiceFan = "Y";
+                                pa_ashley = true;
+                                choiceAsh = "Y";
+                            }
+                            else {
+                                pa_fandango = false;
+                                choiceFan = "N";
+                            }
+                            seedFile.seekg(-14, ios::end);
+                            address = seedFile.tellg();
+                            point = seedFile.get();
+                            if (point == 89) {
+                                LRESULT tickebalash = SendMessage(balAshley, BM_SETCHECK, BST_CHECKED, 0);
+                                LRESULT tickeash = SendMessage(ashley, BM_SETCHECK, BST_CHECKED, 0);
+                                pa_balAshley = true;
+                                choiceBalAsh = "Y";
+                                pa_ashley = true;
+                                choiceAsh = "Y";
+                            }
+                            else {
+                                pa_balAshley = false;
+                                choiceBalAsh = "N";
+                            }
+                            seedFile.seekg(-13, ios::end);
+                            address = seedFile.tellg();
+                            point = seedFile.get();
+                            if (point == 89) {
+                                LRESULT tickeash = SendMessage(ashley, BM_SETCHECK, BST_CHECKED, 0);
+                                pa_ashley = true;
+                                choiceAsh = "Y";
+                                EnableWindow(butRos[butRos.size() - 6], true);
+                                EnableWindow(butRos[butRos.size() - 5], true);
+                            }
+                            else {
+                                pa_ashley = false;
+                                choiceAsh = "N";
+                                EnableWindow(butRos[butRos.size() - 6], false);
+                                EnableWindow(butRos[butRos.size() - 5], false);
+                            }
+                            seedFile.seekg(-12, ios::end);
+                            address = seedFile.tellg();
+                            point = seedFile.get();
+                            if (point == 89) {
+                                LRESULT tickebalstat = SendMessage(balEneStat, BM_SETCHECK, BST_CHECKED, 0);
+                                LRESULT tickestat = SendMessage(eneStat, BM_SETCHECK, BST_CHECKED, 0);
+                                pa_stats = true;
+                                pa_balstats = true;
+                                choiceBe = "Y";
+                                choiceSt = "Y";
+                            }
+                            else {
+                                pa_stats = false;
+                                choiceBe = "N";
+                            }
+                            seedFile.seekg(-11, ios::end);
+                            address = seedFile.tellg();
+                            point = seedFile.get();
+                            if (point == 89) {
+                                LRESULT tickestat = SendMessage(eneStat, BM_SETCHECK, BST_CHECKED, 0);
+                                EnableWindow(butRos[butRos.size() - 1], true);
+                                pa_stats = true;
+                                choiceSt = "Y";
+                            }
+                            else {
+                                EnableWindow(butRos[butRos.size() - 1], true);
+                                pa_stats = false;
+                                choiceSt = "N";
+                            }
+                            seedFile.seekg(-10, ios::end);
+                            address = seedFile.tellg();
+                            point = seedFile.get();
+                            if (point == 89) {
+                                LRESULT tickemod = SendMessage(eneMod, BM_SETCHECK, BST_CHECKED, 0);
+                                pa_models = true;
+                                choiceM = "Y";
+                            }
+                            else {
+                                pa_models = false;
+                                choiceM = "N";
+                            }
                             seedFile.seekg(-9, ios::end);
                             address = seedFile.tellg();
                             point = seedFile.get();
                             if (point == 89) {
                                 LRESULT tickene = SendMessage(enemies, BM_SETCHECK, BST_CHECKED, 0);
+                                pa_enemies = true;
+                                choiceE = "Y";
+                            }
+                            else {
+                                pa_enemies = false;
+                                choiceE = "N";
                             }
                             seedFile.seekg(-8, ios::end);
                             address = seedFile.tellg();
                             point = seedFile.get();
                             if (point == 89) {
                                 LRESULT tickche = SendMessage(chests, BM_SETCHECK, BST_CHECKED, 0);
+                                pa_chests = true;
+                                EnableWindow(butRos[butRos.size() - 4], true);
+                                EnableWindow(butRos[butRos.size() - 3], true);
+                                EnableWindow(butRos[butRos.size() - 2], true);
+                                choiceChe = "Y";
+                            }
+                            else {
+                                pa_chests = false;
+                                EnableWindow(butRos[butRos.size() - 4], false);
+                                EnableWindow(butRos[butRos.size() - 3], false);
+                                EnableWindow(butRos[butRos.size() - 2], false);
+                                choiceChe = "N";
                             }
                             seedFile.seekg(-7, ios::end);
                             address = seedFile.tellg();
                             point = seedFile.get();
                             if (point == 89) {
                                 LRESULT tickroo = SendMessage(rooms, BM_SETCHECK, BST_CHECKED, 0);
+                                pa_rooms = true;
+                                choiceA = "Y";
+                            }
+                            else {
+                                pa_rooms = false;
+                                choiceA = "N";
                             }
                             seedFile.seekg(-6, ios::end);
                             address = seedFile.tellg();
                             point = seedFile.get();
                             if (point == 89) {
                                 LRESULT tickdro = SendMessage(drops, BM_SETCHECK, BST_CHECKED, 0);
+                                pa_drops = true;
+                                choiceD = "Y";
+                            }
+                            else {
+                                pa_drops = false;
+                                choiceD = "N";
                             }
                             seedFile.seekg(-5, ios::end);
                             address = seedFile.tellg();
                             point = seedFile.get();
                             if (point == 89) {
                                 LRESULT tickbal = SendMessage(balance, BM_SETCHECK, BST_CHECKED, 0);
+                                LRESULT tickche = SendMessage(chests, BM_SETCHECK, BST_CHECKED, 0);
+                                EnableWindow(butRos[butRos.size() - 4], true);
+                                EnableWindow(butRos[butRos.size() - 3], true);
+                                EnableWindow(butRos[butRos.size() - 2], true);
+                                choiceB = "Y";
+                                choiceChe = "Y";
+                            }
+                            else {
+                                choiceB = "N";
                             }
                             seedFile.seekg(-4, ios::end);
                             address = seedFile.tellg();
                             point = seedFile.get();
                             if (point == 89) {
                                 LRESULT tickkee = SendMessage(keep, BM_SETCHECK, BST_CHECKED, 0);
+                                LRESULT tickche = SendMessage(chests, BM_SETCHECK, BST_CHECKED, 0);
+                                EnableWindow(butRos[butRos.size() - 4], true);
+                                EnableWindow(butRos[butRos.size() - 3], true);
+                                EnableWindow(butRos[butRos.size() - 2], true);
+                                choiceK = "Y";
+                                choiceChe = "Y";
+                            }
+                            else {
+                                choiceK = "N";
                             }
                             seedFile.seekg(-3, ios::end);
                             address = seedFile.tellg();
                             point = seedFile.get();
                             if (point == 89) {
                                 LRESULT tickcon = SendMessage(consEqu, BM_SETCHECK, BST_CHECKED, 0);
+                                LRESULT tickche = SendMessage(chests, BM_SETCHECK, BST_CHECKED, 0);
+                                EnableWindow(butRos[butRos.size() - 4], true);
+                                EnableWindow(butRos[butRos.size() - 3], true);
+                                EnableWindow(butRos[butRos.size() - 2], true);
+                                choiceC = "Y";
+                                choiceChe = "Y";
                             }
+                            else {
+                                choiceC = "N";
+                            }
+                            ranBoxLock();
                             MessageBox(hWnd, L"The given seed will be used.", L"Seed Stored", MB_OK);
                             cusSeedU = true;
                         }
@@ -566,8 +820,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             swprintf_s(chetext, 256, L"Chest data:");
             swprintf_s(mistext, 256, L"Misc data:");
             TextOut(hdc, xCor * 0.0325, yCor * 0.15, enetext, wcslen(enetext));
-            TextOut(hdc, xCor * 0.0325, yCor * 0.275, chetext, wcslen(chetext));
-            TextOut(hdc, xCor * 0.0325, yCor * 0.46, mistext, wcslen(mistext));
+            TextOut(hdc, xCor * 0.0325, yCor * 0.39, chetext, wcslen(chetext));
+            TextOut(hdc, xCor * 0.0325, yCor * 0.5725, mistext, wcslen(mistext));
             EndPaint(hWnd, &ps);
         }
         break;
@@ -653,25 +907,39 @@ void placeButtons() {
     butRos.emplace_back(enemies);
     butRos.emplace_back(chests);
     butRos.emplace_back(rooms);
+    butRos.emplace_back(eneMod);
     butRos.emplace_back(drops);
+    butRos.emplace_back(eneStat);
+    butRos.emplace_back(ashley);
+    butRos.emplace_back(balAshley);
+    butRos.emplace_back(fandango);
+    //butRos.emplace_back(cusAsh);
     butRos.emplace_back(balance);
     butRos.emplace_back(keep);
     butRos.emplace_back(consEqu);
+    butRos.emplace_back(balEneStat);
 }
 
 void makeButtons(HWND hWnd) {
     openGame = CreateWindow(L"BUTTON", L"Open Game", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * 0.1825), (int)(yCor * 0.05), 90, 25, hWnd, (HMENU)101, hInst, NULL);
-    randomizeButton = CreateWindow(L"BUTTON", L"Randomize", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * 0.1825), (int)(yCor * 0.71), 90, 25, hWnd, (HMENU)9003, hInst, NULL);
-    seedButton = CreateWindow(L"BUTTON", L"Enter Seed", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * 0.0325), (int)(yCor * 0.61), 90, 25, hWnd, (HMENU)9004, hInst, NULL);
-    cSeedButton = CreateWindow(L"BUTTON", L"Clear Seed", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * 0.1825), (int)(yCor * 0.61), 90, 25, hWnd, (HMENU)9005, hInst, NULL);
-    revertButton = CreateWindow(L"BUTTON", L"Revert to Vanilla", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * 0.3325), (int)(yCor * 0.61), 90, 25, hWnd, (HMENU)9006, hInst, NULL);
+    randomizeButton = CreateWindow(L"BUTTON", L"Randomize", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * 0.1825), (int)(yCor * 0.9395), 90, 25, hWnd, (HMENU)9003, hInst, NULL);
+    seedButton = CreateWindow(L"BUTTON", L"Enter Seed", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * 0.0325), (int)(yCor * 0.8385), 90, 25, hWnd, (HMENU)9004, hInst, NULL);
+    cSeedButton = CreateWindow(L"BUTTON", L"Clear Seed", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * 0.1825), (int)(yCor * 0.8385), 90, 25, hWnd, (HMENU)9005, hInst, NULL);
+    revertButton = CreateWindow(L"BUTTON", L"Revert to Vanilla", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * 0.3325), (int)(yCor * 0.8385), 90, 25, hWnd, (HMENU)9006, hInst, NULL);
     enemies = CreateWindow(L"BUTTON", L"Enemies", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.0325), (int)(yCor * 0.20), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
-    chests = CreateWindow(L"BUTTON", L"Chests", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.0325), (int)(yCor * 0.325), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
-    rooms = CreateWindow(L"BUTTON", L"Area Progression", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.0325), (int)(yCor * 0.51), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
-    drops = CreateWindow(L"BUTTON", L"Drops", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.275), (int)(yCor * 0.20), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
-    balance = CreateWindow(L"BUTTON", L"Balance Item Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.275), (int)(yCor * 0.325), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
-    keep = CreateWindow(L"BUTTON", L"Keep Item Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.0325), (int)(yCor * 0.3825), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
-    consEqu = CreateWindow(L"BUTTON", L"Inconsistent Gear", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.275), (int)(yCor * 0.3825), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
+    chests = CreateWindow(L"BUTTON", L"Chests", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.0325), (int)(yCor * 0.44), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
+    rooms = CreateWindow(L"BUTTON", L"Area Progression", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.0325), (int)(yCor * 0.6225), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
+    drops = CreateWindow(L"BUTTON", L"Drops", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.275), (int)(yCor * 0.2575), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
+    balance = CreateWindow(L"BUTTON", L"Balance Item Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.275), (int)(yCor * 0.44), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
+    keep = CreateWindow(L"BUTTON", L"Keep Item Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.0325), (int)(yCor * 0.4975), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
+    consEqu = CreateWindow(L"BUTTON", L"Inconsistent Gear", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.275), (int)(yCor * 0.4975), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
+    eneMod = CreateWindow(L"BUTTON", L"Enemy Models", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.0325), (int)(yCor * 0.2575), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
+    eneStat = CreateWindow(L"BUTTON", L"Enemy Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.0325), (int)(yCor * 0.315), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
+    balEneStat = CreateWindow(L"BUTTON", L"Balance Enemy Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.275), (int)(yCor * 0.315), 120, 25, hWnd, (HMENU)9002, hInst, NULL);
+    ashley = CreateWindow(L"BUTTON", L"Ashley's Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.0325), (int)(yCor * 0.68), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
+    balAshley = CreateWindow(L"BUTTON", L"Balance Ashley's Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.275), (int)(yCor * 0.7375), 140, 25, hWnd, (HMENU)9002, hInst, NULL);
+    fandango = CreateWindow(L"BUTTON", L"Fandango Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.0325), (int)(yCor * 0.7375), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
+    //cusAsh = CreateWindow(L"BUTTON", L"Add Gem and Shield Data", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.275), (int)(yCor * 0.7375), 140, 25, hWnd, (HMENU)9002, hInst, NULL);
 }
 
 void toolTipMaker(HWND hWnd) {
@@ -709,8 +977,6 @@ void toolTipMaker(HWND hWnd) {
         "them.";
     HWND rooTip = toolGen(rooDesc, hWnd, rooms);
     char dropDesc[] =
-        "You can only access this once you\n"
-        "decide to randomize enemies.\n"
         "This will let you randomize what an\n"
         "enemy's random drop is. 100% drops\n"
         "are kept as is to prevent softlocks.";
@@ -738,14 +1004,40 @@ void toolTipMaker(HWND hWnd) {
         "For example, the Arbalest could\n"
         "be a Great Sword with a Dagger\n"
         "model.";
-    HWND consTip = toolGen(consDesc, hWnd, consEqu);
+    HWND consTip = toolGen(consDesc, hWnd, consEqu);  
+    char modDesc[] =
+        "Models from other locations can be\n"
+        "used for enemies. For example, bats\n"
+        "could use wyvern models.";
+    HWND modTip = toolGen(modDesc, hWnd, eneMod);
+    char statDesc[] =
+        "The stats and equipment of enemies\n"
+        "can be randomized.";
+    HWND statTip = toolGen(statDesc, hWnd, eneStat);
+    char balStatDesc[] =
+        "The stats of the randomized enemies\n"
+        "will be balanced according to their\n"
+        "location.";
+    HWND balStatTip = toolGen(balStatDesc, hWnd, balEneStat);
+    char ashDesc[] =
+        "Randomizes the stats of both Ashley\n"
+        "and his starting equipment.";
+    HWND ashTip = toolGen(ashDesc, hWnd, ashley);
+    char fanDesc[] =
+        "Randomizes the blade and grip\n"
+        "of Ashley's starting weapon.";
+    HWND fanTip = toolGen(fanDesc, hWnd, fandango);
+    char balEquDesc[] =
+        "Balances how Ashley's equipment\n"
+        "and stats are randomized.";
+    HWND balEquTip = toolGen(balEquDesc, hWnd, balAshley);
 }
 
 void ranBoxLock() {
     bool checkFound = false;
-    for (int i = 4; i < butRos.size() - 4; i++) {
+    for (int i = 4; i < butRos.size() - 6; i++) {
         LRESULT boxticked = SendMessage(butRos[i], BM_GETCHECK, NULL, NULL);
-        if (boxticked == BST_CHECKED) {
+        if (boxticked == BST_CHECKED && gamePathFound) {
             checkFound = true;
             EnableWindow(randomizeButton, TRUE);
             break;
@@ -765,16 +1057,17 @@ void checkBoxLock() {
     bool found;
     if (gamePathFound) {
         found = true;
-        for (int i = 4; i < butRos.size() - 4; i++) {
+        for (int i = 1; i < butRos.size() - 6; i++) {
             EnableWindow(butRos[i], found);
+            ranBoxLock();
         }
     }
     else {
         found = false;
-        for (int i = 4; i < butRos.size(); i++) {
+        for (int i = 1; i < butRos.size(); i++) {
            LRESULT untick = SendMessage(butRos[i], BM_SETCHECK, BST_UNCHECKED, NULL);
         }
-        for (int i = 4; i < butRos.size(); i++) {
+        for (int i = 1; i < butRos.size(); i++) {
             EnableWindow(butRos[i], found);
         }
     }
@@ -782,9 +1075,13 @@ void checkBoxLock() {
 
 void revertCode(HWND hWnd) {
     vanBat.open("vanCmd.cmd", std::ios::trunc);
+    m_file = ag.getStringPath() + "\\BACKUP\\BATTLE\\INITBTL.PRG";
     ml = rf.getChestCheck();
     mlp = ml.begin();
     vanBat << ("cd " + ag.getStringPath() + " \n");
+    vanBat << (rf.getTool() + " '" + ag.getWhole().string() + "' /BATTLE/INITBTL.PRG" + " '" + m_file + "'") << std::endl;
+    m_file = ag.getStringPath() + "\\BACKUP\\TITLE\\TITLE.PRG";
+    vanBat << (rf.getTool() + " '" + ag.getWhole().string() + "' /TITLE/TITLE.PRG" + " '" + m_file + "'") << std::endl;
     for (int mi = 0; mi < ml.size(); mi++) {
         m_file = ag.getStringPath() + "\\BACKUP\\" + *mlp;
         cur_map = *mlp;
@@ -816,10 +1113,25 @@ void revertCode(HWND hWnd) {
         vanBat << (rf.getTool() + " '" + ag.getWhole().string() + "' /MAP/" + cur_map + " '" + m_file + "'") << std::endl;
         std::advance(wmp, 1);
     }
+    ez = rf.getEneZones();
+    ezp = ez.begin();
+    for (int i = 0; i < ez.size() - 1; i++) {
+        z_file = ag.getStringPath() + "\\BACKUP\\" + *ezp;
+        cur_zone = *ezp;
+        vanBat << (rf.getTool() + " '" + ag.getWhole().string() + "' /MAP/" + cur_zone + " '" + z_file + "'") << std::endl;
+        std::advance(ezp, 1);
+    }
     vanBat << ("xcopy /s /y \"" + ag.getStringPath() + "\\BACKUP\\\" \"" + ag.getStringPath() + "\\MAPS\\\"") << std::endl;
-    //vanBat << ("PAUSE");
+    vanBat << ("xcopy /s /y \"" + ag.getStringPath() + "\\BACKUP\\\" \"" + ag.getStringPath() + "\\ZONES\\\"") << std::endl;
+    vanBat << ("xcopy /s /y \"" + ag.getStringPath() + "\\BACKUP\\BATTLE\\\" \"" + ag.getStringPath() + "\\MISC\\\"") << std::endl;
+    vanBat << ("xcopy /s /y \"" + ag.getStringPath() + "\\BACKUP\\TITLE\\\" \"" + ag.getStringPath() + "\\MISC\\\"") << std::endl;
     vanBat.close();
     runChe = system("cmd.exe /c vanCmd.cmd");
     remove("vanCmd.cmd");
-    MessageBox(hWnd, L"Game unrandomized!", L"Success", MB_OK);
+    if (freshPick != true) {
+        MessageBox(hWnd, L"Game unrandomized!", L"Success", MB_OK);
+    }
+    else {
+        freshPick = false;
+    }
 }
