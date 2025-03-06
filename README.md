@@ -68,17 +68,17 @@ Ko-fi:
 https://ko-fi.com/chaoticbrave
 
 ## Credits
-# Design and Development
+### Design and Development
 * ChaoticBrave: For making the randomizer of course!
 * Christo: For the idea of creating a randomizer in the first place. Also provided masses of feedback regarding how Blades and Grips are handled.
 * the_eyes: For finding out where Ashley's initial equipment is in the game's files.
-# Tools and Code
+### Tools and Code
 * Valendian: For the extensive knowledge in Vagrant Story's file systems, as well as creating the superb VSTOOLS and GodHands packages.
 * CUE: For the psx-mode2 tool in the earlier builds. The project would've been lost without it.
 * gingerbeardman: For letting me use his translation of psx-mode2 for the earlier builds.
 * cebix: Creator of psximager, which is used for mpd file replacement in builds starting from v0.3.0.0.
 * The Xenogears Perfect Works Build team: For very kindly providing the patcher code which is used in the GUI.
-# Testing and Feedback
+### Testing and Feedback
 * NoharOSP: For being at hand to test this locally.
 * mayaktheunholy: For discovering several errors with pre-0.5.1.0 builds.
 * benjamin champion: Discovered that grips can be randomized in chests.
@@ -87,5 +87,5 @@ https://ko-fi.com/chaoticbrave
 * Another_Bloody_Wolf: For discovering the "untitled", enemy drop and Time Trial boss bugs, as well for suggesting the stat balance idea.
 * Overlord Kego: For suggesting the option to keep randomized equipment stats.
 * vagrant18: For suggesting the equipment consistency option.
-# Special Thanks
+### Special Thanks
 * OddKara: Inspired me to do location-based randomizing rather than a room-by-room direction.
