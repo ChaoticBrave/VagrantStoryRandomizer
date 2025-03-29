@@ -359,14 +359,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 }
                 if (cheticked == BST_CHECKED) {
                     pa_chests = true;
-                    EnableWindow(butRos[butRos.size() - 4], true);
+                    //EnableWindow(butRos[butRos.size() - 4], true);
                     EnableWindow(butRos[butRos.size() - 3], true);
                     EnableWindow(butRos[butRos.size() - 2], true);
                     choiceChe = "Y";
                 }
                 else {
                     pa_chests = false;
-                    EnableWindow(butRos[butRos.size() - 4], false);
+                    //EnableWindow(butRos[butRos.size() - 4], false);
                     EnableWindow(butRos[butRos.size() - 3], false);
                     EnableWindow(butRos[butRos.size() - 2], false);
                     choiceChe = "N";
@@ -431,9 +431,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 }
                 if (keeticked == BST_CHECKED && cheticked == BST_CHECKED) {
                     choiceK = "Y";
+                    EnableWindow(butRos[butRos.size() - 4], true);
                 }
                 else {
                     choiceK = "N";
+                    EnableWindow(butRos[butRos.size() - 4], false);
                 }
                 if (consticked == BST_CHECKED && cheticked == BST_CHECKED) {
                     choiceC = "Y";
@@ -689,14 +691,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                             if (point == 89) {
                                 LRESULT tickche = SendMessage(chests, BM_SETCHECK, BST_CHECKED, 0);
                                 pa_chests = true;
-                                EnableWindow(butRos[butRos.size() - 4], true);
+                                //EnableWindow(butRos[butRos.size() - 4], true);
                                 EnableWindow(butRos[butRos.size() - 3], true);
                                 EnableWindow(butRos[butRos.size() - 2], true);
                                 choiceChe = "Y";
                             }
                             else {
                                 pa_chests = false;
-                                EnableWindow(butRos[butRos.size() - 4], false);
+                                //EnableWindow(butRos[butRos.size() - 4], false);
                                 EnableWindow(butRos[butRos.size() - 3], false);
                                 EnableWindow(butRos[butRos.size() - 2], false);
                                 choiceChe = "N";
@@ -761,7 +763,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                             if (point == 89) {
                                 LRESULT tickcon = SendMessage(consEqu, BM_SETCHECK, BST_CHECKED, 0);
                                 LRESULT tickche = SendMessage(chests, BM_SETCHECK, BST_CHECKED, 0);
-                                EnableWindow(butRos[butRos.size() - 4], true);
+                                //EnableWindow(butRos[butRos.size() - 4], true);
                                 EnableWindow(butRos[butRos.size() - 3], true);
                                 EnableWindow(butRos[butRos.size() - 2], true);
                                 choiceC = "Y";
@@ -931,7 +933,7 @@ void makeButtons(HWND hWnd) {
     rooms = CreateWindow(L"BUTTON", L"Area Progression", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.0325), (int)(yCor * 0.6225), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
     drops = CreateWindow(L"BUTTON", L"Drops", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.275), (int)(yCor * 0.2575), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
     balance = CreateWindow(L"BUTTON", L"Balance Item Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.275), (int)(yCor * 0.44), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
-    keep = CreateWindow(L"BUTTON", L"Keep Item Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.0325), (int)(yCor * 0.4975), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
+    keep = CreateWindow(L"BUTTON", L"Item Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.0325), (int)(yCor * 0.4975), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
     consEqu = CreateWindow(L"BUTTON", L"Inconsistent Gear", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.275), (int)(yCor * 0.4975), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
     eneMod = CreateWindow(L"BUTTON", L"Enemy Models", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.0325), (int)(yCor * 0.2575), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
     eneStat = CreateWindow(L"BUTTON", L"Enemy Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.0325), (int)(yCor * 0.315), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
@@ -967,8 +969,7 @@ void toolTipMaker(HWND hWnd) {
         "a particular area in the game.";
     HWND eneTip = toolGen(eneDesc, hWnd, enemies);  
     char cheDesc[] =
-        "Randomizes the contents and item stats\n" 
-        "inside a chest.";
+        "Randomizes the contents inside a chest.\n";
     HWND cheTip = toolGen(cheDesc, hWnd, chests);
     char rooDesc[] =
         "Randomizes the progression of the game.\n"
@@ -984,18 +985,18 @@ void toolTipMaker(HWND hWnd) {
     char balDesc[] =
         "You can only access this once you\n"
         "decide to randomize chests.\n"
-        "This will make the randomized stats of\n"
-        "items more balanced and like what\n"
-        "you'd expect in the original game.";
+        "This will make the randomized stats and\n"
+        "quantities of items more balanced and like\n"
+        "what you'd expect in the original game.\n"
+        "Blades, grips and gems will be balanced\n"
+        "by where you are in the game.";
     HWND balTip = toolGen(balDesc, hWnd, balance);
     char keepDesc[] =
         "You can only access this once you\n"
         "decide to randomize chests.\n"
-        "This will let you keep the\n"
-        "stats of items as they\n"
-        "were in the original game.\n";
-        "They will be ignored when\n"
-        "chests are being randomized.";
+        "This will let you randomize the\n"
+        "stats of items such as equipment\n"
+        "and gems from chests.";
     HWND keepTip = toolGen(keepDesc, hWnd, keep);
     char consDesc[] =
         "Equipment names, types and models\n"

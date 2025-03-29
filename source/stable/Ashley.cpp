@@ -57,6 +57,8 @@ void Ashley::statIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen
     int gem_count;
     int loop_tracker;
     int loop_diff;
+    int cho_blade = 2;
+    int cho_grip = 1;
 
     char * ch_val;
     char rand_hp[20];
@@ -383,6 +385,8 @@ void Ashley::statIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen
         else if (stat == 9) {
             dist_9 = std::uniform_int_distribution<>(83, 90);
         }
+        cho_blade = stat;
+        cho_grip = stat;
         stat = dist_9(aGen);
         map.seekg(start + 25, ios::beg);
         stat_loc = map.tellg();
@@ -424,7 +428,24 @@ void Ashley::statIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen
             stat = 0;
         }
         else {
-            dist_13 = std::uniform_int_distribution<>(249, 255);
+            if (cho_blade == 1) {
+                dist_13 = std::uniform_int_distribution<>(254, 255);
+            }
+            else if (cho_blade == 2 || cho_blade == 5 || cho_blade == 8 || cho_blade == 9) {
+                dist_13 = std::uniform_int_distribution<>(250, 255);
+            }
+            else if (cho_blade == 3) {
+                dist_13 = std::uniform_int_distribution<>(249, 255);
+            }
+            else if (cho_blade == 4) {
+                dist_13 = std::uniform_int_distribution<>(251, 255);
+            }
+            else if (cho_blade == 6) {
+                dist_13 = std::uniform_int_distribution<>(252, 255);
+            }
+            else if (cho_blade == 7) {
+                dist_13 = std::uniform_int_distribution<>(248, 255);
+            }
             stat = dist_13(aGen);
         }
     }
@@ -538,17 +559,49 @@ void Ashley::statIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen
     map.seekp(start + 40, ios::beg);
     map.write(ch_val, 1);
     delete ch_val;
-    if (aDecision == "N") {
-        for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 3; i++) {
+        if (aDecision == "N") {
             stat = dist_20(aGen);
-            map.seekg(start + (45 + i), ios::beg);
-            stat_loc = map.tellg();
-            to_ass = map.get();
-            ch_val = new char(stat);
-            map.seekp(start + (45 + i), ios::beg);
-            map.write(ch_val, 1);
-            delete ch_val;
         }
+        else {
+            if (cho_blade == 1) {
+                stat = 1;
+            }
+            else if (cho_blade == 4) {
+                stat = 3;
+            }
+            else if (cho_blade == 5) {
+                stat = 4;
+            }
+            else {
+                if (cho_blade == 2) {
+                    dist_20 = std::uniform_int_distribution<>(3, 5);
+                }
+                if (cho_blade == 3) {
+                    dist_20 = std::uniform_int_distribution<>(4, 6);
+                }
+                if (cho_blade == 6) {
+                    dist_20 = std::uniform_int_distribution<>(2, 3);
+                }
+                if (cho_blade == 7) {
+                    dist_20 = std::uniform_int_distribution<>(4, 7);
+                }
+                if (cho_blade == 8) {
+                    dist_20 = std::uniform_int_distribution<>(5, 6);
+                }
+                if (cho_blade == 9) {
+                    dist_20 = std::uniform_int_distribution<>(9, 12);
+                }
+                stat = dist_20(aGen);
+            }
+        }
+        map.seekg(start + (45 + i), ios::beg);
+        stat_loc = map.tellg();
+        to_ass = map.get();
+        ch_val = new char(stat);
+        map.seekp(start + (45 + i), ios::beg);
+        map.write(ch_val, 1);
+        delete ch_val;
     }
     for (int i = 0; i < 6; i++) {
         if (aDecision == "Y") {
@@ -592,16 +645,33 @@ void Ashley::statIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen
         map.seekg(start + 732, ios::beg);
         stat_loc = map.tellg();
         to_ass = map.get();
-        if (to_ass == 1) {
+        if (cho_grip >= 1 && cho_grip <= 3) {
+            stat = 1;
+        }
+        else if (cho_grip >= 4 && cho_grip <= 7) {
+            stat = 2;
+        }
+        else if (cho_grip == 8) {
+            stat = 3;
+        }
+        else if (cho_grip == 9) {
+            stat = 4;
+        }
+        cho_grip = stat;
+        ch_val = new char(stat);
+        map.seekp(start + 732, ios::beg);
+        map.write(ch_val, 1);
+        delete ch_val;
+        if (cho_grip == 1) {
             dist_23 = std::uniform_int_distribution<>(96, 104);
         }
-        else if (to_ass == 2) {
+        else if (cho_grip == 2) {
             dist_23 = std::uniform_int_distribution<>(105, 114);
         }
-        else if (to_ass == 3) {
+        else if (cho_grip == 3) {
             dist_23 = std::uniform_int_distribution<>(115, 120);
         }
-        else if (to_ass == 4) {
+        else if (cho_grip == 4) {
             dist_23 = std::uniform_int_distribution<>(121, 126);
         }
         stat = dist_23(aGen);
@@ -637,6 +707,20 @@ void Ashley::statIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen
     map.seekp(start + 735, ios::beg);
     map.write(ch_val, 1);
     delete ch_val;
+    if (secondDecision == "Y") {
+        if (cho_grip == 1) {
+            dist_26 = std::uniform_int_distribution<>(252, 254);
+        }
+        else if (cho_grip == 2) {
+            dist_26 = std::uniform_int_distribution<>(251, 253);
+        }
+        else if (cho_grip == 3) {
+            dist_26 = std::uniform_int_distribution<>(250, 252);
+        }
+        else if (cho_grip == 4) {
+            dist_26 = std::uniform_int_distribution<>(253, 254);
+        }
+    }
     stat = dist_26(aGen);
     map.seekg(start + 736, ios::beg);
     stat_loc = map.tellg();
