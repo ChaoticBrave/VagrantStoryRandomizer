@@ -10,8 +10,10 @@ Both old stable and experimental builds can be found here:
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
 ## Updates
-* Stabilised the enemy stat randomizer and added a balance option. Though you should be careful using the model randomizer.
-* Added the option to randomize Ashley's starting stats and equipment. There is also the option to balance how these are randomized.
+* Updated the "Balance Item Stats" parameter so that there can only be up to 10 of an item in a chest, and so equipment and gems will only get higher stats as you go through the story.
+* "Keep Item Stats" has been changed to "Item Stats" for consistency with how the enemy parameters are termed. Its effect has also been inverted.
+* "Balance Item Stats" will be greyed out unless "Item Stats" is ticked.
+* "Balance Item Stats" and "Balance Ashley's Stats" have been edited so that agility drops will depend on the weapon blades and grips.
 
 ## To Do
 * Add Zenith QoL features.
@@ -26,9 +28,9 @@ If you make any alterations to the source code and you want to bring your projec
 * Enemies: Randomizes the enemy placements within an area.
 * Chests: Randomizes the contents of a chest.
 * Drops: Randomizes what each enemy drops. This will only apply to the random drops of an enemy. Guaranteed drops are unaltered to prevent softlocks.
-* Balance Item Stats: Makes the randomized stats of weapons, blades, grips, gems, shields, and armour in chests less extreme.
+* Balance Item Stats: Makes the randomized stats of weapons, blades, grips, gems, shields, and armour in chests less extreme. Blades, grips and gems will also be adjusted by area in the story.
 * Area Progression: Randomizes where you go next depending on the area you're in.
-* Keep Item Stats: Prevents the stats of weapons, blades, grips, gems, shields, and armour in chests from being randomized.
+* Item Stats: Randomizes the stats of weapons, blades, grips, gems, shields, and armour in chests from being randomized.
 * Enemy Models: Allows you to change which models an enemy uses. Though the randomized model has to be able to use the original enemy's weapon.
 * Enemy Stats: Allows you to randomize the various stats and equipment of an enemy.
 * Balance Enemy Stats: Will balance how the enemy stats are randomized so they are appropriate for the point of the game they are encountered.
@@ -87,5 +89,6 @@ https://ko-fi.com/chaoticbrave
 * Another_Bloody_Wolf: For discovering the "untitled", enemy drop and Time Trial boss bugs, as well for suggesting the stat balance idea.
 * Overlord Kego: For suggesting the option to keep randomized equipment stats.
 * vagrant18: For suggesting the equipment consistency option.
+* JDSilvergun: For suggesting balance improvements.
 ### Special Thanks
 * OddKara: Inspired me to do location-based randomizing rather than a room-by-room direction.
