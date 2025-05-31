@@ -2,18 +2,17 @@
 A tool which will randomize a copy of Vagrant Story. Right now, it will randomize the enemies, their drops and chest items.
 
 A randomized game has been proven to work with both Beetle PSX and DuckStation. 
-## Releases
-If you want the latest build, use the Latest folder. The latest experimental build will be in the Experimental Builds folder.
 
+For the latest version of the randomizer, check the Releases section.
+
+## Old and Experimental Releases
 Both old stable and experimental builds can be found here:
 
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
 ## Updates
-* Updated the "Balance Item Stats" parameter so that there can only be up to 10 of an item in a chest, and so equipment and gems will only get higher stats as you go through the story.
-* "Keep Item Stats" has been changed to "Item Stats" for consistency with how the enemy parameters are termed. Its effect has also been inverted.
-* "Balance Item Stats" will be greyed out unless "Item Stats" is ticked.
-* "Balance Item Stats" and "Balance Ashley's Stats" have been edited so that agility drops will depend on the weapon blades and grips.
+* Fixed some bugs concerning Ghost appearances in the Catacombs and Orcs in Abandoned Mines B2.
+* Added an option to balance the item quantities from chests so they can only go as high as 10.
 
 ## To Do
 * Add Zenith QoL features.
