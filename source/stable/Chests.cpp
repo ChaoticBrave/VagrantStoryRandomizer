@@ -19,7 +19,7 @@ Chests::Chests() {
 
 }
 
-void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen, string aChoice, string secondChoice, string thirdChoice) {
+void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen, string aChoice, string secondChoice, string thirdChoice, string fourthChoice) {
     vector<string> ml = aRF.getChestCheck();
     vector<string>::iterator mlp = ml.begin();
     list<string> mlks = aRF.getKSCheck();
@@ -2566,7 +2566,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                 prop = 1;
             }
             else {
-                if (aChoice == "Y") {
+                if (fourthChoice == "Y") {
                     prop = dist_58(aGen);
                 }
                 else {
@@ -2610,7 +2610,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                 prop = 1;
             }
             else {
-                if (aChoice == "Y") {
+                if (fourthChoice == "Y") {
                     prop = dist_58(aGen);
                 }
                 else {
@@ -2654,7 +2654,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                 prop = 1;
             }
             else {
-                if (aChoice == "Y") {
+                if (fourthChoice == "Y") {
                     prop = dist_58(aGen);
                 }
                 else {

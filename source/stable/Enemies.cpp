@@ -392,183 +392,153 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
                                 ene_at = acmap.tellg();
                                 ene_loc = acmap.get();
                                 ene_dist = std::uniform_int_distribution<>(0, (para_2 - 1));
-                                if ((ene_loc > (para_2 - 1)) == false && (cur_zone == "ZONE013.ZND" && (ene_loc < 5)) == false && (cur_zone == "ZONE015.ZND" && (ene_loc == 0)) == false) {
-                                    ene = ene_dist(aGen);
-                                    if (cur_map == "MAP016.MPD" && (ene == 14 || ene == 15 || ene == 3)) {
-                                        picker = std::uniform_int_distribution<>(1, 3);
-                                        choice = picker(aGen);
-                                        if (choice == 1) {
-                                            ene_dist = std::uniform_int_distribution<>(0, 2);
-                                            ene = ene_dist(aGen);
-                                        }
-                                        else if (choice == 2) {
-                                            ene_dist = std::uniform_int_distribution<>(4, 13);
-                                            ene = ene_dist(aGen);
-                                        }
-                                        else {
-                                            ene_dist = std::uniform_int_distribution<>(16, (para_2 - 1));
-                                            ene = ene_dist(aGen);
-                                        }
-                                    }
-                                    else if (cur_map == "MAP117.MPD" && (ene >= 9 || ene <= 13)) {
-                                        picker = std::uniform_int_distribution<>(1, 2);
-                                        choice = picker(aGen);
-                                        if (choice == 1) {
-                                            ene_dist = std::uniform_int_distribution<>(0, 8);
-                                            ene = ene_dist(aGen);
-                                        }
-                                        else {
-                                            ene_dist = std::uniform_int_distribution<>(14, (para_2 - 1));
-                                            ene = ene_dist(aGen);
-                                        }
-                                    }
-                                    else if (cur_map == "MAP166.MPD" && ene == 24) {
-                                        picker = std::uniform_int_distribution<>(1, 2);
-                                        choice = picker(aGen);
-                                        if (choice == 1) {
-                                            ene_dist = std::uniform_int_distribution<>(0, 12);
-                                            ene = ene_dist(aGen);
-                                        }
-                                        else {
-                                            ene_dist = std::uniform_int_distribution<>(14, (para_2 - 1));
-                                            ene = ene_dist(aGen);
-                                        }
-                                    }
-                                    else if ((cur_map == "MAP031.MPD" || cur_map == "MAP036.MPD") && (ene >= 5 && ene <= 11)) {
-                                        ene_dist = std::uniform_int_distribution<>(12, (para_2 - 1));
+                                if ((ene_loc > (para_2 - 1)) == false && (cur_zone == "ZONE013.ZND" && (ene_loc < 5)) == false && (cur_zone == "ZONE015.ZND" && (ene_loc == 0)) == false && (cur_zone == "ZONE051.ZND" && (ene_loc > 2 && ene_loc < 21)) == false) {
+                                    ene = ene_loc;
+                                    while (ene == ene_loc) {
                                         ene = ene_dist(aGen);
-                                    }
-                                    /*else if (cur_map == "MAP267.MPD" && ene == 0) {
-                                        ene_dist = std::uniform_int_distribution<>(1, (para_2 - 1));
-                                        ene = ene_dist(aGen);
-                                    }*/
-                                    if (cur_zone == "ZONE013.ZND" && ene <= 4) {
-                                        ene_dist = std::uniform_int_distribution<>(5, (para_2 - 1));
-                                        ene = ene_dist(aGen);
-                                    }
-                                    else if (cur_zone == "ZONE015.ZND" && ene == 0) {
-                                        ene_dist = std::uniform_int_distribution<>(1, (para_2 - 1));
-                                        ene = ene_dist(aGen);
-                                    }
-                                    else if (cur_zone == "ZONE028.ZND" && ene == 15) {
-                                        picker = std::uniform_int_distribution<>(1, 2);
-                                        choice = picker(aGen);
-                                        if (choice == 1) {
-                                            ene_dist = std::uniform_int_distribution<>(0, 14);
+                                        if (cur_map == "MAP016.MPD" && (ene == 14 || ene == 15 || ene == 3)) {
+                                            picker = std::uniform_int_distribution<>(1, 3);
+                                            choice = picker(aGen);
+                                            if (choice == 1) {
+                                                ene_dist = std::uniform_int_distribution<>(0, 2);
+                                                ene = ene_dist(aGen);
+                                            }
+                                            else if (choice == 2) {
+                                                ene_dist = std::uniform_int_distribution<>(4, 13);
+                                                ene = ene_dist(aGen);
+                                            }
+                                            else {
+                                                ene_dist = std::uniform_int_distribution<>(16, (para_2 - 1));
+                                                ene = ene_dist(aGen);
+                                            }
+                                        }
+                                        else if (cur_map == "MAP117.MPD" && (ene >= 9 || ene <= 13)) {
+                                            picker = std::uniform_int_distribution<>(1, 2);
+                                            choice = picker(aGen);
+                                            if (choice == 1) {
+                                                ene_dist = std::uniform_int_distribution<>(0, 8);
+                                                ene = ene_dist(aGen);
+                                            }
+                                            else {
+                                                ene_dist = std::uniform_int_distribution<>(14, (para_2 - 1));
+                                                ene = ene_dist(aGen);
+                                            }
+                                        }
+                                        else if (cur_map == "MAP166.MPD" && ene == 24) {
+                                            picker = std::uniform_int_distribution<>(1, 2);
+                                            choice = picker(aGen);
+                                            if (choice == 1) {
+                                                ene_dist = std::uniform_int_distribution<>(0, 12);
+                                                ene = ene_dist(aGen);
+                                            }
+                                            else {
+                                                ene_dist = std::uniform_int_distribution<>(14, (para_2 - 1));
+                                                ene = ene_dist(aGen);
+                                            }
+                                        }
+                                        else if ((cur_map == "MAP031.MPD" || cur_map == "MAP036.MPD") && (ene >= 5 && ene <= 11)) {
+                                            ene_dist = std::uniform_int_distribution<>(12, (para_2 - 1));
                                             ene = ene_dist(aGen);
                                         }
-                                        else {
-                                            ene_dist = std::uniform_int_distribution<>(16, (para_2 - 1));
+                                        /*else if (cur_map == "MAP267.MPD" && ene == 0) {
+                                            ene_dist = std::uniform_int_distribution<>(1, (para_2 - 1));
                                             ene = ene_dist(aGen);
-                                        }
-                                    }
-                                    else if (cur_zone == "ZONE040.ZND" && (ene == 4 || ene == 5)) {
-                                        picker = std::uniform_int_distribution<>(1, 2);
-                                        choice = picker(aGen);
-                                        if (choice == 1) {
-                                            ene_dist = std::uniform_int_distribution<>(0, 3);
-                                            ene = ene_dist(aGen);
-                                        }
-                                        else {
-                                            ene_dist = std::uniform_int_distribution<>(6, (para_2 - 1));
-                                            ene = ene_dist(aGen);
-                                        }
-                                    }
-                                    else if (cur_zone == "ZONE053.ZND" && ene == 4) {
-                                        picker = std::uniform_int_distribution<>(1, 2);
-                                        choice = picker(aGen);
-                                        if (choice == 1) {
-                                            ene_dist = std::uniform_int_distribution<>(0, 3);
-                                            ene = ene_dist(aGen);
-                                        }
-                                        else {
+                                        }*/
+                                        if (cur_zone == "ZONE013.ZND" && ene <= 4) {
                                             ene_dist = std::uniform_int_distribution<>(5, (para_2 - 1));
                                             ene = ene_dist(aGen);
                                         }
-                                    }
-                                    else if (cur_zone == "ZONE049.ZND" && ene == 6) {
-                                        picker = std::uniform_int_distribution<>(1, 2);
-                                        choice = picker(aGen);
-                                        if (choice == 1) {
-                                            ene_dist = std::uniform_int_distribution<>(0, 5);
-                                            ene = ene_dist(aGen);
-                                        }
-                                        else {
-                                            ene_dist = std::uniform_int_distribution<>(7, (para_2 - 1));
-                                            ene = ene_dist(aGen);
-                                        }
-                                    }
-                                    else if (cur_zone == "ZONE054.ZND" && ene == 1) {
-                                        picker = std::uniform_int_distribution<>(1, 2);
-                                        choice = picker(aGen);
-                                        if (choice == 1) {
-                                            ene = 0;
-                                        }
-                                        else {
-                                            ene_dist = std::uniform_int_distribution<>(2, (para_2 - 1));
-                                            ene = ene_dist(aGen);
-                                        }
-                                    }
-                                    else if (cur_zone == "ZONE056.ZND" && (ene == 8 || ene == 7 || ene == 9)) {
-                                        picker = std::uniform_int_distribution<>(1, 2);
-                                        choice = picker(aGen);
-                                        if (choice == 1) {
-                                            ene_dist = std::uniform_int_distribution<>(0, 6);
-                                            ene = ene_dist(aGen);
-                                        }
-                                        else {
-                                            ene_dist = std::uniform_int_distribution<>(10, (para_2 - 1));
-                                            ene = ene_dist(aGen);
-                                        }
-                                    }
-                                    if (ene == ene_loc) {
-                                        if (ene_loc == 0) {
+                                        else if (cur_zone == "ZONE015.ZND" && ene == 0) {
                                             ene_dist = std::uniform_int_distribution<>(1, (para_2 - 1));
                                             ene = ene_dist(aGen);
                                         }
-                                        else if (ene_loc == (para_2 - 1)) {
-                                            ene_dist = std::uniform_int_distribution<>(0, (para_2 - 2));
-                                            ene = ene_dist(aGen);
-                                        }
-                                        else {
+                                        else if (cur_zone == "ZONE051.ZND" && (ene > 2 && ene < 21)) {
                                             picker = std::uniform_int_distribution<>(1, 2);
                                             choice = picker(aGen);
-                                            if (ene_loc == 1) {
-                                                if (choice == 1) {
-                                                    ene = 0;
-                                                }
-                                                else {
-                                                    ene_dist = std::uniform_int_distribution<>(2, (para_2 - 1));
-                                                    ene = ene_dist(aGen);
-                                                }
-                                            }
-                                            else if (ene_loc == (para_2 - 2)) {
-                                                if (choice == 1) {
-                                                    ene_dist = std::uniform_int_distribution<>(0, (para_2 - 3));
-                                                }
-                                                else {
-                                                    ene = (para_2 - 1);
-                                                }
+                                            if (choice == 1) {
+                                                ene_dist = std::uniform_int_distribution<>(0, 2);
                                             }
                                             else {
-                                                if (choice == 1) {
-                                                    ene_dist = std::uniform_int_distribution<>(0, (ene_loc - 1));
-                                                    /*if (cur_map == "MAP267.MPD") {
-                                                        ene_dist = std::uniform_int_distribution<>(1, (ene_loc - 1));
-                                                    }*/
-                                                    ene = ene_dist(aGen);
-                                                }
-                                                else {
-                                                    ene_dist = std::uniform_int_distribution<>((ene_loc + 1), (para_2 - 1));
-                                                    ene = ene_dist(aGen);
-                                                }
+                                                ene_dist = std::uniform_int_distribution<>(21, (para_2 - 1));
+                                            }
+                                            ene = ene_dist(aGen);
+                                        }
+                                        else if (cur_zone == "ZONE028.ZND" && ene == 15) {
+                                            picker = std::uniform_int_distribution<>(1, 2);
+                                            choice = picker(aGen);
+                                            if (choice == 1) {
+                                                ene_dist = std::uniform_int_distribution<>(0, 14);
+                                                ene = ene_dist(aGen);
+                                            }
+                                            else {
+                                                ene_dist = std::uniform_int_distribution<>(16, (para_2 - 1));
+                                                ene = ene_dist(aGen);
                                             }
                                         }
+                                        else if (cur_zone == "ZONE040.ZND" && (ene == 4 || ene == 5)) {
+                                            picker = std::uniform_int_distribution<>(1, 2);
+                                            choice = picker(aGen);
+                                            if (choice == 1) {
+                                                ene_dist = std::uniform_int_distribution<>(0, 3);
+                                                ene = ene_dist(aGen);
+                                            }
+                                            else {
+                                                ene_dist = std::uniform_int_distribution<>(6, (para_2 - 1));
+                                                ene = ene_dist(aGen);
+                                            }
+                                        }
+                                        else if (cur_zone == "ZONE053.ZND" && ene == 4) {
+                                            picker = std::uniform_int_distribution<>(1, 2);
+                                            choice = picker(aGen);
+                                            if (choice == 1) {
+                                                ene_dist = std::uniform_int_distribution<>(0, 3);
+                                                ene = ene_dist(aGen);
+                                            }
+                                            else {
+                                                ene_dist = std::uniform_int_distribution<>(5, (para_2 - 1));
+                                                ene = ene_dist(aGen);
+                                            }
+                                        }
+                                        else if (cur_zone == "ZONE049.ZND" && ene == 6) {
+                                            picker = std::uniform_int_distribution<>(1, 2);
+                                            choice = picker(aGen);
+                                            if (choice == 1) {
+                                                ene_dist = std::uniform_int_distribution<>(0, 5);
+                                                ene = ene_dist(aGen);
+                                            }
+                                            else {
+                                                ene_dist = std::uniform_int_distribution<>(7, (para_2 - 1));
+                                                ene = ene_dist(aGen);
+                                            }
+                                        }
+                                        else if (cur_zone == "ZONE054.ZND" && ene == 1) {
+                                            picker = std::uniform_int_distribution<>(1, 2);
+                                            choice = picker(aGen);
+                                            if (choice == 1) {
+                                                ene = 0;
+                                            }
+                                            else {
+                                                ene_dist = std::uniform_int_distribution<>(2, (para_2 - 1));
+                                                ene = ene_dist(aGen);
+                                            }
+                                        }
+                                        else if (cur_zone == "ZONE056.ZND" && (ene == 8 || ene == 7 || ene == 9)) {
+                                            picker = std::uniform_int_distribution<>(1, 2);
+                                            choice = picker(aGen);
+                                            if (choice == 1) {
+                                                ene_dist = std::uniform_int_distribution<>(0, 6);
+                                                ene = ene_dist(aGen);
+                                            }
+                                            else {
+                                                ene_dist = std::uniform_int_distribution<>(10, (para_2 - 1));
+                                                ene = ene_dist(aGen);
+                                            }
+                                        }
+                                        ch_val = new char(ene);
+                                        acmap.seekp(b, ios::beg);
+                                        acmap.write(ch_val, 1);
+                                        delete ch_val;
                                     }
-                                    ch_val = new char(ene);
-                                    acmap.seekp(b, ios::beg);
-                                    acmap.write(ch_val, 1);
-                                    delete ch_val;
                                 }
                             }
                         }
