@@ -17,7 +17,11 @@ private:
 	string com;
 	list<string> zones;
 	vector<int> r_zones;
+	vector<int> ene_counts;
+	vector<int> ene_offsets;
+	vector<int> ene_wep_offsets;
 	list<string> zones_for_rooms;
+	list<string> ene_zones;
 	vector<int> map_sum;
 	vector<string> has_chest;
 	list<string> has_key_or_sig;
@@ -60,6 +64,7 @@ private:
 	vector<string> l21;
 
 
+
 public:
 	Reference_Files();
 	string getCom();
@@ -72,6 +77,8 @@ public:
 	vector<string> getWarpMaps();
 	vector<string> getRetWarpMaps();
 	vector<int> getWarps();
+	vector<int> getEneCounts();
+	vector<int> getEneWepOffs();
 	vector<int> getRetWarps();
 	vector<int> getZonesOfChoice();
 	vector<int> getRetZonesOfChoice();
@@ -90,5 +97,7 @@ public:
 	void delRetMap(int anIndex);
 	void delRetDoor(int anIndex);
 	vector<string> getCrashRooms();
+	list<string> getEneZones();
+	vector<int> getEneOffsets();
 };
 
