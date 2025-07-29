@@ -11,8 +11,9 @@ Both old stable and experimental builds can be found here:
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
 ## Updates
-* Fixed some bugs concerning Ghost appearances in the Catacombs and Orcs in Abandoned Mines B2.
-* Added an option to balance the item quantities from chests so they can only go as high as 10.
+* Changed the Chests randomizer so that the blades and grips produced have their original stats if Item Stats is not selected. For example, a produced Hand of Light will have 30 STR, 0 INT and -7 AGI.
+* The randomizer will also scale to monitors that have apps and text at a size greater than 100%.
+* When the game loads, the randomizer will now check the hash. If it matches a vanilla game, you won't have the opportunity to revert back until your copy is randomized. You will not be asked if you want to revert if you start randomizing a vanilla game.
 
 ## To Do
 * Add Zenith QoL features.
