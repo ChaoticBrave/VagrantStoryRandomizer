@@ -60,6 +60,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
     int choice;
     int cho_grip;
     int cho_blade;
+    int res;
 
     streampos map_loc;
 
@@ -243,10 +244,10 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                 if (bla_nam >= 57 && bla_nam <= 62) {
                     prop = 6;
                 }
-                if (bla_nam >= 63 && bla_nam <= 69) {
+                if (bla_nam >= 63 && bla_nam <= 70) {
                     prop = 7;
                 }
-                if (bla_nam >= 70 && bla_nam <= 82) {
+                if (bla_nam >= 71 && bla_nam <= 82) {
                     prop = 8;
                 }
                 if (bla_nam >= 83 && bla_nam <= 90) {
@@ -346,25 +347,158 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                 acmap.seekp(size + 15, ios::beg);
                 acmap.write(ch_val, 1);
                 delete ch_val;
-                acmap.seekg(size + 17, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
+            }
+            acmap.seekg(size + 17, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            if (secondChoice == "Y") {
                 prop = dist_21(aGen);
-                ch_val = new char(prop);
-                acmap.seekp(size + 17, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                acmap.seekg(size + 18, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
+            }
+            else {
+                if (bla_nam == 57) {
+                    prop = 1;
+                }
+                else if (bla_nam == 58) {
+                    prop = 2;
+                }
+                else if (bla_nam == 59) {
+                    prop = 3;
+                }
+                else if (bla_nam == 1 || bla_nam == 60) {
+                    prop = 4;
+                }
+                else if (bla_nam == 13 || bla_nam == 61) {
+                    prop = 5;
+                }
+                else if (bla_nam == 2 || bla_nam == 35 || bla_nam == 43 || bla_nam == 62) {
+                    prop = 6;
+                }
+                else if (bla_nam == 14) {
+                    prop = 7;
+                }
+                else if (bla_nam == 3 || bla_nam == 15 || bla_nam == 36 || bla_nam == 44 || bla_nam == 71) {
+                    prop = 8;
+                }
+                else if (bla_nam == 83) {
+                    prop = 9;
+                }
+                else if (bla_nam == 4 || bla_nam == 25 || bla_nam == 37 || bla_nam == 45 || bla_nam == 63 || bla_nam == 72) {
+                    prop = 10;
+                }
+                else if (bla_nam == 16 || bla_nam == 51 || bla_nam == 84) {
+                    prop = 11;
+                }
+                else if (bla_nam == 5 || bla_nam == 26 || bla_nam == 73) {
+                    prop = 12;
+                }
+                else if (bla_nam == 17 || bla_nam == 38 || bla_nam == 46 || bla_nam == 85) {
+                    prop = 13;
+                }
+                else if (bla_nam == 6 || bla_nam == 64 || bla_nam == 74) {
+                    prop = 14;
+                }
+                else if (bla_nam == 18 || bla_nam == 86) {
+                    prop = 15;
+                }
+                else if (bla_nam == 7 || bla_nam == 27 || bla_nam == 39 || bla_nam == 47 || bla_nam == 52) {
+                    prop = 16;
+                }
+                else if (bla_nam == 19 || bla_nam == 75 || bla_nam == 87) {
+                    prop = 17;
+                }
+                else if (bla_nam == 8) {
+                    prop = 18;
+                }
+                else if (bla_nam == 20 || bla_nam == 28 || bla_nam == 40 || bla_nam == 48 || bla_nam == 65 || bla_nam == 76 || bla_nam == 88) {
+                    prop = 19;
+                }
+                else if (bla_nam == 9 || bla_nam == 53) {
+                    prop = 20;
+                }
+                else if (bla_nam == 21 || bla_nam == 77 || bla_nam == 89) {
+                    prop = 21;
+                }
+                else if (bla_nam == 10 || bla_nam == 29 || bla_nam == 41 || bla_nam == 49 || bla_nam == 78) {
+                    prop = 22;
+                }
+                else if (bla_nam == 22 || bla_nam == 66 || bla_nam == 90) {
+                    prop = 23;
+                }
+                else if (bla_nam == 11) {
+                    prop = 24;
+                }
+                else if (bla_nam == 23 || bla_nam == 30 || bla_nam == 42 || bla_nam == 50 || bla_nam == 54) {
+                    prop = 25;
+                }
+                else if (bla_nam == 12 || bla_nam == 79) {
+                    prop = 26;
+                }
+                else if (bla_nam == 24 || bla_nam == 31 || bla_nam == 67) {
+                    prop = 27;
+                }
+                else if (bla_nam == 80) {
+                    prop = 28;
+                }
+                else if (bla_nam == 70 || bla_nam == 81) {
+                    prop = 30;
+                }
+                else if (bla_nam == 32 || bla_nam == 55) {
+                    prop = 31;
+                }
+                else if (bla_nam == 68) {
+                    prop = 32;
+                }
+                else if (bla_nam == 33 || bla_nam == 82) {
+                    prop = 33;
+                }
+                else if (bla_nam == 34 || bla_nam == 56) {
+                    prop = 35;
+                }
+                else if (bla_nam == 69) {
+                    prop = 36;
+                }
+            }
+            ch_val = new char(prop);
+            acmap.seekp(size + 17, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
+            acmap.seekg(size + 18, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            if (secondChoice == "Y") {
                 prop = dist_22(aGen);
-                ch_val = new char(prop);
-                acmap.seekp(size + 18, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                acmap.seekg(size + 19, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
+            }
+            else {
+                if ((bla_nam >= 1 && bla_nam <= 56) || (bla_nam >= 63 && bla_nam <= 90)) {
+                    prop = 0;
+                }
+                else if (bla_nam == 57) {
+                    prop = 5;
+                }
+                else if (bla_nam == 58) {
+                    prop = 10;
+                }
+                else if (bla_nam == 59) {
+                    prop = 16;
+                }
+                else if (bla_nam == 60) {
+                    prop = 20;
+                }
+                else if (bla_nam == 61) {
+                    prop = 25;
+                }
+                else if (bla_nam == 62) {
+                    prop = 30;
+                }
+            }
+            ch_val = new char(prop);
+            acmap.seekp(size + 18, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
+            acmap.seekg(size + 19, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            if (secondChoice == "Y") {
                 if (aChoice == "Y") {
                     if (cho_blade == 1) {
                         dist_23 = std::uniform_int_distribution<>(254, 255);
@@ -386,20 +520,76 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                     }
                 }
                 prop = dist_23(aGen) - 255;
-                ch_val = new char(prop);
-                acmap.seekp(size + 19, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                acmap.seekg(size + 20, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                prop = dist_9(aGen);
-                ch_val = new char(prop);
-                acmap.seekp(size + 20, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
             }
-            prop = (4 * dist_10(aGen)) + dist_11(aGen);
+            else {
+                if (bla_nam >= 1 && bla_nam <= 5) {
+                    prop = 0;
+                }
+                else if ((bla_nam >= 6 && bla_nam <= 15) || bla_nam == 35 || bla_nam == 36 || bla_nam == 43 || bla_nam == 44 || bla_nam == 57 || bla_nam == 58 || bla_nam == 84) {
+                    prop = 255;
+                }
+                else if ((bla_nam >= 16 && bla_nam <= 18) || bla_nam == 25 || bla_nam == 26 || bla_nam == 37 || bla_nam == 38 || bla_nam == 45 || bla_nam == 46 || bla_nam == 51 || bla_nam == 59 || bla_nam == 60 || bla_nam == 63 || (bla_nam >= 71 && bla_nam <= 73) || bla_nam == 83) {
+                    prop = 254;
+                }
+                else if ((bla_nam >= 19 && bla_nam <= 21) || bla_nam == 27 || bla_nam == 28 || bla_nam == 39 || bla_nam == 40 || bla_nam == 47 || bla_nam == 48 || bla_nam == 52 || bla_nam == 53 || bla_nam == 61 || bla_nam == 62 || bla_nam == 64 || bla_nam == 65 || (bla_nam >= 74 && bla_nam <= 76) || (bla_nam >= 85 && bla_nam <= 87)) {
+                    prop = 253;
+                }
+                else if (bla_nam == 22 || bla_nam == 23 || (bla_nam >= 29 && bla_nam <= 31) || bla_nam == 41 || bla_nam == 42 || bla_nam == 49 || bla_nam == 50 || bla_nam == 54 || bla_nam == 55 || bla_nam == 66 || bla_nam == 67 || (bla_nam >= 77 && bla_nam <= 79) || bla_nam == 88 || bla_nam == 89) {
+                    prop = 252;
+                }
+                else if (bla_nam == 24 || bla_nam == 32 || bla_nam == 33 || bla_nam == 56 || bla_nam == 68 || bla_nam == 69 || (bla_nam >= 80 && bla_nam <= 82) || bla_nam == 90) {
+                    prop = 251;
+                }
+                else if (bla_nam == 34) {
+                    prop = 250;
+                }
+                else if (bla_nam == 70) {
+                    prop = 249;
+                }
+            }
+            ch_val = new char(prop);
+            acmap.seekp(size + 19, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
+            acmap.seekg(size + 20, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            if (secondChoice == "Y") {
+                prop = dist_9(aGen);
+            }
+            else {
+                if ((bla_nam >= 1 && bla_nam <= 10) || (bla_nam >= 13 && bla_nam <= 18) || (bla_nam >= 25 && bla_nam <= 28) || (bla_nam >= 35 && bla_nam <= 44) || bla_nam == 51 || bla_nam == 52 || (bla_nam >= 57 && bla_nam <= 62) || bla_nam == 63 || bla_nam == 64 || bla_nam == 70 || (bla_nam >= 71 && bla_nam <= 74)) {
+                    prop = 1;
+                }
+                else if (bla_nam == 11 || bla_nam == 12 || (bla_nam >= 19 && bla_nam <= 23) || (bla_nam >= 29 && bla_nam <= 31) || bla_nam == 34 || (bla_nam >= 45 && bla_nam <= 50) || bla_nam == 53 || bla_nam == 54 || (bla_nam >= 65 && bla_nam <= 67) || (bla_nam >= 75 && bla_nam <= 78) || (bla_nam >= 83 && bla_nam <= 85)) {
+                    prop = 2;
+                }
+                else if (bla_nam == 24 || bla_nam == 32 || bla_nam == 33 || bla_nam == 55 || bla_nam == 56 || bla_nam == 68 || bla_nam == 69 || (bla_nam >= 79 && bla_nam <= 82) || (bla_nam >= 86 && bla_nam <= 88)) {
+                    prop = 3;
+                }
+                else if (bla_nam == 89 || bla_nam == 90) {
+                    prop = 4;
+                }
+            }
+            ch_val = new char(prop);
+            acmap.seekp(size + 20, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
+            if (secondChoice == "Y") {
+                prop = (4 * dist_10(aGen)) + dist_11(aGen);
+            }
+            else {
+                if ((bla_nam >= 43 && bla_nam <= 50) || (bla_nam >= 57 && bla_nam <= 70) || bla_nam == 73 || bla_nam == 80 || bla_nam == 85 || bla_nam == 87 || bla_nam == 89) {
+                    res = 1;
+                }
+                else if (bla_nam == 1 || bla_nam == 3 || bla_nam == 5 || (bla_nam >= 8 && bla_nam <= 11) || bla_nam == 13 || bla_nam == 14 || (bla_nam >= 16 && bla_nam <= 42) || (bla_nam >= 51 && bla_nam <= 56) || bla_nam == 72 || bla_nam == 79 || bla_nam == 81) {
+                    res = 2;
+                }
+                else if (bla_nam == 2 || bla_nam == 4 || bla_nam == 6 || bla_nam == 7 || bla_nam == 12 || bla_nam == 15 || bla_nam == 71 || (bla_nam >= 74 && bla_nam <= 78) || (bla_nam >= 82 && bla_nam <= 84) || bla_nam == 86 || bla_nam == 88 || bla_nam == 90) {
+                    res = 3;
+                }
+                prop = 8 + res;
+            }
             acmap.seekg(size + 21, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
@@ -595,6 +785,24 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             acmap.seekg(size + 53, ios::beg);
             map_loc = acmap.tellg();
             p_53 = acmap.get();
+            if (secondChoice == "N") {
+                if (gri_nam == 96 || gri_nam == 97 || gri_nam == 105 || gri_nam == 107 || gri_nam == 115 || gri_nam == 117 || gri_nam == 121) {
+                    p_53 = 0;
+                }
+                else if (gri_nam == 98 || gri_nam == 100 || gri_nam == 106 || gri_nam == 108 || gri_nam == 110 || gri_nam == 116 || gri_nam == 119 || (gri_nam >= 122 && gri_nam <= 126)) {
+                    p_53 = 1;
+                }
+                else if (gri_nam == 99 || gri_nam == 101 || gri_nam == 103 || gri_nam == 113 || gri_nam == 109 || gri_nam == 11 || gri_nam == 118) {
+                    p_53 = 2;
+                }
+                else if (gri_nam == 102 || gri_nam == 104 || gri_nam == 112 || gri_nam == 114 || gri_nam == 120) {
+                    p_53 = 3;
+                }
+                ch_val = new char(p_53);
+                acmap.seekp(size + 53, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+            }
             if (p_53 > 0) {
                 if (secondChoice == "Y" || size + 63 == 3) {
                     acmap.seekg(size + 65, ios::beg);
@@ -892,26 +1100,73 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                     }
                 }
             }
+            acmap.seekg(size + 54, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
             if (secondChoice == "Y") {
-                acmap.seekg(size + 54, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
                 prop = dist_24(aGen);
-                ch_val = new char(prop);
-                acmap.seekp(size + 54, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                acmap.seekg(size + 55, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
+            }
+            else {
+                if (gri_nam == 96 || gri_nam == 97 || gri_nam == 105 || gri_nam == 106 || gri_nam == 113 || gri_nam == 115 || gri_nam == 121) {
+                    prop = 1;
+                }
+                else if (gri_nam == 98 || gri_nam == 99 || gri_nam == 107 || gri_nam == 108 || gri_nam == 116 || gri_nam == 122 || gri_nam == 125) {
+                    prop = 2;
+                }
+                else if (gri_nam == 100 || gri_nam == 101 || gri_nam == 110 || gri_nam == 109 || gri_nam == 117 || gri_nam == 123) {
+                    prop = 3;
+                }
+                else if (gri_nam == 102 || gri_nam == 103 || gri_nam == 111 || gri_nam == 118 || gri_nam == 115 || gri_nam == 124 || gri_nam == 126) {
+                    prop = 4;
+                }
+                else if (gri_nam == 104 || gri_nam == 112 || gri_nam == 119) {
+                    prop = 5;
+                }
+                else if (gri_nam == 114 || gri_nam == 120) {
+                    prop = 6;
+                }
+            }
+            ch_val = new char(prop);
+            acmap.seekp(size + 54, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
+            acmap.seekg(size + 55, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            if (secondChoice == "Y") {
                 prop = dist_59(aGen);
-                ch_val = new char(prop);
-                acmap.seekp(size + 55, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                acmap.seekg(size + 56, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
+            }
+            else {
+                if (gri_nam == 96 || gri_nam == 105 || gri_nam == 115 || gri_nam == 121 || gri_nam == 122 || gri_nam == 125) {
+                    prop = 0;
+                }
+                else if (gri_nam == 97 || gri_nam == 98 || gri_nam == 107 || gri_nam == 110 || gri_nam == 112 || gri_nam == 116 || gri_nam == 123 || gri_nam == 124) {
+                    prop = 1;
+                }
+                else if (gri_nam == 99 || gri_nam == 100 || gri_nam == 106 || gri_nam == 108 || gri_nam == 109 || gri_nam == 117 || gri_nam == 119 || gri_nam == 126) {
+                    prop = 2;
+                }
+                else if (gri_nam == 101 || gri_nam == 102 || gri_nam == 111 || gri_nam == 114 || gri_nam == 118) {
+                    prop = 3;
+                }
+                else if (gri_nam == 103 || gri_nam == 104) {
+                    prop = 4;
+                }
+                else if (gri_nam == 120) {
+                    prop = 5;
+                }
+                else if (gri_nam == 113) {
+                    prop = 8;
+                }
+            }
+            ch_val = new char(prop);
+            acmap.seekp(size + 55, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
+            acmap.seekg(size + 56, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            if (secondChoice == "Y") {
                 if (aChoice == "Y") {
                     if (cho_grip == 1) {
                         dist_25 = std::uniform_int_distribution<>(252, 254);
@@ -927,10 +1182,29 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                     }
                 }
                 prop = dist_25(aGen) - 255;
-                ch_val = new char(prop);
-                acmap.seekp(size + 56, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
+            }
+            else {
+                if ((gri_nam >= 96 && gri_nam <= 98) || gri_nam == 121 || gri_nam == 122 || gri_nam == 123 || gri_nam == 124) {
+                    prop = 255;
+                }
+                else if ((gri_nam >= 99 && gri_nam <= 101) || gri_nam == 105 || gri_nam == 106 || gri_nam == 107 || gri_nam == 125 || gri_nam == 126) {
+                    prop = 254;
+                }
+                else if ((gri_nam >= 102 && gri_nam <= 104) || (gri_nam >= 109 && gri_nam <= 112) || gri_nam == 115 || gri_nam == 116) {
+                    prop = 253;
+                }
+                else if (gri_nam == 113 || gri_nam == 112 || gri_nam == 114 || gri_nam == 117 || gri_nam == 118) {
+                    prop = 252;
+                }
+                else if (gri_nam == 119 || gri_nam == 120) {
+                    prop = 251;
+                }
+            }
+            ch_val = new char(prop);
+            acmap.seekp(size + 56, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
+            if (secondChoice == "Y") {
                 for (int b = 58; b < 61; b++) {
                     acmap.seekg(size + b, ios::beg);
                     map_loc = acmap.tellg();
@@ -946,6 +1220,167 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                     acmap.write(ch_val, 1);
                     delete ch_val;
                 }
+            }
+            else {
+                acmap.seekg(size + 58, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                if (gri_nam == 96 || gri_nam == 97 || gri_nam == 99 || gri_nam == 100 || gri_nam == 102 || gri_nam == 103) {
+                    prop = 0;
+                }
+                else if (gri_nam == 121) {
+                    prop = 1;
+                }
+                else if (gri_nam == 116 || gri_nam == 117 || gri_nam == 122) {
+                    prop = 2;
+                }
+                else if (gri_nam == 106 || gri_nam == 124) {
+                    prop = 3;
+                }
+                else if (gri_nam == 105 || gri_nam == 126) {
+                    prop = 5;
+                }
+                else if (gri_nam == 108 || gri_nam == 110) {
+                    prop = 6;
+                }
+                else if (gri_nam == 98 || gri_nam == 107 || gri_nam == 112) {
+                    prop = 8;
+                }
+                else if (gri_nam == 101 || gri_nam == 119) {
+                    prop = 10;
+                }
+                else if (gri_nam == 114 || gri_nam == 115) {
+                    prop = 11;
+                }
+                else if (gri_nam == 109) {
+                    prop = 13;
+                }
+                else if (gri_nam == 120) {
+                    prop = 15;
+                }
+                else if (gri_nam == 118) {
+                    prop = 16;
+                }
+                else if (gri_nam == 111 || gri_nam == 123) {
+                    prop = 17;
+                }
+                else if (gri_nam == 104) {
+                    prop = 20;
+                }
+                else if (gri_nam == 113) {
+                    prop = 21;
+                }
+                else if (gri_nam == 125) {
+                    prop = 23;
+                }
+                ch_val = new char(prop);
+                acmap.seekp(size + 58, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                acmap.seekg(size + 59, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                if (gri_nam == 115 || (gri_nam >= 121 && gri_nam <= 126)) {
+                    prop = 0;
+                }
+                else if (gri_nam == 105 ) {
+                    prop = 1;
+                }
+                else if (gri_nam == 97 ) {
+                    prop = 2;
+                }
+                else if (gri_nam == 96 || gri_nam == 107 || gri_nam == 118) {
+                    prop = 4;
+                }
+                else if (gri_nam == 99 || gri_nam == 109) {
+                    prop = 5;
+                }
+                else if (gri_nam == 98 || gri_nam == 106 || gri_nam == 117 || gri_nam == 120) {
+                    prop = 6;
+                }
+                else if (gri_nam == 111) {
+                    prop = 7;
+                }
+                else if (gri_nam == 100) {
+                    prop = 8;
+                }
+                else if (gri_nam == 113 || gri_nam == 108) {
+                    prop = 9;
+                }
+                else if (gri_nam == 101 || gri_nam == 116) {
+                    prop = 12;
+                }
+                else if (gri_nam == 103) {
+                    prop = 13;
+                }
+                else if (gri_nam == 119) {
+                    prop = 14;
+                }
+                else if (gri_nam == 102 || gri_nam == 110) {
+                    prop = 15;
+                }
+                else if (gri_nam == 112) {
+                    prop = 19;
+                }
+                else if (gri_nam == 104) {
+                    prop = 20;
+                }
+                else if (gri_nam == 114) {
+                    prop = 22;
+                }
+                ch_val = new char(prop);
+                acmap.seekp(size + 59, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                acmap.seekg(size + 60, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                if (gri_nam >= 105 && gri_nam <= 114) {
+                    prop = 0;
+                }
+                else if (gri_nam == 96 || gri_nam == 115) {
+                    prop = 1;
+                }
+                else if (gri_nam == 98 || gri_nam == 123) {
+                    prop = 2;
+                }
+                else if (gri_nam == 97 || gri_nam == 116 || gri_nam == 125) {
+                    prop = 4;
+                }
+                else if (gri_nam == 100) {
+                    prop = 7;
+                }
+                else if (gri_nam == 99) {
+                    prop = 9;
+                }
+                else if (gri_nam == 101 || gri_nam == 118 || gri_nam == 121) {
+                    prop = 10;
+                }
+                else if (gri_nam == 102 || gri_nam == 119) {
+                    prop = 12;
+                }
+                else if (gri_nam == 122) {
+                    prop = 13;
+                }
+                else if (gri_nam == 117) {
+                    prop = 16;
+                }
+                else if (gri_nam == 103) {
+                    prop = 17;
+                }
+                else if (gri_nam == 104 || gri_nam == 124) {
+                    prop = 20;
+                }
+                else if (gri_nam == 120) {
+                    prop = 21;
+                }
+                else if (gri_nam == 126) {
+                    prop = 25;
+                }
+                ch_val = new char(prop);
+                acmap.seekp(size + 60, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
             }
         }
         acmap.seekg(size + 173, ios::beg);
@@ -1011,10 +1446,10 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                 if (bla_nam >= 57 && bla_nam <= 62) {
                     prop = 6;
                 }
-                if (bla_nam >= 63 && bla_nam <= 69) {
+                if (bla_nam >= 63 && bla_nam <= 70) {
                     prop = 7;
                 }
-                if (bla_nam >= 70 && bla_nam <= 82) {
+                if (bla_nam >= 71 && bla_nam <= 82) {
                     prop = 8;
                 }
                 if (bla_nam >= 83 && bla_nam <= 90) {
@@ -1112,25 +1547,158 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                 acmap.seekp(size + 187, ios::beg);
                 acmap.write(ch_val, 1);
                 delete ch_val;
-                acmap.seekg(size + 189, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
+            }
+            acmap.seekg(size + 189, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            if (secondChoice == "Y") {
                 prop = dist_21(aGen);
-                ch_val = new char(prop);
-                acmap.seekp(size + 189, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                acmap.seekg(size + 190, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
+            }
+            else {
+                if (bla_nam == 57) {
+                    prop = 1;
+                }
+                else if (bla_nam == 58) {
+                    prop = 2;
+                }
+                else if (bla_nam == 59) {
+                    prop = 3;
+                }
+                else if (bla_nam == 1 || bla_nam == 60) {
+                    prop = 4;
+                }
+                else if (bla_nam == 13 || bla_nam == 61) {
+                    prop = 5;
+                }
+                else if (bla_nam == 2 || bla_nam == 35 || bla_nam == 43 || bla_nam == 62) {
+                    prop = 6;
+                }
+                else if (bla_nam == 14) {
+                    prop = 7;
+                }
+                else if (bla_nam == 3 || bla_nam == 15 || bla_nam == 36 || bla_nam == 44 || bla_nam == 71) {
+                    prop = 8;
+                }
+                else if (bla_nam == 83) {
+                    prop = 9;
+                }
+                else if (bla_nam == 4 || bla_nam == 25 || bla_nam == 37 || bla_nam == 45 || bla_nam == 63 || bla_nam == 72) {
+                    prop = 10;
+                }
+                else if (bla_nam == 16 || bla_nam == 51 || bla_nam == 84) {
+                    prop = 11;
+                }
+                else if (bla_nam == 5 || bla_nam == 26 || bla_nam == 73) {
+                    prop = 12;
+                }
+                else if (bla_nam == 17 || bla_nam == 38 || bla_nam == 46 || bla_nam == 85) {
+                    prop = 13;
+                }
+                else if (bla_nam == 6 || bla_nam == 64 || bla_nam == 74) {
+                    prop = 14;
+                }
+                else if (bla_nam == 18 || bla_nam == 86) {
+                    prop = 15;
+                }
+                else if (bla_nam == 7 || bla_nam == 27 || bla_nam == 39 || bla_nam == 47 || bla_nam == 52) {
+                    prop = 16;
+                }
+                else if (bla_nam == 19 || bla_nam == 75 || bla_nam == 87) {
+                    prop = 17;
+                }
+                else if (bla_nam == 8) {
+                    prop = 18;
+                }
+                else if (bla_nam == 20 || bla_nam == 28 || bla_nam == 40 || bla_nam == 48 || bla_nam == 65 || bla_nam == 76 || bla_nam == 88) {
+                    prop = 19;
+                }
+                else if (bla_nam == 9 || bla_nam == 53) {
+                    prop = 20;
+                }
+                else if (bla_nam == 21 || bla_nam == 77 || bla_nam == 89) {
+                    prop = 21;
+                }
+                else if (bla_nam == 10 || bla_nam == 29 || bla_nam == 41 || bla_nam == 49 || bla_nam == 78) {
+                    prop = 22;
+                }
+                else if (bla_nam == 22 || bla_nam == 66 || bla_nam == 90) {
+                    prop = 23;
+                }
+                else if (bla_nam == 11) {
+                    prop = 24;
+                }
+                else if (bla_nam == 23 || bla_nam == 30 || bla_nam == 42 || bla_nam == 50 || bla_nam == 54) {
+                    prop = 25;
+                }
+                else if (bla_nam == 12 || bla_nam == 79) {
+                    prop = 26;
+                }
+                else if (bla_nam == 24 || bla_nam == 31 || bla_nam == 67) {
+                    prop = 27;
+                }
+                else if (bla_nam == 80) {
+                    prop = 28;
+                }
+                else if (bla_nam == 70 || bla_nam == 81) {
+                    prop = 30;
+                }
+                else if (bla_nam == 32 || bla_nam == 55) {
+                    prop = 31;
+                }
+                else if (bla_nam == 68) {
+                    prop = 32;
+                }
+                else if (bla_nam == 33 || bla_nam == 82) {
+                    prop = 33;
+                }
+                else if (bla_nam == 34 || bla_nam == 56) {
+                    prop = 35;
+                }
+                else if (bla_nam == 69) {
+                    prop = 36;
+                }
+            }
+            ch_val = new char(prop);
+            acmap.seekp(size + 189, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
+            acmap.seekg(size + 190, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            if (secondChoice == "Y") {
                 prop = dist_22(aGen);
-                ch_val = new char(prop);
-                acmap.seekp(size + 190, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                acmap.seekg(size + 191, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
+            }
+            else {
+                if ((bla_nam >= 1 && bla_nam <= 56) || (bla_nam >= 63 && bla_nam <= 90)) {
+                    prop = 0;
+                }
+                else if (bla_nam == 57) {
+                    prop = 5;
+                }
+                else if (bla_nam == 58) {
+                    prop = 10;
+                }
+                else if (bla_nam == 59) {
+                    prop = 16;
+                }
+                else if (bla_nam == 60) {
+                    prop = 20;
+                }
+                else if (bla_nam == 61) {
+                    prop = 25;
+                }
+                else if (bla_nam == 62) {
+                    prop = 30;
+                }
+            }
+            ch_val = new char(prop);
+            acmap.seekp(size + 190, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
+            acmap.seekg(size + 191, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            if (secondChoice == "Y") {
                 if (aChoice == "Y") {
                     if (cho_blade == 1) {
                         dist_23 = std::uniform_int_distribution<>(254, 255);
@@ -1152,20 +1720,76 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                     }
                 }
                 prop = dist_23(aGen) - 255;
-                ch_val = new char(prop);
-                acmap.seekp(size + 191, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                acmap.seekg(size + 192, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                prop = dist_9(aGen);
-                ch_val = new char(prop);
-                acmap.seekp(size + 192, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
             }
-            prop = (4 * dist_10(aGen)) + dist_11(aGen);
+            else {
+                if (bla_nam >= 1 && bla_nam <= 5) {
+                    prop = 0;
+                }
+                else if ((bla_nam >= 6 && bla_nam <= 15) || bla_nam == 35 || bla_nam == 36 || bla_nam == 43 || bla_nam == 44 || bla_nam == 57 || bla_nam == 58 || bla_nam == 84) {
+                    prop = 255;
+                }
+                else if ((bla_nam >= 16 && bla_nam <= 18) || bla_nam == 25 || bla_nam == 26 || bla_nam == 37 || bla_nam == 38 || bla_nam == 45 || bla_nam == 46 || bla_nam == 51 || bla_nam == 59 || bla_nam == 60 || bla_nam == 63 || (bla_nam >= 71 && bla_nam <= 73) || bla_nam == 83) {
+                    prop = 254;
+                }
+                else if ((bla_nam >= 19 && bla_nam <= 21) || bla_nam == 27 || bla_nam == 28 || bla_nam == 39 || bla_nam == 40 || bla_nam == 47 || bla_nam == 48 || bla_nam == 52 || bla_nam == 53 || bla_nam == 61 || bla_nam == 62 || bla_nam == 64 || bla_nam == 65 || (bla_nam >= 74 && bla_nam <= 76) || (bla_nam >= 85 && bla_nam <= 87)) {
+                    prop = 253;
+                }
+                else if (bla_nam == 22 || bla_nam == 23 || (bla_nam >= 29 && bla_nam <= 31) || bla_nam == 41 || bla_nam == 42 || bla_nam == 49 || bla_nam == 50 || bla_nam == 54 || bla_nam == 55 || bla_nam == 66 || bla_nam == 67 || (bla_nam >= 77 && bla_nam <= 79) || bla_nam == 88 || bla_nam == 89) {
+                    prop = 252;
+                }
+                else if (bla_nam == 24 || bla_nam == 32 || bla_nam == 33 || bla_nam == 56 || bla_nam == 68 || bla_nam == 69 || (bla_nam >= 80 && bla_nam <= 82) || bla_nam == 90) {
+                    prop = 251;
+                }
+                else if (bla_nam == 34) {
+                    prop = 250;
+                }
+                else if (bla_nam == 70) {
+                    prop = 249;
+                }
+            }
+            ch_val = new char(prop);
+            acmap.seekp(size + 191, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
+            acmap.seekg(size + 192, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            if (secondChoice == "Y") {
+                prop = dist_9(aGen);
+            }
+            else {
+                if ((bla_nam >= 1 && bla_nam <= 10) || (bla_nam >= 13 && bla_nam <= 18) || (bla_nam >= 25 && bla_nam <= 28) || (bla_nam >= 35 && bla_nam <= 44) || bla_nam == 51 || bla_nam == 52 || (bla_nam >= 57 && bla_nam <= 62) || bla_nam == 63 || bla_nam == 64 || bla_nam == 70 || (bla_nam >= 71 && bla_nam <= 74)) {
+                    prop = 1;
+                }
+                else if (bla_nam == 11 || bla_nam == 12 || (bla_nam >= 19 && bla_nam <= 23) || (bla_nam >= 29 && bla_nam <= 31) || bla_nam == 34 || (bla_nam >= 45 && bla_nam <= 50) || bla_nam == 53 || bla_nam == 54 || (bla_nam >= 65 && bla_nam <= 67) || (bla_nam >= 75 && bla_nam <= 78) || (bla_nam >= 83 && bla_nam <= 85)) {
+                    prop = 2;
+                }
+                else if (bla_nam == 24 || bla_nam == 32 || bla_nam == 33 || bla_nam == 55 || bla_nam == 56 || bla_nam == 68 || bla_nam == 69 || (bla_nam >= 79 && bla_nam <= 82) || (bla_nam >= 86 && bla_nam <= 88)) {
+                    prop = 3;
+                }
+                else if (bla_nam == 89 || bla_nam == 90) {
+                    prop = 4;
+                }
+            }
+            ch_val = new char(prop);
+            acmap.seekp(size + 192, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
+            if (secondChoice == "Y") {
+                prop = (4 * dist_10(aGen)) + dist_11(aGen);
+            }
+            else {
+                if ((bla_nam >= 43 && bla_nam <= 50) || (bla_nam >= 57 && bla_nam <= 70) || bla_nam == 73 || bla_nam == 80 || bla_nam == 85 || bla_nam == 87 || bla_nam == 89) {
+                    res = 1;
+                }
+                else if (bla_nam == 1 || bla_nam == 3 || bla_nam == 5 || (bla_nam >= 8 && bla_nam <= 11) || bla_nam == 13 || bla_nam == 14 || (bla_nam >= 16 && bla_nam <= 42) || (bla_nam >= 51 && bla_nam <= 56) || bla_nam == 72 || bla_nam == 79 || bla_nam == 81) {
+                    res = 2;
+                }
+                else if (bla_nam == 2 || bla_nam == 4 || bla_nam == 6 || bla_nam == 7 || bla_nam == 12 || bla_nam == 15 || bla_nam == 71 || (bla_nam >= 74 && bla_nam <= 78) || (bla_nam >= 82 && bla_nam <= 84) || bla_nam == 86 || bla_nam == 88 || bla_nam == 90) {
+                    res = 3;
+                }
+                prop = 8 + res;
+            }
             acmap.seekg(size + 193, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
@@ -1341,31 +1965,94 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             acmap.seekg(size + 229, ios::beg);
             map_loc = acmap.tellg();
             to_ass = acmap.get();
-            prop = dist_33(aGen);
+            if (secondChoice == "N") {
+                if (gri_nam == 96 || gri_nam == 97 || gri_nam == 105 || gri_nam == 107 || gri_nam == 115 || gri_nam == 117 || gri_nam == 121) {
+                    prop = 0;
+                }
+                else if (gri_nam == 98 || gri_nam == 100 || gri_nam == 106 || gri_nam == 108 || gri_nam == 110 || gri_nam == 116 || gri_nam == 119 || (gri_nam >= 122 && gri_nam <= 126)) {
+                    prop = 1;
+                }
+                else if (gri_nam == 99 || gri_nam == 101 || gri_nam == 103 || gri_nam == 113 || gri_nam == 109 || gri_nam == 111 || gri_nam == 118) {
+                    prop = 2;
+                }
+                else if (gri_nam == 102 || gri_nam == 104 || gri_nam == 112 || gri_nam == 114 || gri_nam == 120) {
+                    prop = 3;
+                }
+            }
+            else {
+                prop = dist_33(aGen);
+            }
             ch_val = new char(prop);
             acmap.seekp(size + 229, ios::beg);
             acmap.write(ch_val, 1);
             delete ch_val;
+            acmap.seekg(size + 230, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
             if (secondChoice == "Y") {
-                acmap.seekg(size + 230, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
                 prop = dist_24(aGen);
-                ch_val = new char(prop);
-                acmap.seekp(size + 230, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                acmap.seekg(size + 231, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
+            }
+            else {
+                if (gri_nam == 96 || gri_nam == 97 || gri_nam == 105 || gri_nam == 106 || gri_nam == 113 || gri_nam == 115 || gri_nam == 121) {
+                    prop = 1;
+                }
+                else if (gri_nam == 98 || gri_nam == 99 || gri_nam == 107 || gri_nam == 108 || gri_nam == 116 || gri_nam == 122 || gri_nam == 125) {
+                    prop = 2;
+                }
+                else if (gri_nam == 100 || gri_nam == 101 || gri_nam == 110 || gri_nam == 109 || gri_nam == 117 || gri_nam == 123) {
+                    prop = 3;
+                }
+                else if (gri_nam == 102 || gri_nam == 103 || gri_nam == 111 || gri_nam == 118 || gri_nam == 115 || gri_nam == 124 || gri_nam == 126) {
+                    prop = 4;
+                }
+                else if (gri_nam == 104 || gri_nam == 112 || gri_nam == 119) {
+                    prop = 5;
+                }
+                else if (gri_nam == 114 || gri_nam == 120) {
+                    prop = 6;
+                }
+            }
+            ch_val = new char(prop);
+            acmap.seekp(size + 230, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
+            acmap.seekg(size + 231, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            if (secondChoice == "Y") {
                 prop = dist_59(aGen);
-                ch_val = new char(prop);
-                acmap.seekp(size + 231, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                acmap.seekg(size + 232, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
+            }
+            else {
+                if (gri_nam == 96 || gri_nam == 105 || gri_nam == 115 || gri_nam == 121 || gri_nam == 122 || gri_nam == 125) {
+                    prop = 0;
+                }
+                else if (gri_nam == 97 || gri_nam == 98 || gri_nam == 107 || gri_nam == 110 || gri_nam == 112 || gri_nam == 116 || gri_nam == 123 || gri_nam == 124) {
+                    prop = 1;
+                }
+                else if (gri_nam == 99 || gri_nam == 100 || gri_nam == 106 || gri_nam == 108 || gri_nam == 109 || gri_nam == 117 || gri_nam == 119 || gri_nam == 126) {
+                    prop = 2;
+                }
+                else if (gri_nam == 101 || gri_nam == 102 || gri_nam == 111 || gri_nam == 114 || gri_nam == 118) {
+                    prop = 3;
+                }
+                else if (gri_nam == 103 || gri_nam == 104) {
+                    prop = 4;
+                }
+                else if (gri_nam == 120) {
+                    prop = 5;
+                }
+                else if (gri_nam == 113) {
+                    prop = 8;
+                }
+            }
+            ch_val = new char(prop);
+            acmap.seekp(size + 231, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
+            acmap.seekg(size + 232, ios::beg);
+            map_loc = acmap.tellg();
+            to_ass = acmap.get();
+            if (secondChoice == "Y") {
                 if (aChoice == "Y") {
                     if (cho_grip == 1) {
                         dist_25 = std::uniform_int_distribution<>(252, 254);
@@ -1381,10 +2068,29 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                     }
                 }
                 prop = dist_25(aGen) - 255;
-                ch_val = new char(prop);
-                acmap.seekp(size + 232, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
+            }
+            else {
+                if ((gri_nam >= 96 && gri_nam <= 98) || gri_nam == 121 || gri_nam == 122 || gri_nam == 123 || gri_nam == 124) {
+                    prop = 255;
+                }
+                else if ((gri_nam >= 99 && gri_nam <= 101) || gri_nam == 105 || gri_nam == 106 || gri_nam == 107 || gri_nam == 125 || gri_nam == 126) {
+                    prop = 254;
+                }
+                else if ((gri_nam >= 102 && gri_nam <= 104) || (gri_nam >= 109 && gri_nam <= 112) || gri_nam == 115 || gri_nam == 116) {
+                    prop = 253;
+                }
+                else if (gri_nam == 113 || gri_nam == 112 || gri_nam == 114 || gri_nam == 117 || gri_nam == 118) {
+                    prop = 252;
+                }
+                else if (gri_nam == 119 || gri_nam == 120) {
+                    prop = 251;
+                }
+            }
+            ch_val = new char(prop);
+            acmap.seekp(size + 232, ios::beg);
+            acmap.write(ch_val, 1);
+            delete ch_val;
+            if (secondChoice == "Y") {
                 for (int b = 234; b < 237; b++) {
                     acmap.seekg(size + b, ios::beg);
                     map_loc = acmap.tellg();
@@ -1400,6 +2106,167 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                     acmap.write(ch_val, 1);
                     delete ch_val;
                 }
+            }
+            else {
+                acmap.seekg(size + 234, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                if (gri_nam == 96 || gri_nam == 97 || gri_nam == 99 || gri_nam == 100 || gri_nam == 102 || gri_nam == 103) {
+                    prop = 0;
+                }
+                else if (gri_nam == 121) {
+                    prop = 1;
+                }
+                else if (gri_nam == 116 || gri_nam == 117 || gri_nam == 122) {
+                    prop = 2;
+                }
+                else if (gri_nam == 106 || gri_nam == 124) {
+                    prop = 3;
+                }
+                else if (gri_nam == 105 || gri_nam == 126) {
+                    prop = 5;
+                }
+                else if (gri_nam == 108 || gri_nam == 110) {
+                    prop = 6;
+                }
+                else if (gri_nam == 98 || gri_nam == 107 || gri_nam == 112) {
+                    prop = 8;
+                }
+                else if (gri_nam == 101 || gri_nam == 119) {
+                    prop = 10;
+                }
+                else if (gri_nam == 114 || gri_nam == 115) {
+                    prop = 11;
+                }
+                else if (gri_nam == 109) {
+                    prop = 13;
+                }
+                else if (gri_nam == 120) {
+                    prop = 15;
+                }
+                else if (gri_nam == 118) {
+                    prop = 16;
+                }
+                else if (gri_nam == 111 || gri_nam == 123) {
+                    prop = 17;
+                }
+                else if (gri_nam == 104) {
+                    prop = 20;
+                }
+                else if (gri_nam == 113) {
+                    prop = 21;
+                }
+                else if (gri_nam == 125) {
+                    prop = 23;
+                }
+                ch_val = new char(prop);
+                acmap.seekp(size + 234, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                acmap.seekg(size + 235, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                if (gri_nam == 115 || (gri_nam >= 121 && gri_nam <= 126)) {
+                    prop = 0;
+                }
+                else if (gri_nam == 105) {
+                    prop = 1;
+                }
+                else if (gri_nam == 97) {
+                    prop = 2;
+                }
+                else if (gri_nam == 96 || gri_nam == 107 || gri_nam == 118) {
+                    prop = 4;
+                }
+                else if (gri_nam == 99 || gri_nam == 109) {
+                    prop = 5;
+                }
+                else if (gri_nam == 98 || gri_nam == 106 || gri_nam == 117 || gri_nam == 120) {
+                    prop = 6;
+                }
+                else if (gri_nam == 111) {
+                    prop = 7;
+                }
+                else if (gri_nam == 100) {
+                    prop = 8;
+                }
+                else if (gri_nam == 113 || gri_nam == 108) {
+                    prop = 9;
+                }
+                else if (gri_nam == 101 || gri_nam == 116) {
+                    prop = 12;
+                }
+                else if (gri_nam == 103) {
+                    prop = 13;
+                }
+                else if (gri_nam == 119) {
+                    prop = 14;
+                }
+                else if (gri_nam == 102 || gri_nam == 110) {
+                    prop = 15;
+                }
+                else if (gri_nam == 112) {
+                    prop = 19;
+                }
+                else if (gri_nam == 104) {
+                    prop = 20;
+                }
+                else if (gri_nam == 114) {
+                    prop = 22;
+                }
+                ch_val = new char(prop);
+                acmap.seekp(size + 235, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                acmap.seekg(size + 236, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                if (gri_nam >= 105 && gri_nam <= 114) {
+                    prop = 0;
+                }
+                else if (gri_nam == 96 || gri_nam == 115) {
+                    prop = 1;
+                }
+                else if (gri_nam == 98 || gri_nam == 123) {
+                    prop = 2;
+                }
+                else if (gri_nam == 97 || gri_nam == 116 || gri_nam == 125) {
+                    prop = 4;
+                }
+                else if (gri_nam == 100) {
+                    prop = 7;
+                }
+                else if (gri_nam == 99) {
+                    prop = 9;
+                }
+                else if (gri_nam == 101 || gri_nam == 118 || gri_nam == 121) {
+                    prop = 10;
+                }
+                else if (gri_nam == 102 || gri_nam == 119) {
+                    prop = 12;
+                }
+                else if (gri_nam == 122) {
+                    prop = 13;
+                }
+                else if (gri_nam == 117) {
+                    prop = 16;
+                }
+                else if (gri_nam == 103) {
+                    prop = 17;
+                }
+                else if (gri_nam == 104 || gri_nam == 124) {
+                    prop = 20;
+                }
+                else if (gri_nam == 120) {
+                    prop = 21;
+                }
+                else if (gri_nam == 126) {
+                    prop = 25;
+                }
+                ch_val = new char(prop);
+                acmap.seekp(size + 236, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
             }
         }
         acmap.seekg(size + 241, ios::beg);

@@ -1,6 +1,7 @@
 // VagrantStoryRandomizerGUI.cpp : Defines the entry point for the application.
 //
 #pragma comment(linker,"\"/manifestdependency:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
+#pragma warning(disable : 4996)
 
 #include <afxwin.h>
 #include "framework.h"
@@ -23,9 +24,14 @@
 #include "Ashley.h"
 #include <chrono>
 #include <commctrl.h>
+#include <openssl/md5.h>
+#include <wincrypt.h>
 
 
+using namespace std;
 
+
+#define OPENSSL_API_COMPAT 0x10100000L
 
 #define MAX_LOADSTRING 100
 
@@ -70,6 +76,8 @@ int runChe;
 int runRoo;
 int runAsh;
 int point;
+int winWidth = 340;
+int winHeight = 460;
 unsigned int cusSeedI = NULL;
 void placeButtons();
 void setWin(HWND hWnd);
@@ -99,6 +107,7 @@ bool pa_quant = false;
 //bool pa_cusAsh = false;
 bool cusSeedU = false;
 bool freshPick = false;
+bool isVanilla = false;
 string choiceD;
 string choiceE;
 string choiceM;
@@ -122,6 +131,7 @@ string cur_zone;
 string m_file;
 string z_file;
 string choices;
+string gameHash;
 vector<string> ivm;
 vector<string>::iterator ivmp;
 vector<string>::iterator wmp;
@@ -143,7 +153,29 @@ TOOLINFO paraInfo;
 TCHAR enetext[256];
 TCHAR chetext[256];
 TCHAR mistext[256];
-
+UINT cur_dpi;
+double opBuX;
+double opBuY;
+double ranBuY;
+double enBuX;
+double enBuY;
+double cleBuX;
+double eneBuY;
+double cheBuY;
+double rooBuY;
+double droBuX;
+double droBuY;
+double itStBuY;
+double enStBuY;
+double ashStBuY;
+double balAshStBuY;
+double balItQuaBuY;
+double revBuX;
+double headX;
+double eneHeadY;
+double chestHeadY;
+double miscHeadY;
+double mul;
 
 // Forward declarations of functions included in this code module:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -151,7 +183,46 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
+string make_MD5(unsigned char* md, long size = MD5_DIGEST_LENGTH) {
+    stringstream result;
+    for (int i = 0; i < size; i++) {
+        result << hex << setw(2) << setfill('0') << (int)md[i];
+    }
+    string fin = result.str();
+    return fin;
+}
 
+string computeMD5FromFile(const string& filePath, HWND hWnd) {
+    ifstream file(filePath, ios::in | ios::binary | ios::ate);
+
+    if (!file.is_open()) {
+        MessageBox(hWnd, L"Cannot load file", L"Error", MB_OK);
+        return "null";
+    }
+
+    // Get file size
+    long fileSize = file.tellg();
+
+    // Allocate memory to hold the entire file
+    char* memBlock = new char[fileSize];
+
+    // Read the file into memory
+    file.seekg(0, ios::beg);
+    file.read(memBlock, fileSize);
+    file.close();
+
+    // Compute the MD5 hash of the file content
+    unsigned char result[MD5_DIGEST_LENGTH];
+    MD5((unsigned char*)memBlock, fileSize, result);
+
+    cout << "MD5 of file '" << filePath << "' : ";
+    string hash = make_MD5(result);
+
+    // Clean up
+    delete[] memBlock;
+
+    return hash;
+}
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
@@ -235,8 +306,9 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    //WS_OVERLAPPEDWINDOW
 
+
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, dwStyle,
-      CW_USEDEFAULT, 0, 350, 460, nullptr, nullptr, hInstance, nullptr);
+      CW_USEDEFAULT, 0, winWidth, winHeight, nullptr, nullptr, hInstance, nullptr);
    if (!hWnd)
    {
       return FALSE;
@@ -244,7 +316,10 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    //StartCommonControls(ICC_TAB_CLASSES);
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
-
+   cur_dpi = GetDpiForWindow(hWnd);
+   if (cur_dpi > 96) {
+       SetWindowPos(hWnd, 0, 0, 0, winWidth * 1.25, winHeight * 1.25, SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE);
+   }
    return TRUE;
 }
 
@@ -300,7 +375,24 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                         std::wstring wpath = std::wstring(path.begin(), path.end());
                         LPCWSTR lpath = wpath.c_str();
                         if (gamePathFound) {
+                            SetWindowTextA(hWnd, "Getting hash value...");
+                            gameHash = computeMD5FromFile(path, hWnd);
+                            SetWindowTextA(hWnd, "Vagrant Story Randomizer");
+                            const char * cHash = gameHash.c_str();
+                            const char * vanHash = "8531bc73ea7cd33a4c8e97bdf139ba9c";
+                            if (strcmp(cHash, vanHash) == 0) {
+                                isVanilla = true;
+                            }
+                            else {
+                                isVanilla = false;
+                            }
                             checkBoxLock();
+                            if (!isVanilla) {
+                                EnableWindow(butRos[4], TRUE);
+                            }
+                            else {
+                                EnableWindow(butRos[4], FALSE);
+                            }
                         }
                     }
                     else {
@@ -461,7 +553,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             case IDM_RANDOMIZE:
             {
                 bool changed = false;
-                //seedBox() {
                 choices = "." + choiceQuant + choiceFan + choiceBalAsh + choiceAsh + choiceBe + choiceSt + choiceM + choiceE + choiceChe + choiceA + choiceD + choiceB + choiceK + choiceC;
                 seedBoxID = MessageBox(hWnd, L"Would you like to save the seed used?", L"Save Seed?", MB_YESNO);
                 switch (seedBoxID)
@@ -473,8 +564,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     seedChoice = "N";
                     break;
                 }
-                    //return seedBoxID;
-                //}
+                if (!isVanilla) {
+                    vanBoxID = MessageBox(hWnd, L"Would you like to revert your game to the vanilla version?", L"Use vanilla version?", MB_YESNO);
+                    switch (vanBoxID)
+                    {
+                    case IDYES:
+                        freshPick = true;
+                        revertCode(hWnd);
+                        break;
+                    case IDNO:
+                        break;
+                    }
+                }
                 if (cusSeedU == true) {
                     ag.makeGenPlus(seedChoice, cusSeedI, choices);
                 }
@@ -484,16 +585,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 finGen = ag.getGen();
                 if (seedChoice == "Y") {
                     MessageBox(hWnd, L"Seed saved to 'seed.txt'.", L"Seed Saved", MB_OK);
-                }
-                vanBoxID = MessageBox(hWnd, L"Would you like to randomize a fresh game?", L"Use vanilla version?", MB_YESNO);
-                switch (vanBoxID)
-                {
-                case IDYES:
-                    freshPick = true;
-                    revertCode(hWnd);
-                    break;
-                case IDNO:
-                    break;
                 }
                 if (pa_ashley) {
                     changed = true;
@@ -543,6 +634,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 {
                     SetWindowTextA(hWnd, "Vagrant Story Randomizer");
                     MessageBox(hWnd, L"Randomization completed!", L"Success", MB_OK);
+                    isVanilla = false;
+                    EnableWindow(butRos[4], TRUE);
                     relock();
                 }
             }
@@ -850,9 +943,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             swprintf_s(enetext, 256, L"Enemy data:");
             swprintf_s(chetext, 256, L"Chest data:");
             swprintf_s(mistext, 256, L"Misc data:");
-            TextOut(hdc, xCor * 0.0325, yCor * 0.15, enetext, wcslen(enetext));
-            TextOut(hdc, xCor * 0.0325, yCor * 0.39, chetext, wcslen(chetext));
-            TextOut(hdc, xCor * 0.0325, yCor * 0.63, mistext, wcslen(mistext));
+            headX = 0.0325 * mul;
+            eneHeadY = 0.15 * mul;
+            chestHeadY = 0.39 * mul;
+            miscHeadY = 0.63 * mul;
+            TextOut(hdc, xCor * headX, yCor * eneHeadY, enetext, wcslen(enetext));
+            TextOut(hdc, xCor * headX, yCor * chestHeadY, chetext, wcslen(chetext));
+            TextOut(hdc, xCor * headX, yCor * miscHeadY, mistext, wcslen(mistext));
             EndPaint(hWnd, &ps);
         }
         break;
@@ -953,25 +1050,50 @@ void placeButtons() {
 }
 
 void makeButtons(HWND hWnd) {
-    openGame = CreateWindow(L"BUTTON", L"Open Game", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * 0.1825), (int)(yCor * 0.05), 90, 25, hWnd, (HMENU)101, hInst, NULL);
-    randomizeButton = CreateWindow(L"BUTTON", L"Randomize", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * 0.1825), (int)(yCor * 0.9895), 90, 25, hWnd, (HMENU)9003, hInst, NULL);
-    seedButton = CreateWindow(L"BUTTON", L"Enter Seed", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * 0.0325), (int)(yCor * 0.8885), 90, 25, hWnd, (HMENU)9004, hInst, NULL);
-    cSeedButton = CreateWindow(L"BUTTON", L"Clear Seed", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * 0.1825), (int)(yCor * 0.8885), 90, 25, hWnd, (HMENU)9005, hInst, NULL);
-    revertButton = CreateWindow(L"BUTTON", L"Revert to Vanilla", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * 0.3325), (int)(yCor * 0.8885), 90, 25, hWnd, (HMENU)9006, hInst, NULL);
-    enemies = CreateWindow(L"BUTTON", L"Enemies", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.0325), (int)(yCor * 0.20), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
-    chests = CreateWindow(L"BUTTON", L"Chests", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.0325), (int)(yCor * 0.44), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
-    rooms = CreateWindow(L"BUTTON", L"Area Progression", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.0325), (int)(yCor * 0.6725), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
-    drops = CreateWindow(L"BUTTON", L"Drops", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.275), (int)(yCor * 0.2575), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
-    balance = CreateWindow(L"BUTTON", L"Balance Item Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.275), (int)(yCor * 0.44), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
-    keep = CreateWindow(L"BUTTON", L"Item Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.0325), (int)(yCor * 0.4975), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
-    consEqu = CreateWindow(L"BUTTON", L"Inconsistent Gear", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.275), (int)(yCor * 0.4975), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
-    eneMod = CreateWindow(L"BUTTON", L"Enemy Models", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.0325), (int)(yCor * 0.2575), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
-    eneStat = CreateWindow(L"BUTTON", L"Enemy Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.0325), (int)(yCor * 0.315), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
-    balEneStat = CreateWindow(L"BUTTON", L"Balance Enemy Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.275), (int)(yCor * 0.315), 120, 25, hWnd, (HMENU)9002, hInst, NULL);
-    ashley = CreateWindow(L"BUTTON", L"Ashley's Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.0325), (int)(yCor * 0.73), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
-    balAshley = CreateWindow(L"BUTTON", L"Balance Ashley's Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.275), (int)(yCor * 0.7875), 140, 25, hWnd, (HMENU)9002, hInst, NULL);
-    fandango = CreateWindow(L"BUTTON", L"Fandango Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.0325), (int)(yCor * 0.7875), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
-    quant = CreateWindow(L"BUTTON", L"Balance Item Quantities", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.0325), (int)(yCor * 0.5550), 150, 25, hWnd, (HMENU)9002, hInst, NULL);
+    cur_dpi = GetDpiForWindow(hWnd);
+    if (cur_dpi > 96) {
+        mul = 1.25;
+    }
+    else {
+        mul = 1.00;
+    }
+    opBuX = 0.1825 * mul;
+    opBuY = 0.05 * mul;
+    ranBuY = 0.9895 * mul;
+    enBuX = 0.0325 * mul;
+    enBuY = 0.8885 * mul;
+    cleBuX = 0.1825 * mul;
+    eneBuY = 0.20 * mul;
+    cheBuY = 0.44 * mul;
+    rooBuY = 0.6725 * mul;
+    droBuX = 0.275 * mul;
+    droBuY = 0.2575 * mul;
+    itStBuY = 0.4975 * mul;
+    enStBuY = 0.315 * mul;
+    ashStBuY = 0.73 * mul;
+    balAshStBuY = 0.7875 * mul;
+    balItQuaBuY = 0.5550 * mul;
+    revBuX = 0.3325 * mul;
+
+    openGame = CreateWindow(L"BUTTON", L"Open Game", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * opBuX), (int)(yCor * opBuY), 90 * mul, 25, hWnd, (HMENU)101, hInst, NULL);
+    randomizeButton = CreateWindow(L"BUTTON", L"Randomize", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * opBuX), (int)(yCor * ranBuY), 90 * mul, 25, hWnd, (HMENU)9003, hInst, NULL);
+    seedButton = CreateWindow(L"BUTTON", L"Enter Seed", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * enBuX), (int)(yCor * enBuY), 90 * mul, 25, hWnd, (HMENU)9004, hInst, NULL);
+    cSeedButton = CreateWindow(L"BUTTON", L"Clear Seed", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * opBuX), (int)(yCor * enBuY), 90 * mul, 25, hWnd, (HMENU)9005, hInst, NULL);
+    revertButton = CreateWindow(L"BUTTON", L"Revert to Vanilla", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * revBuX), (int)(yCor * enBuY), 90 * mul, 25, hWnd, (HMENU)9006, hInst, NULL);
+    enemies = CreateWindow(L"BUTTON", L"Enemies", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * enBuX), (int)(yCor * eneBuY), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
+    chests = CreateWindow(L"BUTTON", L"Chests", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * enBuX), (int)(yCor * cheBuY), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
+    rooms = CreateWindow(L"BUTTON", L"Area Progression", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * enBuX), (int)(yCor * rooBuY), 130, 25, hWnd, (HMENU)9002, hInst, NULL);
+    drops = CreateWindow(L"BUTTON", L"Drops", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * droBuX), (int)(yCor * droBuY), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
+    balance = CreateWindow(L"BUTTON", L"Balance Item Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * droBuX), (int)(yCor * cheBuY), 150, 25, hWnd, (HMENU)9002, hInst, NULL);
+    keep = CreateWindow(L"BUTTON", L"Item Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * enBuX), (int)(yCor * itStBuY), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
+    consEqu = CreateWindow(L"BUTTON", L"Inconsistent Gear", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * droBuX), (int)(yCor * itStBuY), 150, 25, hWnd, (HMENU)9002, hInst, NULL);
+    eneMod = CreateWindow(L"BUTTON", L"Enemy Models", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * enBuX), (int)(yCor * droBuY), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
+    eneStat = CreateWindow(L"BUTTON", L"Enemy Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * enBuX), (int)(yCor * enStBuY), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
+    balEneStat = CreateWindow(L"BUTTON", L"Balance Enemy Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * droBuX), (int)(yCor * enStBuY), 150, 25, hWnd, (HMENU)9002, hInst, NULL);
+    ashley = CreateWindow(L"BUTTON", L"Ashley's Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * enBuX), (int)(yCor * ashStBuY), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
+    balAshley = CreateWindow(L"BUTTON", L"Balance Ashley's Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * droBuX), (int)(yCor * balAshStBuY), 160, 25, hWnd, (HMENU)9002, hInst, NULL);
+    fandango = CreateWindow(L"BUTTON", L"Fandango Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * enBuX), (int)(yCor * balAshStBuY), 150, 25, hWnd, (HMENU)9002, hInst, NULL);
+    quant = CreateWindow(L"BUTTON", L"Balance Item Quantities", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * enBuX), (int)(yCor * balItQuaBuY), 180, 25, hWnd, (HMENU)9002, hInst, NULL);
     //cusAsh = CreateWindow(L"BUTTON", L"Add Gem and Shield Data", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.275), (int)(yCor * 0.7375), 140, 25, hWnd, (HMENU)9002, hInst, NULL);
 }
 
@@ -1074,7 +1196,7 @@ void toolTipMaker(HWND hWnd) {
 
 void ranBoxLock() {
     bool checkFound = false;
-    for (int i = 4; i < butRos.size() - 7; i++) {
+    for (int i = 5; i < butRos.size() - 7; i++) {
         LRESULT boxticked = SendMessage(butRos[i], BM_GETCHECK, NULL, NULL);
         if (boxticked == BST_CHECKED && gamePathFound) {
             checkFound = true;
@@ -1168,9 +1290,12 @@ void revertCode(HWND hWnd) {
     runChe = system("cmd.exe /c vanCmd.cmd");
     remove("vanCmd.cmd");
     if (freshPick != true) {
+        isVanilla = true;
+        EnableWindow(butRos[4], FALSE);
         MessageBox(hWnd, L"Game unrandomized!", L"Success", MB_OK);
     }
     else {
         freshPick = false;
     }
 }
+
