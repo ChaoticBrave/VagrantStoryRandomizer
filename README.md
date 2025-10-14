@@ -1,5 +1,5 @@
 # Vagrant Story Randomizer
-A tool which will randomize a copy of Vagrant Story. Right now, it will randomize the enemies, their drops and chest items.
+A tool which will randomize a copy of Vagrant Story. 
 
 A randomized game has been proven to work with both Beetle PSX and DuckStation. 
 
@@ -11,7 +11,7 @@ Both old stable and experimental builds can be found here:
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
 ## Updates
-* Updated the model randomizer so that bosses are not changed. Also edited some enemy models to be left intact to prevent freezes.
+* Altered the model randomizer so that bosses are not changed. Also edited some enemy models to be left intact to prevent freezes.
 * Added the option to randomize the misc items in Ashley's bag.
 * Included a dropdown menu where you can choose the thresholds for how high or low Ashley's STR, INT and AGL can reach.
 * The UI is now in wide form.
