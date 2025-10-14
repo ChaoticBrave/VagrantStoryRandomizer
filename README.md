@@ -15,6 +15,7 @@ https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 * Added the option to randomize the misc items in Ashley's bag.
 * Included a dropdown menu where you can choose the thresholds for how high or low Ashley's STR, INT and AGL can reach.
 * The UI is now in wide form.
+* When Balance Ashley's Stats is picked, Ashley's HP will now only go as low as 40 and his MP will only go as low as 5.
 
 ## To Do
 * Add Zenith QoL features.
