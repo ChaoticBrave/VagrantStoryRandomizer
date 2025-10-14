@@ -127,6 +127,7 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
     int gem_count;
     int ene_hp_stat;
     int loop_diff;
+    int start_point;
 
     char * ch_val;
     char hhex_1[20];
@@ -590,25 +591,26 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
             ene_count = *ecp;
             ene_off = *eop;
             wep_pos = *ewop;
-            for (int e = 0; e < ene_count; e++) {
-                if (cur_zone != "ZONE031.ZND" && cur_zone != "ZONE025.ZND") {
-                    if (cur_zone == "ZONE013.ZND" && e == 0) {
-                        e = 1;
-                        wep_pos += 1124;
-                        ene_off += 8;
-                    }
-                    else if (cur_zone == "ZONE009.ZND" && e == 6) {
-                        e = 7;
+            if (cur_zone == "ZONE011.ZND" || cur_zone == "ZONE012.ZND" || cur_zone == "ZONE013.ZND" || cur_zone == "ZONE017.ZND" || cur_zone == "ZONE040.ZND" || cur_zone == "ZONE055.ZND") {
+                start_point = 1;
+            }
+            else if (cur_zone == "ZONE014.ZND" || cur_zone == "ZONE048.ZND" || cur_zone == "ZONE054.ZND") {
+                start_point = 2;
+            }
+            else if (cur_zone == "ZONE051.ZND" || cur_zone == "ZONE053.ZND") {
+                start_point = 3;
+            }
+            wep_pos += (1124 * start_point);
+            ene_off += (8 * start_point);
+            for (int e = start_point; e < ene_count; e++) {
+                if (cur_zone != "ZONE031.ZND" && cur_zone != "ZONE025.ZND" && cur_zone != "ZONE016.ZND" && cur_zone != "ZONE022.ZND" && cur_zone != "ZONE041.ZND") {
+                    if (cur_zone == "ZONE009.ZND" && (e == 6 || e == 8)) {
+                        e += 1;
                         wep_pos += 1124;
                         ene_off += 8;
                     }
                     else if (cur_zone == "ZONE015.ZND" && e == 11) {
                         e = 12;
-                        wep_pos += 1124;
-                        ene_off += 8;
-                    }
-                    else if (cur_zone == "ZONE011.ZND" && e == 0) {
-                        e = 1;
                         wep_pos += 1124;
                         ene_off += 8;
                     }
@@ -636,11 +638,6 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
                             ene_off += 8;
                         }
                     }
-                    else if (cur_zone == "ZONE051.ZND" && e == 1) {
-                        e += 1;
-                        wep_pos += 1124;
-                        ene_off += 8;
-                    }
                     else if (cur_zone == "ZONE032.ZND" && (e == 5 || e == 6 || e == 7 || e == 25 || e == 16 || e == 12 || e == 17 || e == 24 || e == 28)) {
                         if (e == 5) {
                             e += 3;
@@ -658,7 +655,7 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
                             ene_off += 8;
                         }
                     }
-                    else if (cur_zone == "ZONE048.ZND" && (e == 0 || e == 3 || e == 5 || e == 23)) {
+                    else if ((cur_zone == "ZONE048.ZND" && (e == 3 || e == 5 || e == 23)) || (cur_zone == "ZONE056.ZND" && (e == 0 || e == 9))) {
                         e += 1;
                         wep_pos += 1124;
                         ene_off += 8;
@@ -679,27 +676,6 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
                             wep_pos += 1124;
                             ene_off += 8;
                         }
-                    }
-                    else if (cur_zone == "ZONE053.ZND" && (e == 0 || e == 1 || e == 2)) {
-                        if (e == 0) {
-                            e += 3;
-                            wep_pos += (1124 * 3);
-                            ene_off += 24;
-                        }
-                        else if (e == 1) {
-                            e += 2;
-                            wep_pos += (1124 * 2);
-                            ene_off += 16;
-                        }
-                        else {
-                            e += 1;
-                            wep_pos += 1124;
-                            ene_off += 8;
-                        }
-
-                    }
-                    else if (cur_zone == "ZONE022.ZND" && e == 0) {
-                        ene_count = 2;
                     }
                     else if (cur_zone == "ZONE024.ZND" && (e == 0 || e == 1 || e == 4 || e == 6 || e == 8)) {
                         if (e == 0) {
@@ -776,6 +752,9 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
                             eiz_dist = std::uniform_int_distribution<>(0, *ecp_sl - 1);
                         }
                         eiz_sl = eiz_dist(aGen);
+                        if (cur_slave == "ZONE012.ZND") {
+                            eiz_sl = 0;
+                        }
                         wep_pos_sl = *ewop_sl + (1124 * eiz_sl);
                         sla_enzon.seekg(wep_pos_sl, ios::beg);
                         sla_enzon.tellg();

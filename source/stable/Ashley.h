@@ -21,5 +21,6 @@ private:
 
 public:
 	Ashley();
-	void statIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen, string aDecision, string secondDecision);
+	void statIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen, string aDecision, string secondDecision, string thirdDecision);
+	void miscIterate(Reference_Files aRF, Add_Game& aGame, string aDecision, std::mt19937 aGen);
 };

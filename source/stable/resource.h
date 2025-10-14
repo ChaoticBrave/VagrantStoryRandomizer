@@ -25,6 +25,12 @@
 #define IDM_GETSEED					   9004
 #define IDM_CLEARSEED				   9005
 #define IDM_REVERT  				   9006
+#define IDM_DROPDOWN  				   9007
+#define IDM_THRES1  				   9008
+#define IDM_THRES2  				   9009
+#define IDM_THRES3  				   9010
+#define IDM_THRES4  				   9011
+
 
 // Next default values for new objects
 // 

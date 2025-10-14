@@ -11,9 +11,10 @@ Both old stable and experimental builds can be found here:
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
 ## Updates
-* Changed the Chests randomizer so that the blades and grips produced have their original stats if Item Stats is not selected. For example, a produced Hand of Light will have 30 STR, 0 INT and -7 AGI.
-* The randomizer will also scale to monitors that have apps and text at a size greater than 100%.
-* When the game loads, the randomizer will now check the hash. If it matches a vanilla game, you won't have the opportunity to revert back until your copy is randomized. You will not be asked if you want to revert if you start randomizing a vanilla game.
+* Updated the model randomizer so that bosses are not changed. Also edited some enemy models to be left intact to prevent freezes.
+* Added the option to randomize the misc items in Ashley's bag.
+* Included a dropdown menu where you can choose the thresholds for how high or low Ashley's STR, INT and AGL can reach.
+* The UI is now in wide form.
 
 ## To Do
 * Add Zenith QoL features.
@@ -28,7 +29,7 @@ If you make any alterations to the source code and you want to bring your projec
 * Enemies: Randomizes the enemy placements within an area.
 * Chests: Randomizes the contents of a chest.
 * Drops: Randomizes what each enemy drops. This will only apply to the random drops of an enemy. Guaranteed drops are unaltered to prevent softlocks.
-* Balance Item Stats: Makes the randomized stats of weapons, blades, grips, gems, shields, and armour in chests less extreme. Blades, grips and gems will also be adjusted by area in the story.
+* Balance Item Stats: Makes the randomized stats of weapons, blades, grips, gems, shields, and armour in chests less extreme. Blade, grip and gem stats will also be adjusted by area in the story.
 * Area Progression: Randomizes where you go next depending on the area you're in.
 * Item Stats: Randomizes the stats of weapons, blades, grips, gems, shields, and armour in chests from being randomized.
 * Enemy Models: Allows you to change which models an enemy uses. Though the randomized model has to be able to use the original enemy's weapon.
@@ -38,6 +39,9 @@ If you make any alterations to the source code and you want to bring your projec
 * Ashley's Stats: Randomizes Ashley's starting stats and equipment.
 * Fandango Stats: Randomizes the blade and grip which are used for the Fandango.
 * Balance Ashley's Stats: Balances Ashley's stats and equipment to remain appropriate for the earlier parts of the game. 
+* Ashley Stat Threshold: Determines the minimum and maximum STR, INT and AGL a balanced Ashley can have. You can choose from low, medium and high. Low is 75-125, medium is 50-150 and high is 25-175.
+* Ashley's Misc Items: Randomizes Ashley's misc consumable items which he starts with.
+* Misc Item Quantities: Randomizes the quantities of the randomized misc items.
 
 ## Limitations
 Enemies can also only be changed to those which can be found within the same area. For example, Snowfly Forest opponents can only be swapped with other Snowfly Forest opponents.
@@ -56,6 +60,9 @@ Discord:
 * Mullenkamp: https://discord.gg/PfbZAkTeCN
 * Personal Discord: https://discord.gg/xmgKtf2tN6
 * Kingdom of Ivalice: https://discord.gg/WZ2DbjHXJF
+
+Bluesky:
+https://bsky.app/profile/chaoticbrave.bsky.social
 
 Twitter:
 
@@ -90,5 +97,6 @@ https://ko-fi.com/chaoticbrave
 * Overlord Kego: For suggesting the option to keep randomized equipment stats.
 * vagrant18: For suggesting the equipment consistency option.
 * JDSilvergun: For suggesting balance improvements.
+* Bledyo: For discovering bugs with the model randomizer and suggesting the option to choose stat thresholds.
 ### Special Thanks
 * OddKara: Inspired me to do location-based randomizing rather than a room-by-room direction.

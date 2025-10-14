@@ -21,7 +21,7 @@ Ashley::Ashley() {
 	//Ashley
 }
 
-void Ashley::statIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen, string aDecision, string secondDecision) {
+void Ashley::statIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen, string aDecision, string secondDecision, string thirdDecision) {
     string file;
     string ashStat = aGame.getStringPath() + "\\MISC\\INITBTL.PRG";
     string ashEqu = aGame.getStringPath() + "\\MISC\\TITLE.PRG";
@@ -60,7 +60,7 @@ void Ashley::statIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen
     int cho_blade = 2;
     int cho_grip = 1;
 
-    char * ch_val;
+    char* ch_val;
     char rand_hp[20];
     char rand_mp[20];
     char rand_dp[20];
@@ -77,9 +77,12 @@ void Ashley::statIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen
     std::stringstream ss_rand_dp;
     std::stringstream hs_rand_dpm;
 
+    std::ofstream ashBat;
+
     std::streampos stat_loc;
 
-	fstream map;
+    fstream map;
+
 
 	std::uniform_int_distribution<> dist_1;
     std::uniform_int_distribution<> dist_2;
@@ -151,17 +154,16 @@ void Ashley::statIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen
     std::uniform_int_distribution<> dist_68;
     std::uniform_int_distribution<> dist_69;
 
-	std::ofstream ashBat;
 	ashBat.open("ashCmd.cmd", std::ios::trunc);
 	ashBat << ("cd " + aGame.getStringPath() + " \n");
 
 
 	if (aDecision == "Y") {
-		dist_1 = std::uniform_int_distribution<>(1, 480);
-        dist_2 = std::uniform_int_distribution<>(1, 130);
-        dist_3 = std::uniform_int_distribution<>(1, 112);
-        dist_4 = std::uniform_int_distribution<>(1, 127);
-        dist_5 = std::uniform_int_distribution<>(1, 132);
+		dist_1 = std::uniform_int_distribution<>(40, 480);
+        dist_2 = std::uniform_int_distribution<>(5, 130);
+        dist_3 = std::uniform_int_distribution<>(90, 112);
+        dist_4 = std::uniform_int_distribution<>(48, 127);
+        dist_5 = std::uniform_int_distribution<>(75, 132);
         dist_10 = std::uniform_int_distribution<>(1, 14);
         dist_11 = std::uniform_int_distribution<>(1, 4);
         dist_24 = std::uniform_int_distribution<>(0, 12);
@@ -208,7 +210,15 @@ void Ashley::statIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen
         dist_60 = std::uniform_int_distribution<>(0, 255);
         dist_64 = std::uniform_int_distribution<>(0, 255);
 	}
-
+    if (thirdDecision == "L") {
+        dist_3, dist_4, dist_5 = std::uniform_int_distribution<>(75, 125);
+    }
+    else if (thirdDecision == "M") {
+        dist_3, dist_4, dist_5 = std::uniform_int_distribution<>(50, 150);
+    }
+    else if (thirdDecision == "H") {
+        dist_3, dist_4, dist_5 = std::uniform_int_distribution<>(25, 175);
+    }
     file = ashStat;
     start = statStart;
 	map.open(file, ios::in | ios::out | ios::binary | ios::ate);
@@ -1163,4 +1173,99 @@ void Ashley::statIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen
     ashBat << (aRF.getTool() + " '" + aGame.getWhole().string() + "' /BATTLE/INITBTL.PRG" + " '" + ashStat + "'") << std::endl;
     ashBat << (aRF.getTool() + " '" + aGame.getWhole().string() + "' /TITLE/TITLE.PRG" + " '" + ashEqu + "'") << std::endl;
     ashBat.close();
+}
+
+void Ashley::miscIterate(Reference_Files aRF, Add_Game& aGame, string aDecision, std::mt19937 aGen) {
+    string ashMisc = aGame.getStringPath() + "\\MISC\\TITLE.PRG";
+
+    std::ofstream ashBat;
+
+    ashBat.open("miscCmd.cmd", std::ios::trunc);
+    ashBat << ("cd " + aGame.getStringPath() + " \n");
+
+    fstream map;
+
+    int stat;
+    int start = 53796;
+    int to_ass;
+
+    char* ch_val;
+
+    std::streampos stat_loc;
+
+    std::uniform_int_distribution<> dist_1 = std::uniform_int_distribution<>(67, 233);
+    std::uniform_int_distribution<> dist_2 = std::uniform_int_distribution<>(0, 1);
+    std::uniform_int_distribution<> dist_3 = std::uniform_int_distribution<>(67, 100);
+    std::uniform_int_distribution<> dist_4 = std::uniform_int_distribution<>(130, 139);
+    std::uniform_int_distribution<> dist_5 = std::uniform_int_distribution<>(167, 200);
+    std::uniform_int_distribution<> dist_6 = std::uniform_int_distribution<>(202, 233);
+    std::uniform_int_distribution<> dist_7 = std::uniform_int_distribution<>(1, 99);
+
+    map.open(ashMisc, ios::in | ios::out | ios::binary | ios::ate);
+    for (int s = 0; s < 5; s++) {
+        stat = dist_1(aGen);
+        if (stat >= 101 && stat <= 129) {
+            stat = dist_2(aGen);
+            if (stat == 0) {
+                stat = dist_3(aGen);
+            }
+            else {
+                stat = dist_4(aGen);
+            }
+        }
+        else if (stat >= 140 && stat <= 142) {
+            stat = 139;
+        }
+        else if (stat >= 144 && stat <= 146) {
+            stat = 143;
+        }
+        else if (stat >= 148 && stat <= 150) {
+            stat = 147;
+        }
+        else if (stat >= 152 && stat <= 154) {
+            stat = 151;
+        }
+        else if (stat >= 156 && stat <= 158) {
+            stat = 155;
+        }
+        else if (stat >= 160 && stat <= 162) {
+            stat = 159;
+        }
+        else if (stat >= 164 && stat <= 166) {
+            stat = 163;
+        }
+        else if (stat == 201) {
+            stat = dist_2(aGen);
+            if (stat == 0) {
+                stat = dist_5(aGen);
+            }
+            else {
+                stat = dist_6(aGen);
+            }
+        }
+        map.seekg(start + (s * 4), ios::beg);
+        stat_loc = map.tellg();
+        to_ass = map.get();
+        ch_val = new char(stat);
+        map.seekp(start + (s * 4), ios::beg);
+        map.write(ch_val, 1);
+        delete ch_val;
+        if (aDecision == "Y" || stat >= 130)  {
+            if (stat < 130 && aDecision == "Y") {
+                stat = dist_7(aGen);
+            }
+            else {
+                stat = 1;
+            }
+            map.seekg(start + (s * 4) + 2, ios::beg);
+            stat_loc = map.tellg();
+            to_ass = map.get();
+            ch_val = new char(stat);
+            map.seekp(start + (s * 4) + 2, ios::beg);
+            map.write(ch_val, 1);
+            delete ch_val;
+        }
+    }
+    ashBat << (aRF.getTool() + " '" + aGame.getWhole().string() + "' /TITLE/TITLE.PRG" + " '" + ashMisc + "'") << std::endl;
+    ashBat.close(); 
 }
