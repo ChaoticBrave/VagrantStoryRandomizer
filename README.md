@@ -11,11 +11,11 @@ Both old stable and experimental builds can be found here:
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
 ## Updates
-* Altered the model randomizer so that bosses are not changed. Also edited some enemy models to be left intact to prevent freezes.
-* Added the option to randomize the misc items in Ashley's bag.
-* Included a dropdown menu where you can choose the thresholds for how high or low Ashley's STR, INT and AGL can reach.
+* Updated the area progression option so that you have to go through Catacombs and Sanctum before the next location is randomised.
+* Fixed a bug where enemy models are not randomised in the Wine Cellar.
+* Fixed several model randomizer crashes.
 * The UI is now in wide form.
-* When Balance Ashley's Stats is picked, Ashley's HP will now only go as low as 40 and his MP will only go as low as 5.
+* Fixed a bug where a seed refusing to select Enemy Stats unticks Balance Enemy Stats.
 
 ## To Do
 * Add Zenith QoL features.
