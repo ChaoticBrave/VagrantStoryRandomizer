@@ -897,7 +897,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                                 choiceSt = "Y";
                             }
                             else {
-                                EnableWindow(butRos[butRos.size() - 1], true);
+                                EnableWindow(butRos[butRos.size() - 1], false);
                                 pa_stats = false;
                                 choiceSt = "N";
                             }

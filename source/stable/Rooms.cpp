@@ -83,7 +83,7 @@ void Rooms::roomIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen)
 			cur_map = *wmp;
 			acmap.open(m_file, ios::in | ios::out | ios::binary | ios::ate);
 			zone_point_r = dist(aGen);
-			if ((aRF.getZonesOfChoice().at(zone_point_r) == 32 && aRF.getMapsOfChoice().at(zone_point_r) == 5) && (cur_map == aGame.getStringPath() + "\\MAPS\\" + "MAP025.MPD" || cur_map == aGame.getStringPath() + "\\MAPS\\" + "MAP239.MPD" || cur_map == aGame.getStringPath() + "\\MAPS\\" + "MAP342.MPD" || cur_map == aGame.getStringPath() + "\\MAPS\\" + "MAP112.MPD")) {
+			if ((aRF.getZonesOfChoice().at(zone_point_r) == 32 && aRF.getMapsOfChoice().at(zone_point_r) == 5) && (cur_map == aGame.getStringPath() + "\\MAPS\\" + "MAP061.MPD" || cur_map == aGame.getStringPath() + "\\MAPS\\" + "MAP239.MPD" || cur_map == aGame.getStringPath() + "\\MAPS\\" + "MAP342.MPD" || cur_map == aGame.getStringPath() + "\\MAPS\\" + "MAP112.MPD")) {
 				zone_point = aRF.getZonesOfChoice().at(zone_point_r);
 				map_point = 7;
 				coor_point = "100044";
@@ -115,7 +115,7 @@ void Rooms::roomIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen)
 			ch_val = new char(zone_point);
 			acmap.seekp(door, ios::beg);
 			acmap.write(ch_val, 1);
-			if (m_file == aGame.getStringPath() + "\\MAPS\\" + "MAP025.MPD") {
+			if (m_file == aGame.getStringPath() + "\\MAPS\\" + "MAP061.MPD") {
 				acmap.seekg(door + 12, ios::beg);
 				door_loc = acmap.tellg();
 				door_g = acmap.get();
@@ -130,7 +130,7 @@ void Rooms::roomIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen)
 			ch_val = new char(map_point);
 			acmap.seekp(door, ios::beg);
 			acmap.write(ch_val, 1);
-			if (m_file == aGame.getStringPath() + "\\MAPS\\" + "MAP025.MPD") {
+			if (m_file == aGame.getStringPath() + "\\MAPS\\" + "MAP061.MPD") {
 				acmap.seekg(door + 12, ios::beg);
 				door_loc = acmap.tellg();
 				door_g = acmap.get();
@@ -149,7 +149,7 @@ void Rooms::roomIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen)
 			ch_val = new char(i_concoor);
 			acmap.seekp(door, ios::beg);
 			acmap.write(ch_val, 1);
-			if (m_file == aGame.getStringPath() + "\\MAPS\\" + "MAP025.MPD") {
+			if (m_file == aGame.getStringPath() + "\\MAPS\\" + "MAP061.MPD") {
 				acmap.seekg(door + 12, ios::beg);
 				door_loc = acmap.tellg();
 				door_g = acmap.get();
@@ -168,7 +168,7 @@ void Rooms::roomIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen)
 			ch_val = new char(i_concoor);
 			acmap.seekp(door, ios::beg);
 			acmap.write(ch_val, 1);
-			if (m_file == aGame.getStringPath() + "\\MAPS\\" + "MAP025.MPD") {
+			if (m_file == aGame.getStringPath() + "\\MAPS\\" + "MAP061.MPD") {
 				acmap.seekg(door + 12, ios::beg);
 				door_loc = acmap.tellg();
 				door_g = acmap.get();
@@ -187,7 +187,7 @@ void Rooms::roomIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen)
 			ch_val = new char(i_concoor);
 			acmap.seekp(door, ios::beg);
 			acmap.write(ch_val, 1);
-			if (m_file == aGame.getStringPath() + "\\MAPS\\" + "MAP025.MPD") {
+			if (m_file == aGame.getStringPath() + "\\MAPS\\" + "MAP061.MPD") {
 				acmap.seekg(door + 12, ios::beg);
 				door_loc = acmap.tellg();
 				door_g = acmap.get();
@@ -204,7 +204,7 @@ void Rooms::roomIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen)
 			ch_val = new char(ret_zone_point);
 			acmap.seekp(ret_door, ios::beg);
 			acmap.write(ch_val, 1);
-			if ((ret_m_file == aGame.getStringPath() + "\\MAPS\\" + "MAP028.MPD") || (ret_m_file == aGame.getStringPath() + "\\MAPS\\" + "MAP087.MPD")) {
+			if ((ret_m_file == aGame.getStringPath() + "\\MAPS\\" + "MAP147.MPD") || (ret_m_file == aGame.getStringPath() + "\\MAPS\\" + "MAP087.MPD")) {
 				acmap.seekg(ret_door + 12, ios::beg);
 				ret_door_loc = acmap.tellg();
 				ret_door_g = acmap.get();
@@ -219,7 +219,7 @@ void Rooms::roomIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen)
 			ch_val = new char(ret_map_point);
 			acmap.seekp(ret_door, ios::beg);
 			acmap.write(ch_val, 1);
-			if ((ret_m_file == aGame.getStringPath() + "\\MAPS\\" + "MAP028.MPD") || (ret_m_file == aGame.getStringPath() + "\\MAPS\\" + "MAP087.MPD")) {
+			if ((ret_m_file == aGame.getStringPath() + "\\MAPS\\" + "MAP147.MPD") || (ret_m_file == aGame.getStringPath() + "\\MAPS\\" + "MAP087.MPD")) {
 				acmap.seekg(ret_door + 12, ios::beg);
 				ret_door_loc = acmap.tellg();
 				ret_door_g = acmap.get();
@@ -238,7 +238,7 @@ void Rooms::roomIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen)
 			ch_val = new char(i_concoor);
 			acmap.seekp(ret_door, ios::beg);
 			acmap.write(ch_val, 1);
-			if ((ret_m_file == aGame.getStringPath() + "\\MAPS\\" + "MAP028.MPD") || (ret_m_file == aGame.getStringPath() + "\\MAPS\\" + "MAP087.MPD")) {
+			if ((ret_m_file == aGame.getStringPath() + "\\MAPS\\" + "MAP147.MPD") || (ret_m_file == aGame.getStringPath() + "\\MAPS\\" + "MAP087.MPD")) {
 				acmap.seekg(ret_door + 12, ios::beg);
 				ret_door_loc = acmap.tellg();
 				ret_door_g = acmap.get();
@@ -257,7 +257,7 @@ void Rooms::roomIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen)
 			ch_val = new char(i_concoor);
 			acmap.seekp(ret_door, ios::beg);
 			acmap.write(ch_val, 1);
-			if ((ret_m_file == aGame.getStringPath() + "\\MAPS\\" + "MAP028.MPD") || (ret_m_file == aGame.getStringPath() + "\\MAPS\\" + "MAP087.MPD")) {
+			if ((ret_m_file == aGame.getStringPath() + "\\MAPS\\" + "MAP147.MPD") || (ret_m_file == aGame.getStringPath() + "\\MAPS\\" + "MAP087.MPD")) {
 				acmap.seekg(ret_door + 12, ios::beg);
 				ret_door_loc = acmap.tellg();
 				ret_door_g = acmap.get();
@@ -276,7 +276,7 @@ void Rooms::roomIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen)
 			ch_val = new char(i_concoor);
 			acmap.seekp(ret_door, ios::beg);
 			acmap.write(ch_val, 1);
-			if ((ret_m_file == aGame.getStringPath() + "\\MAPS\\" + "MAP028.MPD") || (ret_m_file == aGame.getStringPath() + "\\MAPS\\" + "MAP087.MPD")) {
+			if ((ret_m_file == aGame.getStringPath() + "\\MAPS\\" + "MAP147.MPD") || (ret_m_file == aGame.getStringPath() + "\\MAPS\\" + "MAP087.MPD")) {
 				acmap.seekg(ret_door + 12, ios::beg);
 				ret_door_loc = acmap.tellg();
 				ret_door_g = acmap.get();
