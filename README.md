@@ -14,7 +14,6 @@ https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 * Updated the area progression option so that you have to go through Catacombs and Sanctum before the next location is randomised.
 * Fixed a bug where enemy models are not randomised in the Wine Cellar.
 * Fixed several model randomizer crashes.
-* The UI is now in wide form.
 * Fixed a bug where a seed refusing to select Enemy Stats unticks Balance Enemy Stats.
 
 ## To Do
