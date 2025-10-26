@@ -52,6 +52,8 @@ Certain locations are randomized rather than being on a room-by-room basis due t
 
 For some reason, if Ashley dies during the Greylands Incident, he will have the base game's starting stats when "Continue" is selected even if they were randomized. I will investigate this further if I can, but the best bet is to either not die or skip straight to the Wine Cellar.
 
+The enemy model randomizer is highly unstable even on stable builds. The sheer quantity on enemy and model combinations means this is difficult to thoroughly ACID test. Use this parameter at risk.
+
 ## Contact
 If you queries about the project, the best places to contact me are either one of my two Discord servers or my Twitter DMs.
 
