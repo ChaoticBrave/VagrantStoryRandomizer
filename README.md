@@ -1,7 +1,7 @@
 # Vagrant Story Randomizer
 A tool which will randomize a copy of Vagrant Story. 
 
-A randomized game has been proven to work with both Beetle PSX and DuckStation. 
+A randomized game has been proven to work with both Beetle PSX, NO$PSX and DuckStation. Performance reportedly varies if ePSXe is used, so use that emulator at risk until problems which may affect it have been identified and resolved. 
 
 For the latest version of the randomizer, check the Releases section.
 
