@@ -1278,7 +1278,7 @@ void makeButtons(HWND hWnd) {
     balance = CreateWindow(L"BUTTON", L"Balance Item Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * cheBuX), (int)(yCor * droBuY), 150, 25, hWnd, (HMENU)9002, hInst, NULL);
     keep = CreateWindow(L"BUTTON", L"Item Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * cheBuX), (int)(yCor * modBuY), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
     consEqu = CreateWindow(L"BUTTON", L"Inconsistent Gear", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * cheBuX), (int)(yCor * balEneBuY), 150, 25, hWnd, (HMENU)9002, hInst, NULL);
-    eneMod = CreateWindow(L"BUTTON", L"Enemy Models", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * enBuX), (int)(yCor * modBuY), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
+    eneMod = CreateWindow(L"BUTTON", L"Enemy Models (Unstable)", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * enBuX), (int)(yCor * modBuY), 140, 25, hWnd, (HMENU)9002, hInst, NULL);
     eneStat = CreateWindow(L"BUTTON", L"Enemy Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * enBuX), (int)(yCor * enStBuY), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
     balEneStat = CreateWindow(L"BUTTON", L"Balance Enemy Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * enBuX), (int)(yCor * balEneBuY), 150, 25, hWnd, (HMENU)9002, hInst, NULL);
     ashley = CreateWindow(L"BUTTON", L"Ashley's Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * ashBuX), (int)(yCor * enBuY), 110, 25, hWnd, (HMENU)9002, hInst, NULL);
@@ -1363,7 +1363,9 @@ void toolTipMaker(HWND hWnd) {
     char modDesc[] =
         "Models from other locations can be\n"
         "used for enemies. For example, bats\n"
-        "could use wyvern models.";
+        "could use wyvern models. This option is\n"
+        "highly unstable and difficult to properly\n"
+        "ACID test. Use this at risk.";
     HWND modTip = toolGen(modDesc, hWnd, eneMod);
     char statDesc[] =
         "The stats and equipment of enemies\n"

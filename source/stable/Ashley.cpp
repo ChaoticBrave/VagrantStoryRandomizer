@@ -184,8 +184,8 @@ void Ashley::statIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen
         dist_64 = std::uniform_int_distribution<>(0, 5);
 	}
 	else {
-		dist_1 = std::uniform_int_distribution<>(1, 999);
-		dist_2 = std::uniform_int_distribution<>(1, 999);
+		dist_1 = std::uniform_int_distribution<>(40, 999);
+		dist_2 = std::uniform_int_distribution<>(5, 999);
 		dist_3 = std::uniform_int_distribution<>(1, 255);
 		dist_4 = std::uniform_int_distribution<>(1, 255);
 		dist_5 = std::uniform_int_distribution<>(1, 255);
