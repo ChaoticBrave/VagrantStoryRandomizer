@@ -5,6 +5,8 @@ A randomized game has been proven to work with both Beetle PSX, NO$PSX and DuckS
 
 For the latest version of the randomizer, check the Releases section.
 
+For any extra information, please the wiki available on the GitHub repository.
+
 ## Old and Experimental Releases
 Both old stable and experimental builds can be found here:
 
