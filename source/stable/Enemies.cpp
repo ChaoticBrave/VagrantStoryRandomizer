@@ -21,7 +21,7 @@ Enemies::Enemies() {
             
 }
 
-void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision, std::mt19937 aGen, string nextDecision, string mainDecision, string statDecision, string balDecision) {
+void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision, std::mt19937 aGen, string nextDecision, string mainDecision, string statDecision, string balDecision, bool patchDecision) {
     list<string> z = aRF.getZones();
     list<string> ez = aRF.getEneZones();
     list<string>::iterator zp = z.begin();
@@ -56,6 +56,9 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
     string file;
     string sla_file;
     string cur_map;
+    string bronze_map;
+    string silver_map;
+    string iron_map;
     string cur_zone;
     string cur_slave;
     string sCmdPath;
@@ -128,6 +131,9 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
     int ene_hp_stat;
     int loop_diff;
     int start_point;
+    int bronze_zone;
+    int silver_zone;
+    int iron_zone;
 
     char * ch_val;
     char hhex_1[20];
@@ -138,6 +144,10 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
     char rand_dp[20];
 
     bool wep_match;
+    bool bronze_found = false;
+    bool silver_found = false;
+    bool iron_found = false;
+
 
     //wchar_t wCmd[20];
 
@@ -323,6 +333,8 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
     std::stringstream rand_dpm_fin;
     std::stringstream rand_dp_fin;
 
+    vector<string> mino = aRF.getPreMino();
+
 
     //std::ofstream mapoutput;
     //mapoutput.open("rooms.txt", std::ios_base::app);
@@ -369,6 +381,9 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
             for (int mi = 0; mi < aRF.getIndivZone(*mlp).size(); mi++) {
                 m_file = aGame.getStringPath() + "\\MAPS\\" + *ivmp;
                 cur_map = *ivmp;
+                if (cur_map == "MAP046.MPD" && patchDecision == true) {
+                    m_file = aGame.getStringPath() + "\\MAPS\\PATCHED\\" + *ivmp;
+                }
                 if (find(begin(ccr), end(ccr), cur_map) == end(ccr)) {
                     if (find(begin(bc), end(bc), cur_map) == end(bc)) {
                         acmap.open(m_file, ios::in | ios::out | ios::binary | ios::ate);
@@ -393,7 +408,7 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
                                 ene_at = acmap.tellg();
                                 ene_loc = acmap.get();
                                 ene_dist = std::uniform_int_distribution<>(0, (para_2 - 1));
-                                if ((ene_loc > (para_2 - 1)) == false && (cur_zone == "ZONE013.ZND" && (ene_loc < 5)) == false && (cur_zone == "ZONE015.ZND" && (ene_loc == 0)) == false && (cur_zone == "ZONE051.ZND" && (ene_loc > 2 && ene_loc < 21)) == false) {
+                                if ((ene_loc > (para_2 - 1)) == false && (cur_zone == "ZONE013.ZND" && (ene_loc < 5)) == false && (cur_zone == "ZONE015.ZND" && (ene_loc == 0)) == false && (cur_zone == "ZONE051.ZND" && (ene_loc > 2 && ene_loc < 21)) == false /* && (cur_zone == "ZONE028.ZND" && (ene_loc > 13 && ene_loc < 22)) == false*/) {
                                     ene = ene_loc;
                                     while (ene == ene_loc) {
                                         ene = ene_dist(aGen);
@@ -500,6 +515,20 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
                                                 ene = ene_dist(aGen);
                                             }
                                         }
+                                        else if (cur_zone == "ZONE048.ZND" && ene == 0) {
+                                            ene_dist = std::uniform_int_distribution<>(1, (para_2 - 1));
+                                            ene = ene_dist(aGen);
+                                            /*picker = std::uniform_int_distribution<>(1, 2);
+                                            choice = picker(aGen);
+                                            if (choice == 1) {
+                                                ene_dist = std::uniform_int_distribution<>(0, 9);
+                                                ene = ene_dist(aGen);
+                                            }
+                                            else {
+                                                ene_dist = std::uniform_int_distribution<>(11, (para_2 - 1));
+                                                ene = ene_dist(aGen);
+                                            }*/
+                                        }
                                         else if (cur_zone == "ZONE049.ZND" && ene == 6) {
                                             picker = std::uniform_int_distribution<>(1, 2);
                                             choice = picker(aGen);
@@ -539,6 +568,12 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
                                         acmap.seekp(b, ios::beg);
                                         acmap.write(ch_val, 1);
                                         delete ch_val;
+                                        if (cur_zone == "ZONE028.ZND" && (ene < 14 || ene == 22)) {
+                                            ch_val = new char(0);
+                                            acmap.seekp(b + 33, ios::beg);
+                                            acmap.write(ch_val, 1);
+                                            delete ch_val;
+                                        }
                                     }
                                 }
                             }
@@ -547,9 +582,47 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
                             item_dist = std::uniform_int_distribution<>(323, 489);
                             for (int b = size - 9; b > ((size - (38 * round(quo_numer / 40))) - 40); b -= 40) {
                                 ind_item = item_dist(aGen) - 256;
+                                if (ind_item == 210 && (std::find(mino.begin(), mino.end(), cur_map) != mino.end())) {
+                                    while (ind_item == 210 && (std::find(mino.begin(), mino.end(), cur_map) != mino.end())) {
+                                        ind_item = item_dist(aGen) - 256;
+                                    }
+                                }
                                 if (std::find(unt.begin(), unt.end(), ind_item) != unt.end()) {
                                     while (std::find(unt.begin(), unt.end(), ind_item) != unt.end()) {
                                         ind_item = item_dist(aGen) - 256;
+                                    }
+                                }
+                                if (ind_item == 202) {
+                                    bronze_found = true;
+                                    bronze_zone = i;
+                                }
+                                else if (ind_item == 204 || ind_item == 203) {
+                                    if (bronze_found == false) {
+                                        ind_item = 202;
+                                        bronze_zone = i;
+                                        bronze_found = true;
+                                    }
+                                    else if ((bronze_zone == 8 && i != 8) || (bronze_zone == 10 && (i != 8 && i != 10)) || (bronze_zone == 18 && (i != 8 && i != 10 && i != 18)) || (bronze_zone == 14 && (i != 8 && i != 10 && i != 18 && i != 14)) || (bronze_zone == 9 && (i != 8 && i != 10 && i != 18 && i != 14 && i != 9)) || ((bronze_zone == 9 || bronze_zone == 11 || bronze_zone == 13 || bronze_zone == 16) && (i != 8 && i != 10 && i != 18 && i != 14 && i != 9 && i != 11 && i != 13 && i != 16))) {
+                                        ind_item = 67;
+                                    }
+                                    else if (ind_item == 204) {
+                                        iron_found = true;
+                                        iron_zone = i;
+                                    }
+                                    else if (ind_item == 203) {
+                                        if (iron_found == false) {
+                                            ind_item = 204;
+                                            iron_zone = i;
+                                            iron_found = true;
+                                        }
+                                        else if ((iron_zone == 8 && i != 8) || (iron_zone == 10 && (i != 8 && i != 10)) || (iron_zone == 18 && (i != 8 && i != 10 && i != 18)) || (iron_zone == 14 && (i != 8 && i != 10 && i != 18 && i != 14)) || (iron_zone == 9 && (i != 8 && i != 10 && i != 18 && i != 14 && i != 9)) || ((iron_zone == 9 || iron_zone == 11 || iron_zone == 13 || iron_zone == 16) && (i != 8 && i != 10 && i != 18 && i != 14 && i != 9 && i != 11 && i != 13 && i != 16))) {
+                                            ind_item = 67;
+                                        }
+                                        else {
+                                            ind_item = 203;
+                                            silver_zone = i;
+                                            silver_found = true;
+                                        }
                                     }
                                 }
                                 acmap.seekp(b + 1, ios::beg);

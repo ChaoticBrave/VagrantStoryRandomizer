@@ -30,6 +30,18 @@
 #define IDM_THRES2  				   9009
 #define IDM_THRES3  				   9010
 #define IDM_THRES4  				   9011
+#define IDM_DROPDOWN2  				   9012
+#define IDM_BUILD1  				   9013
+#define IDM_BUILD2  				   9014
+#define IDM_BUILD3  				   9015
+#define IDM_BUILD4  				   9016
+#define IDM_BUILD5  				   9017
+#define IDM_BUILD6  				   9018
+#define IDM_BUILD7  				   9019
+#define IDM_BUILD8  				   9020
+#define IDM_BUILD9  				   9021
+#define IDM_BUILD10  				   9022
+#define IDM_BUILD11  				   9023
 
 
 // Next default values for new objects

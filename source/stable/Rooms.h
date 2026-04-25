@@ -22,4 +22,6 @@ private:
 public:
 	Rooms();
 	void roomIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen);
+	void mandyMaiden(Reference_Files aRF, Add_Game& aGame);
+	void openWorld(Reference_Files aRF, Add_Game& aGame);
 };

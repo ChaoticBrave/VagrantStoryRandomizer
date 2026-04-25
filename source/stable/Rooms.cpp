@@ -297,3 +297,165 @@ void Rooms::roomIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen)
     }
 	rooBat.close();
 }
+
+void Rooms::mandyMaiden(Reference_Files aRF, Add_Game& aGame) {
+	fstream acmap;
+
+	string m_file;
+
+	streampos op_loc;
+
+	int op_g;
+
+	char* ch_val;
+
+	std::ofstream maidBat;
+
+	maidBat.open("maidCmd.cmd", std::ios::trunc);
+	maidBat << ("cd " + aGame.getStringPath() + " \n");
+
+	m_file = aGame.getStringPath() + "\\MAPS\\" + "MAP171.MPD";
+	acmap.open(m_file, ios::in | ios::out | ios::binary | ios::ate);
+	acmap.seekg(56744, ios::beg);
+	op_loc = acmap.tellg();
+	op_g = acmap.get();
+	ch_val = new char(1);
+	acmap.seekp(56744, ios::beg);
+	acmap.write(ch_val, 1);
+	delete ch_val;
+	acmap.seekg(56748, ios::beg);
+	op_loc = acmap.tellg();
+	op_g = acmap.get();
+	ch_val = new char(230);
+	acmap.seekp(56748, ios::beg);
+	acmap.write(ch_val, 1);
+	delete ch_val;
+	acmap.seekg(56749, ios::beg);
+	op_loc = acmap.tellg();
+	op_g = acmap.get();
+	ch_val = new char(1);
+	acmap.seekp(56749, ios::beg);
+	acmap.write(ch_val, 1);
+	delete ch_val;
+	acmap.seekg(56764, ios::beg);
+	op_loc = acmap.tellg();
+	op_g = acmap.get();
+	ch_val = new char(1);
+	acmap.seekp(56764, ios::beg);
+	acmap.write(ch_val, 1);
+	delete ch_val;
+	acmap.seekg(56768, ios::beg);
+	op_loc = acmap.tellg();
+	op_g = acmap.get();
+	ch_val = new char(230);
+	acmap.seekp(56768, ios::beg);
+	acmap.write(ch_val, 1);
+	delete ch_val;
+	acmap.seekg(56769, ios::beg);
+	op_loc = acmap.tellg();
+	op_g = acmap.get();
+	ch_val = new char(1);
+	acmap.seekp(56769, ios::beg);
+	acmap.write(ch_val, 1);
+	delete ch_val;
+	maidBat << (aRF.getTool() + " '" + aGame.getWhole().string() + "' /MAP/" + "MAP171.MPD" + " '" + m_file + "'") << std::endl;
+	acmap.close();
+
+	m_file = aGame.getStringPath() + "\\MAPS\\" + "MAP145.MPD";
+	acmap.open(m_file, ios::in | ios::out | ios::binary | ios::ate);
+	acmap.seekg(60618, ios::beg);
+	op_loc = acmap.tellg();
+	op_g = acmap.get();
+	ch_val = new char(205);
+	acmap.seekp(60618, ios::beg);
+	acmap.write(ch_val, 1);
+	delete ch_val;
+	acmap.seekg(60619, ios::beg);
+	op_loc = acmap.tellg();
+	op_g = acmap.get();
+	ch_val = new char(1);
+	acmap.seekp(60619, ios::beg);
+	acmap.write(ch_val, 1);
+	delete ch_val;
+	acmap.seekg(60620, ios::beg);
+	op_loc = acmap.tellg();
+	op_g = acmap.get();
+	ch_val = new char(206);
+	acmap.seekp(60620, ios::beg);
+	acmap.write(ch_val, 1);
+	delete ch_val;
+	acmap.seekg(60621, ios::beg);
+	op_loc = acmap.tellg();
+	op_g = acmap.get();
+	ch_val = new char(1);
+	acmap.seekp(60621, ios::beg);
+	acmap.write(ch_val, 1);
+	delete ch_val;
+	acmap.seekg(60624, ios::beg);
+	op_loc = acmap.tellg();
+	op_g = acmap.get();
+	ch_val = new char(1);
+	acmap.seekp(60624, ios::beg);
+	acmap.write(ch_val, 1);
+	delete ch_val;
+	acmap.seekg(60625, ios::beg);
+	op_loc = acmap.tellg();
+	op_g = acmap.get();
+	ch_val = new char(1);
+	acmap.seekp(60625, ios::beg);
+	acmap.write(ch_val, 1);
+	delete ch_val;
+	maidBat << (aRF.getTool() + " '" + aGame.getWhole().string() + "' /MAP/" + "MAP145.MPD" + " '" + m_file + "'") << std::endl;
+	acmap.close();
+	maidBat.close();
+}
+
+void Rooms::openWorld(Reference_Files aRF, Add_Game& aGame) {
+	string ashMisc = aGame.getStringPath() + "\\MISC\\TITLE.PRG";
+
+	std::ofstream worBat;
+
+	worBat.open("worCmd.cmd", std::ios::trunc);
+	worBat << ("cd " + aGame.getStringPath() + " \n");
+
+	fstream map;
+
+	int stat;
+	int start = 53796;
+	int to_ass;
+
+	char* ch_val;
+
+	std::streampos stat_loc;
+
+	map.open(ashMisc, ios::in | ios::out | ios::binary | ios::ate);
+	for (int s = 0; s < 32; s++) {
+		stat = (s + 202);
+		map.seekg(start + (s * 4), ios::beg);
+		stat_loc = map.tellg();
+		to_ass = map.get();
+		ch_val = new char(stat);
+		map.seekp(start + (s * 4), ios::beg);
+		map.write(ch_val, 1);
+		delete ch_val;
+		stat = 1;
+		if (s > 4) {
+			map.seekg(start + (s * 4) + 1, ios::beg);
+			stat_loc = map.tellg();
+			to_ass = map.get();
+			ch_val = new char(stat);
+			map.seekp(start + (s * 4) + 1, ios::beg);
+			map.write(ch_val, 1);
+			delete ch_val;
+		}
+		map.seekg(start + (s * 4) + 2, ios::beg);
+		stat_loc = map.tellg();
+		to_ass = map.get();
+		ch_val = new char(stat);
+		map.seekp(start + (s * 4) + 2, ios::beg);
+		map.write(ch_val, 1);
+		delete ch_val;
+	}
+	worBat << (aRF.getTool() + " '" + aGame.getWhole().string() + "' /TITLE/TITLE.PRG" + " '" + ashMisc + "'") << std::endl;
+	worBat.close();
+}

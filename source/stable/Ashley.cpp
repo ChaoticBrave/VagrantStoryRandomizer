@@ -1243,6 +1243,9 @@ void Ashley::miscIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
                 stat = dist_6(aGen);
             }
         }
+        else if (stat == 210) {
+            stat = 67;
+        }
         map.seekg(start + (s * 4), ios::beg);
         stat_loc = map.tellg();
         to_ass = map.get();
@@ -1268,4 +1271,1166 @@ void Ashley::miscIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
     }
     ashBat << (aRF.getTool() + " '" + aGame.getWhole().string() + "' /TITLE/TITLE.PRG" + " '" + ashMisc + "'") << std::endl;
     ashBat.close(); 
+}
+
+void Ashley::buildIterate(Reference_Files aRF, Add_Game& aGame, string aDecision, std::mt19937 aGen) {
+    string file;
+    string ashStat = aGame.getStringPath() + "\\MISC\\INITBTL.PRG";
+    string ashEqu = aGame.getStringPath() + "\\MISC\\TITLE.PRG";
+    string s_rand_hp;
+    string s1;
+    string s2;
+    string s3;
+    string s4;
+    string s_rand_hp1;
+    string s_rand_hp2;
+    string s_rand_mp;
+    string s_rand_mp1;
+    string s_rand_mp2;
+
+    int start;
+    int statStart = 4916;
+    int stat;
+    int res;
+    int ash_hp_stat;
+    int int_rand_hp;
+    int to_ass;
+    int int_rand_mp;
+    int equStart = 50827;
+    int cho_blade;
+    int cho_grip;
+    int miscStart = 53796;
+
+    char* ch_val;
+    char rand_hp[20];
+    char rand_mp[20];
+
+    fstream map;
+
+    std::stringstream ss_rand_hp;
+    std::stringstream hs_rand_hp;
+    std::stringstream fin_rand_hp;
+    std::stringstream ss_rand_mp;
+    std::stringstream hs_rand_mp;
+    std::stringstream fin_rand_mp;
+
+    std::streampos stat_loc;
+
+    std::uniform_int_distribution<> dist_1;
+    std::uniform_int_distribution<> dist_2;
+    std::uniform_int_distribution<> dist_3;
+    std::uniform_int_distribution<> dist_4;
+    std::uniform_int_distribution<> dist_5;
+    std::uniform_int_distribution<> dist_6;
+    std::uniform_int_distribution<> dist_7;
+    std::uniform_int_distribution<> dist_8;
+    std::uniform_int_distribution<> dist_9;
+    std::uniform_int_distribution<> dist_10;
+    std::uniform_int_distribution<> dist_11;
+    std::uniform_int_distribution<> dist_12;
+    std::uniform_int_distribution<> dist_13;
+    std::uniform_int_distribution<> dist_14;
+    std::uniform_int_distribution<> dist_15;
+
+    std::ofstream buiBat;
+
+    buiBat.open("buildCmd.cmd", std::ios::trunc);
+    buiBat << ("cd " + aGame.getStringPath() + " \n");
+
+    dist_6 = std::uniform_int_distribution<>(1, 5);
+    dist_7 = std::uniform_int_distribution<>(1, 2);
+    dist_8 = std::uniform_int_distribution<>(202, 233);
+    dist_9 = std::uniform_int_distribution<>(1, 4);
+    dist_10 = std::uniform_int_distribution<>(1, 9);
+    dist_11 = std::uniform_int_distribution<>(211, 233);
+    dist_12 = std::uniform_int_distribution<>(1, 11);
+    dist_13 = std::uniform_int_distribution<>(1, 7);
+    dist_14 = std::uniform_int_distribution<>(130, 200);
+    dist_15 = std::uniform_int_distribution<>(1, 99);
+
+    if (aDecision == "R") {
+        res = dist_10(aGen);
+        if (res == 1) {
+            aDecision = "A";
+        }
+        else if (res == 2) {
+            aDecision = "B";
+        }
+        else if (res == 3) {
+            aDecision = "C";
+        }
+        else if (res == 4) {
+            aDecision = "D";
+        }
+        else if (res == 5) {
+            aDecision = "E";
+        }
+        else if (res == 6) {
+            aDecision = "F";
+        }
+        else if (res == 7) {
+            aDecision = "G";
+        }
+        else if (res == 8) {
+            aDecision = "H";
+        }
+        else if (res == 9) {
+            aDecision = "I";
+        }
+    }
+
+    if (aDecision == "A") {
+        dist_1 = std::uniform_int_distribution<>(185, 195);
+        dist_2 = std::uniform_int_distribution<>(15, 25);
+        dist_4 = std::uniform_int_distribution<>(55, 65);
+        dist_5 = std::uniform_int_distribution<>(105, 115);
+        dist_3 = std::uniform_int_distribution<>(85, 95);
+    }
+    else if (aDecision == "B") {
+        dist_1 = std::uniform_int_distribution<>(320, 330);
+        dist_2 = std::uniform_int_distribution<>(30, 40);
+        dist_4 = std::uniform_int_distribution<>(75, 85);
+        dist_5 = std::uniform_int_distribution<>(95, 105);
+        dist_3 = std::uniform_int_distribution<>(105, 115);
+    }
+    else if (aDecision == "C") {
+        dist_1 = std::uniform_int_distribution<>(220, 230);
+        dist_2 = std::uniform_int_distribution<>(45, 55);
+        dist_4 = std::uniform_int_distribution<>(85, 95);
+        dist_5 = std::uniform_int_distribution<>(95, 105);
+        dist_3 = std::uniform_int_distribution<>(100, 110);
+    }
+    else if (aDecision == "D") {
+        dist_1 = std::uniform_int_distribution<>(155, 165);
+        dist_2 = std::uniform_int_distribution<>(30, 40);
+        dist_4 = std::uniform_int_distribution<>(75, 85);
+        dist_5 = std::uniform_int_distribution<>(95, 105);
+        dist_3 = std::uniform_int_distribution<>(65, 75);
+    }
+    else if (aDecision == "E" || aDecision == "F" || aDecision == "G") {
+        dist_1 = std::uniform_int_distribution<>(235, 245);
+        if (aDecision == "E") {
+            dist_2 = std::uniform_int_distribution<>(45, 55);
+            dist_4 = std::uniform_int_distribution<>(90, 100);
+            dist_5 = std::uniform_int_distribution<>(90, 100);
+            dist_3 = std::uniform_int_distribution<>(95, 105);
+        }
+        else if (aDecision == "F") {
+            dist_2 = std::uniform_int_distribution<>(50, 60);
+            dist_4 = std::uniform_int_distribution<>(90, 100);
+            dist_5 = std::uniform_int_distribution<>(95, 105);
+            dist_3 = std::uniform_int_distribution<>(100, 110);
+        }
+        else if (aDecision == "G") {
+            dist_2 = std::uniform_int_distribution<>(15, 25);
+            dist_4 = std::uniform_int_distribution<>(45, 55);
+            dist_5 = std::uniform_int_distribution<>(95, 105);
+            dist_3 = std::uniform_int_distribution<>(105, 115);
+        }
+    }
+    else if (aDecision == "H") {
+        dist_1 = std::uniform_int_distribution<>(145, 155);
+        dist_2 = std::uniform_int_distribution<>(55, 65);
+        dist_4 = std::uniform_int_distribution<>(145, 155);
+        dist_5 = std::uniform_int_distribution<>(95, 105);
+        dist_3 = std::uniform_int_distribution<>(50, 60);
+    }
+    else if (aDecision == "I") {
+        dist_1 = std::uniform_int_distribution<>(195, 205);
+        dist_2 = std::uniform_int_distribution<>(25, 35);
+        dist_4 = std::uniform_int_distribution<>(75, 85);
+        dist_5 = std::uniform_int_distribution<>(95, 105);
+        dist_3 = std::uniform_int_distribution<>(95, 105);
+    }
+
+    file = ashStat;
+    start = statStart;
+    map.open(file, ios::in | ios::out | ios::binary | ios::ate);
+    stat = dist_1(aGen);
+    ash_hp_stat = stat;
+    sprintf_s(rand_hp, "%X", stat);
+    ss_rand_hp << rand_hp;
+    ss_rand_hp >> s_rand_hp;
+    ss_rand_hp.clear();
+    hs_rand_hp << std::hex << s_rand_hp;
+    hs_rand_hp >> int_rand_hp;
+    hs_rand_hp.clear();
+    s1 = "0";
+    if (stat > 255) {
+        s2 = s_rand_hp.at(0);
+        s3 = s_rand_hp.at(1);
+        s4 = s_rand_hp.at(2);
+    }
+    else if (stat > 16) {
+        s2 = "0";
+        s3 = s_rand_hp.at(0);
+        s4 = s_rand_hp.at(1);
+    }
+    else {
+        s2 = "0";
+        s3 = "0";
+        s4 = s_rand_hp.at(0);
+    }
+    s_rand_hp2 = s1 + s2;
+    s_rand_hp1 = s3 + s4;
+    fin_rand_hp << std::hex << s_rand_hp1;
+    fin_rand_hp >> stat;
+    fin_rand_hp.clear();
+    map.seekg(start, ios::beg);
+    stat_loc = map.tellg();
+    to_ass = map.get();
+    ch_val = new char(stat);
+    map.seekg(start, ios::beg);
+    map.write(ch_val, 1);
+    delete ch_val;
+    fin_rand_hp << std::hex << s_rand_hp2;
+    fin_rand_hp >> stat;
+    fin_rand_hp.clear();
+    map.seekg(start + 1, ios::beg);
+    stat_loc = map.tellg();
+    to_ass = map.get();
+    ch_val = new char(stat);
+    map.seekg(start + 1, ios::beg);
+    map.write(ch_val, 1);
+    delete ch_val;
+    stat = dist_2(aGen);
+    sprintf_s(rand_mp, "%X", stat);
+    ss_rand_mp << rand_mp;
+    ss_rand_mp >> s_rand_mp;
+    ss_rand_mp.clear();
+    hs_rand_mp << std::hex << s_rand_mp;
+    hs_rand_mp >> int_rand_mp;
+    hs_rand_mp.clear();
+    s1 = "0";
+    if (stat > 255) {
+        s2 = s_rand_mp.at(0);
+        s3 = s_rand_mp.at(1);
+        s4 = s_rand_mp.at(2);
+    }
+    else if (stat > 16) {
+        s2 = "0";
+        s3 = s_rand_mp.at(0);
+        s4 = s_rand_mp.at(1);
+    }
+    else {
+        s2 = "0";
+        s3 = "0";
+        s4 = s_rand_mp.at(0);
+    }
+    s_rand_mp2 = s1 + s2;
+    s_rand_mp1 = s3 + s4;
+    fin_rand_mp << std::hex << s_rand_mp1;
+    fin_rand_mp >> stat;
+    fin_rand_mp.clear();
+    map.seekg(start + 2, ios::beg);
+    stat_loc = map.tellg();
+    to_ass = map.get();
+    ch_val = new char(stat);
+    map.seekp(start + 2, ios::beg);
+    map.write(ch_val, 1);
+    delete ch_val;
+    fin_rand_mp << std::hex << s_rand_mp2;
+    fin_rand_mp >> stat;
+    fin_rand_mp.clear();
+    map.seekg(start + 3, ios::beg);
+    stat_loc = map.tellg();
+    to_ass = map.get();
+    ch_val = new char(stat);
+    map.seekp(start + 3, ios::beg);
+    map.write(ch_val, 1);
+    delete ch_val;
+    stat = dist_3(aGen);
+    map.seekg(start + 4, ios::beg);
+    stat_loc = map.tellg();
+    to_ass = map.get();
+    ch_val = new char(stat);
+    map.seekp(start + 4, ios::beg);
+    map.write(ch_val, 1);
+    delete ch_val;
+    stat = dist_4(aGen);
+    map.seekg(start + 5, ios::beg);
+    stat_loc = map.tellg();
+    to_ass = map.get();
+    ch_val = new char(stat);
+    map.seekp(start + 5, ios::beg);
+    map.write(ch_val, 1);
+    delete ch_val;
+    stat = dist_5(aGen);
+    map.seekg(start + 6, ios::beg);
+    stat_loc = map.tellg();
+    to_ass = map.get();
+    ch_val = new char(stat);
+    map.seekp(start + 6, ios::beg);
+    map.write(ch_val, 1);
+    delete ch_val;
+    map.close();
+    file = ashEqu;
+    start = equStart;
+    map.open(file, ios::in | ios::out | ios::binary | ios::ate);
+    map.seekg(start + 28, ios::beg);
+    stat_loc = map.tellg();
+    to_ass = map.get();
+    if (aDecision == "A") {
+        stat = 1;
+    }
+    else if (aDecision == "B") {
+        stat = 3;
+    }
+    else if (aDecision == "C" || aDecision == "D") {
+        stat = 4;
+    }
+    if (aDecision == "E") {
+        stat = 5;
+    }
+    else if (aDecision == "F") {
+        stat = 7;
+    }
+    else if (aDecision == "G") {
+        stat = 8;
+    }
+    else if (aDecision == "H") {
+        stat = 6;
+    }
+    else if (aDecision == "I") {
+        stat = 9;
+    }
+    ch_val = new char(stat);
+    map.seekp(start + 28, ios::beg);
+    map.write(ch_val, 1);
+    delete ch_val;
+    cho_blade = stat;
+    cho_grip = stat;
+    if (aDecision == "A") {
+        stat = 2;
+    }
+    else if (aDecision == "B") {
+        stat = 26;
+    }
+    else if (aDecision == "C") {
+        stat = 36;
+    }
+    else if (aDecision == "D") {
+        stat = 44;
+    }
+    else if (aDecision == "E") {
+        stat = 52;
+    }
+    else if (aDecision == "H") {
+        stat = 58;
+    }
+    else if (aDecision == "F") {
+        stat = 64;
+    }
+    else if (aDecision == "G") {
+        stat = 71;
+    }
+    else if (aDecision == "I") {
+        stat = 84;
+    }
+    map.seekg(start + 25, ios::beg);
+    stat_loc = map.tellg();
+    to_ass = map.get();
+    ch_val = new char(stat);
+    map.seekp(start + 25, ios::beg);
+    map.write(ch_val, 1);
+    map.seekg(start + 26, ios::beg);
+    stat_loc = map.tellg();
+    to_ass = map.get();
+    map.seekp(start + 26, ios::beg);
+    map.write(ch_val, 1);
+    map.seekg(start + 27, ios::beg);
+    stat_loc = map.tellg();
+    to_ass = map.get();
+    map.seekp(start + 27, ios::beg);
+    map.write(ch_val, 1);
+    delete ch_val;
+    if (aDecision == "A") {
+        stat = 6;
+    }
+    else if (aDecision == "B") {
+        stat = 12;
+    }
+    else if (aDecision == "C" || aDecision == "D") {
+        stat = 8;
+    }
+    else if (aDecision == "E") {
+        stat = 16;
+    }
+    else if (aDecision == "H") {
+        stat = 2;
+    }
+    else if (aDecision == "F") {
+        stat = 14;
+    }
+    else if (aDecision == "G") {
+        stat = 10;
+    }
+    else if (aDecision == "I") {
+        stat = 11;
+    }
+    map.seekg(start + 37, ios::beg);
+    stat_loc = map.tellg();
+    to_ass = map.get();
+    ch_val = new char(stat);
+    map.seekp(start + 37, ios::beg);
+    map.write(ch_val, 1);
+    delete ch_val;
+    if (aDecision == "H") {
+        stat = 10;
+    }
+    else {
+        stat = 0;
+    }
+    map.seekg(start + 38, ios::beg);
+    stat_loc = map.tellg();
+    to_ass = map.get();
+    ch_val = new char(stat);
+    map.seekp(start + 38, ios::beg);
+    map.write(ch_val, 1);
+    delete ch_val;
+    if (aDecision == "A") {
+        stat = 0;
+    }
+    else if (aDecision == "B" || aDecision == "G") {
+        stat = 254;
+    }
+    else if (aDecision == "C" || aDecision == "D" || aDecision == "H" || aDecision == "I") {
+        stat = 255;
+    }
+    else if (aDecision == "E" || aDecision == "F") {
+        stat = 253;
+    }
+    map.seekg(start + 39, ios::beg);
+    stat_loc = map.tellg();
+    to_ass = map.get();
+    ch_val = new char(stat);
+    map.seekp(start + 39, ios::beg);
+    map.write(ch_val, 1);
+    delete ch_val;
+    if (aDecision == "A" || aDecision == "I") {
+        stat = (4 * 3) + 2;
+    }
+    else if (aDecision == "B" || aDecision == "C" || aDecision == "E" || aDecision == "G") {
+        stat = (4 * 2) + 2;
+    }
+    else if (aDecision == "D" || aDecision == "H" || aDecision == "F") {
+        stat = (4 * 1) + 2;
+    }
+    map.seekg(start + 41, ios::beg);
+    stat_loc = map.tellg();
+    to_ass = map.get();
+    ch_val = new char(stat);
+    map.seekp(start + 41, ios::beg);
+    map.write(ch_val, 1);
+    delete ch_val;
+    if (aDecision == "I") {
+        stat = 2;
+    }
+    else {
+        stat = 1;
+    }
+    map.seekg(start + 40, ios::beg);
+    stat_loc = map.tellg();
+    to_ass = map.get();
+    ch_val = new char(stat);
+    map.seekp(start + 40, ios::beg);
+    map.write(ch_val, 1);
+    delete ch_val;
+    if (aDecision == "A") {
+        stat = 1;
+    }
+    else if (aDecision == "B" || aDecision == "E" || aDecision == "F") {
+        stat = 4;
+    }
+    else if (aDecision == "C" || aDecision == "D") {
+        stat = 3;
+    }
+    else if (aDecision == "G") {
+        stat = 5;
+    }
+    else if (aDecision == "H") {
+        stat = 2;
+    }
+    else if (aDecision == "I") {
+        stat = 9;
+    }
+    map.seekg(start + 45, ios::beg);
+    stat_loc = map.tellg();
+    to_ass = map.get();
+    ch_val = new char(stat);
+    map.seekp(start + 45, ios::beg);
+    map.write(ch_val, 1);
+    delete ch_val;
+    if (aDecision == "A") {
+        stat = 0;
+    }
+    else if (aDecision == "B" || aDecision == "E" || aDecision == "F") {
+        stat = 3;
+    }
+    else if (aDecision == "C" || aDecision == "D") {
+        stat = 2;
+    }
+    else if (aDecision == "G") {
+        stat = 4;
+    }
+    else if (aDecision == "H") {
+        stat = 1;
+    }
+    else if (aDecision == "I") {
+        stat = 8;
+    }
+    map.seekg(start + 46, ios::beg);
+    stat_loc = map.tellg();
+    to_ass = map.get();
+    ch_val = new char(stat);
+    map.seekp(start + 46, ios::beg);
+    map.write(ch_val, 1);
+    delete ch_val;
+    if (aDecision == "A") {
+        stat = 1;
+    }
+    else if (aDecision == "B" || aDecision == "E" || aDecision == "F") {
+        stat = 4;
+    }
+    else if (aDecision == "C" || aDecision == "D") {
+        stat = 3;
+    }
+    else if (aDecision == "G") {
+        stat = 5;
+    }
+    else if (aDecision == "H") {
+        stat = 2;
+    }
+    else if (aDecision == "I") {
+        stat = 9;
+    }
+    map.seekg(start + 47, ios::beg);
+    stat_loc = map.tellg();
+    to_ass = map.get();
+    ch_val = new char(stat);
+    map.seekp(start + 47, ios::beg);
+    map.write(ch_val, 1);
+    delete ch_val;
+    map.seekg(start + 732, ios::beg);
+    stat_loc = map.tellg();
+    to_ass = map.get();
+    if (cho_grip == 1 || cho_grip == 3) {
+        stat = 1;
+    }
+    else if (cho_grip >= 4 && cho_grip <= 7) {
+        stat = 2;
+    }
+    else if (cho_grip == 8) {
+        stat = 3;
+    }
+    else if (cho_grip == 9) {
+        stat = 4;
+    }
+    ch_val = new char(stat);
+    map.seekp(start + 732, ios::beg);
+    map.write(ch_val, 1);
+    delete ch_val;
+    if (cho_grip == 1 || cho_grip == 3) {
+        stat = 96;
+    }
+    else if (cho_grip >= 4 && cho_grip <= 7) {
+        stat = 105;
+    }
+    else if (cho_grip == 8) {
+        stat = 115;
+    }
+    else if (cho_grip == 9) {
+        stat = 121;
+    }
+    map.seekg(start + 729, ios::beg);
+    stat_loc = map.tellg();
+    to_ass = map.get();
+    ch_val = new char(stat);
+    map.seekp(start + 729, ios::beg);
+    map.write(ch_val, 1);
+    delete ch_val;
+    stat -= 95;
+    map.seekg(start + 731, ios::beg);
+    stat_loc = map.tellg();
+    to_ass = map.get();
+    ch_val = new char(stat);
+    map.seekp(start + 731, ios::beg);
+    map.write(ch_val, 1);
+    delete ch_val;
+    stat = 1;
+    map.seekg(start + 734, ios::beg);
+    stat_loc = map.tellg();
+    to_ass = map.get();
+    ch_val = new char(stat);
+    map.seekp(start + 734, ios::beg);
+    map.write(ch_val, 1);
+    delete ch_val;
+    stat = 0;
+    map.seekg(start + 735, ios::beg);
+    stat_loc = map.tellg();
+    to_ass = map.get();
+    ch_val = new char(stat);
+    map.seekp(start + 735, ios::beg);
+    map.write(ch_val, 1);
+    delete ch_val;
+    if (cho_grip == 1 || cho_grip == 3 || cho_grip == 9) {
+        stat = 255;
+    }
+    else if (cho_grip >= 4 && cho_grip <= 7) {
+        stat = 254;
+    }
+    else if (cho_grip == 8) {
+        stat = 253;
+    }
+    map.seekg(start + 736, ios::beg);
+    stat_loc = map.tellg();
+    to_ass = map.get();
+    ch_val = new char(stat);
+    map.seekp(start + 736, ios::beg);
+    map.write(ch_val, 1);
+    delete ch_val;
+    if (cho_grip == 1 || cho_grip == 3) {
+        stat = 0;
+    }
+    else if (cho_grip >= 4 && cho_grip <= 7) {
+        stat = 5;
+    }
+    else if (cho_grip == 8) {
+        stat = 11;
+    }
+    else if (cho_grip == 9) {
+        stat = 1;
+    }
+    map.seekg(start + 738, ios::beg);
+    stat_loc = map.tellg();
+    to_ass = map.get();
+    ch_val = new char(stat);
+    map.seekp(start + 738, ios::beg);
+    map.write(ch_val, 1);
+    delete ch_val;
+    if (cho_grip == 1 || cho_grip == 3) {
+        stat = 4;
+    }
+    else if (cho_grip >= 4 && cho_grip <= 7) {
+        stat = 1;
+    }
+    else if (cho_grip >= 8) {
+        stat = 0;
+    }
+    map.seekg(start + 739, ios::beg);
+    stat_loc = map.tellg();
+    to_ass = map.get();
+    ch_val = new char(stat);
+    map.seekp(start + 739, ios::beg);
+    map.write(ch_val, 1);
+    delete ch_val;
+    if (cho_grip == 1 || cho_grip == 3 || cho_grip == 8) {
+        stat = 1;
+    }
+    else if (cho_grip >= 4 && cho_grip <= 7) {
+        stat = 0;
+    }
+    else if (cho_grip == 9) {
+        stat = 10;
+    }
+    map.seekg(start + 740, ios::beg);
+    stat_loc = map.tellg();
+    to_ass = map.get();
+    ch_val = new char(stat);
+    map.seekp(start + 740, ios::beg);
+    map.write(ch_val, 1);
+    delete ch_val;
+    start = miscStart;
+    for (int s = 0; s < 5; s++) {
+        if (s < 3) {
+            if (aDecision == "A") {
+                if (s == 0) {
+                    stat = 89;
+                }
+                else if (s == 1) {
+                    stat = 92;
+                }
+                else if (s == 2) {
+                    stat = 100;
+                }
+            }
+            else if (aDecision == "B") {
+                if (s == 0) {
+                    stat = 90;
+                }
+                else if (s == 1) {
+                    stat = 93;
+                }
+                else if (s == 2) {
+                    res = dist_6(aGen);
+                    stat = res + 94;
+                }
+            }
+            else if (aDecision == "C") {
+                if (s == 0) {
+                    stat = 88;
+                }
+                else if (s == 1) {
+                    stat = 89;
+                }
+                else if (s == 2) {
+                    stat = 95;
+                }
+            }
+            else if (aDecision == "D") {
+                if (s == 0) {
+                    stat = 80;
+                }
+                else if (s == 1) {
+                    stat = 87;
+                }
+                else if (s == 2) {
+                    res = dist_6(aGen);
+                    stat = res + 89;
+                }
+            }
+            else if (aDecision == "E") {
+                if (s == 0) {
+                    stat = 78;
+                }
+                else if (s == 1) {
+                    stat = 93;
+                }
+                else if (s == 2) {
+                    stat = 98;
+                }
+            }
+            else if (aDecision == "F") {
+                if (s == 0) {
+                    stat = 88;
+                }
+                else if (s == 1) {
+                    stat = 90;
+                }
+                else if (s == 2) {
+                    stat = 92;
+                }
+            }
+            else if (aDecision == "G") {
+                if (s == 0) {
+                    stat = 78;
+                }
+                else if (s == 1) {
+                    res = dist_7(aGen);
+                    if (res == 1) {
+                        stat = 87;
+                    }
+                    else {
+                        stat = 89;
+                    }
+                }
+                else if (s == 2) {
+                    res = dist_7(aGen);
+                    if (res == 1) {
+                        stat = 90;
+                    }
+                    else {
+                        stat = 92;
+                    }
+                }
+            }
+            else if (aDecision == "H") {
+                if (s == 0) {
+                    stat = 74;
+                }
+                else if (s == 1) {
+                    stat = 87;
+                }
+                else if (s == 2) {
+                    res = dist_7(aGen);
+                    if (res == 1) {
+                        stat = 91;
+                    }
+                    else {
+                        stat = 94;
+                    }
+                }
+            }
+            else if (aDecision == "I") {
+                if (s == 0) {
+                    stat = 78;
+                }
+                else if (s == 1) {
+                    stat = 85;
+                }
+                else if (s == 2) {
+                    stat = 92;
+                }
+            }
+        }
+        else if (s == 3) {
+            if (aDecision == "A") {
+                stat = dist_8(aGen);
+                if (stat > 202 && stat < 211) {
+                    stat = 202;
+                }
+            }
+            else if (aDecision == "B") {
+                res = dist_9(aGen);
+                if (res == 1) {
+                    stat = 135;
+                }
+                else if (res == 2) {
+                    stat = 137;
+                }
+                else if (res == 3) {
+                    stat = 159;
+                }
+                else {
+                    stat = 169;
+                }
+            }
+            else if (aDecision == "C") {
+                stat = 175;
+            }
+            else if (aDecision == "D") {
+                res = dist_6(aGen);
+                if (res == 1) {
+                    stat = 139;
+                }
+                else if (res == 2) {
+                    stat = 159;
+                }
+                else if (res == 3) {
+                    stat = 168;
+                }
+                else if (res == 4) {
+                    stat = 169;
+                }
+                else {
+                    stat = 173;
+                }
+            }
+            else if (aDecision == "E") {
+                res = dist_6(aGen);
+                if (res == 1) {
+                    stat = 136;
+                }
+                else if (res == 2) {
+                    stat = 138;
+                }
+                else if (res == 3) {
+                    stat = 163;
+                }
+                else if (res == 4) {
+                    stat = 167;
+                }
+                else {
+                    stat = 168;
+                }
+            }
+            else if (aDecision == "F") {
+                res = dist_10(aGen);
+                if (res == 1) {
+                    stat = 176;
+                }
+                else if (res == 2) {
+                    stat = 178;
+                }
+                else if (res == 3) {
+                    stat = 180;
+                }
+                else {
+                    stat = (res + 178);
+                }
+            }
+            else if (aDecision == "G") {
+                stat = 173;
+            }
+            else if (aDecision == "H") {
+                stat = dist_11(aGen);
+            }
+            else if (aDecision == "I") {
+                res = dist_9(aGen);
+                if (res == 1) {
+                    stat = 131;
+                }
+                else if (res == 2) {
+                    stat = 143;
+                }
+                else if (res == 3) {
+                    stat = 193;
+                }
+                else {
+                    stat = 197;
+                }
+            }
+        }
+        else if (s == 4) {
+            if (aDecision == "A") {
+                stat = dist_12(aGen);
+                if (res == 1) {
+                    stat = 136;
+                }
+                else if (res == 2) {
+                    stat = 138;
+                }
+                else if (res == 3) {
+                    stat = 163;
+                }
+                else if (res == 4) {
+                    stat = 167;
+                }
+                else if (res == 5) {
+                    stat = 168;
+                }
+                else if (res == 6) {
+                    stat = 179;
+                }
+                else if (res == 7) {
+                    stat = 180;
+                }
+                else if (res == 8) {
+                    stat = 185;
+                }
+                else if (res == 9) {
+                    stat = 188;
+                }
+                else if (res == 10) {
+                    stat = 190;
+                }
+                else {
+                    stat = 191;
+                }
+            }
+            else if (aDecision == "B") {
+                res = dist_7(aGen);
+                if (res == 1) {
+                    stat = 175;
+                }
+                else {
+                    stat = 181;
+                }
+            }
+            else if (aDecision == "C" || aDecision == "G") {
+                stat = 181;
+            }
+            else if (aDecision == "D") {
+                res = dist_13(aGen);
+                if (res == 1) {
+                    stat = 177;
+                }
+                else if (res == 2) {
+                    stat = 181;
+                }
+                else if (res == 3) {
+                    stat = 184;
+                }
+                else if (res == 4) {
+                    stat = 185;
+                }
+                else if (res == 5) {
+                    stat = 186;
+                }
+                else if (res == 6) {
+                    stat = 187;
+                }
+                else {
+                    stat = 189;
+                }
+            }
+            else if (aDecision == "E") {
+                res = dist_6(aGen);
+                if (res == 1) {
+                    stat = 176;
+                }
+                else if (res == 2) {
+                    stat = 178;
+                }
+                else if (res == 3) {
+                    stat = 180;
+                }
+                else if (res == 4) {
+                    stat = 182;
+                }
+                else {
+                    stat = 185;
+                }
+            }
+            else if (aDecision == "F") {
+                res = dist_9(aGen);
+                stat = (res + 187);
+            }
+            else if (aDecision == "H") {
+                res = dist_14(aGen);
+                if ((res > 139) && (res < 143)) {
+                    stat = 139;
+                }
+                else if ((res > 143) && (res < 147)) {
+                    stat = 143;
+                }
+                else if ((res > 147) && (res < 151)) {
+                    stat = 147;
+                }
+                else if ((res > 151) && (res < 155)) {
+                    stat = 151;
+                }
+                else if ((res > 155) && (res < 159)) {
+                    stat = 155;
+                }
+                else if ((res > 159) && (res < 163)) {
+                    stat = 159;
+                }
+                else if ((res > 163) && (res < 167)) {
+                    res = 163;
+                }
+                else {
+                    stat = res;
+                }
+            }
+            else if (aDecision == "I") {
+                res = dist_6(aGen);
+                if (res == 1) {
+                    stat = 173;
+                }
+                else if (res == 2) {
+                    stat = 180;
+                }
+                else if (res == 3) {
+                    stat = 188;
+                }
+                else if (res == 4) {
+                    stat = 191;
+                }
+                else {
+                    stat = 192;
+                }
+            }
+        }
+        map.seekg(start + (s * 4), ios::beg);
+        stat_loc = map.tellg();
+        to_ass = map.get();
+        ch_val = new char(stat);
+        map.seekp(start + (s * 4), ios::beg);
+        map.write(ch_val, 1);
+        delete ch_val;
+        if (stat >= 130) {
+            if (stat < 130 && aDecision == "Y") {
+                stat = dist_15(aGen);
+            }
+            else {
+                stat = 1;
+            }
+            map.seekg(start + (s * 4) + 2, ios::beg);
+            stat_loc = map.tellg();
+            to_ass = map.get();
+            ch_val = new char(stat);
+            map.seekp(start + (s * 4) + 2, ios::beg);
+            map.write(ch_val, 1);
+            delete ch_val;
+        }
+    }
+    buiBat << (aRF.getTool() + " '" + aGame.getWhole().string() + "' /BATTLE/INITBTL.PRG" + " '" + ashStat + "'") << std::endl;
+    buiBat << (aRF.getTool() + " '" + aGame.getWhole().string() + "' /TITLE/TITLE.PRG" + " '" + ashEqu + "'") << std::endl;
+}
+
+void Ashley::breakArts(Reference_Files aRF, Add_Game& aGame, string aDecision, std::mt19937 aGen) {
+    fstream brmap;
+
+    streampos brloc;
+
+    int brass;
+    int stat;
+    int coStart = 255807;
+    int kiStart = 263652;
+    int brArtKi;
+    int int_rand_kiCo;
+    string s1;
+    string s2;
+    string s3;
+    string s4;
+
+    char* ch_val;
+    char rand_kiCo[20];
+
+    std::stringstream ss_rand_kiCo;
+    std::stringstream hs_rand_kiCo;
+    std::stringstream fin_rand_kiCo;
+
+    string brFile = aGame.getStringPath() + "\\ZENITH_QOL\\SLUS_010.40";
+    string s_rand_kiCo;
+    string s_rand_kiCo1;
+    string s_rand_kiCo2;
+
+    std::ofstream brBat;
+
+    brBat.open("breakCmd.cmd", std::ios::trunc);
+    brBat << ("cd " + aGame.getStringPath() + " \n");
+
+    std::uniform_int_distribution<> dist_1;
+    std::uniform_int_distribution<> dist_2;
+
+    if (aDecision == "Y") {
+        dist_1 = std::uniform_int_distribution<>(25, 75);
+        dist_2 = std::uniform_int_distribution<>(10, 485);
+    }
+    else {
+        dist_1 = std::uniform_int_distribution<>(0, 255);
+        dist_2 = std::uniform_int_distribution<>(1, 999);
+    }
+
+    brmap.open(brFile, ios::in | ios::out | ios::binary | ios::ate);
+    for (int s = 0; s < 40; s++) {
+        stat = dist_1(aGen);
+        brmap.seekg(coStart + (s * 52), ios::beg);
+        brloc = brmap.tellg();
+        brass = brmap.get();
+        ch_val = new char(stat);
+        brmap.seekp(coStart + (s * 52), ios::beg);
+        brmap.write(ch_val, 1);
+        delete ch_val;
+        stat = dist_2(aGen);
+        brArtKi = stat;
+        sprintf_s(rand_kiCo, "%X", stat);
+        ss_rand_kiCo << rand_kiCo;
+        ss_rand_kiCo >> s_rand_kiCo;
+        ss_rand_kiCo.clear();
+        hs_rand_kiCo << std::hex << s_rand_kiCo;
+        hs_rand_kiCo >> int_rand_kiCo;
+        hs_rand_kiCo.clear();
+        s1 = "0";
+        if (stat > 255) {
+            s2 = s_rand_kiCo.at(0);
+            s3 = s_rand_kiCo.at(1);
+            s4 = s_rand_kiCo.at(2);
+        }
+        else if (stat > 16) {
+            s2 = "0";
+            s3 = s_rand_kiCo.at(0);
+            s4 = s_rand_kiCo.at(1);
+        }
+        else {
+            s2 = "0";
+            s3 = "0";
+            s4 = s_rand_kiCo.at(0);
+        }
+        s_rand_kiCo2 = s1 + s2;
+        s_rand_kiCo1 = s3 + s4;
+        fin_rand_kiCo << std::hex << s_rand_kiCo1;
+        fin_rand_kiCo >> stat;
+        fin_rand_kiCo.clear();
+        brmap.seekg(kiStart + (s * 2), ios::beg);
+        brloc = brmap.tellg();
+        brass = brmap.get();
+        ch_val = new char(stat);
+        brmap.seekg(kiStart + (s * 2), ios::beg);
+        brmap.write(ch_val, 1);
+        delete ch_val;
+        fin_rand_kiCo << std::hex << s_rand_kiCo2;
+        fin_rand_kiCo >> stat;
+        fin_rand_kiCo.clear();
+        brmap.seekg(kiStart + (s * 2) + 1, ios::beg);
+        brloc = brmap.tellg();
+        brass = brmap.get();
+        ch_val = new char(stat);
+        brmap.seekg(kiStart + (s * 2) + 1, ios::beg);
+        brmap.write(ch_val, 1);
+        delete ch_val;
+    }
+    brBat << (aRF.getTool() + " '" + aGame.getWhole().string() + "' /SLUS_010.40" + " '" + brFile + "'") << std::endl;
 }

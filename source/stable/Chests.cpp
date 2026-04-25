@@ -19,13 +19,14 @@ Chests::Chests() {
 
 }
 
-void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen, string aChoice, string secondChoice, string thirdChoice, string fourthChoice) {
+void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen, string aChoice, string secondChoice, string thirdChoice, string fourthChoice, bool fifthChoice) {
     vector<string> ml = aRF.getChestCheck();
     vector<string>::iterator mlp = ml.begin();
     list<string> mlks = aRF.getKSCheck();
     vector<int> unt = aRF.getUntitleds();
+    vector<string> mino = aRF.getPreMino();
+    vector<vector<string>> mapList = aRF.getMapList();
 
-    
     string ivm = *mlp;
     string m_file;
     string cur_map;
@@ -61,6 +62,10 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
     int cho_grip;
     int cho_blade;
     int res;
+    int bronze_zone;
+    int silver_zone;
+    int iron_zone;
+    int locMapList;
 
     streampos map_loc;
 
@@ -125,7 +130,9 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
     std::uniform_int_distribution<> dist_58 = std::uniform_int_distribution<>(1, 10);
     std::uniform_int_distribution<> dist_59 = std::uniform_int_distribution<>(1, 5);
 
-
+    bool bronze_found = false;
+    bool silver_found = false;
+    bool iron_found = false;
 
     char* ch_val;
     char rand_dpm[20];
@@ -144,6 +151,14 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
     for (int mi = 0; mi < ml.size(); mi++) {
         m_file = aGame.getStringPath() + "\\MAPS\\" + *mlp;
         cur_map = *mlp;
+        for (int i = 0; i < mapList.size(); i++) {
+            if (std::find(mapList.at(i).begin(), mapList.at(i).end(), cur_map) != mapList.at(i).end()) {
+                locMapList = i;
+            }
+        }
+        if (cur_map == "MAP046.MPD" && fifthChoice == true) {
+            m_file = aGame.getStringPath() + "\\MAPS\\PATCHED\\" + *mlp;
+        }
         if (aChoice == "Y") {
             if (*mlp == "MAP018.MPD" || *mlp == "MAP027.MPD" || *mlp == "MAP409.MPD" || *mlp == "MAP025.MPD" || *mlp == "MAP026.MPD" || *mlp == "MAP408.MPD" || *mlp == "MAP032.MPD" || *mlp == "MAP033.MPD" || *mlp == "MAP037.MPD" || *mlp == "MAP045.MPD" || *mlp == "MAP050.MPD") {
                 dist_46 = std::uniform_int_distribution<>(0, 20);
@@ -3409,9 +3424,47 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             map_loc = acmap.tellg();
             to_ass = acmap.get();
             prop = dist_20(aGen) - 256;
+            if (prop == 210 && (std::find(mino.begin(), mino.end(), cur_map) != mino.end())) {
+                while (prop == 210 && (std::find(mino.begin(), mino.end(), cur_map) != mino.end())) {
+                    prop = dist_20(aGen) - 256;
+                }
+            }
             if (std::find(unt.begin(), unt.end(), prop) != unt.end()) {
                 while (std::find(unt.begin(), unt.end(), prop) != unt.end()) {
                     prop = dist_20(aGen) - 256;
+                }
+            }
+            if (prop == 202) {
+                bronze_found = true;
+                bronze_zone = locMapList;
+            }
+            else if (prop == 204 || prop == 203) {
+                if (bronze_found == false) {
+                    prop = 202;
+                    bronze_zone = locMapList;
+                    bronze_found = true;
+                }
+                else if ((bronze_zone == 8 && locMapList != 8) || (bronze_zone == 10 && (locMapList != 8 && locMapList != 10)) || (bronze_zone == 18 && (locMapList != 8 && locMapList != 10 && locMapList != 18)) || (bronze_zone == 14 && (locMapList != 8 && locMapList != 10 && locMapList != 18 && locMapList != 14)) || (bronze_zone == 9 && (locMapList != 8 && locMapList != 10 && locMapList != 18 && locMapList != 14 && locMapList != 9)) || ((bronze_zone == 9 || bronze_zone == 11 || bronze_zone == 13 || bronze_zone == 16) && (locMapList != 8 && locMapList != 10 && locMapList != 18 && locMapList != 14 && locMapList != 9 && locMapList != 11 && locMapList != 13 && locMapList != 16))) {
+                    prop = 67;
+                }
+                else if (prop == 204) {
+                    iron_found = true;
+                    iron_zone = locMapList;
+                }
+                else if (prop == 203) {
+                    if (iron_found == false) {
+                        prop = 204;
+                        iron_zone = locMapList;
+                        iron_found = true;
+                    }
+                    else if ((iron_zone == 8 && locMapList != 8) || (iron_zone == 10 && (locMapList != 8 && locMapList != 10)) || (iron_zone == 18 && (locMapList != 8 && locMapList != 10 && locMapList != 18)) || (iron_zone == 14 && (locMapList != 8 && locMapList != 10 && locMapList != 18 && locMapList != 14)) || (iron_zone == 9 && (locMapList != 8 && locMapList != 10 && locMapList != 18 && locMapList != 14 && locMapList != 9)) || ((iron_zone == 9 || iron_zone == 11 || iron_zone == 13 || iron_zone == 16) && (locMapList != 8 && locMapList != 10 && locMapList != 18 && locMapList != 14 && locMapList != 9 && locMapList != 11 && locMapList != 13 && locMapList != 16))) {
+                        prop = 67;
+                    }
+                    else {
+                        prop = 203;
+                        silver_zone = locMapList;
+                        silver_found = true;
+                    }
                 }
             }
             misc_item = prop;
@@ -3458,6 +3511,11 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                     prop = dist_20(aGen) - 256;
                 }
             }
+            if (prop == 210 && (std::find(mino.begin(), mino.end(), cur_map) != mino.end())) {
+                while (prop == 210 && (std::find(mino.begin(), mino.end(), cur_map) != mino.end())) {
+                    prop = dist_20(aGen) - 256;
+                }
+            }
             misc_item = prop;
             ch_val = new char(prop);
             acmap.seekp(size + 537, ios::beg);
@@ -3499,6 +3557,11 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             prop = dist_20(aGen) - 256;
             if (std::find(unt.begin(), unt.end(), prop) != unt.end()) {
                 while (std::find(unt.begin(), unt.end(), prop) != unt.end()) {
+                    prop = dist_20(aGen) - 256;
+                }
+            }
+            if (prop == 210 && (std::find(mino.begin(), mino.end(), cur_map) != mino.end())) {
+                while (prop == 210 && (std::find(mino.begin(), mino.end(), cur_map) != mino.end())) {
                     prop = dist_20(aGen) - 256;
                 }
             }

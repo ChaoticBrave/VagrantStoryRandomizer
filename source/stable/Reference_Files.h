@@ -22,10 +22,14 @@ private:
 	vector<int> ene_wep_offsets;
 	list<string> zones_for_rooms;
 	list<string> ene_zones;
+	list<string> pla_zones;
 	vector<int> map_sum;
 	vector<string> has_chest;
 	list<string> has_key_or_sig;
 	vector<string> has_boss;
+	vector<string> pre_mino;
+	vector<string> has_boss_mu;
+	vector<int> boss_mu_sec;
 	vector<string> warp_maps;
 	vector<string> ret_maps;
 	vector<string> alt_ret_maps;
@@ -71,6 +75,7 @@ public:
 	string getTool();
 	vector<vector<string>> getMapList();
 	list<string> getZones();
+	list<string> getPlayZones();
 	list<string> getZonesFR();
 	list<string> getKSCheck();
 	vector<int> getMapSum();
@@ -90,7 +95,10 @@ public:
 	vector<string> getIndivZone(vector<string> aZoneList);
 	vector<string> getChestCheck();
 	vector<string> getBossRooms();
+	vector<string> getBossMusicRooms();
+	vector<string> getPreMino();
 	vector<int> getRawZones();
+	vector<int> getBossMusicLoc();
 	void delZone(int anIndex);
 	void delMap(int anIndex);
 	void delCoordinate(int anIndex);
