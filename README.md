@@ -23,7 +23,8 @@ https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 	- Edited the Enemy Drops and Chest options so that players must fight Minotaur. Players will always be given Bronze, Iron and Silver keys in that order.
 	- Fixed a bug where enemies can be randomized to have an additional texture layer. RIP Ice Wolf. You died an incomplete death...
 	- Added a progress bar.
-	- A cleanup is enforced after the randomization is done. 
+	- A cleanup is enforced after the randomization is done.
+ 	- A better screen size detection algorithm. 
 
 ## To Do
 * Make a more stable enemy model randomizer.
