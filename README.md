@@ -29,6 +29,7 @@ https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 ## To Do
 * Make a more stable enemy model randomizer.
 * Return Ice Wolf?
+* Add more Zenith options.
 
 If you wish to keep up-to-date with this project and what will be updated short-term, a link to the Trello can be found below:
 https://trello.com/b/BZRfh8ht/vagrant-story-randomizer
