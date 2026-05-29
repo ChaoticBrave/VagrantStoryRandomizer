@@ -200,7 +200,6 @@ void Zenith::bossDrops(Add_Game& aGame, Reference_Files aRF) {
 
 	char* ch_val;
 
-
 	string grimMan1 = aGame.getStringPath() + "\\MAPS\\MAP032.MPD";
 	string grimMan2 = aGame.getStringPath() + "\\MAPS\\MAP286.MPD";
 	string grimMan3 = aGame.getStringPath() + "\\MAPS\\MAP277.MPD";

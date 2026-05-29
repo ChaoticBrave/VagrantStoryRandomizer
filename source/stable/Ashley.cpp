@@ -21,7 +21,7 @@ Ashley::Ashley() {
 	//Ashley
 }
 
-void Ashley::statIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen, string aDecision, string secondDecision, string thirdDecision) {
+void Ashley::statIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen, string aDecision, string secondDecision, string thirdDecision, string fourthDecision) {
     string file;
     string ashStat = aGame.getStringPath() + "\\MISC\\INITBTL.PRG";
     string ashEqu = aGame.getStringPath() + "\\MISC\\TITLE.PRG";
@@ -101,7 +101,7 @@ void Ashley::statIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen
     std::uniform_int_distribution<> dist_15 = std::uniform_int_distribution<>(100, 250);
     std::uniform_int_distribution<> dist_16;
     std::uniform_int_distribution<> dist_17 = std::uniform_int_distribution<>(1, 3);
-    std::uniform_int_distribution<> dist_18 = std::uniform_int_distribution<>(1, 4);
+    std::uniform_int_distribution<> dist_18;
     std::uniform_int_distribution<> dist_19 = std::uniform_int_distribution<>(1, 255);
     std::uniform_int_distribution<> dist_20 = std::uniform_int_distribution<>(1, 255);
     std::uniform_int_distribution<> dist_21 = std::uniform_int_distribution<>(1, 255);
@@ -166,6 +166,7 @@ void Ashley::statIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen
         dist_5 = std::uniform_int_distribution<>(75, 132);
         dist_10 = std::uniform_int_distribution<>(1, 14);
         dist_11 = std::uniform_int_distribution<>(1, 4);
+        dist_19 = std::uniform_int_distribution<>(1, 4);
         dist_24 = std::uniform_int_distribution<>(0, 12);
         dist_25 = std::uniform_int_distribution<>(0, 12);
         dist_26 = std::uniform_int_distribution<>(253, 255);
@@ -553,7 +554,13 @@ void Ashley::statIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen
     map.seekp(start + 35, ios::beg);
     map.write(ch_val, 1);
     delete ch_val;
-    stat = (4 * dist_17(aGen)) + dist_18(aGen);
+    if (fourthDecision == "Y") {
+        std::uniform_int_distribution<> dist_18 = std::uniform_int_distribution<>(1, 4);
+        stat = (4 * dist_17(aGen)) + dist_18(aGen);
+    }
+    else {
+        stat = (8 + dist_17(aGen));
+    }
     map.seekg(start + 41, ios::beg);
     stat_loc = map.tellg();
     to_ass = map.get();
@@ -2433,4 +2440,136 @@ void Ashley::breakArts(Reference_Files aRF, Add_Game& aGame, string aDecision, s
         delete ch_val;
     }
     brBat << (aRF.getTool() + " '" + aGame.getWhole().string() + "' /SLUS_010.40" + " '" + brFile + "'") << std::endl;
+}
+
+void Ashley::chainCost(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen) {
+    fstream chmap;
+
+    streampos chloc;
+
+    int chass;
+    int stat;
+    int extra;
+    int start = 263772;
+    int int_rand_chAb;
+    int beg = 0;
+    int ostat;
+
+    char* ch_val;
+    char rand_chAb[20];
+
+    std::stringstream ss_rand_chAb;
+    std::stringstream hs_rand_chAb;
+    std::stringstream rand_chAb_fin;
+
+    string chFile = aGame.getStringPath() + "\\ZENITH_QOL\\SLUS_010.40";
+    string s_rand_chAb;
+    string s_rand_chAb1;
+    string s_rand_chAb2;
+    string s1;
+    string s2;
+    string s3;
+    string s4;
+
+    std::ofstream chBat;
+
+    chBat.open("chCmd.cmd", std::ios::trunc);
+    chBat << ("cd " + aGame.getStringPath() + " \n");
+
+    std::uniform_int_distribution<> dist;
+
+    vector<int> chdic = { 20, 54, 72, 95, 125, 165, 216, 283, 369, 482, 628, 818, 1066, 1387, 1805, 2349, 3055, 3973, 5167, 6719, 8737, 11359 };
+
+    chmap.open(chFile, ios::in | ios::out | ios::binary | ios::ate);
+    for (int s = 0; s < 22; s++) {
+        dist = std::uniform_int_distribution<>(beg, chdic.at(s));
+        stat = dist(aGen);
+        ostat = stat;
+        if (stat > 255) {
+            sprintf_s(rand_chAb, "%X", stat);
+            ss_rand_chAb << rand_chAb;
+            ss_rand_chAb >> s_rand_chAb;
+            ss_rand_chAb.clear();
+            hs_rand_chAb << std::hex << s_rand_chAb;
+            hs_rand_chAb >> int_rand_chAb;
+            hs_rand_chAb.clear();
+            if (stat < 4096) {
+                s1 = '0';
+                s2 = s_rand_chAb.at(0);
+                s3 = s_rand_chAb.at(1);
+                s4 = s_rand_chAb.at(2);
+            }
+            else {
+                s1 = s_rand_chAb.at(0);
+                s2 = s_rand_chAb.at(1);
+                s3 = s_rand_chAb.at(2);
+                s4 = s_rand_chAb.at(3);
+            }
+            s_rand_chAb1 = s1 + s2;
+            s_rand_chAb2 = s3 + s4;
+            rand_chAb_fin << std::hex << s_rand_chAb1;
+            rand_chAb_fin >> extra;
+            rand_chAb_fin.clear();
+            ch_val = new char(extra);
+            chmap.seekp((start + (s * 2)) + 1, ios::beg);
+            chmap.write(ch_val, 1);
+            delete ch_val;
+            rand_chAb_fin << std::hex << s_rand_chAb2;
+            rand_chAb_fin >> stat;
+            rand_chAb_fin.clear();
+        }
+        chmap.seekg(start + (s * 2), ios::beg);
+        chloc = chmap.tellg();
+        chass = chmap.get();
+        ch_val = new char(stat);
+        chmap.seekp(start + (s * 2), ios::beg);
+        chmap.write(ch_val, 1);
+        delete ch_val;
+        beg = ostat + 1;
+    }
+    chBat << (aRF.getTool() + " '" + aGame.getWhole().string() + "' /SLUS_010.40" + " '" + chFile + "'") << std::endl;
+}
+
+void Ashley::abilityCost(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen) {
+    fstream abmap;
+
+    streampos abloc;
+
+    int abass;
+    int stat;
+    int start = 247383;
+
+    char* ch_val;
+
+    string abFile = aGame.getStringPath() + "\\ZENITH_QOL\\SLUS_010.40";
+
+    std::ofstream abBat;
+
+    abBat.open("riCoCmd.cmd", std::ios::trunc);
+    abBat << ("cd " + aGame.getStringPath() + " \n");
+
+    std::uniform_int_distribution<> dist;
+
+    abmap.open(abFile, ios::in | ios::out | ios::binary | ios::ate);
+    for (int s = 0; s < 28; s++) {
+        dist = std::uniform_int_distribution<>(1, 6);
+        stat = dist(aGen);
+        abmap.seekg(start, ios::beg);
+        abloc = abmap.tellg();
+        abass = abmap.get();
+        ch_val = new char(stat);
+        abmap.seekp(start, ios::beg);
+        abmap.write(ch_val, 1);
+        delete ch_val;
+        if (s == 10 || s == 12) {
+            start += 104;
+        }
+        else if (s == 13) {
+            start += 156;
+        }
+        else {
+            start += 52;
+        }
+    }
+    abBat << (aRF.getTool() + " '" + aGame.getWhole().string() + "' /SLUS_010.40" + " '" + abFile + "'") << std::endl;
 }

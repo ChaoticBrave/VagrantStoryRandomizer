@@ -19,7 +19,7 @@ Chests::Chests() {
 
 }
 
-void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen, string aChoice, string secondChoice, string thirdChoice, string fourthChoice, bool fifthChoice) {
+void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen, string aChoice, string secondChoice, string thirdChoice, string fourthChoice, bool fifthChoice, string sixthChoice) {
     vector<string> ml = aRF.getChestCheck();
     vector<string>::iterator mlp = ml.begin();
     list<string> mlks = aRF.getKSCheck();
@@ -591,7 +591,12 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             acmap.write(ch_val, 1);
             delete ch_val;
             if (secondChoice == "Y") {
-                prop = (4 * dist_10(aGen)) + dist_11(aGen);
+                if (sixthChoice == "Y") {
+                    prop = (4 * dist_10(aGen)) + dist_11(aGen);
+                }
+                else {
+                    prop = (8 + dist_10(aGen));
+                }
             }
             else {
                 if ((bla_nam >= 43 && bla_nam <= 50) || (bla_nam >= 57 && bla_nam <= 70) || bla_nam == 73 || bla_nam == 80 || bla_nam == 85 || bla_nam == 87 || bla_nam == 89) {
@@ -1791,7 +1796,12 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
             acmap.write(ch_val, 1);
             delete ch_val;
             if (secondChoice == "Y") {
-                prop = (4 * dist_10(aGen)) + dist_11(aGen);
+                if (sixthChoice == "Y") {
+                    prop = (4 * dist_10(aGen)) + dist_11(aGen);
+                }
+                else {
+                    prop = (8 + dist_10(aGen));
+                }
             }
             else {
                 if ((bla_nam >= 43 && bla_nam <= 50) || (bla_nam >= 57 && bla_nam <= 70) || bla_nam == 73 || bla_nam == 80 || bla_nam == 85 || bla_nam == 87 || bla_nam == 89) {
@@ -1803,7 +1813,12 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                 else if (bla_nam == 2 || bla_nam == 4 || bla_nam == 6 || bla_nam == 7 || bla_nam == 12 || bla_nam == 15 || bla_nam == 71 || (bla_nam >= 74 && bla_nam <= 78) || (bla_nam >= 82 && bla_nam <= 84) || bla_nam == 86 || bla_nam == 88 || bla_nam == 90) {
                     res = 3;
                 }
-                prop = 8 + res;
+                if (sixthChoice == "Y") {
+                    prop = (4 * res) + dist_11(aGen);
+                }
+                else {
+                    prop = 8 + res;
+                }
             }
             acmap.seekg(size + 193, ios::beg);
             map_loc = acmap.tellg();

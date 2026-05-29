@@ -13,22 +13,9 @@ Both old stable and experimental builds can be found here:
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
 ## Latest version
-* 0.9.0 (23/04/2026): So huge that the changes will need their own list (stable):
-	- Zenith QoL features.
-	- Ashley build options.
-	- Mandatory Iron Maiden option.
-	- Open world option.
-	- Break Arts randomization.
-	- Music randomization.
-	- Edited the Enemy Drops and Chest options so that players must fight Minotaur. Players will always be given Bronze, Iron and Silver keys in that order.
-	- Fixed a bug where enemies can be randomized to have an additional texture layer. RIP Ice Wolf. You died an incomplete death...
-	- Added a progress bar.
-	- A cleanup is enforced after the the randomization is done. 
+* 0.9.1.0 (29/05/2026): Added an option to change Hellhounds in the City Walls to Ice Wolves. They will have blue textures, have their Fire and Water stats swapped, and can use an Ice Breath attack. Bugs with the progress bar and the Revert to Vanilla option have been fixed. The number of chains needed to learn Battle Abilities and their risk costs can now be randomized. Risk is actually balanced now when you pick Balance Ashley's Stats. Risk is now the damage cost stat by default, though you can choose to have it randomized (stable).
 
 ## To Do
-* Make a more stable enemy model randomizer.
-* Return Ice Wolf?
-
 If you wish to keep up-to-date with this project and what will be updated short-term, a link to the Trello can be found below:
 https://trello.com/b/BZRfh8ht/vagrant-story-randomizer
 
@@ -62,6 +49,11 @@ If you make any alterations to the source code and you want to bring your projec
 * Area Music: Randomizes the music that plays in areas. More information can be found on the wiki.
 * Restore Cut Music: Has "Lea Monde", "Lizardman", and "Within the City Walls" play for their appropriate areas and bosses.
 * Boss Music: Randomizes the music that plays on boss fights.
+* Ice Wolf: Will turn Hellhounds in City Walls into ice-based opponents (based on a bug).
+* Blade Cost Stat: Randomizes the damage cost stat of blades in chests.
+* Fandango Cost Stat: Randomizes the damage cost stat of the Fandango.
+* Chain Ability Learning Costs: Randomizes the number of chains needed to learn each battle ability.
+* Chain Ability Damage Costs: Randomizes the risk costs needed to use each chain ability.
 
 ## Zenith options
 * Free Teleport

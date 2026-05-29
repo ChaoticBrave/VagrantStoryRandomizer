@@ -21,7 +21,7 @@ Enemies::Enemies() {
             
 }
 
-void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision, std::mt19937 aGen, string nextDecision, string mainDecision, string statDecision, string balDecision, bool patchDecision) {
+void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision, std::mt19937 aGen, string nextDecision, string mainDecision, string statDecision, string balDecision, bool patchDecision, string wolfDecision) {
     list<string> z = aRF.getZones();
     list<string> ez = aRF.getEneZones();
     list<string>::iterator zp = z.begin();
@@ -408,7 +408,7 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
                                 ene_at = acmap.tellg();
                                 ene_loc = acmap.get();
                                 ene_dist = std::uniform_int_distribution<>(0, (para_2 - 1));
-                                if ((ene_loc > (para_2 - 1)) == false && (cur_zone == "ZONE013.ZND" && (ene_loc < 5)) == false && (cur_zone == "ZONE015.ZND" && (ene_loc == 0)) == false && (cur_zone == "ZONE051.ZND" && (ene_loc > 2 && ene_loc < 21)) == false /* && (cur_zone == "ZONE028.ZND" && (ene_loc > 13 && ene_loc < 22)) == false*/) {
+                                if ((ene_loc > (para_2 - 1)) == false && (cur_zone == "ZONE013.ZND" && (ene_loc < 5)) == false && (cur_zone == "ZONE015.ZND" && (ene_loc == 0)) == false && (cur_zone == "ZONE051.ZND" && (ene_loc > 2 && ene_loc < 21)) == false) {
                                     ene = ene_loc;
                                     while (ene == ene_loc) {
                                         ene = ene_dist(aGen);
@@ -569,7 +569,18 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
                                         acmap.write(ch_val, 1);
                                         delete ch_val;
                                         if (cur_zone == "ZONE028.ZND" && (ene < 14 || ene == 22)) {
-                                            ch_val = new char(0);
+                                            if (ene == 0 && wolfDecision == "Y") {
+                                                ch_val = new char(159);
+                                                map.open(file, ios::in | ios::out | ios::binary | ios::ate);
+                                                map.seekp(968, ios::beg);
+                                                map.write(ch_val, 1);
+                                                map.close();
+                                                delete ch_val;
+                                                ch_val = new char(1);
+                                            }
+                                            else {
+                                                ch_val = new char(0);
+                                            }
                                             acmap.seekp(b + 33, ios::beg);
                                             acmap.write(ch_val, 1);
                                             delete ch_val;
