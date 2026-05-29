@@ -80,6 +80,8 @@ Because there are two versions of the scene when Ashley encounters the Lizardmen
 
 Model sizes can not be changed outside of RAM editing.
 
+With respect to the_eyes' wishes to keep features exclusive, no further Zenith options will be included.
+
 ## Contact
 If you queries about the project, the best places to contact me are either one of my two Discord servers or my Twitter DMs.
 
