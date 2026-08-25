@@ -21,10 +21,12 @@ private:
 
 public:
 	Ashley();
-	void statIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen, string aDecision, string secondDecision, string thirdDecision, string fourthDecision);
+	void statIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen, string aDecision, string secondDecision, string thirdDecision, string fourthDecision, string fifthDecision, string sixthDecision, string seventhDecision, string eighthDecision);
 	void miscIterate(Reference_Files aRF, Add_Game& aGame, string aDecision, std::mt19937 aGen);
 	void buildIterate(Reference_Files aRF, Add_Game& aGame, string aDecision, std::mt19937 aGen);
 	void breakArts(Reference_Files aRF, Add_Game& aGame, string aDecision, std::mt19937 aGen);
 	void chainCost(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen);
 	void abilityCost(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen);
+	void ultiSpells(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen);
+	void abiFrame(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen);
 };

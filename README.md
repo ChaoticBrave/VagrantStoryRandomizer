@@ -13,7 +13,7 @@ Both old stable and experimental builds can be found here:
 https://mega.nz/folder/wFV3CTzQ#NPZK8E4Wy-c_98T4n2DMTQ
 
 ## Latest version
-* 0.9.1.0 (29/05/2026): Added an option to change Hellhounds in the City Walls to Ice Wolves. They will have blue textures, have their Fire and Water stats swapped, and can use an Ice Breath attack. Bugs with the progress bar and the Revert to Vanilla option have been fixed. The number of chains needed to learn Battle Abilities and their risk costs can now be randomized. Risk is actually balanced now when you pick Balance Ashley's Stats. Risk is now the damage cost stat by default, though you can choose to have it randomized (stable).
+* 0.9.2.0 (25/08/2026): Made stat randomization more flexible. Added the option for Ashley to use ultimate spells. Gave the option to randomize frame windows (stable).
 
 ## To Do
 If you wish to keep up-to-date with this project and what will be updated short-term, a link to the Trello can be found below:
@@ -25,18 +25,30 @@ Many can find these GitHubs tedious, myself included. The "Releases" section exi
 If you make any alterations to the source code and you want to bring your project to life, make sure that your exe is in the same directory as the ZONES and MAPS directories, as well as a psxinject exe file and its necessary dll files after conversion in order for it to work. 
 
 ## What are the parameters available?
-* Enemies: Randomizes the enemy placements within an area.
-* Chests: Randomizes the contents of a chest.
+* Enemies Placements: Randomizes the enemy placements within an area.
+* Enemy Base Stats: Randomizes the enemy's HP, MP, STR, INT, AGL and speed stats.
+* Enemy Base Equipment Stats: Randomizes the enemy's equipment values which are not related to class, affinity, blunt, edged, or piercing.
+* Enemy Equipment Class Stats: Randomizes the enemy's equipment class values.
+* Enemy Equipment Affinity Stats: Randomizes the enemy's equipment affinity values.
+* Enemy Equipment Blunt/Edged/Piercing Stats: Randomizes the enemy's equipment blunt, edged, and piercing values.
+* Enemy Appendages: Randomizes the values of enemy appendages.
 * Drops: Randomizes what each enemy drops. This will only apply to the random drops of an enemy. Guaranteed drops are unaltered to prevent softlocks.
 * Balance Item Stats: Makes the randomized stats of weapons, blades, grips, gems, shields, and armour in chests less extreme. Blade, grip and gem stats will also be adjusted by area in the story.
+* Balance Item Quantities: Balances the quantities for items found in chests to be more like what is found in the vanilla game.
+* Chests: Randomizes the contents of a chest.
+* Chest Item Base Stats: Randomizes the equipment values which are not related to class, affinity, blunt, edged, or piercing.
+* Chest Item Class Stats: Randomizes the equipment class values.
+* Chest Item Affinity Stats: Randomizes the equipment affinity values.
+* Chest Item Blunt/Edged/Piercing Stats: Randomizes the equipment blunt, edged, and piercing values.
 * Area Progression: Randomizes where you go next depending on the area you're in.
-* Item Stats: Randomizes the stats of weapons, blades, grips, gems, shields, and armour in chests from being randomized.
 * Enemy Models: Allows you to change which models an enemy uses. Though the randomized model has to be able to use the original enemy's weapon.
-* Enemy Stats: Allows you to randomize the various stats and equipment of an enemy.
 * Balance Enemy Stats: Will balance how the enemy stats are randomized so they are appropriate for the point of the game they are encountered.
 * Inconsistent Gear: Makes equipment type, name, and models inconsistent between one another.
-* Ashley's Stats: Randomizes Ashley's starting stats and equipment.
-* Fandango Stats: Randomizes the blade and grip which are used for the Fandango.
+* Ashley's Base Stats: Randomizes Ashley's base stat and equipment values which are not related to class, affinity, blunt, edged, or piercing.
+* Ashley's Class Stats: Randomizes Ashley's base stat and equipment class values.
+* Ashley's Affinity Stats: Randomizes Ashley's base stat and equipment affinity values.
+* Ashley's Blunt/Edged/Piercing Stats: Randomizes Ashley's blunt, edged, and piercing values.
+* Fandango Blade and Grip: Randomizes the blade and grip which are used for the Fandango.
 * Balance Ashley's Stats: Balances Ashley's stats and equipment to remain appropriate for the earlier parts of the game. 
 * Ashley Stat Threshold: Determines the minimum and maximum STR, INT and AGL a balanced Ashley can have. You can choose from low, medium and high. Low is 75-125, medium is 50-150 and high is 25-175.
 * Ashley's Misc Items: Randomizes Ashley's misc consumable items which he starts with.
@@ -54,6 +66,8 @@ If you make any alterations to the source code and you want to bring your projec
 * Fandango Cost Stat: Randomizes the damage cost stat of the Fandango.
 * Chain Ability Learning Costs: Randomizes the number of chains needed to learn each battle ability.
 * Chain Ability Damage Costs: Randomizes the risk costs needed to use each chain ability.
+* Learn Ultimate Spells: Replaces the Level 4 versions of elemental spells with ultimate spells used by enemies.
+* Ability Time Frames: Randomizes the number of frames you have to use a chain or defense ability.
 
 ## Zenith options
 * Free Teleport
@@ -79,8 +93,6 @@ The enemy model randomizer is highly unstable even on stable builds. The sheer q
 Because there are two versions of the scene when Ashley encounters the Lizardmen, if restored, their battle track when play when the doors lock behind Ashley.
 
 Model sizes can not be changed outside of RAM editing.
-
-With respect to the_eyes' wishes to keep features exclusive, no further Zenith options will be included.
 
 ## Contact
 If you queries about the project, the best places to contact me are either one of my two Discord servers or my Twitter DMs.
@@ -117,6 +129,7 @@ https://ko-fi.com/chaoticbrave
 * gingerbeardman: For letting me use his translation of psx-mode2 for the earlier builds.
 * cebix: Creator of psximager, which is used for mpd file replacement in builds starting from v0.3.0.0.
 * The Xenogears Perfect Works Build team: For very kindly providing the patcher code which is used in the GUI.
+* ser-pounce: For the Rood Reverse project.
 ### Testing and Feedback
 * NoharOSP: For being at hand to test this locally.
 * mayaktheunholy: For discovering several errors with pre-0.5.1.0 builds.
@@ -129,10 +142,10 @@ https://ko-fi.com/chaoticbrave
 * JDSilvergun: For suggesting balance improvements.
 * Bledyo: For discovering bugs with the model randomizer, and suggesting both the option to choose stat thresholds and build options.
 * Tabs: For discovering the libcrypto-3-x64.dll dependency.
+* snapperfisch: For suggesting the split in how stats should be randomized.
 ### Special Thanks
 * OddKara: Inspired me to do location-based randomizing rather than a room-by-room direction.
 * redd2213: Inspired me to use a progress bar.
 * Coffee Potato: Contributed Ashley build ideas.
 * PowerPanda: Inspired me to create a music restoration option.
 * riezahughes: Inspired me to approach the game's code on a more practical level.
-* ser-pounce: For the Rood Reverse project.

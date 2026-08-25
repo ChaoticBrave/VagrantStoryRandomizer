@@ -21,7 +21,7 @@ Ashley::Ashley() {
 	//Ashley
 }
 
-void Ashley::statIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen, string aDecision, string secondDecision, string thirdDecision, string fourthDecision) {
+void Ashley::statIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen, string aDecision, string secondDecision, string thirdDecision, string fourthDecision, string fifthDecision, string sixthDecision, string seventhDecision, string eighthDecision) {
     string file;
     string ashStat = aGame.getStringPath() + "\\MISC\\INITBTL.PRG";
     string ashEqu = aGame.getStringPath() + "\\MISC\\TITLE.PRG";
@@ -223,664 +223,10 @@ void Ashley::statIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen
     file = ashStat;
     start = statStart;
 	map.open(file, ios::in | ios::out | ios::binary | ios::ate);
-    stat = dist_1(aGen);
-    ash_hp_stat = stat;
-    sprintf_s(rand_hp, "%X", stat);
-    ss_rand_hp << rand_hp;
-    ss_rand_hp >> s_rand_hp;
-    ss_rand_hp.clear();
-    hs_rand_hp << std::hex << s_rand_hp;
-    hs_rand_hp >> int_rand_hp;
-    hs_rand_hp.clear();
-    s1 = "0";
-    if (stat > 255) {
-        s2 = s_rand_hp.at(0);
-        s3 = s_rand_hp.at(1);
-        s4 = s_rand_hp.at(2);
-    }
-    else if (stat > 16) {
-        s2 = "0";
-        s3 = s_rand_hp.at(0);
-        s4 = s_rand_hp.at(1);
-    }
-    else {
-        s2 = "0";
-        s3 = "0";
-        s4 = s_rand_hp.at(0);
-    }
-    s_rand_hp2 = s1 + s2;
-    s_rand_hp1 = s3 + s4;
-    fin_rand_hp << std::hex << s_rand_hp1;
-    fin_rand_hp >> stat;
-    fin_rand_hp.clear();
-    map.seekg(start, ios::beg);
-    stat_loc = map.tellg();
-    to_ass = map.get();
-    ch_val = new char(stat);
-    map.seekg(start, ios::beg);
-    map.write(ch_val, 1);
-    delete ch_val;
-    fin_rand_hp << std::hex << s_rand_hp2;
-    fin_rand_hp >> stat;
-    fin_rand_hp.clear();
-    map.seekg(start + 1, ios::beg);
-    stat_loc = map.tellg();
-    to_ass = map.get();
-    ch_val = new char(stat);
-    map.seekg(start + 1, ios::beg);
-    map.write(ch_val, 1);
-    delete ch_val;
-    stat = dist_2(aGen);
-    sprintf_s(rand_mp, "%X", stat);
-    ss_rand_mp << rand_mp;
-    ss_rand_mp >> s_rand_mp;
-    ss_rand_mp.clear();
-    hs_rand_mp << std::hex << s_rand_mp;
-    hs_rand_mp >> int_rand_mp;
-    hs_rand_mp.clear();
-    s1 = "0";
-    if (stat > 255) {
-        s2 = s_rand_mp.at(0);
-        s3 = s_rand_mp.at(1);
-        s4 = s_rand_mp.at(2);
-    }
-    else if (stat > 16) {
-        s2 = "0";
-        s3 = s_rand_mp.at(0);
-        s4 = s_rand_mp.at(1);
-    }
-    else {
-        s2 = "0";
-        s3 = "0";
-        s4 = s_rand_mp.at(0);
-    }
-    s_rand_mp2 = s1 + s2;
-    s_rand_mp1 = s3 + s4;
-    fin_rand_mp << std::hex << s_rand_mp1;
-    fin_rand_mp >> stat;
-    fin_rand_mp.clear();
-    map.seekg(start + 2, ios::beg);
-    stat_loc = map.tellg();
-    to_ass = map.get();
-    ch_val = new char(stat);
-    map.seekp(start + 2, ios::beg);
-    map.write(ch_val, 1);
-    delete ch_val;
-    fin_rand_mp << std::hex << s_rand_mp2;
-    fin_rand_mp >> stat;
-    fin_rand_mp.clear();
-    map.seekg(start + 3, ios::beg);
-    stat_loc = map.tellg();
-    to_ass = map.get();
-    ch_val = new char(stat);
-    map.seekp(start + 3, ios::beg);
-    map.write(ch_val, 1);
-    delete ch_val;
-    stat = dist_3(aGen);
-    map.seekg(start + 4, ios::beg);
-    stat_loc = map.tellg();
-    to_ass = map.get();
-    ch_val = new char(stat);
-    map.seekp(start + 4, ios::beg);
-    map.write(ch_val, 1);
-    delete ch_val;
-    stat = dist_4(aGen);
-    map.seekg(start + 5, ios::beg);
-    stat_loc = map.tellg();
-    to_ass = map.get();
-    ch_val = new char(stat);
-    map.seekp(start + 5, ios::beg);
-    map.write(ch_val, 1);
-    delete ch_val;
-    stat = dist_5(aGen);
-    map.seekg(start + 6, ios::beg);
-    stat_loc = map.tellg();
-    to_ass = map.get();
-    ch_val = new char(stat);
-    map.seekp(start + 6, ios::beg);
-    map.write(ch_val, 1);
-    delete ch_val;
-    stat = dist_6(aGen);
-    map.seekg(start + 9, ios::beg);
-    stat_loc = map.tellg();
-    to_ass = map.get();
-    ch_val = new char(stat);
-    map.seekp(start + 9, ios::beg);
-    map.write(ch_val, 1);
-    delete ch_val;
-    stat = dist_7(aGen);
-    map.seekg(start + 11, ios::beg);
-    stat_loc = map.tellg();
-    to_ass = map.get();
-    ch_val = new char(stat);
-    map.seekp(start + 11, ios::beg);
-    map.write(ch_val, 1);
-    delete ch_val;
-    map.close();
-    file = ashEqu;
-    start = equStart;
-    map.open(file, ios::in | ios::out | ios::binary | ios::ate);
-    if (secondDecision == "Y") {
-        stat = dist_8(aGen);
-        map.seekg(start + 28, ios::beg);
-        stat_loc = map.tellg();
-        to_ass = map.get();
-        ch_val = new char(stat);
-        map.seekp(start + 28, ios::beg);
-        map.write(ch_val, 1);
-        delete ch_val;
-        if (stat == 1) {
-            dist_9 = std::uniform_int_distribution<>(1, 12);
-        }
-        else if (stat == 2) {
-            dist_9 = std::uniform_int_distribution<>(13, 24);
-        }
-        else if (stat == 3) {
-            dist_9 = std::uniform_int_distribution<>(25, 34);
-        }
-        else if (stat == 4) {
-            dist_9 = std::uniform_int_distribution<>(35, 50);
-        }
-        else if (stat == 5) {
-            dist_9 = std::uniform_int_distribution<>(51, 56);
-        }
-        else if (stat == 6) {
-            dist_9 = std::uniform_int_distribution<>(57, 62);
-        }
-        else if (stat == 7) {
-            dist_9 = std::uniform_int_distribution<>(63, 69);
-        }
-        else if (stat == 8) {
-            dist_9 = std::uniform_int_distribution<>(70, 82);
-        }
-        else if (stat == 9) {
-            dist_9 = std::uniform_int_distribution<>(83, 90);
-        }
-        cho_blade = stat;
-        cho_grip = stat;
-        stat = dist_9(aGen);
-        map.seekg(start + 25, ios::beg);
-        stat_loc = map.tellg();
-        to_ass = map.get();
-        ch_val = new char(stat);
-        map.seekp(start + 25, ios::beg);
-        map.write(ch_val, 1);
-        map.seekg(start + 26, ios::beg);
-        stat_loc = map.tellg();
-        to_ass = map.get();
-        map.seekp(start + 26, ios::beg);
-        map.write(ch_val, 1);
-        map.seekg(start + 27, ios::beg);
-        stat_loc = map.tellg();
-        to_ass = map.get();
-        map.seekp(start + 27, ios::beg);
-        map.write(ch_val, 1);
-        delete ch_val;
-    }
-    stat = dist_10(aGen);
-    map.seekg(start + 37, ios::beg);
-    stat_loc = map.tellg();
-    to_ass = map.get();
-    ch_val = new char(stat);
-    map.seekp(start + 37, ios::beg);
-    map.write(ch_val, 1);
-    delete ch_val;
-    stat = dist_11(aGen);
-    map.seekg(start + 38, ios::beg);
-    stat_loc = map.tellg();
-    to_ass = map.get();
-    ch_val = new char(stat);
-    map.seekp(start + 38, ios::beg);
-    map.write(ch_val, 1);
-    delete ch_val;
-    if (aDecision == "Y") {
-        stat = dist_12(aGen);
-        if (stat == 1) {
-            stat = 0;
-        }
-        else {
-            if (cho_blade == 1) {
-                dist_13 = std::uniform_int_distribution<>(254, 255);
-            }
-            else if (cho_blade == 2 || cho_blade == 5 || cho_blade == 8 || cho_blade == 9) {
-                dist_13 = std::uniform_int_distribution<>(250, 255);
-            }
-            else if (cho_blade == 3) {
-                dist_13 = std::uniform_int_distribution<>(249, 255);
-            }
-            else if (cho_blade == 4) {
-                dist_13 = std::uniform_int_distribution<>(251, 255);
-            }
-            else if (cho_blade == 6) {
-                dist_13 = std::uniform_int_distribution<>(252, 255);
-            }
-            else if (cho_blade == 7) {
-                dist_13 = std::uniform_int_distribution<>(248, 255);
-            }
-            stat = dist_13(aGen);
-        }
-    }
-    else {
-        dist_13 = std::uniform_int_distribution<>(0, 255);
-        stat = dist_13(aGen);
-    }
-    map.seekg(start + 39, ios::beg);
-    stat_loc = map.tellg();
-    to_ass = map.get();
-    ch_val = new char(stat);
-    map.seekp(start + 39, ios::beg);
-    map.write(ch_val, 1);
-    delete ch_val;
-    stat = dist_14(aGen) * 100;
-    sprintf_s(rand_dpm, "%X", stat);
-    ss_rand_dpm << rand_dpm;
-    ss_rand_dpm >> s_rand_dpm;
-    ss_rand_dpm.clear();
-    hs_rand_dpm << std::hex << s_rand_dpm;
-    hs_rand_dpm >> int_rand_dpm;
-    hs_rand_dpm.clear();
-    dist_14 = std::uniform_int_distribution<>(41, round(int_rand_dpm / 100));
-    stat = dist_14(aGen) * 100;
-    sprintf_s(rand_dp, "%X", stat);
-    ss_rand_dp << rand_dp;
-    ss_rand_dp >> s_rand_dp;
-    ss_rand_dp.clear();
-    s1 = s_rand_dpm.at(0);
-    s2 = s_rand_dpm.at(1);
-    s3 = s_rand_dpm.at(2);
-    s4 = s_rand_dpm.at(3);
-    s_rand_dpm_1 = s1 + s2;
-    s_rand_dpm_2 = s3 + s4;
-    s1 = s_rand_dp.at(0);
-    s2 = s_rand_dp.at(1);
-    s3 = s_rand_dp.at(2);
-    s4 = s_rand_dp.at(3);
-    s_rand_dp_1 = s1 + s2;
-    s_rand_dp_2 = s3 + s4;
-    rand_dpm_fin << std::hex << s_rand_dpm_1;
-    rand_dpm_fin >> stat;
-    rand_dpm_fin.clear();
-    map.seekg(start + 30, ios::beg);
-    stat_loc = map.tellg();
-    to_ass = map.get();
-    ch_val = new char(stat);
-    map.seekg(start + 30, ios::beg);
-    map.write(ch_val, 1);
-    delete ch_val;
-    rand_dpm_fin << std::hex << s_rand_dpm_2;
-    rand_dpm_fin >> stat;
-    rand_dpm_fin.clear();
-    map.seekg(start + 29, ios::beg);
-    stat_loc = map.tellg();
-    to_ass = map.get();
-    ch_val = new char(stat);
-    map.seekg(start + 29, ios::beg);
-    map.write(ch_val, 1);
-    delete ch_val;
-    ppm = dist_15(aGen);
-    map.seekg(start + 31, ios::beg);
-    stat_loc = map.tellg();
-    to_ass = map.get();
-    ch_val = new char(ppm);
-    map.seekp(start + 31, ios::beg);
-    map.write(ch_val, 1);
-    delete ch_val;
-    rand_dpm_fin << std::hex << s_rand_dp_1;
-    rand_dpm_fin >> stat;
-    rand_dpm_fin.clear();
-    map.seekg(start + 34, ios::beg);
-    stat_loc = map.tellg();
-    to_ass = map.get();
-    ch_val = new char(stat);
-    map.seekp(start + 34, ios::beg);
-    map.write(ch_val, 1);
-    delete ch_val;
-    rand_dpm_fin << std::hex << s_rand_dp_2;
-    rand_dpm_fin >> stat;
-    rand_dpm_fin.clear();
-    map.seekg(start + 33, ios::beg);
-    stat_loc = map.tellg();
-    to_ass = map.get();
-    ch_val = new char(stat);
-    map.seekp(start + 33, ios::beg);
-    map.write(ch_val, 1);
-    delete ch_val;
-    dist_16 = std::uniform_int_distribution<>(1, ppm);
-    pp = dist_16(aGen);
-    map.seekg(start + 35, ios::beg);
-    stat_loc = map.tellg();
-    to_ass = map.get();
-    ch_val = new char(pp);
-    map.seekp(start + 35, ios::beg);
-    map.write(ch_val, 1);
-    delete ch_val;
-    if (fourthDecision == "Y") {
-        std::uniform_int_distribution<> dist_18 = std::uniform_int_distribution<>(1, 4);
-        stat = (4 * dist_17(aGen)) + dist_18(aGen);
-    }
-    else {
-        stat = (8 + dist_17(aGen));
-    }
-    map.seekg(start + 41, ios::beg);
-    stat_loc = map.tellg();
-    to_ass = map.get();
-    ch_val = new char(stat);
-    map.seekp(start + 41, ios::beg);
-    map.write(ch_val, 1);
-    delete ch_val;
-    stat = dist_19(aGen);
-    map.seekg(start + 40, ios::beg);
-    stat_loc = map.tellg();
-    to_ass = map.get();
-    ch_val = new char(stat);
-    map.seekp(start + 40, ios::beg);
-    map.write(ch_val, 1);
-    delete ch_val;
-    for (int i = 0; i < 3; i++) {
-        if (aDecision == "N") {
-            stat = dist_20(aGen);
-        }
-        else {
-            if (cho_blade == 1) {
-                stat = 1;
-            }
-            else if (cho_blade == 4) {
-                stat = 3;
-            }
-            else if (cho_blade == 5) {
-                stat = 4;
-            }
-            else {
-                if (cho_blade == 2) {
-                    dist_20 = std::uniform_int_distribution<>(3, 5);
-                }
-                if (cho_blade == 3) {
-                    dist_20 = std::uniform_int_distribution<>(4, 6);
-                }
-                if (cho_blade == 6) {
-                    dist_20 = std::uniform_int_distribution<>(2, 3);
-                }
-                if (cho_blade == 7) {
-                    dist_20 = std::uniform_int_distribution<>(4, 7);
-                }
-                if (cho_blade == 8) {
-                    dist_20 = std::uniform_int_distribution<>(5, 6);
-                }
-                if (cho_blade == 9) {
-                    dist_20 = std::uniform_int_distribution<>(9, 12);
-                }
-                stat = dist_20(aGen);
-            }
-        }
-        map.seekg(start + (45 + i), ios::beg);
-        stat_loc = map.tellg();
-        to_ass = map.get();
-        ch_val = new char(stat);
-        map.seekp(start + (45 + i), ios::beg);
-        map.write(ch_val, 1);
-        delete ch_val;
-    }
-    for (int i = 0; i < 6; i++) {
-        if (aDecision == "Y") {
-            stat = dist_12(aGen);
-            if (stat == 1) {
-                dist_21 = std::uniform_int_distribution<>(0, 14);
-            }
-            else {
-                dist_21 = std::uniform_int_distribution<>(236, 255);
-            }
-        }
-        stat = dist_21(aGen);
-        map.seekg(start + (49 + i), ios::beg);
-        stat_loc = map.tellg();
-        to_ass = map.get();
-        ch_val = new char(stat);
-        map.seekp(start + (49 + i), ios::beg);
-        map.write(ch_val, 1);
-        delete ch_val;
-    }
-    for (int i = 0; i < 7; i++) {
-        if (aDecision == "Y") {
-            stat = dist_12(aGen);
-            if (stat == 1) {
-                dist_22 = std::uniform_int_distribution<>(0, 10);
-            }
-            else {
-                dist_22 = std::uniform_int_distribution<>(253, 255);
-            }
-        }
-        stat = dist_22(aGen);
-        map.seekg(start + (57 + i), ios::beg);
-        stat_loc = map.tellg();
-        to_ass = map.get();
-        ch_val = new char(stat);
-        map.seekp(start + (57 + i), ios::beg);
-        map.write(ch_val, 1);
-        delete ch_val;
-    }
-    if (secondDecision == "Y") {
-        map.seekg(start + 732, ios::beg);
-        stat_loc = map.tellg();
-        to_ass = map.get();
-        if (cho_grip >= 1 && cho_grip <= 3) {
-            stat = 1;
-        }
-        else if (cho_grip >= 4 && cho_grip <= 7) {
-            stat = 2;
-        }
-        else if (cho_grip == 8) {
-            stat = 3;
-        }
-        else if (cho_grip == 9) {
-            stat = 4;
-        }
-        cho_grip = stat;
-        ch_val = new char(stat);
-        map.seekp(start + 732, ios::beg);
-        map.write(ch_val, 1);
-        delete ch_val;
-        if (cho_grip == 1) {
-            dist_23 = std::uniform_int_distribution<>(96, 104);
-        }
-        else if (cho_grip == 2) {
-            dist_23 = std::uniform_int_distribution<>(105, 114);
-        }
-        else if (cho_grip == 3) {
-            dist_23 = std::uniform_int_distribution<>(115, 120);
-        }
-        else if (cho_grip == 4) {
-            dist_23 = std::uniform_int_distribution<>(121, 126);
-        }
-        stat = dist_23(aGen);
-        map.seekg(start + 729, ios::beg);
-        stat_loc = map.tellg();
-        to_ass = map.get();
-        ch_val = new char(stat);
-        map.seekp(start + 729, ios::beg);
-        map.write(ch_val, 1);
-        delete ch_val;
-        stat -= 95;
-        map.seekg(start + 731, ios::beg);
-        stat_loc = map.tellg();
-        to_ass = map.get();
-        ch_val = new char(stat);
-        map.seekp(start + 731, ios::beg);
-        map.write(ch_val, 1);
-        delete ch_val;
-    }
-    stat = dist_24(aGen);
-    map.seekg(start + 734, ios::beg);
-    stat_loc = map.tellg();
-    to_ass = map.get();
-    ch_val = new char(stat);
-    map.seekp(start + 734, ios::beg);
-    map.write(ch_val, 1);
-    delete ch_val;
-    stat = dist_25(aGen);
-    map.seekg(start + 735, ios::beg);
-    stat_loc = map.tellg();
-    to_ass = map.get();
-    ch_val = new char(stat);
-    map.seekp(start + 735, ios::beg);
-    map.write(ch_val, 1);
-    delete ch_val;
-    if (secondDecision == "Y") {
-        if (cho_grip == 1) {
-            dist_26 = std::uniform_int_distribution<>(252, 254);
-        }
-        else if (cho_grip == 2) {
-            dist_26 = std::uniform_int_distribution<>(251, 253);
-        }
-        else if (cho_grip == 3) {
-            dist_26 = std::uniform_int_distribution<>(250, 252);
-        }
-        else if (cho_grip == 4) {
-            dist_26 = std::uniform_int_distribution<>(253, 254);
-        }
-    }
-    stat = dist_26(aGen);
-    map.seekg(start + 736, ios::beg);
-    stat_loc = map.tellg();
-    to_ass = map.get();
-    ch_val = new char(stat);
-    map.seekp(start + 736, ios::beg);
-    map.write(ch_val, 1);
-    delete ch_val;
-    for (int i = 0; i < 3; i++) {
-        stat = dist_27(aGen);
-        map.seekg(start + (738 + i), ios::beg);
-        stat_loc = map.tellg();
-        to_ass = map.get();
-        ch_val = new char(stat);
-        map.seekp(start + (738 + i), ios::beg);
-        map.write(ch_val, 1);
-        delete ch_val;
-    }
-    stat = dist_33(aGen);
-    map.seekg(start + 264, ios::beg);
-    stat_loc = map.tellg();
-    to_ass = map.get();
-    ch_val = new char(stat);
-    map.seekp(start + 264, ios::beg);
-    map.write(ch_val, 1);
-    delete ch_val;
-    stat = dist_47(aGen);
-    map.seekg(start + 1185, ios::beg);
-    stat_loc = map.tellg();
-    to_ass = map.get();
-    ch_val = new char(stat);
-    map.seekp(start + 1185, ios::beg);
-    map.write(ch_val, 1);
-    delete ch_val;
-    stat -= 126;
-    map.seekg(start + 1186, ios::beg);
-    stat_loc = map.tellg();
-    to_ass = map.get();
-    ch_val = new char(stat);
-    map.seekp(start + 1186, ios::beg);
-    map.write(ch_val, 1);
-    delete ch_val;
-    for (int i = 0; i < 3; i++) {
-        stat = dist_48(aGen);
-        map.seekg((start + 1198 + i), ios::beg);
-        stat_loc = map.tellg();
-        to_ass = map.get();
-        ch_val = new char(stat);
-        map.seekp((start + 1198 + i), ios::beg);
-        map.write(ch_val, 1);
-        delete ch_val;
-    }
-    for (int i = 0; i < 3; i++) {
-        if (aDecision == "Y") {
-            stat = 0;
-        }
-        else {
-            stat = dist_49(aGen);
-        }
-        map.seekg((start + 1202 + i), ios::beg);
-        stat_loc = map.tellg();
-        to_ass = map.get();
-        ch_val = new char(stat);
-        map.seekp((start + 1202 + i), ios::beg);
-        map.write(ch_val, 1);
-        delete ch_val;
-    }
-    for (int i = 0; i < 6; i++) {
-        if (aDecision == "Y") {
-            stat = dist_12(aGen);
-            if (stat == 1) {
-                dist_50 = std::uniform_int_distribution<>(0, 10);
-            }
-            else {
-                dist_50 = std::uniform_int_distribution<>(246, 255);
-            }
-        }
-        else {
-            dist_50 = std::uniform_int_distribution<>(0, 255);
-        }
-        stat = dist_50(aGen);
-        map.seekg((start + 1205 + i), ios::beg);
-        stat_loc = map.tellg();
-        to_ass = map.get();
-        ch_val = new char(stat);
-        map.seekp((start + 1205 + i), ios::beg);
-        map.write(ch_val, 1);
-        delete ch_val;
-    }
-    for (int i = 0; i < 7; i++) {
-        if (aDecision == "Y") {
-            stat = dist_12(aGen);
-            if (stat == 1) {
-                dist_51 = std::uniform_int_distribution<>(0, 10);
-            }
-            else {
-                dist_51 = std::uniform_int_distribution<>(251, 255);
-            }
-        }
-        else {
-            dist_51 = std::uniform_int_distribution<>(0, 255);
-        }
-        stat = dist_51(aGen);
-        map.seekg((start + 1213 + i), ios::beg);
-        stat_loc = map.tellg();
-        to_ass = map.get();
-        ch_val = new char(stat);
-        map.seekp((start + 1213 + i), ios::beg);
-        map.write(ch_val, 1);
-        delete ch_val;
-    }
-    loop_diff = 541;
-    for (int i = 0; i < 6; i++) {
-        map.close();
-        file = ashStat;
-        start = statStart;
-        map.open(file, ios::in | ios::out | ios::binary | ios::ate);
-        if (i == 0 || i == 1) {
-            stat = ash_hp_stat / 2;
-        }
-        else if (i == 2) {
-            stat = ash_hp_stat / 3;
-        }
-        else if (i == 3) {
-            stat = ash_hp_stat / (100 / 75);
-        }
-        else if (i == 4) {
-            stat = ash_hp_stat / (100 / 60);
-        }
-        else if (i == 5) {
-            map.seekg(start + loop_diff, ios::beg);
-            stat_loc = map.tellg();
-            to_ass = map.get();
-            map.seekg(start + loop_diff + 1, ios::beg);
-            stat_loc = map.tellg();
-            to_ass2 = map.get();
-            if (to_ass == 0 && to_ass2 == 0) {
-                break;
-            }
-            else {
-                stat = ash_hp_stat / (100 / 30);
-            }
-        }
+    //Ash base and weapon
+    if (fifthDecision == "Y") {
+        stat = dist_1(aGen);
+        ash_hp_stat = stat;
         sprintf_s(rand_hp, "%X", stat);
         ss_rand_hp << rand_hp;
         ss_rand_hp >> s_rand_hp;
@@ -906,149 +252,228 @@ void Ashley::statIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen
         }
         s_rand_hp2 = s1 + s2;
         s_rand_hp1 = s3 + s4;
-        fin_rand_hp << std::hex << s_rand_hp2;
-        fin_rand_hp >> stat;
-        fin_rand_hp.clear();
-        map.seekg(start + loop_diff, ios::beg);
-        stat_loc = map.tellg();
-        to_ass = map.get();
-        ch_val = new char(stat);
-        map.seekp(start + loop_diff, ios::beg);
-        map.write(ch_val, 1);
-        delete ch_val;
         fin_rand_hp << std::hex << s_rand_hp1;
         fin_rand_hp >> stat;
         fin_rand_hp.clear();
-        map.seekg(start + loop_diff - 1, ios::beg);
+        map.seekg(start, ios::beg);
         stat_loc = map.tellg();
         to_ass = map.get();
         ch_val = new char(stat);
-        map.seekp(start + loop_diff - 1, ios::beg);
+        map.seekg(start, ios::beg);
         map.write(ch_val, 1);
         delete ch_val;
-        stat = dist_53(aGen);
-        map.seekg(start + loop_diff + 1, ios::beg);
+        fin_rand_hp << std::hex << s_rand_hp2;
+        fin_rand_hp >> stat;
+        fin_rand_hp.clear();
+        map.seekg(start + 1, ios::beg);
         stat_loc = map.tellg();
         to_ass = map.get();
         ch_val = new char(stat);
-        map.seekp(start + loop_diff + 1, ios::beg);
+        map.seekg(start + 1, ios::beg);
         map.write(ch_val, 1);
         delete ch_val;
-        stat = dist_53(aGen);
-        map.seekg(start + loop_diff + 2, ios::beg);
-        stat_loc = map.tellg();
-        to_ass = map.get();
-        ch_val = new char(stat);
-        map.seekp(start + loop_diff + 2, ios::beg);
-        map.write(ch_val, 1);
-        delete ch_val;
-        for (int i2 = 0; i2 < 3; i2++) {
-            if (aDecision == "Y") {
-                stat = dist_12(aGen);
-                if (stat == 1) {
-                    dist_54 = std::uniform_int_distribution<>(0, 35);
-                }
-                else {
-                    dist_54 = std::uniform_int_distribution<>(226, 255);
-                }
-            }
-            else {
-                dist_54 = std::uniform_int_distribution<>(0, 255);
-            }
-            stat = dist_54(aGen);
-            map.seekg((start + loop_diff + 4 + i2), ios::beg);
-            stat_loc = map.tellg();
-            to_ass = map.get();
-            ch_val = new char(stat);
-            map.seekp((start + loop_diff + 4 + i2), ios::beg);
-            map.write(ch_val, 1);
-            delete ch_val;
+        stat = dist_2(aGen);
+        sprintf_s(rand_mp, "%X", stat);
+        ss_rand_mp << rand_mp;
+        ss_rand_mp >> s_rand_mp;
+        ss_rand_mp.clear();
+        hs_rand_mp << std::hex << s_rand_mp;
+        hs_rand_mp >> int_rand_mp;
+        hs_rand_mp.clear();
+        s1 = "0";
+        if (stat > 255) {
+            s2 = s_rand_mp.at(0);
+            s3 = s_rand_mp.at(1);
+            s4 = s_rand_mp.at(2);
         }
-        for (int i2 = 0; i2 < 7; i2++) {
-            if (aDecision == "Y") {
-                stat = dist_12(aGen);
-                if (stat == 1) {
-                    dist_55 = std::uniform_int_distribution<>(0, 75);
-                }
-                else {
-                    dist_55 = std::uniform_int_distribution<>(223, 255);
-                }
-            }
-            else {
-                dist_55 = std::uniform_int_distribution<>(0, 255);
-            }
-            stat = dist_55(aGen);
-            map.seekg((start + loop_diff + 7 + i2), ios::beg);
-            stat_loc = map.tellg();
-            to_ass = map.get();
-            ch_val = new char(stat);
-            map.seekp((start + loop_diff + 7 + i2), ios::beg);
-            map.write(ch_val, 1);
-            delete ch_val;
+        else if (stat > 16) {
+            s2 = "0";
+            s3 = s_rand_mp.at(0);
+            s4 = s_rand_mp.at(1);
         }
+        else {
+            s2 = "0";
+            s3 = "0";
+            s4 = s_rand_mp.at(0);
+        }
+        s_rand_mp2 = s1 + s2;
+        s_rand_mp1 = s3 + s4;
+        fin_rand_mp << std::hex << s_rand_mp1;
+        fin_rand_mp >> stat;
+        fin_rand_mp.clear();
+        map.seekg(start + 2, ios::beg);
+        stat_loc = map.tellg();
+        to_ass = map.get();
+        ch_val = new char(stat);
+        map.seekp(start + 2, ios::beg);
+        map.write(ch_val, 1);
+        delete ch_val;
+        fin_rand_mp << std::hex << s_rand_mp2;
+        fin_rand_mp >> stat;
+        fin_rand_mp.clear();
+        map.seekg(start + 3, ios::beg);
+        stat_loc = map.tellg();
+        to_ass = map.get();
+        ch_val = new char(stat);
+        map.seekp(start + 3, ios::beg);
+        map.write(ch_val, 1);
+        delete ch_val;
+        stat = dist_3(aGen);
+        map.seekg(start + 4, ios::beg);
+        stat_loc = map.tellg();
+        to_ass = map.get();
+        ch_val = new char(stat);
+        map.seekp(start + 4, ios::beg);
+        map.write(ch_val, 1);
+        delete ch_val;
+        stat = dist_4(aGen);
+        map.seekg(start + 5, ios::beg);
+        stat_loc = map.tellg();
+        to_ass = map.get();
+        ch_val = new char(stat);
+        map.seekp(start + 5, ios::beg);
+        map.write(ch_val, 1);
+        delete ch_val;
+        stat = dist_5(aGen);
+        map.seekg(start + 6, ios::beg);
+        stat_loc = map.tellg();
+        to_ass = map.get();
+        ch_val = new char(stat);
+        map.seekp(start + 6, ios::beg);
+        map.write(ch_val, 1);
+        delete ch_val;
+        stat = dist_6(aGen);
+        map.seekg(start + 9, ios::beg);
+        stat_loc = map.tellg();
+        to_ass = map.get();
+        ch_val = new char(stat);
+        map.seekp(start + 9, ios::beg);
+        map.write(ch_val, 1);
+        delete ch_val;
+        stat = dist_7(aGen);
+        map.seekg(start + 11, ios::beg);
+        stat_loc = map.tellg();
+        to_ass = map.get();
+        ch_val = new char(stat);
+        map.seekp(start + 11, ios::beg);
+        map.write(ch_val, 1);
+        delete ch_val;
         map.close();
         file = ashEqu;
         start = equStart;
         map.open(file, ios::in | ios::out | ios::binary | ios::ate);
-        if (i == 0 || i == 1) {
-            stat = dist_56(aGen);
-        }
-        else if (i == 2) {
-            stat = dist_57(aGen);
-        }
-        else if (i == 3) {
-            stat = dist_58(aGen);
-        }
-        else if (i == 4) {
-            stat = dist_59(aGen);
-        }
-        map.seekg(start + 985 + (i * 40), ios::beg);
-        stat_loc = map.tellg();
-        to_ass = map.get();
-        ch_val = new char(stat);
-        map.seekp(start + 985 + (i * 40), ios::beg);
-        map.write(ch_val, 1);
-        delete ch_val;
-        stat -= 126;
-        map.seekg(start + 986 + (i * 40), ios::beg);
-        stat_loc = map.tellg();
-        to_ass = map.get();
-        ch_val = new char(stat);
-        map.seekp(start + 986 + (i * 40), ios::beg);
-        map.write(ch_val, 1);
-        delete ch_val;
-        for (int i2 = 0; i2 < 2; i2++) {
-            stat = dist_60(aGen);
-            map.seekg((start + 998 + (i * 40) + i2), ios::beg);
+        if (secondDecision == "Y") {
+            stat = dist_8(aGen);
+            map.seekg(start + 28, ios::beg);
             stat_loc = map.tellg();
             to_ass = map.get();
             ch_val = new char(stat);
-            map.seekp((start + 998 + (i * 40) + i2), ios::beg);
+            map.seekp(start + 28, ios::beg);
+            map.write(ch_val, 1);
+            delete ch_val;
+            if (stat == 1) {
+                dist_9 = std::uniform_int_distribution<>(1, 12);
+            }
+            else if (stat == 2) {
+                dist_9 = std::uniform_int_distribution<>(13, 24);
+            }
+            else if (stat == 3) {
+                dist_9 = std::uniform_int_distribution<>(25, 34);
+            }
+            else if (stat == 4) {
+                dist_9 = std::uniform_int_distribution<>(35, 50);
+            }
+            else if (stat == 5) {
+                dist_9 = std::uniform_int_distribution<>(51, 56);
+            }
+            else if (stat == 6) {
+                dist_9 = std::uniform_int_distribution<>(57, 62);
+            }
+            else if (stat == 7) {
+                dist_9 = std::uniform_int_distribution<>(63, 69);
+            }
+            else if (stat == 8) {
+                dist_9 = std::uniform_int_distribution<>(70, 82);
+            }
+            else if (stat == 9) {
+                dist_9 = std::uniform_int_distribution<>(83, 90);
+            }
+            cho_blade = stat;
+            cho_grip = stat;
+            stat = dist_9(aGen);
+            map.seekg(start + 25, ios::beg);
+            stat_loc = map.tellg();
+            to_ass = map.get();
+            ch_val = new char(stat);
+            map.seekp(start + 25, ios::beg);
+            map.write(ch_val, 1);
+            map.seekg(start + 26, ios::beg);
+            stat_loc = map.tellg();
+            to_ass = map.get();
+            map.seekp(start + 26, ios::beg);
+            map.write(ch_val, 1);
+            map.seekg(start + 27, ios::beg);
+            stat_loc = map.tellg();
+            to_ass = map.get();
+            map.seekp(start + 27, ios::beg);
             map.write(ch_val, 1);
             delete ch_val;
         }
+        stat = dist_10(aGen);
+        map.seekg(start + 37, ios::beg);
+        stat_loc = map.tellg();
+        to_ass = map.get();
+        ch_val = new char(stat);
+        map.seekp(start + 37, ios::beg);
+        map.write(ch_val, 1);
+        delete ch_val;
+        stat = dist_11(aGen);
+        map.seekg(start + 38, ios::beg);
+        stat_loc = map.tellg();
+        to_ass = map.get();
+        ch_val = new char(stat);
+        map.seekp(start + 38, ios::beg);
+        map.write(ch_val, 1);
+        delete ch_val;
         if (aDecision == "Y") {
-            stat = dist_11(aGen);
+            stat = dist_12(aGen);
             if (stat == 1) {
                 stat = 0;
             }
             else {
-                dist_61 = std::uniform_int_distribution<>(253, 255);
-                stat = dist_61(aGen);
+                if (cho_blade == 1) {
+                    dist_13 = std::uniform_int_distribution<>(254, 255);
+                }
+                else if (cho_blade == 2 || cho_blade == 5 || cho_blade == 8 || cho_blade == 9) {
+                    dist_13 = std::uniform_int_distribution<>(250, 255);
+                }
+                else if (cho_blade == 3) {
+                    dist_13 = std::uniform_int_distribution<>(249, 255);
+                }
+                else if (cho_blade == 4) {
+                    dist_13 = std::uniform_int_distribution<>(251, 255);
+                }
+                else if (cho_blade == 6) {
+                    dist_13 = std::uniform_int_distribution<>(252, 255);
+                }
+                else if (cho_blade == 7) {
+                    dist_13 = std::uniform_int_distribution<>(248, 255);
+                }
+                stat = dist_13(aGen);
             }
         }
         else {
-            dist_61 = std::uniform_int_distribution<>(0, 255);
-            stat = dist_61(aGen);
+            dist_13 = std::uniform_int_distribution<>(0, 255);
+            stat = dist_13(aGen);
         }
-        map.seekg(start + 1000 + (i * 40), ios::beg);
+        map.seekg(start + 39, ios::beg);
         stat_loc = map.tellg();
         to_ass = map.get();
         ch_val = new char(stat);
-        map.seekp(start + 1000 + (i * 40), ios::beg);
+        map.seekp(start + 39, ios::beg);
         map.write(ch_val, 1);
         delete ch_val;
-        stat = dist_62(aGen) * 100;
+        stat = dist_14(aGen) * 100;
         sprintf_s(rand_dpm, "%X", stat);
         ss_rand_dpm << rand_dpm;
         ss_rand_dpm >> s_rand_dpm;
@@ -1056,8 +481,8 @@ void Ashley::statIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen
         hs_rand_dpm << std::hex << s_rand_dpm;
         hs_rand_dpm >> int_rand_dpm;
         hs_rand_dpm.clear();
-        dist_63 = std::uniform_int_distribution<>(41, round(int_rand_dpm / 100));
-        stat = dist_63(aGen) * 100;
+        dist_14 = std::uniform_int_distribution<>(41, round(int_rand_dpm / 100));
+        stat = dist_14(aGen) * 100;
         sprintf_s(rand_dp, "%X", stat);
         ss_rand_dp << rand_dp;
         ss_rand_dp >> s_rand_dp;
@@ -1077,105 +502,771 @@ void Ashley::statIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen
         rand_dpm_fin << std::hex << s_rand_dpm_1;
         rand_dpm_fin >> stat;
         rand_dpm_fin.clear();
-        map.seekg(start + 990 + (i * 40), ios::beg);
+        map.seekg(start + 30, ios::beg);
         stat_loc = map.tellg();
         to_ass = map.get();
         ch_val = new char(stat);
-        map.seekp(start + 990 + (i * 40), ios::beg);
+        map.seekg(start + 30, ios::beg);
         map.write(ch_val, 1);
+        delete ch_val;
         rand_dpm_fin << std::hex << s_rand_dpm_2;
         rand_dpm_fin >> stat;
         rand_dpm_fin.clear();
-        map.seekg(start + 989 + (i * 40), ios::beg);
+        map.seekg(start + 29, ios::beg);
         stat_loc = map.tellg();
         to_ass = map.get();
         ch_val = new char(stat);
-        map.seekp(start + 989 + (i * 40), ios::beg);
+        map.seekg(start + 29, ios::beg);
+        map.write(ch_val, 1);
+        delete ch_val;
+        ppm = dist_15(aGen);
+        map.seekg(start + 31, ios::beg);
+        stat_loc = map.tellg();
+        to_ass = map.get();
+        ch_val = new char(ppm);
+        map.seekp(start + 31, ios::beg);
         map.write(ch_val, 1);
         delete ch_val;
         rand_dpm_fin << std::hex << s_rand_dp_1;
         rand_dpm_fin >> stat;
         rand_dpm_fin.clear();
-        map.seekg(start + 994 + (i * 40), ios::beg);
+        map.seekg(start + 34, ios::beg);
         stat_loc = map.tellg();
         to_ass = map.get();
         ch_val = new char(stat);
-        map.seekp(start + 994 + (i * 40), ios::beg);
+        map.seekp(start + 34, ios::beg);
         map.write(ch_val, 1);
         delete ch_val;
         rand_dpm_fin << std::hex << s_rand_dp_2;
         rand_dpm_fin >> stat;
         rand_dpm_fin.clear();
-        map.seekg(start + 993 + (i * 40), ios::beg);
+        map.seekg(start + 33, ios::beg);
         stat_loc = map.tellg();
         to_ass = map.get();
         ch_val = new char(stat);
-        map.seekp(start + 993 + (i * 40), ios::beg);
+        map.seekp(start + 33, ios::beg);
         map.write(ch_val, 1);
         delete ch_val;
-        for (int i2 = 0; i2 < 3; i2++) {
-            stat = dist_64(aGen);
-            map.seekg((start + 1002 + (i * 40) + i2), ios::beg);
-            stat_loc = map.tellg();
-            to_ass = map.get();
-            ch_val = new char(stat);
-            map.seekp((start + 1002 + (i * 40) + i2), ios::beg);
-            map.write(ch_val, 1);
-            delete ch_val;
+        dist_16 = std::uniform_int_distribution<>(1, ppm);
+        pp = dist_16(aGen);
+        map.seekg(start + 35, ios::beg);
+        stat_loc = map.tellg();
+        to_ass = map.get();
+        ch_val = new char(pp);
+        map.seekp(start + 35, ios::beg);
+        map.write(ch_val, 1);
+        delete ch_val;
+        if (fourthDecision == "Y") {
+            std::uniform_int_distribution<> dist_18 = std::uniform_int_distribution<>(1, 4);
+            stat = (4 * dist_17(aGen)) + dist_18(aGen);
         }
-        for (int i2 = 0; i2 < 6; i2++) {
-            if (aDecision == "Y") {
-                stat = dist_12(aGen);
-                if (stat == 1) {
-                    dist_65 = std::uniform_int_distribution<>(0, 1);
-                }
-                else {
-                    dist_65 = std::uniform_int_distribution<>(251, 255);
-                }
-            }
-            else {
-                dist_65 = std::uniform_int_distribution<>(0, 255);
-            }
-            stat = dist_65(aGen);
-            map.seekg((start + 1005 + (i * 40) + i2), ios::beg);
-            stat_loc = map.tellg();
-            to_ass = map.get();
-            ch_val = new char(stat);
-            map.seekp((start + 1005 + (i * 40) + i2), ios::beg);
-            map.write(ch_val, 1);
-            delete ch_val;
+        else {
+            stat = (8 + dist_17(aGen));
         }
-        for (int i2 = 0; i2 < 7; i2++) {
-            if (aDecision == "Y") {
-                stat = dist_12(aGen);
-                if (stat == 1) {
-                    dist_66 = std::uniform_int_distribution<>(0, 10);
-                }
-                else {
-                    dist_66 = std::uniform_int_distribution<>(251, 255);
-                }
-            }
-            else {
-                dist_66 = std::uniform_int_distribution<>(0, 255);
-            }
-            stat = dist_66(aGen);
-            map.seekg((start + 1013 + (i * 40) + i2), ios::beg);
-            stat_loc = map.tellg();
-            to_ass = map.get();
-            ch_val = new char(stat);
-            map.seekp((start + 1013 + (i * 40) + i2), ios::beg);
-            map.write(ch_val, 1);
-            delete ch_val;
-        }
-        stat = dist_46(aGen);
-        map.seekg(start + 1021 + (i * 40), ios::beg);
+        map.seekg(start + 41, ios::beg);
         stat_loc = map.tellg();
         to_ass = map.get();
         ch_val = new char(stat);
-        map.seekp(start + 1021 + (i * 40), ios::beg);
+        map.seekp(start + 41, ios::beg);
         map.write(ch_val, 1);
         delete ch_val;
-        loop_diff += 92;
+        stat = dist_19(aGen);
+        map.seekg(start + 40, ios::beg);
+        stat_loc = map.tellg();
+        to_ass = map.get();
+        ch_val = new char(stat);
+        map.seekp(start + 40, ios::beg);
+        map.write(ch_val, 1);
+        delete ch_val;
+        for (int i = 0; i < 3; i++) {
+            if (aDecision == "N") {
+                stat = dist_20(aGen);
+            }
+            else {
+                if (cho_blade == 1) {
+                    stat = 1;
+                }
+                else if (cho_blade == 4) {
+                    stat = 3;
+                }
+                else if (cho_blade == 5) {
+                    stat = 4;
+                }
+                else {
+                    if (cho_blade == 2) {
+                        dist_20 = std::uniform_int_distribution<>(3, 5);
+                    }
+                    if (cho_blade == 3) {
+                        dist_20 = std::uniform_int_distribution<>(4, 6);
+                    }
+                    if (cho_blade == 6) {
+                        dist_20 = std::uniform_int_distribution<>(2, 3);
+                    }
+                    if (cho_blade == 7) {
+                        dist_20 = std::uniform_int_distribution<>(4, 7);
+                    }
+                    if (cho_blade == 8) {
+                        dist_20 = std::uniform_int_distribution<>(5, 6);
+                    }
+                    if (cho_blade == 9) {
+                        dist_20 = std::uniform_int_distribution<>(9, 12);
+                    }
+                    stat = dist_20(aGen);
+                }
+            }
+            map.seekg(start + (45 + i), ios::beg);
+            stat_loc = map.tellg();
+            to_ass = map.get();
+            ch_val = new char(stat);
+            map.seekp(start + (45 + i), ios::beg);
+            map.write(ch_val, 1);
+            delete ch_val;
+        }
+    }
+    if (sixthDecision == "Y") {
+        map.close();
+        file = ashEqu;
+        start = equStart;
+        map.open(file, ios::in | ios::out | ios::binary | ios::ate);
+        for (int i = 0; i < 6; i++) {
+            if (aDecision == "Y") {
+                stat = dist_12(aGen);
+                if (stat == 1) {
+                    dist_21 = std::uniform_int_distribution<>(0, 14);
+                }
+                else {
+                    dist_21 = std::uniform_int_distribution<>(236, 255);
+                }
+            }
+            stat = dist_21(aGen);
+            map.seekg(start + (49 + i), ios::beg);
+            stat_loc = map.tellg();
+            to_ass = map.get();
+            ch_val = new char(stat);
+            map.seekp(start + (49 + i), ios::beg);
+            map.write(ch_val, 1);
+            delete ch_val;
+        }
+    }
+    if (seventhDecision == "Y") {
+        map.close();
+        file = ashEqu;
+        start = equStart;
+        map.open(file, ios::in | ios::out | ios::binary | ios::ate);
+        for (int i = 0; i < 7; i++) {
+            if (aDecision == "Y") {
+                stat = dist_12(aGen);
+                if (stat == 1) {
+                    dist_22 = std::uniform_int_distribution<>(0, 10);
+                }
+                else {
+                    dist_22 = std::uniform_int_distribution<>(253, 255);
+                }
+            }
+            stat = dist_22(aGen);
+            map.seekg(start + (57 + i), ios::beg);
+            stat_loc = map.tellg();
+            to_ass = map.get();
+            ch_val = new char(stat);
+            map.seekp(start + (57 + i), ios::beg);
+            map.write(ch_val, 1);
+            delete ch_val;
+        }
+    }
+    if (fifthDecision == "Y") {
+        if (secondDecision == "Y") {
+            map.seekg(start + 732, ios::beg);
+            stat_loc = map.tellg();
+            to_ass = map.get();
+            if (cho_grip >= 1 && cho_grip <= 3) {
+                stat = 1;
+            }
+            else if (cho_grip >= 4 && cho_grip <= 7) {
+                stat = 2;
+            }
+            else if (cho_grip == 8) {
+                stat = 3;
+            }
+            else if (cho_grip == 9) {
+                stat = 4;
+            }
+            cho_grip = stat;
+            ch_val = new char(stat);
+            map.seekp(start + 732, ios::beg);
+            map.write(ch_val, 1);
+            delete ch_val;
+            if (cho_grip == 1) {
+                dist_23 = std::uniform_int_distribution<>(96, 104);
+            }
+            else if (cho_grip == 2) {
+                dist_23 = std::uniform_int_distribution<>(105, 114);
+            }
+            else if (cho_grip == 3) {
+                dist_23 = std::uniform_int_distribution<>(115, 120);
+            }
+            else if (cho_grip == 4) {
+                dist_23 = std::uniform_int_distribution<>(121, 126);
+            }
+            stat = dist_23(aGen);
+            map.seekg(start + 729, ios::beg);
+            stat_loc = map.tellg();
+            to_ass = map.get();
+            ch_val = new char(stat);
+            map.seekp(start + 729, ios::beg);
+            map.write(ch_val, 1);
+            delete ch_val;
+            stat -= 95;
+            map.seekg(start + 731, ios::beg);
+            stat_loc = map.tellg();
+            to_ass = map.get();
+            ch_val = new char(stat);
+            map.seekp(start + 731, ios::beg);
+            map.write(ch_val, 1);
+            delete ch_val;
+        }
+        stat = dist_24(aGen);
+        map.seekg(start + 734, ios::beg);
+        stat_loc = map.tellg();
+        to_ass = map.get();
+        ch_val = new char(stat);
+        map.seekp(start + 734, ios::beg);
+        map.write(ch_val, 1);
+        delete ch_val;
+        stat = dist_25(aGen);
+        map.seekg(start + 735, ios::beg);
+        stat_loc = map.tellg();
+        to_ass = map.get();
+        ch_val = new char(stat);
+        map.seekp(start + 735, ios::beg);
+        map.write(ch_val, 1);
+        delete ch_val;
+        if (secondDecision == "Y") {
+            if (cho_grip == 1) {
+                dist_26 = std::uniform_int_distribution<>(252, 254);
+            }
+            else if (cho_grip == 2) {
+                dist_26 = std::uniform_int_distribution<>(251, 253);
+            }
+            else if (cho_grip == 3) {
+                dist_26 = std::uniform_int_distribution<>(250, 252);
+            }
+            else if (cho_grip == 4) {
+                dist_26 = std::uniform_int_distribution<>(253, 254);
+            }
+        }
+        stat = dist_26(aGen);
+        map.seekg(start + 736, ios::beg);
+        stat_loc = map.tellg();
+        to_ass = map.get();
+        ch_val = new char(stat);
+        map.seekp(start + 736, ios::beg);
+        map.write(ch_val, 1);
+        delete ch_val;
+    }
+    if (eighthDecision == "Y") {
+        map.close();
+        file = ashEqu;
+        start = equStart;
+        map.open(file, ios::in | ios::out | ios::binary | ios::ate);
+        for (int i = 0; i < 3; i++) {
+            stat = dist_27(aGen);
+            map.seekg(start + (738 + i), ios::beg);
+            stat_loc = map.tellg();
+            to_ass = map.get();
+            ch_val = new char(stat);
+            map.seekp(start + (738 + i), ios::beg);
+            map.write(ch_val, 1);
+            delete ch_val;
+        }
+    }
+    //Ash acc
+    if (fifthDecision == "Y") {
+        stat = dist_33(aGen);
+        map.seekg(start + 264, ios::beg);
+        stat_loc = map.tellg();
+        to_ass = map.get();
+        ch_val = new char(stat);
+        map.seekp(start + 264, ios::beg);
+        map.write(ch_val, 1);
+        delete ch_val;
+        stat = dist_47(aGen);
+        map.seekg(start + 1185, ios::beg);
+        stat_loc = map.tellg();
+        to_ass = map.get();
+        ch_val = new char(stat);
+        map.seekp(start + 1185, ios::beg);
+        map.write(ch_val, 1);
+        delete ch_val;
+        stat -= 126;
+        map.seekg(start + 1186, ios::beg);
+        stat_loc = map.tellg();
+        to_ass = map.get();
+        ch_val = new char(stat);
+        map.seekp(start + 1186, ios::beg);
+        map.write(ch_val, 1);
+        delete ch_val;
+        for (int i = 0; i < 3; i++) {
+            stat = dist_48(aGen);
+            map.seekg((start + 1198 + i), ios::beg);
+            stat_loc = map.tellg();
+            to_ass = map.get();
+            ch_val = new char(stat);
+            map.seekp((start + 1198 + i), ios::beg);
+            map.write(ch_val, 1);
+            delete ch_val;
+        }
+    }
+    if (eighthDecision == "Y") {
+        for (int i = 0; i < 3; i++) {
+            if (aDecision == "Y") {
+                stat = 0;
+            }
+            else {
+                stat = dist_49(aGen);
+            }
+            map.seekg((start + 1202 + i), ios::beg);
+            stat_loc = map.tellg();
+            to_ass = map.get();
+            ch_val = new char(stat);
+            map.seekp((start + 1202 + i), ios::beg);
+            map.write(ch_val, 1);
+            delete ch_val;
+        }
+    }
+    if (sixthDecision == "Y") {
+        for (int i = 0; i < 6; i++) {
+            if (aDecision == "Y") {
+                stat = dist_12(aGen);
+                if (stat == 1) {
+                    dist_50 = std::uniform_int_distribution<>(0, 10);
+                }
+                else {
+                    dist_50 = std::uniform_int_distribution<>(246, 255);
+                }
+            }
+            else {
+                dist_50 = std::uniform_int_distribution<>(0, 255);
+            }
+            stat = dist_50(aGen);
+            map.seekg((start + 1205 + i), ios::beg);
+            stat_loc = map.tellg();
+            to_ass = map.get();
+            ch_val = new char(stat);
+            map.seekp((start + 1205 + i), ios::beg);
+            map.write(ch_val, 1);
+            delete ch_val;
+        }
+    }
+    if (seventhDecision == "Y") {
+        for (int i = 0; i < 7; i++) {
+            if (aDecision == "Y") {
+                stat = dist_12(aGen);
+                if (stat == 1) {
+                    dist_51 = std::uniform_int_distribution<>(0, 10);
+                }
+                else {
+                    dist_51 = std::uniform_int_distribution<>(251, 255);
+                }
+            }
+            else {
+                dist_51 = std::uniform_int_distribution<>(0, 255);
+            }
+            stat = dist_51(aGen);
+            map.seekg((start + 1213 + i), ios::beg);
+            stat_loc = map.tellg();
+            to_ass = map.get();
+            ch_val = new char(stat);
+            map.seekp((start + 1213 + i), ios::beg);
+            map.write(ch_val, 1);
+            delete ch_val;
+        }
+    }
+    //Ash appen   
+    loop_diff = 541;
+    if (fifthDecision == "Y") {
+        for (int i = 0; i < 6; i++) {
+            map.close();
+            file = ashStat;
+            start = statStart;
+            map.open(file, ios::in | ios::out | ios::binary | ios::ate);
+            if (i == 0 || i == 1) {
+                stat = ash_hp_stat / 2;
+            }
+            else if (i == 2) {
+                stat = ash_hp_stat / 3;
+            }
+            else if (i == 3) {
+                stat = ash_hp_stat / (100 / 75);
+            }
+            else if (i == 4) {
+                stat = ash_hp_stat / (100 / 60);
+            }
+            else if (i == 5) {
+                map.seekg(start + loop_diff, ios::beg);
+                stat_loc = map.tellg();
+                to_ass = map.get();
+                map.seekg(start + loop_diff + 1, ios::beg);
+                stat_loc = map.tellg();
+                to_ass2 = map.get();
+                if (to_ass == 0 && to_ass2 == 0) {
+                    break;
+                }
+                else {
+                    stat = ash_hp_stat / (100 / 30);
+                }
+            }
+            sprintf_s(rand_hp, "%X", stat);
+            ss_rand_hp << rand_hp;
+            ss_rand_hp >> s_rand_hp;
+            ss_rand_hp.clear();
+            hs_rand_hp << std::hex << s_rand_hp;
+            hs_rand_hp >> int_rand_hp;
+            hs_rand_hp.clear();
+            s1 = "0";
+            if (stat > 255) {
+                s2 = s_rand_hp.at(0);
+                s3 = s_rand_hp.at(1);
+                s4 = s_rand_hp.at(2);
+            }
+            else if (stat > 16) {
+                s2 = "0";
+                s3 = s_rand_hp.at(0);
+                s4 = s_rand_hp.at(1);
+            }
+            else {
+                s2 = "0";
+                s3 = "0";
+                s4 = s_rand_hp.at(0);
+            }
+            s_rand_hp2 = s1 + s2;
+            s_rand_hp1 = s3 + s4;
+            fin_rand_hp << std::hex << s_rand_hp2;
+            fin_rand_hp >> stat;
+            fin_rand_hp.clear();
+            map.seekg(start + loop_diff, ios::beg);
+            stat_loc = map.tellg();
+            to_ass = map.get();
+            ch_val = new char(stat);
+            map.seekp(start + loop_diff, ios::beg);
+            map.write(ch_val, 1);
+            delete ch_val;
+            fin_rand_hp << std::hex << s_rand_hp1;
+            fin_rand_hp >> stat;
+            fin_rand_hp.clear();
+            map.seekg(start + loop_diff - 1, ios::beg);
+            stat_loc = map.tellg();
+            to_ass = map.get();
+            ch_val = new char(stat);
+            map.seekp(start + loop_diff - 1, ios::beg);
+            map.write(ch_val, 1);
+            delete ch_val;
+            stat = dist_53(aGen);
+            map.seekg(start + loop_diff + 1, ios::beg);
+            stat_loc = map.tellg();
+            to_ass = map.get();
+            ch_val = new char(stat);
+            map.seekp(start + loop_diff + 1, ios::beg);
+            map.write(ch_val, 1);
+            delete ch_val;
+            stat = dist_53(aGen);
+            map.seekg(start + loop_diff + 2, ios::beg);
+            stat_loc = map.tellg();
+            to_ass = map.get();
+            ch_val = new char(stat);
+            map.seekp(start + loop_diff + 2, ios::beg);
+            map.write(ch_val, 1);
+            delete ch_val;
+            loop_diff += 92;
+        }
+    }
+    loop_diff = 541;
+    if (eighthDecision == "Y") {
+        for (int i = 0; i < 6; i++) {
+            map.close();
+            file = ashStat;
+            start = statStart;
+            map.open(file, ios::in | ios::out | ios::binary | ios::ate);
+            for (int i2 = 0; i2 < 3; i2++) {
+                if (aDecision == "Y") {
+                    stat = dist_12(aGen);
+                    if (stat == 1) {
+                        dist_54 = std::uniform_int_distribution<>(0, 35);
+                    }
+                    else {
+                        dist_54 = std::uniform_int_distribution<>(226, 255);
+                    }
+                }
+                else {
+                    dist_54 = std::uniform_int_distribution<>(0, 255);
+                }
+                stat = dist_54(aGen);
+                map.seekg((start + loop_diff + 4 + i2), ios::beg);
+                stat_loc = map.tellg();
+                to_ass = map.get();
+                ch_val = new char(stat);
+                map.seekp((start + loop_diff + 4 + i2), ios::beg);
+                map.write(ch_val, 1);
+                delete ch_val;
+            }
+            loop_diff += 92;
+        }
+    }
+    loop_diff = 541;
+    if (seventhDecision == "Y") {
+        for (int i = 0; i < 6; i++) {
+            map.close();
+            file = ashStat;
+            start = statStart;
+            map.open(file, ios::in | ios::out | ios::binary | ios::ate);
+            for (int i2 = 0; i2 < 7; i2++) {
+                if (aDecision == "Y") {
+                    stat = dist_12(aGen);
+                    if (stat == 1) {
+                        dist_55 = std::uniform_int_distribution<>(0, 75);
+                    }
+                    else {
+                        dist_55 = std::uniform_int_distribution<>(223, 255);
+                    }
+                }
+                else {
+                    dist_55 = std::uniform_int_distribution<>(0, 255);
+                }
+                stat = dist_55(aGen);
+                map.seekg((start + loop_diff + 7 + i2), ios::beg);
+                stat_loc = map.tellg();
+                to_ass = map.get();
+                ch_val = new char(stat);
+                map.seekp((start + loop_diff + 7 + i2), ios::beg);
+                map.write(ch_val, 1);
+                delete ch_val;
+            }
+            loop_diff += 92;
+        }
+    }
+    if (fifthDecision == "Y") {
+        for (int i = 0; i < 6; i++) {
+            map.close();
+            file = ashEqu;
+            start = equStart;
+            map.open(file, ios::in | ios::out | ios::binary | ios::ate);
+            if (i == 0 || i == 1) {
+                stat = dist_56(aGen);
+            }
+            else if (i == 2) {
+                stat = dist_57(aGen);
+            }
+            else if (i == 3) {
+                stat = dist_58(aGen);
+            }
+            else if (i == 4) {
+                stat = dist_59(aGen);
+            }
+            map.seekg(start + 985 + (i * 40), ios::beg);
+            stat_loc = map.tellg();
+            to_ass = map.get();
+            ch_val = new char(stat);
+            map.seekp(start + 985 + (i * 40), ios::beg);
+            map.write(ch_val, 1);
+            delete ch_val;
+            stat -= 126;
+            map.seekg(start + 986 + (i * 40), ios::beg);
+            stat_loc = map.tellg();
+            to_ass = map.get();
+            ch_val = new char(stat);
+            map.seekp(start + 986 + (i * 40), ios::beg);
+            map.write(ch_val, 1);
+            delete ch_val;
+            for (int i2 = 0; i2 < 2; i2++) {
+                stat = dist_60(aGen);
+                map.seekg((start + 998 + (i * 40) + i2), ios::beg);
+                stat_loc = map.tellg();
+                to_ass = map.get();
+                ch_val = new char(stat);
+                map.seekp((start + 998 + (i * 40) + i2), ios::beg);
+                map.write(ch_val, 1);
+                delete ch_val;
+            }
+            if (aDecision == "Y") {
+                stat = dist_11(aGen);
+                if (stat == 1) {
+                    stat = 0;
+                }
+                else {
+                    dist_61 = std::uniform_int_distribution<>(253, 255);
+                    stat = dist_61(aGen);
+                }
+            }
+            else {
+                dist_61 = std::uniform_int_distribution<>(0, 255);
+                stat = dist_61(aGen);
+            }
+            map.seekg(start + 1000 + (i * 40), ios::beg);
+            stat_loc = map.tellg();
+            to_ass = map.get();
+            ch_val = new char(stat);
+            map.seekp(start + 1000 + (i * 40), ios::beg);
+            map.write(ch_val, 1);
+            delete ch_val;
+            stat = dist_62(aGen) * 100;
+            sprintf_s(rand_dpm, "%X", stat);
+            ss_rand_dpm << rand_dpm;
+            ss_rand_dpm >> s_rand_dpm;
+            ss_rand_dpm.clear();
+            hs_rand_dpm << std::hex << s_rand_dpm;
+            hs_rand_dpm >> int_rand_dpm;
+            hs_rand_dpm.clear();
+            dist_63 = std::uniform_int_distribution<>(41, round(int_rand_dpm / 100));
+            stat = dist_63(aGen) * 100;
+            sprintf_s(rand_dp, "%X", stat);
+            ss_rand_dp << rand_dp;
+            ss_rand_dp >> s_rand_dp;
+            ss_rand_dp.clear();
+            s1 = s_rand_dpm.at(0);
+            s2 = s_rand_dpm.at(1);
+            s3 = s_rand_dpm.at(2);
+            s4 = s_rand_dpm.at(3);
+            s_rand_dpm_1 = s1 + s2;
+            s_rand_dpm_2 = s3 + s4;
+            s1 = s_rand_dp.at(0);
+            s2 = s_rand_dp.at(1);
+            s3 = s_rand_dp.at(2);
+            s4 = s_rand_dp.at(3);
+            s_rand_dp_1 = s1 + s2;
+            s_rand_dp_2 = s3 + s4;
+            rand_dpm_fin << std::hex << s_rand_dpm_1;
+            rand_dpm_fin >> stat;
+            rand_dpm_fin.clear();
+            map.seekg(start + 990 + (i * 40), ios::beg);
+            stat_loc = map.tellg();
+            to_ass = map.get();
+            ch_val = new char(stat);
+            map.seekp(start + 990 + (i * 40), ios::beg);
+            map.write(ch_val, 1);
+            rand_dpm_fin << std::hex << s_rand_dpm_2;
+            rand_dpm_fin >> stat;
+            rand_dpm_fin.clear();
+            map.seekg(start + 989 + (i * 40), ios::beg);
+            stat_loc = map.tellg();
+            to_ass = map.get();
+            ch_val = new char(stat);
+            map.seekp(start + 989 + (i * 40), ios::beg);
+            map.write(ch_val, 1);
+            delete ch_val;
+            rand_dpm_fin << std::hex << s_rand_dp_1;
+            rand_dpm_fin >> stat;
+            rand_dpm_fin.clear();
+            map.seekg(start + 994 + (i * 40), ios::beg);
+            stat_loc = map.tellg();
+            to_ass = map.get();
+            ch_val = new char(stat);
+            map.seekp(start + 994 + (i * 40), ios::beg);
+            map.write(ch_val, 1);
+            delete ch_val;
+            rand_dpm_fin << std::hex << s_rand_dp_2;
+            rand_dpm_fin >> stat;
+            rand_dpm_fin.clear();
+            map.seekg(start + 993 + (i * 40), ios::beg);
+            stat_loc = map.tellg();
+            to_ass = map.get();
+            ch_val = new char(stat);
+            map.seekp(start + 993 + (i * 40), ios::beg);
+            map.write(ch_val, 1);
+            delete ch_val;
+        }
+    }
+    if (eighthDecision == "Y") {
+        for (int i = 0; i < 6; i++) {
+            map.close();
+            file = ashEqu;
+            start = equStart;
+            map.open(file, ios::in | ios::out | ios::binary | ios::ate);
+            for (int i2 = 0; i2 < 3; i2++) {
+                stat = dist_64(aGen);
+                map.seekg((start + 1002 + (i * 40) + i2), ios::beg);
+                stat_loc = map.tellg();
+                to_ass = map.get();
+                ch_val = new char(stat);
+                map.seekp((start + 1002 + (i * 40) + i2), ios::beg);
+                map.write(ch_val, 1);
+                delete ch_val;
+            }
+        }
+    }
+    if (sixthDecision == "Y") {
+        for (int i = 0; i < 6; i++) {
+            map.close();
+            file = ashEqu;
+            start = equStart;
+            map.open(file, ios::in | ios::out | ios::binary | ios::ate);
+            for (int i2 = 0; i2 < 6; i2++) {
+                if (aDecision == "Y") {
+                    stat = dist_12(aGen);
+                    if (stat == 1) {
+                        dist_65 = std::uniform_int_distribution<>(0, 1);
+                    }
+                    else {
+                        dist_65 = std::uniform_int_distribution<>(251, 255);
+                    }
+                }
+                else {
+                    dist_65 = std::uniform_int_distribution<>(0, 255);
+                }
+                stat = dist_65(aGen);
+                map.seekg((start + 1005 + (i * 40) + i2), ios::beg);
+                stat_loc = map.tellg();
+                to_ass = map.get();
+                ch_val = new char(stat);
+                map.seekp((start + 1005 + (i * 40) + i2), ios::beg);
+                map.write(ch_val, 1);
+                delete ch_val;
+            }
+        }
+    }
+    if (seventhDecision == "Y") {
+        for (int i = 0; i < 6; i++) {
+            map.close();
+            file = ashEqu;
+            start = equStart;
+            map.open(file, ios::in | ios::out | ios::binary | ios::ate);
+            for (int i2 = 0; i2 < 7; i2++) {
+                if (aDecision == "Y") {
+                    stat = dist_12(aGen);
+                    if (stat == 1) {
+                        dist_66 = std::uniform_int_distribution<>(0, 10);
+                    }
+                    else {
+                        dist_66 = std::uniform_int_distribution<>(251, 255);
+                    }
+                }
+                else {
+                    dist_66 = std::uniform_int_distribution<>(0, 255);
+                }
+                stat = dist_66(aGen);
+                map.seekg((start + 1013 + (i * 40) + i2), ios::beg);
+                stat_loc = map.tellg();
+                to_ass = map.get();
+                ch_val = new char(stat);
+                map.seekp((start + 1013 + (i * 40) + i2), ios::beg);
+                map.write(ch_val, 1);
+                delete ch_val;
+            }
+        }
+    }
+    if (fifthDecision == "Y") {
+        for (int i = 0; i < 6; i++) {
+            map.close();
+            file = ashEqu;
+            start = equStart;
+            map.open(file, ios::in | ios::out | ios::binary | ios::ate);
+            stat = dist_46(aGen);
+            map.seekg(start + 1021 + (i * 40), ios::beg);
+            stat_loc = map.tellg();
+            to_ass = map.get();
+            ch_val = new char(stat);
+            map.seekp(start + 1021 + (i * 40), ios::beg);
+            map.write(ch_val, 1);
+            delete ch_val;
+        }
     }
     ashBat << (aRF.getTool() + " '" + aGame.getWhole().string() + "' /BATTLE/INITBTL.PRG" + " '" + ashStat + "'") << std::endl;
     ashBat << (aRF.getTool() + " '" + aGame.getWhole().string() + "' /TITLE/TITLE.PRG" + " '" + ashEqu + "'") << std::endl;
@@ -2572,4 +2663,96 @@ void Ashley::abilityCost(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen
         }
     }
     abBat << (aRF.getTool() + " '" + aGame.getWhole().string() + "' /SLUS_010.40" + " '" + abFile + "'") << std::endl;
+}
+
+void Ashley::ultiSpells(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen) {
+    vector<int> starts = { 251904, 252112, 252320, 252528, 252736, 252944, 253152 };
+    vector<int> phy = { 134, 81, 99, 35, 12, 12, 12, 1, 8, 8, 8, 1, 2, 160, 0, 144, 0, 0, 0, 0, 58, 161, 3, 32, 0, 0, 0, 0, 29, 50, 53, 49, 36, 39, 50, 231, 182, 4, 231, 42, 40, 250, 6, 182, 4, 231, 0, 0, 0, 0, 0, 0 };
+    vector<int> win = { 135, 82, 99, 35, 12, 12, 12, 1, 8, 8, 8, 1, 2, 160, 0, 144, 0, 0, 0, 0, 58, 161, 3, 64, 0, 0, 0, 0, 29, 43, 56, 49, 39, 40, 53, 37, 50, 47, 55, 231, 40, 250, 6, 182, 4, 231, 0, 0, 0, 0, 0, 0 };
+    vector<int> fir = { 136, 83, 99, 35, 12, 12, 12, 1, 8, 8, 8, 1, 2, 160, 0, 144, 0, 0, 0, 0, 58, 161, 3, 96, 0, 0, 0, 0, 15, 44, 53, 40, 250, 6, 28, 55, 50, 53, 48, 231, 40, 250, 6, 182, 4, 231, 0, 0, 0, 0, 0, 0 };
+    vector<int> ear = { 137, 84, 99, 35, 11, 5, 11, 2, 8, 6, 8, 2, 2, 160, 0, 144, 0, 0, 0, 0, 58, 161, 3, 128, 0, 0, 0, 0, 16, 53, 36, 57, 44, 55, 60, 231, 50, 53, 48, 231, 40, 250, 6, 182, 4, 231, 0, 0, 0, 0, 0, 0 };
+    vector<int> wat = { 138, 85, 99, 35, 12, 12, 12, 1, 8, 8, 8, 1, 2, 160, 0, 144, 0, 0, 0, 0, 58, 161, 3, 160, 0, 0, 0, 0, 10, 38, 44, 39, 250, 6, 15, 47, 50, 58, 231, 231, 40, 250, 6, 182, 4, 231, 0, 0, 0, 0, 0, 0 };
+    vector<int> lig = { 139, 86, 99, 65, 12, 12, 12, 1, 8, 8, 8, 1, 2, 160, 0, 176, 0, 0, 0, 0, 58, 161, 131, 192, 0, 0, 0, 0, 19, 56, 39, 42, 48, 40, 49, 55, 231, 58, 231, 231, 40, 250, 6, 182, 4, 231, 0, 0, 0, 0, 0, 0 };
+    vector<int> dar = { 140, 87, 99, 65, 12, 12, 12, 1, 8, 8, 8, 1, 2, 160, 0, 176, 0, 0, 0, 0, 186, 162, 131, 224, 0, 0, 0, 0, 10, 51, 50, 38, 36, 47, 60, 51, 54, 40, 231, 231, 40, 250, 6, 182, 4, 231, 0, 0, 0, 0, 0, 0 };
+    vector<vector<int>> spells = { phy, win, fir, ear, wat, lig, dar };
+
+    
+    fstream usmap;
+
+    streampos usloc;
+
+    int usass;
+    int stat;
+    int start;
+    
+
+    char* ch_val;
+
+    string usFile = aGame.getStringPath() + "\\ZENITH_QOL\\SLUS_010.40";
+
+    std::ofstream usBat;
+
+    usBat.open("ulSpCmd.cmd", std::ios::trunc);
+    usBat << ("cd " + aGame.getStringPath() + " \n");
+
+    usmap.open(usFile, ios::in | ios::out | ios::binary | ios::ate);
+    for (int i = 0; i < 7; i++) {
+        start = starts[i];
+        for (int p = 0; p < 52; p++) {
+            stat = spells[i][p];
+            usmap.seekg(start + p, ios::beg);
+            usloc = usmap.tellg();
+            usass = usmap.get();
+            ch_val = new char(stat);
+            usmap.seekp(start + p, ios::beg);
+            usmap.write(ch_val, 1);
+            delete ch_val;
+        }   
+    }
+    usBat << (aRF.getTool() + " '" + aGame.getWhole().string() + "' /SLUS_010.40" + " '" + usFile + "'") << std::endl;
+}
+
+void Ashley::abiFrame(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen) {
+    fstream afmap;
+
+    streampos afloc;
+
+    int afass;
+    int stat;
+    int point;
+
+
+    char* ch_val;
+
+    string afFile = aGame.getStringPath() + "\\MISC\\BATTLE.PRG";
+
+    std::ofstream afBat;
+
+    afBat.open("abFrCmd.cmd", std::ios::trunc);
+    afBat << ("cd " + aGame.getStringPath() + " \n");
+
+    std::uniform_int_distribution<> dist;
+
+    afmap.open(afFile, ios::in | ios::out | ios::binary | ios::ate);
+    point = 66352;
+    dist = std::uniform_int_distribution<>(8, 30);
+    stat = dist(aGen);
+    afmap.seekg(point, ios::beg);
+    afloc = afmap.tellg();
+    afass = afmap.get();
+    ch_val = new char(stat);
+    afmap.seekp(point, ios::beg);
+    afmap.write(ch_val, 1);
+    delete ch_val;
+    point = 66376;
+    dist = std::uniform_int_distribution<>(8, 30);
+    afmap.seekg(point, ios::beg);
+    afloc = afmap.tellg();
+    afass = afmap.get();
+    ch_val = new char(stat);
+    afmap.seekp(point, ios::beg);
+    afmap.write(ch_val, 1);
+    delete ch_val;
+    afBat << (aRF.getTool() + " '" + aGame.getWhole().string() + "' /BATTLE/BATTLE.PRG" + " '" + afFile + "'") << std::endl;
+
 }

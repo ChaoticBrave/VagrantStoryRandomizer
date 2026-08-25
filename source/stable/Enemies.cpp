@@ -21,7 +21,7 @@ Enemies::Enemies() {
             
 }
 
-void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision, std::mt19937 aGen, string nextDecision, string mainDecision, string statDecision, string balDecision, bool patchDecision, string wolfDecision) {
+void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision, std::mt19937 aGen, string nextDecision, string mainDecision, string statDecision, string balDecision, bool patchDecision, string wolfDecision, string appenDecision, string baseEquDecision, string BEPDecision, string classDecision, string affDecision) {
     list<string> z = aRF.getZones();
     list<string> ez = aRF.getEneZones();
     list<string>::iterator zp = z.begin();
@@ -127,13 +127,14 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
     int int_rand_dpm;
     int ppm;
     int pp;
-    int gem_count;
+    int gem_count = 0;
     int ene_hp_stat;
     int loop_diff;
     int start_point;
     int bronze_zone;
     int silver_zone;
     int iron_zone;
+    int has_equip;
 
     char * ch_val;
     char hhex_1[20];
@@ -574,8 +575,17 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
                                                 map.open(file, ios::in | ios::out | ios::binary | ios::ate);
                                                 map.seekp(968, ios::beg);
                                                 map.write(ch_val, 1);
-                                                map.close();
                                                 delete ch_val;
+                                                ch_val = new char(231);
+                                                map.seekp(958, ios::beg);
+                                                map.write(ch_val, 1);
+                                                delete ch_val;
+                                                ch_val = new char(45);
+                                                map.seekp(960, ios::beg);
+                                                map.write(ch_val, 1);
+                                                delete ch_val;
+                                                map.close();
+                                                eneBat << (aRF.getTool() + " '" + aGame.getWhole().string() + "' /MAP/" + cur_zone + " '" + file + "'") << std::endl;
                                                 ch_val = new char(1);
                                             }
                                             else {
@@ -900,7 +910,7 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
             eneBat << (aRF.getTool() + " '" + aGame.getWhole().string() + "' /MAP/" + cur_zone + " '" + file + "'") << std::endl;
         }
     }
-    if (statDecision == "Y") {
+    if (statDecision == "Y" || appenDecision == "Y" || baseEquDecision == "Y" || BEPDecision == "Y" || classDecision == "Y" || affDecision == "Y") {
         ecp = ec.begin();
         ezp = ez.begin();
         ewop = ewo.begin();
@@ -1543,1312 +1553,1353 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
                 }
             }
             for (int e = 0; e < ene_count; e++) {
-                stat = dist_1(aGen);
-                ene_hp_stat = stat;
-                sprintf_s(rand_hp, "%X", stat);
-                ss_rand_hp << rand_hp;
-                ss_rand_hp >> s_rand_hp;
-                ss_rand_hp.clear();
-                hs_rand_hp << std::hex << s_rand_hp;
-                hs_rand_hp >> int_rand_hp;
-                hs_rand_hp.clear();
-                s1 = "0";
-                if (stat > 255) {
-                    s2 = s_rand_hp.at(0);
-                    s3 = s_rand_hp.at(1);
-                    s4 = s_rand_hp.at(2);
+                if (statDecision == "Y") {
+                    stat = dist_1(aGen);
+                    ene_hp_stat = stat;
+                    sprintf_s(rand_hp, "%X", stat);
+                    ss_rand_hp << rand_hp;
+                    ss_rand_hp >> s_rand_hp;
+                    ss_rand_hp.clear();
+                    hs_rand_hp << std::hex << s_rand_hp;
+                    hs_rand_hp >> int_rand_hp;
+                    hs_rand_hp.clear();
+                    s1 = "0";
+                    if (stat > 255) {
+                        s2 = s_rand_hp.at(0);
+                        s3 = s_rand_hp.at(1);
+                        s4 = s_rand_hp.at(2);
+                    }
+                    else if (stat > 16) {
+                        s2 = "0";
+                        s3 = s_rand_hp.at(0);
+                        s4 = s_rand_hp.at(1);
+                    }
+                    else {
+                        s2 = "0";
+                        s3 = "0";
+                        s4 = s_rand_hp.at(0);
+                    }
+                    s_rand_hp2 = s1 + s2;
+                    s_rand_hp1 = s3 + s4;
+                    fin_rand_hp << std::hex << s_rand_hp1;
+                    fin_rand_hp >> stat;
+                    fin_rand_hp.clear();
+                    enzon.seekg(wep_pos - 28, ios::beg);
+                    stat_loc = enzon.tellg();
+                    to_ass = enzon.get();
+                    ch_val = new char(stat);
+                    enzon.seekp(wep_pos - 28, ios::beg);
+                    enzon.write(ch_val, 1);
+                    delete ch_val;
+                    fin_rand_hp << std::hex << s_rand_hp2;
+                    fin_rand_hp >> stat;
+                    fin_rand_hp.clear();
+                    enzon.seekg(wep_pos - 27, ios::beg);
+                    stat_loc = enzon.tellg();
+                    to_ass = enzon.get();
+                    ch_val = new char(stat);
+                    enzon.seekp(wep_pos - 27, ios::beg);
+                    enzon.write(ch_val, 1);
+                    delete ch_val;
+                    stat = dist_2(aGen);
+                    sprintf_s(rand_mp, "%X", stat);
+                    ss_rand_mp << rand_mp;
+                    ss_rand_mp >> s_rand_mp;
+                    ss_rand_mp.clear();
+                    hs_rand_mp << std::hex << s_rand_mp;
+                    hs_rand_mp >> int_rand_mp;
+                    hs_rand_mp.clear();
+                    s1 = "0";
+                    if (stat > 255) {
+                        s2 = s_rand_mp.at(0);
+                        s3 = s_rand_mp.at(1);
+                        s4 = s_rand_mp.at(2);
+                    }
+                    else if (stat > 16) {
+                        s2 = "0";
+                        s3 = s_rand_mp.at(0);
+                        s4 = s_rand_mp.at(1);
+                    }
+                    else {
+                        s2 = "0";
+                        s3 = "0";
+                        s4 = s_rand_mp.at(0);
+                    }
+                    s_rand_mp2 = s1 + s2;
+                    s_rand_mp1 = s3 + s4;
+                    fin_rand_mp << std::hex << s_rand_mp1;
+                    fin_rand_mp >> stat;
+                    fin_rand_mp.clear();
+                    enzon.seekg(wep_pos - 26, ios::beg);
+                    stat_loc = enzon.tellg();
+                    to_ass = enzon.get();
+                    ch_val = new char(stat);
+                    enzon.seekp(wep_pos - 26, ios::beg);
+                    enzon.write(ch_val, 1);
+                    delete ch_val;
+                    fin_rand_mp << std::hex << s_rand_mp2;
+                    fin_rand_mp >> stat;
+                    fin_rand_mp.clear();
+                    enzon.seekg(wep_pos - 25, ios::beg);
+                    stat_loc = enzon.tellg();
+                    to_ass = enzon.get();
+                    ch_val = new char(stat);
+                    enzon.seekp(wep_pos - 25, ios::beg);
+                    enzon.write(ch_val, 1);
+                    delete ch_val;
+                    stat = dist_3(aGen);
+                    enzon.seekg(wep_pos - 24, ios::beg);
+                    stat_loc = enzon.tellg();
+                    to_ass = enzon.get();
+                    ch_val = new char(stat);
+                    enzon.seekp(wep_pos - 24, ios::beg);
+                    enzon.write(ch_val, 1);
+                    delete ch_val;
+                    stat = dist_4(aGen);
+                    enzon.seekg(wep_pos - 23, ios::beg);
+                    stat_loc = enzon.tellg();
+                    to_ass = enzon.get();
+                    ch_val = new char(stat);
+                    enzon.seekp(wep_pos - 23, ios::beg);
+                    enzon.write(ch_val, 1);
+                    delete ch_val;
+                    stat = dist_5(aGen);
+                    enzon.seekg(wep_pos - 22, ios::beg);
+                    stat_loc = enzon.tellg();
+                    to_ass = enzon.get();
+                    ch_val = new char(stat);
+                    enzon.seekp(wep_pos - 22, ios::beg);
+                    enzon.write(ch_val, 1);
+                    delete ch_val;
+                    stat = dist_6(aGen);
+                    enzon.seekg(wep_pos - 19, ios::beg);
+                    stat_loc = enzon.tellg();
+                    to_ass = enzon.get();
+                    ch_val = new char(stat);
+                    enzon.seekp(wep_pos - 19, ios::beg);
+                    enzon.write(ch_val, 1);
+                    delete ch_val;
+                    stat = dist_7(aGen);
+                    enzon.seekg(wep_pos - 17, ios::beg);
+                    stat_loc = enzon.tellg();
+                    to_ass = enzon.get();
+                    ch_val = new char(stat);
+                    enzon.seekp(wep_pos - 17, ios::beg);
+                    enzon.write(ch_val, 1);
+                    delete ch_val;
                 }
-                else if (stat > 16) {
-                    s2 = "0";
-                    s3 = s_rand_hp.at(0);
-                    s4 = s_rand_hp.at(1);
-                }
-                else {
-                    s2 = "0";
-                    s3 = "0";
-                    s4 = s_rand_hp.at(0);
-                }
-                s_rand_hp2 = s1 + s2;
-                s_rand_hp1 = s3 + s4;
-                fin_rand_hp << std::hex << s_rand_hp1;
-                fin_rand_hp >> stat;
-                fin_rand_hp.clear();
-                enzon.seekg(wep_pos - 28, ios::beg);
-                stat_loc = enzon.tellg();
-                to_ass = enzon.get();
-                ch_val = new char(stat);
-                enzon.seekp(wep_pos - 28, ios::beg);
-                enzon.write(ch_val, 1);
-                delete ch_val;
-                fin_rand_hp << std::hex << s_rand_hp2;
-                fin_rand_hp >> stat;
-                fin_rand_hp.clear();
-                enzon.seekg(wep_pos - 27, ios::beg);
-                stat_loc = enzon.tellg();
-                to_ass = enzon.get();
-                ch_val = new char(stat);
-                enzon.seekp(wep_pos - 27, ios::beg);
-                enzon.write(ch_val, 1);
-                delete ch_val;
-                stat = dist_2(aGen);
-                sprintf_s(rand_mp, "%X", stat);
-                ss_rand_mp << rand_mp;
-                ss_rand_mp >> s_rand_mp;
-                ss_rand_mp.clear();
-                hs_rand_mp << std::hex << s_rand_mp;
-                hs_rand_mp >> int_rand_mp;
-                hs_rand_mp.clear();
-                s1 = "0";
-                if (stat > 255) {
-                    s2 = s_rand_mp.at(0);
-                    s3 = s_rand_mp.at(1);
-                    s4 = s_rand_mp.at(2);
-                }
-                else if (stat > 16) {
-                    s2 = "0";
-                    s3 = s_rand_mp.at(0);
-                    s4 = s_rand_mp.at(1);
-                }
-                else {
-                    s2 = "0";
-                    s3 = "0";
-                    s4 = s_rand_mp.at(0);
-                }
-                s_rand_mp2 = s1 + s2;
-                s_rand_mp1 = s3 + s4;
-                fin_rand_mp << std::hex << s_rand_mp1;
-                fin_rand_mp >> stat;
-                fin_rand_mp.clear();
-                enzon.seekg(wep_pos - 26, ios::beg);
-                stat_loc = enzon.tellg();
-                to_ass = enzon.get();
-                ch_val = new char(stat);
-                enzon.seekp(wep_pos - 26, ios::beg);
-                enzon.write(ch_val, 1);
-                delete ch_val;
-                fin_rand_mp << std::hex << s_rand_mp2;
-                fin_rand_mp >> stat;
-                fin_rand_mp.clear();
-                enzon.seekg(wep_pos - 25, ios::beg);
-                stat_loc = enzon.tellg();
-                to_ass = enzon.get();
-                ch_val = new char(stat);
-                enzon.seekp(wep_pos - 25, ios::beg);
-                enzon.write(ch_val, 1);
-                delete ch_val;
-                stat = dist_3(aGen);
-                enzon.seekg(wep_pos - 24, ios::beg);
-                stat_loc = enzon.tellg();
-                to_ass = enzon.get();
-                ch_val = new char(stat);
-                enzon.seekp(wep_pos - 24, ios::beg);
-                enzon.write(ch_val, 1);
-                delete ch_val;
-                stat = dist_4(aGen);
-                enzon.seekg(wep_pos - 23, ios::beg);
-                stat_loc = enzon.tellg();
-                to_ass = enzon.get();
-                ch_val = new char(stat);
-                enzon.seekp(wep_pos - 23, ios::beg);
-                enzon.write(ch_val, 1);
-                delete ch_val;
-                stat = dist_5(aGen);
-                enzon.seekg(wep_pos - 22, ios::beg);
-                stat_loc = enzon.tellg();
-                to_ass = enzon.get();
-                ch_val = new char(stat);
-                enzon.seekp(wep_pos - 22, ios::beg);
-                enzon.write(ch_val, 1);
-                delete ch_val;
-                stat = dist_6(aGen);
-                enzon.seekg(wep_pos - 19, ios::beg);
-                stat_loc = enzon.tellg();
-                to_ass = enzon.get();
-                ch_val = new char(stat);
-                enzon.seekp(wep_pos - 19, ios::beg);
-                enzon.write(ch_val, 1);
-                delete ch_val;
-                stat = dist_7(aGen);
-                enzon.seekg(wep_pos - 17, ios::beg);
-                stat_loc = enzon.tellg();
-                to_ass = enzon.get();
-                ch_val = new char(stat);
-                enzon.seekp(wep_pos - 17, ios::beg);
-                enzon.write(ch_val, 1);
-                delete ch_val;
                 enzon.seekg(wep_pos, ios::beg);
                 stat_loc = enzon.tellg();
-                to_ass = enzon.get();
-                if (to_ass > 0) {
-                    if (to_ass == 1) {
-                        dist_8 = std::uniform_int_distribution<>(1, 12);
-                    }
-                    else if (to_ass == 2) {
-                        dist_8 = std::uniform_int_distribution<>(13, 24);
-                    }
-                    else if (to_ass == 3) {
-                        dist_8 = std::uniform_int_distribution<>(25, 34);
-                    }
-                    else if (to_ass == 4) {
-                        dist_8 = std::uniform_int_distribution<>(35, 50);
-                    }
-                    else if (to_ass == 5) {
-                        dist_8 = std::uniform_int_distribution<>(51, 56);
-                    }
-                    else if (to_ass == 6) {
-                        dist_8 = std::uniform_int_distribution<>(57, 62);
-                    }
-                    else if (to_ass == 7) {
-                        dist_8 = std::uniform_int_distribution<>(63, 69);
-                    }
-                    else if (to_ass == 8) {
-                        dist_8 = std::uniform_int_distribution<>(70, 82);
-                    }
-                    else if (to_ass == 9) {
-                        dist_8 = std::uniform_int_distribution<>(83, 90);
-                    }
-                    stat = dist_8(aGen);
-                    enzon.seekg(wep_pos - 4, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos - 4, ios::beg);
-                    enzon.write(ch_val, 1);
-                    enzon.seekg(wep_pos - 2, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    enzon.seekp(wep_pos - 2, ios::beg);
-                    enzon.write(ch_val, 1);
-                    enzon.seekg(wep_pos - 1, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    enzon.seekp(wep_pos - 1, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    stat = dist_9(aGen);
-                    enzon.seekg(wep_pos + 1, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 1, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    stat = dist_10(aGen);
-                    enzon.seekg(wep_pos + 2, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 2, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    stat = dist_12(aGen);
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            stat = 0;
+                has_equip = enzon.get();
+                to_ass = has_equip;
+                if (baseEquDecision == "Y") {
+                    if (has_equip > 0) {
+                        if (to_ass == 1) {
+                            dist_8 = std::uniform_int_distribution<>(1, 12);
                         }
-                        else {
-                            if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                dist_12 = std::uniform_int_distribution<>(248, 255);
+                        else if (to_ass == 2) {
+                            dist_8 = std::uniform_int_distribution<>(13, 24);
+                        }
+                        else if (to_ass == 3) {
+                            dist_8 = std::uniform_int_distribution<>(25, 34);
+                        }
+                        else if (to_ass == 4) {
+                            dist_8 = std::uniform_int_distribution<>(35, 50);
+                        }
+                        else if (to_ass == 5) {
+                            dist_8 = std::uniform_int_distribution<>(51, 56);
+                        }
+                        else if (to_ass == 6) {
+                            dist_8 = std::uniform_int_distribution<>(57, 62);
+                        }
+                        else if (to_ass == 7) {
+                            dist_8 = std::uniform_int_distribution<>(63, 69);
+                        }
+                        else if (to_ass == 8) {
+                            dist_8 = std::uniform_int_distribution<>(70, 82);
+                        }
+                        else if (to_ass == 9) {
+                            dist_8 = std::uniform_int_distribution<>(83, 90);
+                        }
+                        stat = dist_8(aGen);
+                        enzon.seekg(wep_pos - 4, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos - 4, ios::beg);
+                        enzon.write(ch_val, 1);
+                        enzon.seekg(wep_pos - 2, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        enzon.seekp(wep_pos - 2, ios::beg);
+                        enzon.write(ch_val, 1);
+                        enzon.seekg(wep_pos - 1, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        enzon.seekp(wep_pos - 1, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        stat = dist_9(aGen);
+                        enzon.seekg(wep_pos + 1, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 1, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        stat = dist_10(aGen);
+                        enzon.seekg(wep_pos + 2, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 2, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        stat = dist_12(aGen);
+                        if (balDecision == "Y") {
+                            stat = dist_11(aGen);
+                            if (stat == 1) {
+                                stat = 0;
                             }
                             else {
-                                dist_12 = std::uniform_int_distribution<>(249, 255);
+                                if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                    dist_12 = std::uniform_int_distribution<>(248, 255);
+                                }
+                                else {
+                                    dist_12 = std::uniform_int_distribution<>(249, 255);
+                                }
+                                stat = dist_12(aGen);
                             }
+                        }
+                        else {
                             stat = dist_12(aGen);
                         }
-                    }
-                    else {
-                        stat = dist_12(aGen);
-                    }
-                    enzon.seekg(wep_pos + 3, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 3, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    stat = dist_13(aGen) * 100;
-                    sprintf_s(rand_dpm, "%X", stat);
-                    ss_rand_dpm << rand_dpm;
-                    ss_rand_dpm >> s_rand_dpm;
-                    ss_rand_dpm.clear();
-                    hs_rand_dpm << std::hex << s_rand_dpm;
-                    hs_rand_dpm >> int_rand_dpm;
-                    hs_rand_dpm.clear();
-                    dist_14 = std::uniform_int_distribution<>(41, round(int_rand_dpm / 100));
-                    stat = dist_14(aGen) * 100;
-                    sprintf_s(rand_dp, "%X", stat);
-                    ss_rand_dp << rand_dp;
-                    ss_rand_dp >> s_rand_dp;
-                    ss_rand_dp.clear();
-                    s1 = s_rand_dpm.at(0);
-                    s2 = s_rand_dpm.at(1);
-                    s3 = s_rand_dpm.at(2);
-                    s4 = s_rand_dpm.at(3);
-                    s_rand_dpm_1 = s1 + s2;
-                    s_rand_dpm_2 = s3 + s4;
-                    s1 = s_rand_dp.at(0);
-                    s2 = s_rand_dp.at(1);
-                    s3 = s_rand_dp.at(2);
-                    s4 = s_rand_dp.at(3);
-                    s_rand_dp_1 = s1 + s2;
-                    s_rand_dp_2 = s3 + s4;
-                    rand_dpm_fin << std::hex << s_rand_dpm_1;
-                    rand_dpm_fin >> stat;
-                    rand_dpm_fin.clear();
-                    enzon.seekg(wep_pos + 7, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 7, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    rand_dpm_fin << std::hex << s_rand_dpm_2;
-                    rand_dpm_fin >> stat;
-                    rand_dpm_fin.clear();
-                    enzon.seekg(wep_pos + 6, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 6, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    ppm = dist_15(aGen);
-                    enzon.seekg(wep_pos + 10, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(ppm);
-                    enzon.seekp(wep_pos + 10, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    rand_dpm_fin << std::hex << s_rand_dp_1;
-                    rand_dpm_fin >> stat;
-                    rand_dpm_fin.clear();
-                    enzon.seekg(wep_pos + 5, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 5, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    rand_dpm_fin << std::hex << s_rand_dp_2;
-                    rand_dpm_fin >> stat;
-                    rand_dpm_fin.clear();
-                    enzon.seekg(wep_pos + 4, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 4, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    dist_16 = std::uniform_int_distribution<>(1, ppm);
-                    pp = dist_16(aGen);
-                    enzon.seekg(wep_pos + 8, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(pp);
-                    enzon.seekp(wep_pos + 8, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    stat = dist_18(aGen);
-                    enzon.seekg(wep_pos + 12, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 12, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    stat = dist_19(aGen);
-                    enzon.seekg(wep_pos + 13, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 13, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    stat = dist_17(aGen);
-                    enzon.seekg(wep_pos + 14, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 14, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    //bla classes
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 14);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 20);
-                            }
-                        }
-                        else {
-                            dist_20 = std::uniform_int_distribution<>(236, 255);
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_21(aGen);
-                        enzon.seekg(wep_pos + 20, ios::beg);
+                        enzon.seekg(wep_pos + 3, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 3, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        stat = dist_13(aGen) * 100;
+                        sprintf_s(rand_dpm, "%X", stat);
+                        ss_rand_dpm << rand_dpm;
+                        ss_rand_dpm >> s_rand_dpm;
+                        ss_rand_dpm.clear();
+                        hs_rand_dpm << std::hex << s_rand_dpm;
+                        hs_rand_dpm >> int_rand_dpm;
+                        hs_rand_dpm.clear();
+                        dist_14 = std::uniform_int_distribution<>(41, round(int_rand_dpm / 100));
+                        stat = dist_14(aGen) * 100;
+                        sprintf_s(rand_dp, "%X", stat);
+                        ss_rand_dp << rand_dp;
+                        ss_rand_dp >> s_rand_dp;
+                        ss_rand_dp.clear();
+                        s1 = s_rand_dpm.at(0);
+                        s2 = s_rand_dpm.at(1);
+                        s3 = s_rand_dpm.at(2);
+                        s4 = s_rand_dpm.at(3);
+                        s_rand_dpm_1 = s1 + s2;
+                        s_rand_dpm_2 = s3 + s4;
+                        s1 = s_rand_dp.at(0);
+                        s2 = s_rand_dp.at(1);
+                        s3 = s_rand_dp.at(2);
+                        s4 = s_rand_dp.at(3);
+                        s_rand_dp_1 = s1 + s2;
+                        s_rand_dp_2 = s3 + s4;
+                        rand_dpm_fin << std::hex << s_rand_dpm_1;
+                        rand_dpm_fin >> stat;
+                        rand_dpm_fin.clear();
+                        enzon.seekg(wep_pos + 7, ios::beg);
                         map_loc = enzon.tellg();
                         to_ass = enzon.get();
                         ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 20, ios::beg);
+                        enzon.seekp(wep_pos + 7, ios::beg);
                         enzon.write(ch_val, 1);
                         delete ch_val;
-                        stat = dist_22(aGen);
-                        enzon.seekg(wep_pos + 21, ios::beg);
+                        rand_dpm_fin << std::hex << s_rand_dpm_2;
+                        rand_dpm_fin >> stat;
+                        rand_dpm_fin.clear();
+                        enzon.seekg(wep_pos + 6, ios::beg);
                         map_loc = enzon.tellg();
                         to_ass = enzon.get();
                         ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 21, ios::beg);
+                        enzon.seekp(wep_pos + 6, ios::beg);
                         enzon.write(ch_val, 1);
                         delete ch_val;
-                        stat = dist_23(aGen);
-                        enzon.seekg(wep_pos + 22, ios::beg);
+                        ppm = dist_15(aGen);
+                        enzon.seekg(wep_pos + 10, ios::beg);
+                        map_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(ppm);
+                        enzon.seekp(wep_pos + 10, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        rand_dpm_fin << std::hex << s_rand_dp_1;
+                        rand_dpm_fin >> stat;
+                        rand_dpm_fin.clear();
+                        enzon.seekg(wep_pos + 5, ios::beg);
                         map_loc = enzon.tellg();
                         to_ass = enzon.get();
                         ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 22, ios::beg);
+                        enzon.seekp(wep_pos + 5, ios::beg);
                         enzon.write(ch_val, 1);
                         delete ch_val;
-                        stat = dist_24(aGen);
-                    }
-                    enzon.seekg(wep_pos + 28, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 28, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 14);
+                        rand_dpm_fin << std::hex << s_rand_dp_2;
+                        rand_dpm_fin >> stat;
+                        rand_dpm_fin.clear();
+                        enzon.seekg(wep_pos + 4, ios::beg);
+                        map_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 4, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        dist_16 = std::uniform_int_distribution<>(1, ppm);
+                        pp = dist_16(aGen);
+                        enzon.seekg(wep_pos + 8, ios::beg);
+                        map_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(pp);
+                        enzon.seekp(wep_pos + 8, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        stat = dist_18(aGen);
+                        enzon.seekg(wep_pos + 12, ios::beg);
+                        map_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 12, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        stat = dist_19(aGen);
+                        enzon.seekg(wep_pos + 13, ios::beg);
+                        map_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 13, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        stat = dist_17(aGen);
+                        enzon.seekg(wep_pos + 14, ios::beg);
+                        map_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 14, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        if (balDecision == "Y") {
+                            stat = dist_11(aGen);
+                            if (stat == 1) {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 14);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(0, 20);
+                                }
                             }
                             else {
-                                dist_20 = std::uniform_int_distribution<>(0, 20);
-                            }
-                        }
-                        else {
-                            dist_20 = std::uniform_int_distribution<>(236, 255);
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_25(aGen);
-                    }
-                    enzon.seekg(wep_pos + 29, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 29, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 14);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 20);
-                            }
-                        }
-                        else {
-                            dist_20 = std::uniform_int_distribution<>(236, 255);
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_26(aGen);
-                    }
-                    enzon.seekg(wep_pos + 30, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 30, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 14);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 20);
-                            }
-                        }
-                        else {
-                            dist_20 = std::uniform_int_distribution<>(236, 255);
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_27(aGen);
-                    }
-                    enzon.seekg(wep_pos + 31, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 31, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 14);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 20);
-                            }
-                        }
-                        else {
-                            dist_20 = std::uniform_int_distribution<>(236, 255);
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_28(aGen);
-                    }
-                    enzon.seekg(wep_pos + 32, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 32, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 14);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 20);
-                            }
-                        }
-                        else {
-                            dist_20 = std::uniform_int_distribution<>(236, 255);
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_29(aGen);
-                    }
-                    enzon.seekg(wep_pos + 33, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 33, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    //bla affinities
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 10);
-                            }
-                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 20);
-                            }
-                            else if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 30);
+                                dist_20 = std::uniform_int_distribution<>(236, 255);
                             }
                             stat = dist_20(aGen);
                         }
                         else {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(253, 255);
-                            }
-                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || * ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(251, 255);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(246, 255);
-                            }
-                            stat = dist_20(aGen);
+                            stat = dist_21(aGen);
+                            enzon.seekg(wep_pos + 20, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 20, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            stat = dist_22(aGen);
+                            enzon.seekg(wep_pos + 21, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 21, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            stat = dist_23(aGen);
+                            enzon.seekg(wep_pos + 22, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 22, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            stat = dist_24(aGen);
                         }
                     }
-                    else {
-                        stat = dist_30(aGen);
-                    }
-                    enzon.seekg(wep_pos + 36, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 36, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 10);
+                }
+                if (classDecision == "Y") {
+                    if (has_equip > 0) {
+                        enzon.seekg(wep_pos + 28, ios::beg);
+                        map_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 28, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        if (balDecision == "Y") {
+                            stat = dist_11(aGen);
+                            if (stat == 1) {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 14);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(0, 20);
+                                }
                             }
-                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 20);
-                            }
-                            else if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 30);
+                            else {
+                                dist_20 = std::uniform_int_distribution<>(236, 255);
                             }
                             stat = dist_20(aGen);
                         }
                         else {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(253, 255);
-                            }
-                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(251, 255);
+                            stat = dist_25(aGen);
+                        }
+                        enzon.seekg(wep_pos + 29, ios::beg);
+                        map_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 29, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        if (balDecision == "Y") {
+                            stat = dist_11(aGen);
+                            if (stat == 1) {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 14);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(0, 20);
+                                }
                             }
                             else {
-                                dist_20 = std::uniform_int_distribution<>(246, 255);
-                            }
-                            stat = dist_20(aGen);
-                        }
-                    }
-                    else {
-                        stat = dist_31(aGen);
-                    }
-                    enzon.seekg(wep_pos + 37, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 37, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 10);
-                            }
-                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 20);
-                            }
-                            else if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 30);
+                                dist_20 = std::uniform_int_distribution<>(236, 255);
                             }
                             stat = dist_20(aGen);
                         }
                         else {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(253, 255);
-                            }
-                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(251, 255);
+                            stat = dist_26(aGen);
+                        }
+                        enzon.seekg(wep_pos + 30, ios::beg);
+                        map_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 30, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        if (balDecision == "Y") {
+                            stat = dist_11(aGen);
+                            if (stat == 1) {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 14);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(0, 20);
+                                }
                             }
                             else {
-                                dist_20 = std::uniform_int_distribution<>(246, 255);
-                            }
-                            stat = dist_20(aGen);
-                        }
-                    }
-                    else {
-                        stat = dist_32(aGen);
-                    }
-                    enzon.seekg(wep_pos + 38, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 38, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 10);
-                            }
-                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 20);
-                            }
-                            else if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 30);
+                                dist_20 = std::uniform_int_distribution<>(236, 255);
                             }
                             stat = dist_20(aGen);
                         }
                         else {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(253, 255);
-                            }
-                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(251, 255);
+                            stat = dist_27(aGen);
+                        }
+                        enzon.seekg(wep_pos + 31, ios::beg);
+                        map_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 31, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        if (balDecision == "Y") {
+                            stat = dist_11(aGen);
+                            if (stat == 1) {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 14);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(0, 20);
+                                }
                             }
                             else {
-                                dist_20 = std::uniform_int_distribution<>(246, 255);
-                            }
-                            stat = dist_20(aGen);
-                        }
-                    }
-                    else {
-                        stat = dist_33(aGen);
-                    }
-                    enzon.seekg(wep_pos + 39, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 39, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 10);
-                            }
-                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 20);
-                            }
-                            else if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 30);
+                                dist_20 = std::uniform_int_distribution<>(236, 255);
                             }
                             stat = dist_20(aGen);
                         }
                         else {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(253, 255);
-                            }
-                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(251, 255);
+                            stat = dist_28(aGen);
+                        }
+                        enzon.seekg(wep_pos + 32, ios::beg);
+                        map_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 32, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        if (balDecision == "Y") {
+                            stat = dist_11(aGen);
+                            if (stat == 1) {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 14);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(0, 20);
+                                }
                             }
                             else {
-                                dist_20 = std::uniform_int_distribution<>(246, 255);
-                            }
-                            stat = dist_20(aGen);
-                        }
-                    }
-                    else {
-                        stat = dist_34(aGen);
-                    }
-                    enzon.seekg(wep_pos + 40, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 40, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 10);
-                            }
-                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 20);
-                            }
-                            else if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 30);
+                                dist_20 = std::uniform_int_distribution<>(236, 255);
                             }
                             stat = dist_20(aGen);
                         }
                         else {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(253, 255);
-                            }
-                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(251, 255);
+                            stat = dist_29(aGen);
+                        }
+                        enzon.seekg(wep_pos + 33, ios::beg);
+                        map_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 33, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                    }
+                }
+                if (affDecision == "Y") {
+                    if (has_equip > 0) {
+                        if (balDecision == "Y") {
+                            stat = dist_11(aGen);
+                            if (stat == 1) {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 10);
+                                }
+                                else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 20);
+                                }
+                                else if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                }
+                                stat = dist_20(aGen);
                             }
                             else {
-                                dist_20 = std::uniform_int_distribution<>(246, 255);
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(253, 255);
+                                }
+                                else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(251, 255);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(246, 255);
+                                }
+                                stat = dist_20(aGen);
                             }
-                            stat = dist_20(aGen);
-                        }
-                    }
-                    else {
-                        stat = dist_35(aGen);
-                    }
-                    enzon.seekg(wep_pos + 41, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 41, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 10);
-                            }
-                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 20);
-                            }
-                            else if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 30);
-                            }
-                            stat = dist_20(aGen);
                         }
                         else {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(253, 255);
-                            }
-                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(251, 255);
+                            stat = dist_30(aGen);
+                        }
+                        enzon.seekg(wep_pos + 36, ios::beg);
+                        map_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 36, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        if (balDecision == "Y") {
+                            stat = dist_11(aGen);
+                            if (stat == 1) {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 10);
+                                }
+                                else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 20);
+                                }
+                                else if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                }
+                                stat = dist_20(aGen);
                             }
                             else {
-                                dist_20 = std::uniform_int_distribution<>(246, 255);
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(253, 255);
+                                }
+                                else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(251, 255);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(246, 255);
+                                }
+                                stat = dist_20(aGen);
                             }
-                            stat = dist_20(aGen);
                         }
+                        else {
+                            stat = dist_31(aGen);
+                        }
+                        enzon.seekg(wep_pos + 37, ios::beg);
+                        map_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 37, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        if (balDecision == "Y") {
+                            stat = dist_11(aGen);
+                            if (stat == 1) {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 10);
+                                }
+                                else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 20);
+                                }
+                                else if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                }
+                                stat = dist_20(aGen);
+                            }
+                            else {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(253, 255);
+                                }
+                                else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(251, 255);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(246, 255);
+                                }
+                                stat = dist_20(aGen);
+                            }
+                        }
+                        else {
+                            stat = dist_32(aGen);
+                        }
+                        enzon.seekg(wep_pos + 38, ios::beg);
+                        map_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 38, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        if (balDecision == "Y") {
+                            stat = dist_11(aGen);
+                            if (stat == 1) {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 10);
+                                }
+                                else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 20);
+                                }
+                                else if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                }
+                                stat = dist_20(aGen);
+                            }
+                            else {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(253, 255);
+                                }
+                                else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(251, 255);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(246, 255);
+                                }
+                                stat = dist_20(aGen);
+                            }
+                        }
+                        else {
+                            stat = dist_33(aGen);
+                        }
+                        enzon.seekg(wep_pos + 39, ios::beg);
+                        map_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 39, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        if (balDecision == "Y") {
+                            stat = dist_11(aGen);
+                            if (stat == 1) {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 10);
+                                }
+                                else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 20);
+                                }
+                                else if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                }
+                                stat = dist_20(aGen);
+                            }
+                            else {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(253, 255);
+                                }
+                                else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(251, 255);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(246, 255);
+                                }
+                                stat = dist_20(aGen);
+                            }
+                        }
+                        else {
+                            stat = dist_34(aGen);
+                        }
+                        enzon.seekg(wep_pos + 40, ios::beg);
+                        map_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 40, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        if (balDecision == "Y") {
+                            stat = dist_11(aGen);
+                            if (stat == 1) {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 10);
+                                }
+                                else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 20);
+                                }
+                                else if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                }
+                                stat = dist_20(aGen);
+                            }
+                            else {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(253, 255);
+                                }
+                                else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(251, 255);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(246, 255);
+                                }
+                                stat = dist_20(aGen);
+                            }
+                        }
+                        else {
+                            stat = dist_35(aGen);
+                        }
+                        enzon.seekg(wep_pos + 41, ios::beg);
+                        map_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 41, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        if (balDecision == "Y") {
+                            stat = dist_11(aGen);
+                            if (stat == 1) {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 10);
+                                }
+                                else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 20);
+                                }
+                                else if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                }
+                                stat = dist_20(aGen);
+                            }
+                            else {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(253, 255);
+                                }
+                                else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(251, 255);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(246, 255);
+                                }
+                                stat = dist_20(aGen);
+                            }
+                        }
+                        else {
+                            stat = dist_36(aGen);
+                        }
+                        enzon.seekg(wep_pos + 42, ios::beg);
+                        map_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 42, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
                     }
-                    else {
-                        stat = dist_36(aGen);
+                }
+                if (baseEquDecision == "Y") {
+                    if (has_equip > 0) {
+                        enzon.seekg(wep_pos + 48, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        if (to_ass == 1) {
+                            dist_37 = std::uniform_int_distribution<>(96, 104);
+                        }
+                        else if (to_ass == 2) {
+                            dist_37 = std::uniform_int_distribution<>(105, 114);
+                        }
+                        else if (to_ass == 3) {
+                            dist_37 = std::uniform_int_distribution<>(115, 120);
+                        }
+                        else if (to_ass == 4) {
+                            dist_37 = std::uniform_int_distribution<>(121, 126);
+                        }
+                        stat = dist_37(aGen);
+                        enzon.seekg(wep_pos + 44, ios::beg);
+                        map_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 44, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        stat -= 95;
+                        enzon.seekg(wep_pos + 46, ios::beg);
+                        map_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 46, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        stat = dist_38(aGen);
+                        enzon.seekg(wep_pos + 49, ios::beg);
+                        map_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 49, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        stat = dist_39(aGen);
+                        enzon.seekg(wep_pos + 50, ios::beg);
+                        map_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 50, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        stat = dist_40(aGen);
+                        enzon.seekg(wep_pos + 51, ios::beg);
+                        map_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 51, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
                     }
-                    enzon.seekg(wep_pos + 42, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 42, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    enzon.seekg(wep_pos + 48, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    if (to_ass == 1) {
-                        dist_37 = std::uniform_int_distribution<>(96, 104);
-                    }
-                    else if (to_ass == 2) {
-                        dist_37 = std::uniform_int_distribution<>(105, 114);
-                    }
-                    else if (to_ass == 3) {
-                        dist_37 = std::uniform_int_distribution<>(115, 120);
-                    }
-                    else if (to_ass == 4) {
-                        dist_37 = std::uniform_int_distribution<>(121, 126);
-                    }
-                    stat = dist_37(aGen);
-                    enzon.seekg(wep_pos + 44, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 44, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    stat -= 95;
-                    enzon.seekg(wep_pos + 46, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 46, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    stat = dist_38(aGen);
-                    enzon.seekg(wep_pos + 49, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 49, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    stat = dist_39(aGen);
-                    enzon.seekg(wep_pos + 50, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 50, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    stat = dist_40(aGen);
-                    enzon.seekg(wep_pos + 51, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 51, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
+                }
+                if (has_equip > 0) {
                     enzon.seekg(wep_pos + 65, ios::beg);
                     map_loc = enzon.tellg();
                     to_ass = enzon.get();
                     gem_count = to_ass;
-                    stat = dist_41(aGen);
-                    enzon.seekg(wep_pos + 73, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 73, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    stat = dist_42(aGen);
-                    enzon.seekg(wep_pos + 74, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 74, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    stat = dist_43(aGen);
-                    enzon.seekg(wep_pos + 75, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 75, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (gem_count > 0) {
-                        stat = dist_44(aGen);
-                        enzon.seekg(wep_pos + 92, ios::beg);
+                }
+                if (BEPDecision == "Y") {
+                    if (has_equip > 0) {
+                        stat = dist_41(aGen);
+                        enzon.seekg(wep_pos + 73, ios::beg);
                         map_loc = enzon.tellg();
                         to_ass = enzon.get();
                         ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 92, ios::beg);
+                        enzon.seekp(wep_pos + 73, ios::beg);
                         enzon.write(ch_val, 1);
                         delete ch_val;
-                        enzon.seekg(wep_pos + 93, ios::beg);
-                        map_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(1);
-                        enzon.seekp(wep_pos + 93, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        stat -= 4;
-                        enzon.seekg(wep_pos + 94, ios::beg);
+                        stat = dist_42(aGen);
+                        enzon.seekg(wep_pos + 74, ios::beg);
                         map_loc = enzon.tellg();
                         to_ass = enzon.get();
                         ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 94, ios::beg);
+                        enzon.seekp(wep_pos + 74, ios::beg);
                         enzon.write(ch_val, 1);
                         delete ch_val;
-                        if (balDecision == "Y" && *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                dist_20 = std::uniform_int_distribution<>(253, 255);
-                                stat = dist_20(aGen);
+                        stat = dist_43(aGen);
+                        enzon.seekg(wep_pos + 75, ios::beg);
+                        map_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 75, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                    }
+                }
+                if (baseEquDecision == "Y") {
+                    if (has_equip > 0) {
+                        if (gem_count > 0) {
+                            stat = dist_44(aGen);
+                            enzon.seekg(wep_pos + 92, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 92, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            enzon.seekg(wep_pos + 93, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(1);
+                            enzon.seekp(wep_pos + 93, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            stat -= 4;
+                            enzon.seekg(wep_pos + 94, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 94, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y" && *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    stat = dist_20(aGen);
+                                }
+                                else {
+                                    stat = dist_45(aGen);
+                                }
                             }
                             else {
                                 stat = dist_45(aGen);
                             }
-                        }
-                        else {
-                            stat = dist_45(aGen);
-                        }
-                        enzon.seekg(wep_pos + 97, ios::beg);
-                        map_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 97, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y" && *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                dist_20 = std::uniform_int_distribution<>(253, 255);
-                                stat = dist_20(aGen);
+                            enzon.seekg(wep_pos + 97, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 97, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y" && *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    stat = dist_20(aGen);
+                                }
+                                else {
+                                    stat = dist_46(aGen);
+                                }
                             }
                             else {
                                 stat = dist_46(aGen);
                             }
-                        }
-                        else {
-                            stat = dist_46(aGen);
-                        }
-                        enzon.seekg(wep_pos + 98, ios::beg);
-                        map_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 98, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y" && *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                dist_20 = std::uniform_int_distribution<>(253, 255);
-                                stat = dist_20(aGen);
+                            enzon.seekg(wep_pos + 98, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 98, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y" && *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    stat = dist_20(aGen);
+                                }
+                                else {
+                                    stat = dist_47(aGen);
+                                }
                             }
                             else {
                                 stat = dist_47(aGen);
                             }
-                        }
-                        else {
-                            stat = dist_47(aGen);
-                        }
-                        enzon.seekg(wep_pos + 99, ios::beg);
-                        map_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 99, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 30);
-                                }
-                                else {
-                                    dist_20 = std::uniform_int_distribution<>(0, 15);
-                                }
-                            }
-                            else {
-                                if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(251, 255);
-                                }
-                                else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(250, 255);
-                                }
-                                else {
-                                    dist_20 = std::uniform_int_distribution<>(253, 255);
-                                }
-                            }
-                            stat = dist_20(aGen);
-                        }
-                        else {
-                            stat = dist_48(aGen);
-                        }
-                        enzon.seekg(wep_pos + 124, ios::beg);
-                        map_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 124, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 30);
-                                }
-                                else {
-                                    dist_20 = std::uniform_int_distribution<>(0, 15);
-                                }
-                            }
-                            else {
-                                if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(251, 255);
-                                }
-                                else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(250, 255);
-                                }
-                                else {
-                                    dist_20 = std::uniform_int_distribution<>(253, 255);
-                                }
-                            }
-                            stat = dist_20(aGen);
-                        }
-                        else {
-                            stat = dist_49(aGen);
-                        }
-                        enzon.seekg(wep_pos + 125, ios::beg);
-                        map_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 125, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 30);
-                                }
-                                else {
-                                    dist_20 = std::uniform_int_distribution<>(0, 15);
-                                }
-                            }
-                            else {
-                                if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(251, 255);
-                                }
-                                else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(250, 255);
-                                }
-                                else {
-                                    dist_20 = std::uniform_int_distribution<>(253, 255);
-                                }
-                            }
-                            stat = dist_20(aGen);
-                        }
-                        else {
-                            stat = dist_50(aGen);
-                        }
-                        enzon.seekg(wep_pos + 126, ios::beg);
-                        map_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 126, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 30);
-                                }
-                                else {
-                                    dist_20 = std::uniform_int_distribution<>(0, 15);
-                                }
-                            }
-                            else {
-                                if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(251, 255);
-                                }
-                                else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(250, 255);
-                                }
-                                else {
-                                    dist_20 = std::uniform_int_distribution<>(253, 255);
-                                }
-                            }
-                            stat = dist_20(aGen);
-                        }
-                        else {
-                            stat = dist_51(aGen);
-                        }
-                        enzon.seekg(wep_pos + 127, ios::beg);
-                        map_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 127, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 30);
-                                }
-                                else {
-                                    dist_20 = std::uniform_int_distribution<>(0, 15);
-                                }
-                            }
-                            else {
-                                if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(251, 255);
-                                }
-                                else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(250, 255);
-                                }
-                                else {
-                                    dist_20 = std::uniform_int_distribution<>(253, 255);
-                                }
-                            }
-                            stat = dist_20(aGen);
-                        }
-                        else {
-                            stat = dist_52(aGen);
-                        }
-                        enzon.seekg(wep_pos + 128, ios::beg);
-                        map_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 128, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 30);
-                                }
-                                else {
-                                    dist_20 = std::uniform_int_distribution<>(0, 15);
-                                }
-                            }
-                            else {
-                                if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(251, 255);
-                                }
-                                else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(250, 255);
-                                }
-                                else {
-                                    dist_20 = std::uniform_int_distribution<>(253, 255);
-                                }
-                            }
-                            stat = dist_20(aGen);
-                        }
-                        else {
-                            stat = dist_53(aGen);
-                        }
-                        enzon.seekg(wep_pos + 129, ios::beg);
-                        map_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 129, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y") {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                stat = 0;
-                            }
-                            else {
+                            enzon.seekg(wep_pos + 99, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 99, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
                                 stat = dist_11(aGen);
                                 if (stat == 1) {
-                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(0, 15);
+                                    }
                                 }
                                 else {
-                                    dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(251, 255);
+                                    }
+                                    else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(250, 255);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    }
                                 }
                                 stat = dist_20(aGen);
                             }
-                        }
-                        else {
-                            stat = dist_54(aGen);
-                        }
-                        enzon.seekg(wep_pos + 132, ios::beg);
-                        map_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 132, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y") {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                stat = 0;
-                            }
                             else {
+                                stat = dist_48(aGen);
+                            }
+                        }
+                    }
+                }
+                if (classDecision == "Y") {
+                    if (has_equip > 0) {
+                        if (gem_count > 0) {
+                            enzon.seekg(wep_pos + 124, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 124, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
                                 stat = dist_11(aGen);
                                 if (stat == 1) {
-                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(0, 15);
+                                    }
                                 }
                                 else {
-                                    dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(251, 255);
+                                    }
+                                    else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(250, 255);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    }
                                 }
                                 stat = dist_20(aGen);
                             }
-                        }
-                        else {
-                            stat = dist_55(aGen);
-                        }
-                        enzon.seekg(wep_pos + 133, ios::beg);
-                        map_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 133, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y") {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                stat = 0;
-                            }
                             else {
+                                stat = dist_49(aGen);
+                            }
+                            enzon.seekg(wep_pos + 125, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 125, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
                                 stat = dist_11(aGen);
                                 if (stat == 1) {
-                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(0, 15);
+                                    }
                                 }
                                 else {
-                                    dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(251, 255);
+                                    }
+                                    else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(250, 255);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    }
                                 }
                                 stat = dist_20(aGen);
                             }
-                        }
-                        else {
-                            stat = dist_56(aGen);
-                        }
-                        enzon.seekg(wep_pos + 134, ios::beg);
-                        map_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 134, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y") {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                stat = 0;
-                            }
                             else {
+                                stat = dist_50(aGen);
+                            }
+                            enzon.seekg(wep_pos + 126, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 126, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
                                 stat = dist_11(aGen);
                                 if (stat == 1) {
-                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(0, 15);
+                                    }
                                 }
                                 else {
-                                    dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(251, 255);
+                                    }
+                                    else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(250, 255);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    }
                                 }
                                 stat = dist_20(aGen);
                             }
-                        }
-                        else {
-                            stat = dist_57(aGen);
-                        }
-                        enzon.seekg(wep_pos + 135, ios::beg);
-                        map_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 135, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y") {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                stat = 0;
-                            }
                             else {
+                                stat = dist_51(aGen);
+                            }
+                            enzon.seekg(wep_pos + 127, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 127, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
                                 stat = dist_11(aGen);
                                 if (stat == 1) {
-                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(0, 15);
+                                    }
                                 }
                                 else {
-                                    dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(251, 255);
+                                    }
+                                    else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(250, 255);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    }
                                 }
                                 stat = dist_20(aGen);
                             }
-                        }
-                        else {
-                            stat = dist_58(aGen);
-                        }
-                        enzon.seekg(wep_pos + 136, ios::beg);
-                        map_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 136, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y") {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                stat = 0;
-                            }
                             else {
+                                stat = dist_52(aGen);
+                            }
+                            enzon.seekg(wep_pos + 128, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 128, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
                                 stat = dist_11(aGen);
                                 if (stat == 1) {
-                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(0, 15);
+                                    }
                                 }
                                 else {
-                                    dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(251, 255);
+                                    }
+                                    else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(250, 255);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    }
                                 }
                                 stat = dist_20(aGen);
                             }
-                        }
-                        else {
-                            stat = dist_59(aGen);
-                        }
-                        enzon.seekg(wep_pos + 137, ios::beg);
-                        map_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 137, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y") {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                stat = 0;
-                            }
                             else {
-                                stat = dist_11(aGen);
-                                if (stat == 1) {
-                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                stat = dist_53(aGen);
+                            }
+                            enzon.seekg(wep_pos + 129, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 129, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                        }
+                    }
+                }
+                if (affDecision == "Y") {
+                    if (has_equip > 0) {
+                        if (gem_count > 0) {
+                            if (balDecision == "Y") {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    stat = 0;
                                 }
                                 else {
-                                    dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    }
+                                    stat = dist_20(aGen);
                                 }
-                                stat = dist_20(aGen);
                             }
+                            else {
+                                stat = dist_54(aGen);
+                            }
+                            enzon.seekg(wep_pos + 132, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 132, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    stat = 0;
+                                }
+                                else {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                            }
+                            else {
+                                stat = dist_55(aGen);
+                            }
+                            enzon.seekg(wep_pos + 133, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 133, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    stat = 0;
+                                }
+                                else {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                            }
+                            else {
+                                stat = dist_56(aGen);
+                            }
+                            enzon.seekg(wep_pos + 134, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 134, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    stat = 0;
+                                }
+                                else {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                            }
+                            else {
+                                stat = dist_57(aGen);
+                            }
+                            enzon.seekg(wep_pos + 135, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 135, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    stat = 0;
+                                }
+                                else {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                            }
+                            else {
+                                stat = dist_58(aGen);
+                            }
+                            enzon.seekg(wep_pos + 136, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 136, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    stat = 0;
+                                }
+                                else {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                            }
+                            else {
+                                stat = dist_59(aGen);
+                            }
+                            enzon.seekg(wep_pos + 137, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 137, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    stat = 0;
+                                }
+                                else {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                            }
+                            else {
+                                stat = dist_60(aGen);
+                            }
+                            enzon.seekg(wep_pos + 138, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 138, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
                         }
-                        else {
-                            stat = dist_60(aGen);
-                        }
-                        enzon.seekg(wep_pos + 138, ios::beg);
-                        map_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 138, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
+                    }
+                }
+                if (baseEquDecision == "Y") {
+                    if (has_equip > 0) {
                         if (gem_count > 1) {
                             stat = dist_44(aGen);
                             enzon.seekg(wep_pos + 140, ios::beg);
@@ -2933,6 +2984,12 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
                             enzon.seekp(wep_pos + 147, ios::beg);
                             enzon.write(ch_val, 1);
                             delete ch_val;
+                        }
+                    }
+                }
+                if (classDecision == "Y") {
+                    if (has_equip > 0) {
+                        if (gem_count > 1) {
                             if (balDecision == "Y") {
                                 stat = dist_11(aGen);
                                 if (stat == 1) {
@@ -3131,6 +3188,12 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
                             enzon.seekp(wep_pos + 177, ios::beg);
                             enzon.write(ch_val, 1);
                             delete ch_val;
+                        }
+                    }
+                }
+                if (affDecision == "Y") {
+                    if (has_equip > 0) {
+                        if (gem_count > 1) {
                             if (balDecision == "Y") {
                                 if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
                                     stat = 0;
@@ -3306,1465 +3369,1522 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
                             enzon.seekp(wep_pos + 186, ios::beg);
                             enzon.write(ch_val, 1);
                             delete ch_val;
-                            if (gem_count > 2) {
-                                stat = dist_44(aGen);
-                                enzon.seekg(wep_pos + 188, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 188, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                enzon.seekg(wep_pos + 189, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(1);
-                                enzon.seekp(wep_pos + 189, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                stat -= 4;
-                                enzon.seekg(wep_pos + 190, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 190, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                if (balDecision == "Y" && *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    stat = dist_11(aGen);
-                                    if (stat == 1) {
-                                        dist_20 = std::uniform_int_distribution<>(253, 255);
-                                        stat = dist_20(aGen);
-                                    }
-                                    else {
-                                        stat = dist_45(aGen);
-                                    }
+                        }
+                    }
+                }
+                if (baseEquDecision == "Y") {
+                    if (has_equip > 0) {
+                        if (gem_count > 2) {
+                            stat = dist_44(aGen);
+                            enzon.seekg(wep_pos + 188, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 188, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            enzon.seekg(wep_pos + 189, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(1);
+                            enzon.seekp(wep_pos + 189, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            stat -= 4;
+                            enzon.seekg(wep_pos + 190, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 190, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y" && *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    stat = dist_20(aGen);
                                 }
                                 else {
                                     stat = dist_45(aGen);
                                 }
-                                enzon.seekg(wep_pos + 193, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 193, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                if (balDecision == "Y" && *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    stat = dist_11(aGen);
-                                    if (stat == 1) {
-                                        dist_20 = std::uniform_int_distribution<>(253, 255);
-                                        stat = dist_20(aGen);
-                                    }
-                                    else {
-                                        stat = dist_46(aGen);
-                                    }
-                                }
-                                else {
-                                    stat = dist_46(aGen);
-                                }
-                                enzon.seekg(wep_pos + 194, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 194, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                if (balDecision == "Y" && *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    stat = dist_11(aGen);
-                                    if (stat == 1) {
-                                        dist_20 = std::uniform_int_distribution<>(253, 255);
-                                        stat = dist_20(aGen);
-                                    }
-                                    else {
-                                        stat = dist_47(aGen);
-                                    }
-                                }
-                                else {
-                                    stat = dist_47(aGen);
-                                }
-                                enzon.seekg(wep_pos + 195, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 195, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                if (balDecision == "Y") {
-                                    stat = dist_11(aGen);
-                                    if (stat == 1) {
-                                        if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(0, 30);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(0, 15);
-                                        }
-                                    }
-                                    else {
-                                        if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(251, 255);
-                                        }
-                                        else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(250, 255);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(253, 255);
-                                        }
-                                    }
-                                    stat = dist_20(aGen);
-                                }
-                                else {
-                                    stat = dist_48(aGen);
-                                }
-                                enzon.seekg(wep_pos + 220, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 220, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                if (balDecision == "Y") {
-                                    stat = dist_11(aGen);
-                                    if (stat == 1) {
-                                        if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(0, 30);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(0, 15);
-                                        }
-                                    }
-                                    else {
-                                        if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(251, 255);
-                                        }
-                                        else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(250, 255);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(253, 255);
-                                        }
-                                    }
-                                    stat = dist_20(aGen);
-                                }
-                                else {
-                                    stat = dist_49(aGen);
-                                }
-                                enzon.seekg(wep_pos + 221, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 221, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                if (balDecision == "Y") {
-                                    stat = dist_11(aGen);
-                                    if (stat == 1) {
-                                        if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(0, 30);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(0, 15);
-                                        }
-                                    }
-                                    else {
-                                        if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(251, 255);
-                                        }
-                                        else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(250, 255);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(253, 255);
-                                        }
-                                    }
-                                    stat = dist_20(aGen);
-                                }
-                                else {
-                                    stat = dist_50(aGen);
-                                }
-                                enzon.seekg(wep_pos + 222, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 222, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                if (balDecision == "Y") {
-                                    stat = dist_11(aGen);
-                                    if (stat == 1) {
-                                        if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(0, 30);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(0, 15);
-                                        }
-                                    }
-                                    else {
-                                        if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(251, 255);
-                                        }
-                                        else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(250, 255);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(253, 255);
-                                        }
-                                    }
-                                    stat = dist_20(aGen);
-                                }
-                                else {
-                                    stat = dist_51(aGen);
-                                }
-                                enzon.seekg(wep_pos + 223, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 223, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                if (balDecision == "Y") {
-                                    stat = dist_11(aGen);
-                                    if (stat == 1) {
-                                        if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(0, 30);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(0, 15);
-                                        }
-                                    }
-                                    else {
-                                        if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(251, 255);
-                                        }
-                                        else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(250, 255);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(253, 255);
-                                        }
-                                    }
-                                    stat = dist_20(aGen);
-                                }
-                                else {
-                                    stat = dist_52(aGen);
-                                }
-                                enzon.seekg(wep_pos + 224, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 224, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                if (balDecision == "Y") {
-                                    stat = dist_11(aGen);
-                                    if (stat == 1) {
-                                        if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(0, 30);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(0, 15);
-                                        }
-                                    }
-                                    else {
-                                        if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(251, 255);
-                                        }
-                                        else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(250, 255);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(253, 255);
-                                        }
-                                    }
-                                    stat = dist_20(aGen);
-                                }
-                                else {
-                                    stat = dist_53(aGen);
-                                }
-                                enzon.seekg(wep_pos + 225, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 225, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                if (balDecision == "Y") {
-                                    if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                        stat = 0;
-                                    }
-                                    else {
-                                        stat = dist_11(aGen);
-                                        if (stat == 1) {
-                                            dist_20 = std::uniform_int_distribution<>(0, 30);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(241, 255);
-                                        }
-                                        stat = dist_20(aGen);
-                                    }
-                                }
-                                else {
-                                    stat = dist_54(aGen);
-                                }
-                                enzon.seekg(wep_pos + 228, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 228, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                if (balDecision == "Y") {
-                                    if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                        stat = 0;
-                                    }
-                                    else {
-                                        stat = dist_11(aGen);
-                                        if (stat == 1) {
-                                            dist_20 = std::uniform_int_distribution<>(0, 30);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(241, 255);
-                                        }
-                                        stat = dist_20(aGen);
-                                    }
-                                }
-                                else {
-                                    stat = dist_55(aGen);
-                                }
-                                enzon.seekg(wep_pos + 229, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 229, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                if (balDecision == "Y") {
-                                    if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                        stat = 0;
-                                    }
-                                    else {
-                                        stat = dist_11(aGen);
-                                        if (stat == 1) {
-                                            dist_20 = std::uniform_int_distribution<>(0, 30);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(241, 255);
-                                        }
-                                        stat = dist_20(aGen);
-                                    }
-                                }
-                                else {
-                                    stat = dist_56(aGen);
-                                }
-                                enzon.seekg(wep_pos + 230, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 230, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                if (balDecision == "Y") {
-                                    if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                        stat = 0;
-                                    }
-                                    else {
-                                        stat = dist_11(aGen);
-                                        if (stat == 1) {
-                                            dist_20 = std::uniform_int_distribution<>(0, 30);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(241, 255);
-                                        }
-                                        stat = dist_20(aGen);
-                                    }
-                                }
-                                else {
-                                    stat = dist_57(aGen);
-                                }
-                                enzon.seekg(wep_pos + 231, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 231, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                if (balDecision == "Y") {
-                                    if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                        stat = 0;
-                                    }
-                                    else {
-                                        stat = dist_11(aGen);
-                                        if (stat == 1) {
-                                            dist_20 = std::uniform_int_distribution<>(0, 30);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(241, 255);
-                                        }
-                                        stat = dist_20(aGen);
-                                    }
-                                }
-                                else {
-                                    stat = dist_58(aGen);
-                                }
-                                enzon.seekg(wep_pos + 232, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 232, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                if (balDecision == "Y") {
-                                    if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                        stat = 0;
-                                    }
-                                    else {
-                                        stat = dist_11(aGen);
-                                        if (stat == 1) {
-                                            dist_20 = std::uniform_int_distribution<>(0, 30);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(241, 255);
-                                        }
-                                        stat = dist_20(aGen);
-                                    }
-                                }
-                                else {
-                                    stat = dist_59(aGen);
-                                }
-                                enzon.seekg(wep_pos + 233, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 233, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                if (balDecision == "Y") {
-                                    if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                        stat = 0;
-                                    }
-                                    else {
-                                        stat = dist_11(aGen);
-                                        if (stat == 1) {
-                                            dist_20 = std::uniform_int_distribution<>(0, 30);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(241, 255);
-                                        }
-                                        stat = dist_20(aGen);
-                                    }
-                                }
-                                else {
-                                    stat = dist_60(aGen);
-                                }
-                                enzon.seekg(wep_pos + 234, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 234, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                            }
-                        }
-                    }
-                    stat = dist_61(aGen);
-                    enzon.seekg(wep_pos + 236, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 236, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    stat = dist_62(aGen);
-                    enzon.seekg(wep_pos + 237, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 237, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-
-                } 
-                enzon.seekg(wep_pos + 264, ios::beg);
-                stat_loc = enzon.tellg();
-                to_ass = enzon.get();
-                if (to_ass > 0) {
-                    stat = dist_63(aGen);
-                    enzon.seekg(wep_pos + 264, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 264, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    stat -= 126;
-                    enzon.seekg(wep_pos + 266, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 266, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    stat += 95;
-                    enzon.seekg(wep_pos + 267, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 267, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    stat = dist_64(aGen);
-                    enzon.seekg(wep_pos + 269, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 269, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    stat = dist_65(aGen);
-                    enzon.seekg(wep_pos + 270, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 270, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    stat = dist_66(aGen);
-                    enzon.seekg(wep_pos + 271, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 271, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    stat = dist_67(aGen) * 100;
-                    sprintf_s(rand_dpm, "%X", stat);
-                    ss_rand_dpm << rand_dpm;
-                    ss_rand_dpm >> s_rand_dpm;
-                    ss_rand_dpm.clear();
-                    hs_rand_dpm << std::hex << s_rand_dpm;
-                    hs_rand_dpm >> int_rand_dpm;
-                    hs_rand_dpm.clear();
-                    dist_68 = std::uniform_int_distribution<>(41, round(int_rand_dpm / 100));
-                    stat = dist_68(aGen) * 100;
-                    sprintf_s(rand_dp, "%X", stat);
-                    ss_rand_dp << rand_dp;
-                    ss_rand_dp >> s_rand_dp;
-                    ss_rand_dp.clear();
-                    s1 = s_rand_dpm.at(0);
-                    s2 = s_rand_dpm.at(1);
-                    s3 = s_rand_dpm.at(2);
-                    s4 = s_rand_dpm.at(3);
-                    s_rand_dpm_1 = s1 + s2;
-                    s_rand_dpm_2 = s3 + s4;
-                    s1 = s_rand_dp.at(0);
-                    s2 = s_rand_dp.at(1);
-                    s3 = s_rand_dp.at(2);
-                    s4 = s_rand_dp.at(3);
-                    s_rand_dp_1 = s1 + s2;
-                    s_rand_dp_2 = s3 + s4;
-                    rand_dpm_fin << std::hex << s_rand_dpm_1;
-                    rand_dpm_fin >> stat;
-                    rand_dpm_fin.clear();
-                    enzon.seekg(wep_pos + 275, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 275, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    rand_dpm_fin << std::hex << s_rand_dpm_2;
-                    rand_dpm_fin >> stat;
-                    rand_dpm_fin.clear();
-                    enzon.seekg(wep_pos + 274, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 274, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    ppm = dist_69(aGen);
-                    enzon.seekg(wep_pos + 278, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(ppm);
-                    enzon.seekp(wep_pos + 278, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    rand_dpm_fin << std::hex << s_rand_dp_1;
-                    rand_dpm_fin >> stat;
-                    rand_dpm_fin.clear();
-                    enzon.seekg(wep_pos + 273, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 273, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    rand_dpm_fin << std::hex << s_rand_dp_2;
-                    rand_dpm_fin >> stat;
-                    rand_dpm_fin.clear();
-                    enzon.seekg(wep_pos + 272, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 272, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    dist_70 = std::uniform_int_distribution<>(1, ppm);
-                    pp = dist_70(aGen);
-                    enzon.seekg(wep_pos + 276, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(pp);
-                    enzon.seekp(wep_pos + 276, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    enzon.seekg(wep_pos + 285, ios::beg);
-                    map_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    gem_count = to_ass;
-                    stat = dist_71(aGen);
-                    enzon.seekg(wep_pos + 293, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 293, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    stat = dist_72(aGen);
-                    enzon.seekg(wep_pos + 294, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 294, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    stat = dist_73(aGen);
-                    enzon.seekg(wep_pos + 295, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 295, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                            stat = dist_142(aGen);
-                        }
-                        else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                stat = dist_148(aGen);
-                            }
-                            else {
-                                stat = dist_142(aGen);
-                            }
-                        }
-                    }
-                    else {
-                        stat = dist_142(aGen);
-                    }
-                    enzon.seekg(wep_pos + 296, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 296, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                            stat = dist_142(aGen);
-                        }
-                        else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                stat = dist_148(aGen);
-                            }
-                            else {
-                                stat = dist_142(aGen);
-                            }
-                        }
-                    }
-                    else {
-                        stat = dist_143(aGen);
-                    }
-                    enzon.seekg(wep_pos + 297, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 297, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                            stat = dist_142(aGen);
-                        }
-                        else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                stat = dist_148(aGen);
-                            }
-                            else {
-                                stat = dist_142(aGen);
-                            }
-                        }
-                    }
-                    else {
-                        stat = dist_144(aGen);
-                    }
-                    enzon.seekg(wep_pos + 298, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 298, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                            stat = dist_142(aGen);
-                        }
-                        else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                stat = dist_148(aGen);
-                            }
-                            else {
-                                stat = dist_142(aGen);
-                            }
-                        }
-                    }
-                    else {
-                        stat = dist_145(aGen);
-                    }
-                    enzon.seekg(wep_pos + 299, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 299, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                            stat = dist_142(aGen);
-                        }
-                        else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                stat = dist_148(aGen);
-                            }
-                            else {
-                                stat = dist_142(aGen);
-                            }
-                        }
-                    }
-                    else {
-                        stat = dist_146(aGen);
-                    }
-                    enzon.seekg(wep_pos + 300, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 300, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                            stat = dist_142(aGen);
-                        }
-                        else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                stat = dist_148(aGen);
-                            }
-                            else {
-                                stat = dist_142(aGen);
-                            }
-                        }
-                    }
-                    else {
-                        stat = dist_147(aGen);
-                    }
-                    enzon.seekg(wep_pos + 301, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 301, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 8);
-                            }
-                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 14);
-                            }
-                            else if (*ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 15);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 19);
-                            }
-                        }
-                        else {
-                            dist_20 = std::uniform_int_distribution<>(250, 255);
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_74(aGen);
-                    }
-                    enzon.seekg(wep_pos + 304, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 304, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 8);
-                            }
-                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 14);
-                            }
-                            else if (*ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 15);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 19);
-                            }
-                        }
-                        else {
-                            dist_20 = std::uniform_int_distribution<>(250, 255);
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_75(aGen);
-                    }
-                    enzon.seekg(wep_pos + 305, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 305, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 8);
-                            }
-                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 14);
-                            }
-                            else if (*ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 15);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 19);
-                            }
-                        }
-                        else {
-                            dist_20 = std::uniform_int_distribution<>(250, 255);
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_76(aGen);
-                    }
-                    enzon.seekg(wep_pos + 306, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 306, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 8);
-                            }
-                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 14);
-                            }
-                            else if (*ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 15);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 19);
-                            }
-                        }
-                        else {
-                            dist_20 = std::uniform_int_distribution<>(250, 255);
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_77(aGen);
-                    }
-                    enzon.seekg(wep_pos + 307, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 307, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 8);
-                            }
-                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 14);
-                            }
-                            else if (*ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 15);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 19);
-                            }
-                        }
-                        else {
-                            dist_20 = std::uniform_int_distribution<>(250, 255);
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_78(aGen);
-                    }
-                    enzon.seekg(wep_pos + 308, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 308, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 8);
-                            }
-                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 14);
-                            }
-                            else if (*ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 15);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 19);
-                            }
-                        }
-                        else {
-                            dist_20 = std::uniform_int_distribution<>(250, 255);
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_79(aGen);
-                    }
-                    enzon.seekg(wep_pos + 309, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 309, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 8);
-                            }
-                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 14);
-                            }
-                            else if (*ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 15);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 19);
-                            }
-                        }
-                        else {
-                            dist_20 = std::uniform_int_distribution<>(250, 255);
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_80(aGen);
-                    }
-                    enzon.seekg(wep_pos + 310, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 310, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (gem_count > 0) {
-                        stat = dist_44(aGen);
-                        enzon.seekg(wep_pos + 312, ios::beg);
-                        map_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 312, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        enzon.seekg(wep_pos + 313, ios::beg);
-                        map_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(1);
-                        enzon.seekp(wep_pos + 313, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        stat -= 4;
-                        enzon.seekg(wep_pos + 314, ios::beg);
-                        map_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 314, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y" && *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                dist_20 = std::uniform_int_distribution<>(253, 255);
-                                stat = dist_20(aGen);
                             }
                             else {
                                 stat = dist_45(aGen);
                             }
-                        }
-                        else {
-                            stat = dist_45(aGen);
-                        }
-                        enzon.seekg(wep_pos + 317, ios::beg);
-                        map_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 317, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y" && *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                dist_20 = std::uniform_int_distribution<>(253, 255);
-                                stat = dist_20(aGen);
+                            enzon.seekg(wep_pos + 193, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 193, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y" && *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    stat = dist_20(aGen);
+                                }
+                                else {
+                                    stat = dist_46(aGen);
+                                }
                             }
                             else {
                                 stat = dist_46(aGen);
                             }
-                        }
-                        else {
-                            stat = dist_46(aGen);
-                        }
-                        enzon.seekg(wep_pos + 318, ios::beg);
-                        map_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 318, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y" && *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                dist_20 = std::uniform_int_distribution<>(253, 255);
-                                stat = dist_20(aGen);
+                            enzon.seekg(wep_pos + 194, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 194, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y" && *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    stat = dist_20(aGen);
+                                }
+                                else {
+                                    stat = dist_47(aGen);
+                                }
                             }
                             else {
                                 stat = dist_47(aGen);
                             }
+                            enzon.seekg(wep_pos + 195, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 195, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
                         }
-                        else {
-                            stat = dist_47(aGen);
+                    }
+                }
+                if (classDecision == "Y") {
+                    if (has_equip > 0) {
+                        if (gem_count > 2) {
+                            if (balDecision == "Y") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(0, 15);
+                                    }
+                                }
+                                else {
+                                    if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(251, 255);
+                                    }
+                                    else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(250, 255);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    }
+                                }
+                                stat = dist_20(aGen);
+                            }
+                            else {
+                                stat = dist_48(aGen);
+                            }
+                            enzon.seekg(wep_pos + 220, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 220, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(0, 15);
+                                    }
+                                }
+                                else {
+                                    if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(251, 255);
+                                    }
+                                    else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(250, 255);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    }
+                                }
+                                stat = dist_20(aGen);
+                            }
+                            else {
+                                stat = dist_49(aGen);
+                            }
+                            enzon.seekg(wep_pos + 221, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 221, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(0, 15);
+                                    }
+                                }
+                                else {
+                                    if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(251, 255);
+                                    }
+                                    else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(250, 255);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    }
+                                }
+                                stat = dist_20(aGen);
+                            }
+                            else {
+                                stat = dist_50(aGen);
+                            }
+                            enzon.seekg(wep_pos + 222, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 222, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(0, 15);
+                                    }
+                                }
+                                else {
+                                    if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(251, 255);
+                                    }
+                                    else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(250, 255);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    }
+                                }
+                                stat = dist_20(aGen);
+                            }
+                            else {
+                                stat = dist_51(aGen);
+                            }
+                            enzon.seekg(wep_pos + 223, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 223, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(0, 15);
+                                    }
+                                }
+                                else {
+                                    if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(251, 255);
+                                    }
+                                    else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(250, 255);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    }
+                                }
+                                stat = dist_20(aGen);
+                            }
+                            else {
+                                stat = dist_52(aGen);
+                            }
+                            enzon.seekg(wep_pos + 224, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 224, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(0, 15);
+                                    }
+                                }
+                                else {
+                                    if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(251, 255);
+                                    }
+                                    else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(250, 255);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    }
+                                }
+                                stat = dist_20(aGen);
+                            }
+                            else {
+                                stat = dist_53(aGen);
+                            }
+                            enzon.seekg(wep_pos + 225, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 225, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
                         }
-                        enzon.seekg(wep_pos + 319, ios::beg);
+                    }
+                }
+                if (affDecision == "Y") {
+                    if (has_equip > 0) {
+                        if (gem_count > 2) {
+                            if (balDecision == "Y") {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    stat = 0;
+                                }
+                                else {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                            }
+                            else {
+                                stat = dist_54(aGen);
+                            }
+                            enzon.seekg(wep_pos + 228, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 228, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    stat = 0;
+                                }
+                                else {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                            }
+                            else {
+                                stat = dist_55(aGen);
+                            }
+                            enzon.seekg(wep_pos + 229, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 229, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    stat = 0;
+                                }
+                                else {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                            }
+                            else {
+                                stat = dist_56(aGen);
+                            }
+                            enzon.seekg(wep_pos + 230, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 230, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    stat = 0;
+                                }
+                                else {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                            }
+                            else {
+                                stat = dist_57(aGen);
+                            }
+                            enzon.seekg(wep_pos + 231, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 231, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    stat = 0;
+                                }
+                                else {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                            }
+                            else {
+                                stat = dist_58(aGen);
+                            }
+                            enzon.seekg(wep_pos + 232, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 232, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    stat = 0;
+                                }
+                                else {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                            }
+                            else {
+                                stat = dist_59(aGen);
+                            }
+                            enzon.seekg(wep_pos + 233, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 233, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    stat = 0;
+                                }
+                                else {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                            }
+                            else {
+                                stat = dist_60(aGen);
+                            }
+                            enzon.seekg(wep_pos + 234, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 234, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                        }
+                    }
+                }
+                if (baseEquDecision == "Y") {
+                    if (has_equip > 0) {
+                        stat = dist_61(aGen);
+                        enzon.seekg(wep_pos + 236, ios::beg);
                         map_loc = enzon.tellg();
                         to_ass = enzon.get();
                         ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 319, ios::beg);
+                        enzon.seekp(wep_pos + 236, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        stat = dist_62(aGen);
+                        enzon.seekg(wep_pos + 237, ios::beg);
+                        map_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 237, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                    }
+                }
+                enzon.seekg(wep_pos + 264, ios::beg);
+                stat_loc = enzon.tellg();
+                has_equip = enzon.get();
+                to_ass = has_equip;
+                if (baseEquDecision == "Y") {
+                    if (has_equip > 0) {
+                        stat = dist_63(aGen);
+                        enzon.seekg(wep_pos + 264, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 264, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        stat -= 126;
+                        enzon.seekg(wep_pos + 266, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 266, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        stat += 95;
+                        enzon.seekg(wep_pos + 267, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 267, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        stat = dist_64(aGen);
+                        enzon.seekg(wep_pos + 269, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 269, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        stat = dist_65(aGen);
+                        enzon.seekg(wep_pos + 270, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 270, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        stat = dist_66(aGen);
+                        enzon.seekg(wep_pos + 271, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 271, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        stat = dist_67(aGen) * 100;
+                        sprintf_s(rand_dpm, "%X", stat);
+                        ss_rand_dpm << rand_dpm;
+                        ss_rand_dpm >> s_rand_dpm;
+                        ss_rand_dpm.clear();
+                        hs_rand_dpm << std::hex << s_rand_dpm;
+                        hs_rand_dpm >> int_rand_dpm;
+                        hs_rand_dpm.clear();
+                        dist_68 = std::uniform_int_distribution<>(41, round(int_rand_dpm / 100));
+                        stat = dist_68(aGen) * 100;
+                        sprintf_s(rand_dp, "%X", stat);
+                        ss_rand_dp << rand_dp;
+                        ss_rand_dp >> s_rand_dp;
+                        ss_rand_dp.clear();
+                        s1 = s_rand_dpm.at(0);
+                        s2 = s_rand_dpm.at(1);
+                        s3 = s_rand_dpm.at(2);
+                        s4 = s_rand_dpm.at(3);
+                        s_rand_dpm_1 = s1 + s2;
+                        s_rand_dpm_2 = s3 + s4;
+                        s1 = s_rand_dp.at(0);
+                        s2 = s_rand_dp.at(1);
+                        s3 = s_rand_dp.at(2);
+                        s4 = s_rand_dp.at(3);
+                        s_rand_dp_1 = s1 + s2;
+                        s_rand_dp_2 = s3 + s4;
+                        rand_dpm_fin << std::hex << s_rand_dpm_1;
+                        rand_dpm_fin >> stat;
+                        rand_dpm_fin.clear();
+                        enzon.seekg(wep_pos + 275, ios::beg);
+                        map_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 275, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        rand_dpm_fin << std::hex << s_rand_dpm_2;
+                        rand_dpm_fin >> stat;
+                        rand_dpm_fin.clear();
+                        enzon.seekg(wep_pos + 274, ios::beg);
+                        map_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 274, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        ppm = dist_69(aGen);
+                        enzon.seekg(wep_pos + 278, ios::beg);
+                        map_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(ppm);
+                        enzon.seekp(wep_pos + 278, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        rand_dpm_fin << std::hex << s_rand_dp_1;
+                        rand_dpm_fin >> stat;
+                        rand_dpm_fin.clear();
+                        enzon.seekg(wep_pos + 273, ios::beg);
+                        map_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 273, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        rand_dpm_fin << std::hex << s_rand_dp_2;
+                        rand_dpm_fin >> stat;
+                        rand_dpm_fin.clear();
+                        enzon.seekg(wep_pos + 272, ios::beg);
+                        map_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 272, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        dist_70 = std::uniform_int_distribution<>(1, ppm);
+                        pp = dist_70(aGen);
+                        enzon.seekg(wep_pos + 276, ios::beg);
+                        map_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(pp);
+                        enzon.seekp(wep_pos + 276, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+
+                    }
+                }
+                if (has_equip > 0) {
+                    enzon.seekg(wep_pos + 285, ios::beg);
+                    map_loc = enzon.tellg();
+                    to_ass = enzon.get();
+                    gem_count = to_ass;
+                }
+                if (BEPDecision == "Y") {
+                    if (has_equip > 0) {
+                        stat = dist_71(aGen);
+                        enzon.seekg(wep_pos + 293, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 293, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        stat = dist_72(aGen);
+                        enzon.seekg(wep_pos + 294, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 294, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        stat = dist_73(aGen);
+                        enzon.seekg(wep_pos + 295, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 295, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                    }
+                }
+                if (classDecision == "Y") {
+                    if (has_equip > 0) {
+                        if (balDecision == "Y") {
+                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                stat = dist_142(aGen);
+                            }
+                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    stat = dist_148(aGen);
+                                }
+                                else {
+                                    stat = dist_142(aGen);
+                                }
+                            }
+                        }
+                        else {
+                            stat = dist_142(aGen);
+                        }
+                        enzon.seekg(wep_pos + 296, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 296, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        if (balDecision == "Y") {
+                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                stat = dist_142(aGen);
+                            }
+                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    stat = dist_148(aGen);
+                                }
+                                else {
+                                    stat = dist_142(aGen);
+                                }
+                            }
+                        }
+                        else {
+                            stat = dist_143(aGen);
+                        }
+                        enzon.seekg(wep_pos + 297, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 297, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        if (balDecision == "Y") {
+                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                stat = dist_142(aGen);
+                            }
+                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    stat = dist_148(aGen);
+                                }
+                                else {
+                                    stat = dist_142(aGen);
+                                }
+                            }
+                        }
+                        else {
+                            stat = dist_144(aGen);
+                        }
+                        enzon.seekg(wep_pos + 298, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 298, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        if (balDecision == "Y") {
+                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                stat = dist_142(aGen);
+                            }
+                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    stat = dist_148(aGen);
+                                }
+                                else {
+                                    stat = dist_142(aGen);
+                                }
+                            }
+                        }
+                        else {
+                            stat = dist_145(aGen);
+                        }
+                        enzon.seekg(wep_pos + 299, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 299, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        if (balDecision == "Y") {
+                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                stat = dist_142(aGen);
+                            }
+                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    stat = dist_148(aGen);
+                                }
+                                else {
+                                    stat = dist_142(aGen);
+                                }
+                            }
+                        }
+                        else {
+                            stat = dist_146(aGen);
+                        }
+                        enzon.seekg(wep_pos + 300, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 300, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        if (balDecision == "Y") {
+                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                stat = dist_142(aGen);
+                            }
+                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    stat = dist_148(aGen);
+                                }
+                                else {
+                                    stat = dist_142(aGen);
+                                }
+                            }
+                        }
+                        else {
+                            stat = dist_147(aGen);
+                        }
+                        enzon.seekg(wep_pos + 301, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 301, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                    }
+                }
+                if (affDecision == "Y") {
+                    if (has_equip > 0) {
+                        if (balDecision == "Y") {
+                            stat = dist_11(aGen);
+                            if (stat == 1) {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 8);
+                                }
+                                else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 14);
+                                }
+                                else if (*ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 15);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(0, 19);
+                                }
+                            }
+                            else {
+                                dist_20 = std::uniform_int_distribution<>(250, 255);
+                            }
+                            stat = dist_20(aGen);
+                        }
+                        else {
+                            stat = dist_74(aGen);
+                        }
+                        enzon.seekg(wep_pos + 304, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 304, ios::beg);
                         enzon.write(ch_val, 1);
                         delete ch_val;
                         if (balDecision == "Y") {
                             stat = dist_11(aGen);
                             if (stat == 1) {
-                                if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 8);
+                                }
+                                else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 14);
+                                }
+                                else if (*ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 15);
                                 }
                                 else {
-                                    dist_20 = std::uniform_int_distribution<>(0, 15);
+                                    dist_20 = std::uniform_int_distribution<>(0, 19);
                                 }
                             }
                             else {
-                                if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(251, 255);
-                                }
-                                else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(250, 255);
-                                }
-                                else {
-                                    dist_20 = std::uniform_int_distribution<>(253, 255);
-                                }
+                                dist_20 = std::uniform_int_distribution<>(250, 255);
                             }
                             stat = dist_20(aGen);
                         }
                         else {
-                            stat = dist_48(aGen);
+                            stat = dist_75(aGen);
                         }
-                        enzon.seekg(wep_pos + 344, ios::beg);
-                        map_loc = enzon.tellg();
+                        enzon.seekg(wep_pos + 305, ios::beg);
+                        stat_loc = enzon.tellg();
                         to_ass = enzon.get();
                         ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 344, ios::beg);
+                        enzon.seekp(wep_pos + 305, ios::beg);
                         enzon.write(ch_val, 1);
                         delete ch_val;
                         if (balDecision == "Y") {
                             stat = dist_11(aGen);
                             if (stat == 1) {
-                                if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 8);
+                                }
+                                else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 14);
+                                }
+                                else if (*ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 15);
                                 }
                                 else {
-                                    dist_20 = std::uniform_int_distribution<>(0, 15);
+                                    dist_20 = std::uniform_int_distribution<>(0, 19);
                                 }
                             }
                             else {
-                                if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(251, 255);
-                                }
-                                else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(250, 255);
-                                }
-                                else {
-                                    dist_20 = std::uniform_int_distribution<>(253, 255);
-                                }
+                                dist_20 = std::uniform_int_distribution<>(250, 255);
                             }
                             stat = dist_20(aGen);
                         }
                         else {
-                            stat = dist_49(aGen);
+                            stat = dist_76(aGen);
                         }
-                        enzon.seekg(wep_pos + 345, ios::beg);
-                        map_loc = enzon.tellg();
+                        enzon.seekg(wep_pos + 306, ios::beg);
+                        stat_loc = enzon.tellg();
                         to_ass = enzon.get();
                         ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 345, ios::beg);
+                        enzon.seekp(wep_pos + 306, ios::beg);
                         enzon.write(ch_val, 1);
                         delete ch_val;
                         if (balDecision == "Y") {
                             stat = dist_11(aGen);
                             if (stat == 1) {
-                                if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 8);
+                                }
+                                else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 14);
+                                }
+                                else if (*ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 15);
                                 }
                                 else {
-                                    dist_20 = std::uniform_int_distribution<>(0, 15);
+                                    dist_20 = std::uniform_int_distribution<>(0, 19);
                                 }
                             }
                             else {
-                                if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(251, 255);
-                                }
-                                else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(250, 255);
-                                }
-                                else {
-                                    dist_20 = std::uniform_int_distribution<>(253, 255);
-                                }
+                                dist_20 = std::uniform_int_distribution<>(250, 255);
                             }
                             stat = dist_20(aGen);
                         }
                         else {
-                            stat = dist_50(aGen);
+                            stat = dist_77(aGen);
                         }
-                        enzon.seekg(wep_pos + 346, ios::beg);
-                        map_loc = enzon.tellg();
+                        enzon.seekg(wep_pos + 307, ios::beg);
+                        stat_loc = enzon.tellg();
                         to_ass = enzon.get();
                         ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 346, ios::beg);
+                        enzon.seekp(wep_pos + 307, ios::beg);
                         enzon.write(ch_val, 1);
                         delete ch_val;
                         if (balDecision == "Y") {
                             stat = dist_11(aGen);
                             if (stat == 1) {
-                                if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 8);
+                                }
+                                else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 14);
+                                }
+                                else if (*ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 15);
                                 }
                                 else {
-                                    dist_20 = std::uniform_int_distribution<>(0, 15);
+                                    dist_20 = std::uniform_int_distribution<>(0, 19);
                                 }
                             }
                             else {
-                                if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(251, 255);
-                                }
-                                else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(250, 255);
-                                }
-                                else {
-                                    dist_20 = std::uniform_int_distribution<>(253, 255);
-                                }
+                                dist_20 = std::uniform_int_distribution<>(250, 255);
                             }
                             stat = dist_20(aGen);
                         }
                         else {
-                            stat = dist_51(aGen);
+                            stat = dist_78(aGen);
                         }
-                        enzon.seekg(wep_pos + 347, ios::beg);
-                        map_loc = enzon.tellg();
+                        enzon.seekg(wep_pos + 308, ios::beg);
+                        stat_loc = enzon.tellg();
                         to_ass = enzon.get();
                         ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 347, ios::beg);
+                        enzon.seekp(wep_pos + 308, ios::beg);
                         enzon.write(ch_val, 1);
                         delete ch_val;
                         if (balDecision == "Y") {
                             stat = dist_11(aGen);
                             if (stat == 1) {
-                                if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 8);
+                                }
+                                else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 14);
+                                }
+                                else if (*ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 15);
                                 }
                                 else {
-                                    dist_20 = std::uniform_int_distribution<>(0, 15);
+                                    dist_20 = std::uniform_int_distribution<>(0, 19);
                                 }
                             }
                             else {
-                                if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(251, 255);
-                                }
-                                else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(250, 255);
-                                }
-                                else {
-                                    dist_20 = std::uniform_int_distribution<>(253, 255);
-                                }
+                                dist_20 = std::uniform_int_distribution<>(250, 255);
                             }
                             stat = dist_20(aGen);
                         }
                         else {
-                            stat = dist_52(aGen);
+                            stat = dist_79(aGen);
                         }
-                        enzon.seekg(wep_pos + 348, ios::beg);
-                        map_loc = enzon.tellg();
+                        enzon.seekg(wep_pos + 309, ios::beg);
+                        stat_loc = enzon.tellg();
                         to_ass = enzon.get();
                         ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 348, ios::beg);
+                        enzon.seekp(wep_pos + 309, ios::beg);
                         enzon.write(ch_val, 1);
                         delete ch_val;
                         if (balDecision == "Y") {
                             stat = dist_11(aGen);
                             if (stat == 1) {
-                                if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 8);
+                                }
+                                else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 14);
+                                }
+                                else if (*ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 15);
                                 }
                                 else {
-                                    dist_20 = std::uniform_int_distribution<>(0, 15);
+                                    dist_20 = std::uniform_int_distribution<>(0, 19);
                                 }
                             }
                             else {
-                                if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(251, 255);
-                                }
-                                else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(250, 255);
-                                }
-                                else {
-                                    dist_20 = std::uniform_int_distribution<>(253, 255);
-                                }
+                                dist_20 = std::uniform_int_distribution<>(250, 255);
                             }
                             stat = dist_20(aGen);
                         }
                         else {
-                            stat = dist_53(aGen);
+                            stat = dist_80(aGen);
                         }
-                        enzon.seekg(wep_pos + 349, ios::beg);
-                        map_loc = enzon.tellg();
+                        enzon.seekg(wep_pos + 310, ios::beg);
+                        stat_loc = enzon.tellg();
                         to_ass = enzon.get();
                         ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 349, ios::beg);
+                        enzon.seekp(wep_pos + 310, ios::beg);
                         enzon.write(ch_val, 1);
                         delete ch_val;
-                        if (balDecision == "Y") {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                stat = 0;
-                            }
-                            else {
+                    }
+                }
+                if (baseEquDecision == "Y") {
+                    if (has_equip > 0) {
+                        if (gem_count > 0) {
+                            stat = dist_44(aGen);
+                            enzon.seekg(wep_pos + 312, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 312, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            enzon.seekg(wep_pos + 313, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(1);
+                            enzon.seekp(wep_pos + 313, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            stat -= 4;
+                            enzon.seekg(wep_pos + 314, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 314, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y" && *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
                                 stat = dist_11(aGen);
                                 if (stat == 1) {
-                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    stat = dist_20(aGen);
                                 }
                                 else {
-                                    dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    stat = dist_45(aGen);
+                                }
+                            }
+                            else {
+                                stat = dist_45(aGen);
+                            }
+                            enzon.seekg(wep_pos + 317, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 317, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y" && *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    stat = dist_20(aGen);
+                                }
+                                else {
+                                    stat = dist_46(aGen);
+                                }
+                            }
+                            else {
+                                stat = dist_46(aGen);
+                            }
+                            enzon.seekg(wep_pos + 318, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 318, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y" && *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    stat = dist_20(aGen);
+                                }
+                                else {
+                                    stat = dist_47(aGen);
+                                }
+                            }
+                            else {
+                                stat = dist_47(aGen);
+                            }
+                            enzon.seekg(wep_pos + 319, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 319, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                        }
+                    }
+                }
+                if (classDecision == "Y") {
+                    if (has_equip > 0) { 
+                        if (gem_count > 0) {
+                            if (balDecision == "Y") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(0, 15);
+                                    }
+                                }
+                                else {
+                                    if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(251, 255);
+                                    }
+                                    else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(250, 255);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    }
                                 }
                                 stat = dist_20(aGen);
                             }
-                        }
-                        else {
-                            stat = dist_54(aGen);
-                        }
-                        enzon.seekg(wep_pos + 352, ios::beg);
-                        map_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 352, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y") {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                stat = 0;
-                            }
                             else {
+                                stat = dist_48(aGen);
+                            }
+                            enzon.seekg(wep_pos + 344, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 344, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
                                 stat = dist_11(aGen);
                                 if (stat == 1) {
-                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(0, 15);
+                                    }
                                 }
                                 else {
-                                    dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(251, 255);
+                                    }
+                                    else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(250, 255);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    }
                                 }
                                 stat = dist_20(aGen);
                             }
-                        }
-                        else {
-                            stat = dist_55(aGen);
-                        }
-                        enzon.seekg(wep_pos + 353, ios::beg);
-                        map_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 353, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y") {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                stat = 0;
-                            }
                             else {
+                                stat = dist_49(aGen);
+                            }
+                            enzon.seekg(wep_pos + 345, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 345, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
                                 stat = dist_11(aGen);
                                 if (stat == 1) {
-                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(0, 15);
+                                    }
                                 }
                                 else {
-                                    dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(251, 255);
+                                    }
+                                    else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(250, 255);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    }
                                 }
                                 stat = dist_20(aGen);
                             }
-                        }
-                        else {
-                            stat = dist_56(aGen);
-                        }
-                        enzon.seekg(wep_pos + 354, ios::beg);
-                        map_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 354, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y") {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                stat = 0;
-                            }
                             else {
+                                stat = dist_50(aGen);
+                            }
+                            enzon.seekg(wep_pos + 346, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 346, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
                                 stat = dist_11(aGen);
                                 if (stat == 1) {
-                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(0, 15);
+                                    }
                                 }
                                 else {
-                                    dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(251, 255);
+                                    }
+                                    else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(250, 255);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    }
                                 }
                                 stat = dist_20(aGen);
                             }
-                        }
-                        else {
-                            stat = dist_57(aGen);
-                        }
-                        enzon.seekg(wep_pos + 355, ios::beg);
-                        map_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 355, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y") {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                stat = 0;
-                            }
                             else {
+                                stat = dist_51(aGen);
+                            }
+                            enzon.seekg(wep_pos + 347, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 347, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
                                 stat = dist_11(aGen);
                                 if (stat == 1) {
-                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(0, 15);
+                                    }
                                 }
                                 else {
-                                    dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(251, 255);
+                                    }
+                                    else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(250, 255);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    }
                                 }
                                 stat = dist_20(aGen);
                             }
-                        }
-                        else {
-                            stat = dist_58(aGen);
-                        }
-                        enzon.seekg(wep_pos + 356, ios::beg);
-                        map_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 356, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y") {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                stat = 0;
-                            }
                             else {
+                                stat = dist_52(aGen);
+                            }
+                            enzon.seekg(wep_pos + 348, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 348, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
                                 stat = dist_11(aGen);
                                 if (stat == 1) {
-                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(0, 15);
+                                    }
                                 }
                                 else {
-                                    dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(251, 255);
+                                    }
+                                    else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(250, 255);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    }
                                 }
                                 stat = dist_20(aGen);
                             }
-                        }
-                        else {
-                            stat = dist_59(aGen);
-                        }
-                        enzon.seekg(wep_pos + 357, ios::beg);
-                        map_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 357, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y") {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                stat = 0;
-                            }
                             else {
-                                stat = dist_11(aGen);
-                                if (stat == 1) {
-                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                stat = dist_53(aGen);
+                            }
+                            enzon.seekg(wep_pos + 349, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 349, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                        } 
+                    }
+                }
+                if (affDecision == "Y") {
+                    if (has_equip > 0) {
+                        if (gem_count > 0) {
+                            if (balDecision == "Y") {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    stat = 0;
                                 }
                                 else {
-                                    dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    }
+                                    stat = dist_20(aGen);
                                 }
-                                stat = dist_20(aGen);
                             }
+                            else {
+                                stat = dist_54(aGen);
+                            }
+                            enzon.seekg(wep_pos + 352, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 352, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    stat = 0;
+                                }
+                                else {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                            }
+                            else {
+                                stat = dist_55(aGen);
+                            }
+                            enzon.seekg(wep_pos + 353, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 353, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    stat = 0;
+                                }
+                                else {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                            }
+                            else {
+                                stat = dist_56(aGen);
+                            }
+                            enzon.seekg(wep_pos + 354, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 354, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    stat = 0;
+                                }
+                                else {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                            }
+                            else {
+                                stat = dist_57(aGen);
+                            }
+                            enzon.seekg(wep_pos + 355, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 355, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    stat = 0;
+                                }
+                                else {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                            }
+                            else {
+                                stat = dist_58(aGen);
+                            }
+                            enzon.seekg(wep_pos + 356, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 356, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    stat = 0;
+                                }
+                                else {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                            }
+                            else {
+                                stat = dist_59(aGen);
+                            }
+                            enzon.seekg(wep_pos + 357, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 357, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    stat = 0;
+                                }
+                                else {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                            }
+                            else {
+                                stat = dist_60(aGen);
+                            }
+                            enzon.seekg(wep_pos + 358, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 358, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
                         }
-                        else {
-                            stat = dist_60(aGen);
-                        }
-                        enzon.seekg(wep_pos + 358, ios::beg);
-                        map_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + 358, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
+                    }
+                }
+                if (baseEquDecision == "Y") {
+                    if (has_equip > 0) {
                         if (gem_count > 1) {
                             stat = dist_44(aGen);
                             enzon.seekg(wep_pos + 360, ios::beg);
@@ -4849,6 +4969,12 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
                             enzon.seekp(wep_pos + 367, ios::beg);
                             enzon.write(ch_val, 1);
                             delete ch_val;
+                        }
+                    }
+                }
+                if (classDecision == "Y") {
+                    if (has_equip > 0) {
+                        if (gem_count > 1) {
                             if (balDecision == "Y") {
                                 stat = dist_11(aGen);
                                 if (stat == 1) {
@@ -5047,6 +5173,12 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
                             enzon.seekp(wep_pos + 397, ios::beg);
                             enzon.write(ch_val, 1);
                             delete ch_val;
+                        }
+                    }
+                }
+                if (affDecision == "Y") {
+                    if (has_equip > 0) {
+                        if (gem_count > 1) {
                             if (balDecision == "Y") {
                                 if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
                                     stat = 0;
@@ -5222,2025 +5354,2089 @@ void Enemies::mapIterate(Reference_Files aRF, Add_Game& aGame, string aDecision,
                             enzon.seekp(wep_pos + 406, ios::beg);
                             enzon.write(ch_val, 1);
                             delete ch_val;
-                            if (gem_count > 2) {
-                                stat = dist_44(aGen);
-                                enzon.seekg(wep_pos + 408, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 408, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                enzon.seekg(wep_pos + 409, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(1);
-                                enzon.seekp(wep_pos + 409, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                stat -= 4;
-                                enzon.seekg(wep_pos + 410, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 410, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                if (balDecision == "Y" && *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    stat = dist_11(aGen);
-                                    if (stat == 1) {
-                                        dist_20 = std::uniform_int_distribution<>(253, 255);
-                                        stat = dist_20(aGen);
-                                    }
-                                    else {
-                                        stat = dist_45(aGen);
-                                    }
+                        }
+                    }
+                }
+                if (baseEquDecision == "Y") {
+                    if (has_equip > 0) {
+                        if (gem_count > 2) {
+                            stat = dist_44(aGen);
+                            enzon.seekg(wep_pos + 408, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 408, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            enzon.seekg(wep_pos + 409, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(1);
+                            enzon.seekp(wep_pos + 409, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            stat -= 4;
+                            enzon.seekg(wep_pos + 410, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 410, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y" && *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    stat = dist_20(aGen);
                                 }
                                 else {
                                     stat = dist_45(aGen);
                                 }
-                                enzon.seekg(wep_pos + 413, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 413, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                if (balDecision == "Y" && *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    stat = dist_11(aGen);
-                                    if (stat == 1) {
-                                        dist_20 = std::uniform_int_distribution<>(253, 255);
-                                        stat = dist_20(aGen);
-                                    }
-                                    else {
-                                        stat = dist_46(aGen);
-                                    }
+                            }
+                            else {
+                                stat = dist_45(aGen);
+                            }
+                            enzon.seekg(wep_pos + 413, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 413, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y" && *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    stat = dist_20(aGen);
                                 }
                                 else {
                                     stat = dist_46(aGen);
                                 }
-                                enzon.seekg(wep_pos + 414, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 414, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                if (balDecision == "Y" && *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    stat = dist_11(aGen);
-                                    if (stat == 1) {
-                                        dist_20 = std::uniform_int_distribution<>(253, 255);
-                                        stat = dist_20(aGen);
-                                    }
-                                    else {
-                                        stat = dist_47(aGen);
-                                    }
+                            }
+                            else {
+                                stat = dist_46(aGen);
+                            }
+                            enzon.seekg(wep_pos + 414, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 414, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y" && *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND" || *ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    stat = dist_20(aGen);
                                 }
                                 else {
                                     stat = dist_47(aGen);
                                 }
-                                enzon.seekg(wep_pos + 415, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 415, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                if (balDecision == "Y") {
-                                    stat = dist_11(aGen);
-                                    if (stat == 1) {
-                                        if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(0, 30);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(0, 15);
-                                        }
-                                    }
-                                    else {
-                                        if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(251, 255);
-                                        }
-                                        else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(250, 255);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(253, 255);
-                                        }
-                                    }
-                                    stat = dist_20(aGen);
-                                }
-                                else {
-                                    stat = dist_48(aGen);
-                                }
-                                enzon.seekg(wep_pos + 440, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 440, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                if (balDecision == "Y") {
-                                    stat = dist_11(aGen);
-                                    if (stat == 1) {
-                                        if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(0, 30);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(0, 15);
-                                        }
-                                    }
-                                    else {
-                                        if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(251, 255);
-                                        }
-                                        else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(250, 255);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(253, 255);
-                                        }
-                                    }
-                                    stat = dist_20(aGen);
-                                }
-                                else {
-                                    stat = dist_49(aGen);
-                                }
-                                enzon.seekg(wep_pos + 441, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 441, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                if (balDecision == "Y") {
-                                    stat = dist_11(aGen);
-                                    if (stat == 1) {
-                                        if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(0, 30);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(0, 15);
-                                        }
-                                    }
-                                    else {
-                                        if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(251, 255);
-                                        }
-                                        else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(250, 255);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(253, 255);
-                                        }
-                                    }
-                                    stat = dist_20(aGen);
-                                }
-                                else {
-                                    stat = dist_50(aGen);
-                                }
-                                enzon.seekg(wep_pos + 442, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 442, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                if (balDecision == "Y") {
-                                    stat = dist_11(aGen);
-                                    if (stat == 1) {
-                                        if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(0, 30);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(0, 15);
-                                        }
-                                    }
-                                    else {
-                                        if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(251, 255);
-                                        }
-                                        else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(250, 255);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(253, 255);
-                                        }
-                                    }
-                                    stat = dist_20(aGen);
-                                }
-                                else {
-                                    stat = dist_51(aGen);
-                                }
-                                enzon.seekg(wep_pos + 443, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 443, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                if (balDecision == "Y") {
-                                    stat = dist_11(aGen);
-                                    if (stat == 1) {
-                                        if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(0, 30);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(0, 15);
-                                        }
-                                    }
-                                    else {
-                                        if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(251, 255);
-                                        }
-                                        else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(250, 255);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(253, 255);
-                                        }
-                                    }
-                                    stat = dist_20(aGen);
-                                }
-                                else {
-                                    stat = dist_52(aGen);
-                                }
-                                enzon.seekg(wep_pos + 444, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 444, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                if (balDecision == "Y") {
-                                    stat = dist_11(aGen);
-                                    if (stat == 1) {
-                                        if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(0, 30);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(0, 15);
-                                        }
-                                    }
-                                    else {
-                                        if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(251, 255);
-                                        }
-                                        else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                            dist_20 = std::uniform_int_distribution<>(250, 255);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(253, 255);
-                                        }
-                                    }
-                                    stat = dist_20(aGen);
-                                }
-                                else {
-                                    stat = dist_53(aGen);
-                                }
-                                enzon.seekg(wep_pos + 445, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 445, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                if (balDecision == "Y") {
-                                    if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                        stat = 0;
-                                    }
-                                    else {
-                                        stat = dist_11(aGen);
-                                        if (stat == 1) {
-                                            dist_20 = std::uniform_int_distribution<>(0, 30);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(241, 255);
-                                        }
-                                        stat = dist_20(aGen);
-                                    }
-                                }
-                                else {
-                                    stat = dist_54(aGen);
-                                }
-                                enzon.seekg(wep_pos + 448, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 448, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                if (balDecision == "Y") {
-                                    if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                        stat = 0;
-                                    }
-                                    else {
-                                        stat = dist_11(aGen);
-                                        if (stat == 1) {
-                                            dist_20 = std::uniform_int_distribution<>(0, 30);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(241, 255);
-                                        }
-                                        stat = dist_20(aGen);
-                                    }
-                                }
-                                else {
-                                    stat = dist_55(aGen);
-                                }
-                                enzon.seekg(wep_pos + 449, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 449, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                if (balDecision == "Y") {
-                                    if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                        stat = 0;
-                                    }
-                                    else {
-                                        stat = dist_11(aGen);
-                                        if (stat == 1) {
-                                            dist_20 = std::uniform_int_distribution<>(0, 30);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(241, 255);
-                                        }
-                                        stat = dist_20(aGen);
-                                    }
-                                }
-                                else {
-                                    stat = dist_56(aGen);
-                                }
-                                enzon.seekg(wep_pos + 450, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 450, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                if (balDecision == "Y") {
-                                    if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                        stat = 0;
-                                    }
-                                    else {
-                                        stat = dist_11(aGen);
-                                        if (stat == 1) {
-                                            dist_20 = std::uniform_int_distribution<>(0, 30);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(241, 255);
-                                        }
-                                        stat = dist_20(aGen);
-                                    }
-                                }
-                                else {
-                                    stat = dist_57(aGen);
-                                }
-                                enzon.seekg(wep_pos + 451, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 451, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                if (balDecision == "Y") {
-                                    if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                        stat = 0;
-                                    }
-                                    else {
-                                        stat = dist_11(aGen);
-                                        if (stat == 1) {
-                                            dist_20 = std::uniform_int_distribution<>(0, 30);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(241, 255);
-                                        }
-                                        stat = dist_20(aGen);
-                                    }
-                                }
-                                else {
-                                    stat = dist_58(aGen);
-                                }
-                                enzon.seekg(wep_pos + 452, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 452, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                if (balDecision == "Y") {
-                                    if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                        stat = 0;
-                                    }
-                                    else {
-                                        stat = dist_11(aGen);
-                                        if (stat == 1) {
-                                            dist_20 = std::uniform_int_distribution<>(0, 30);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(241, 255);
-                                        }
-                                        stat = dist_20(aGen);
-                                    }
-                                }
-                                else {
-                                    stat = dist_59(aGen);
-                                }
-                                enzon.seekg(wep_pos + 453, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 453, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
-                                if (balDecision == "Y") {
-                                    if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                        stat = 0;
-                                    }
-                                    else {
-                                        stat = dist_11(aGen);
-                                        if (stat == 1) {
-                                            dist_20 = std::uniform_int_distribution<>(0, 30);
-                                        }
-                                        else {
-                                            dist_20 = std::uniform_int_distribution<>(241, 255);
-                                        }
-                                        stat = dist_20(aGen);
-                                    }
-                                }
-                                else {
-                                    stat = dist_60(aGen);
-                                }
-                                enzon.seekg(wep_pos + 454, ios::beg);
-                                map_loc = enzon.tellg();
-                                to_ass = enzon.get();
-                                ch_val = new char(stat);
-                                enzon.seekp(wep_pos + 454, ios::beg);
-                                enzon.write(ch_val, 1);
-                                delete ch_val;
                             }
+                            else {
+                                stat = dist_47(aGen);
+                            }
+                            enzon.seekg(wep_pos + 415, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 415, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
                         }
                     }
-                    stat = dist_81(aGen);
-                    enzon.seekg(wep_pos + 456, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 456, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    stat = dist_82(aGen);
-                    enzon.seekg(wep_pos + 457, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 457, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
+                }
+                if (classDecision == "Y") {
+                    if (has_equip > 0) {
+                        if (gem_count > 2) {
+                            if (balDecision == "Y") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(0, 15);
+                                    }
+                                }
+                                else {
+                                    if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(251, 255);
+                                    }
+                                    else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(250, 255);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    }
+                                }
+                                stat = dist_20(aGen);
+                            }
+                            else {
+                                stat = dist_48(aGen);
+                            }
+                            enzon.seekg(wep_pos + 440, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 440, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(0, 15);
+                                    }
+                                }
+                                else {
+                                    if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(251, 255);
+                                    }
+                                    else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(250, 255);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    }
+                                }
+                                stat = dist_20(aGen);
+                            }
+                            else {
+                                stat = dist_49(aGen);
+                            }
+                            enzon.seekg(wep_pos + 441, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 441, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(0, 15);
+                                    }
+                                }
+                                else {
+                                    if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(251, 255);
+                                    }
+                                    else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(250, 255);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    }
+                                }
+                                stat = dist_20(aGen);
+                            }
+                            else {
+                                stat = dist_50(aGen);
+                            }
+                            enzon.seekg(wep_pos + 442, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 442, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(0, 15);
+                                    }
+                                }
+                                else {
+                                    if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(251, 255);
+                                    }
+                                    else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(250, 255);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    }
+                                }
+                                stat = dist_20(aGen);
+                            }
+                            else {
+                                stat = dist_51(aGen);
+                            }
+                            enzon.seekg(wep_pos + 443, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 443, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(0, 15);
+                                    }
+                                }
+                                else {
+                                    if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(251, 255);
+                                    }
+                                    else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(250, 255);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    }
+                                }
+                                stat = dist_20(aGen);
+                            }
+                            else {
+                                stat = dist_52(aGen);
+                            }
+                            enzon.seekg(wep_pos + 444, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 444, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(0, 15);
+                                    }
+                                }
+                                else {
+                                    if (*ezp == "ZONE022.ZND" || *ezp == "ZONE024.ZND" || *ezp == "ZONE025.ZND" || *ezp == "ZONE030.ZND" || *ezp == "ZONE031.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(251, 255);
+                                    }
+                                    else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(250, 255);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(253, 255);
+                                    }
+                                }
+                                stat = dist_20(aGen);
+                            }
+                            else {
+                                stat = dist_53(aGen);
+                            }
+                            enzon.seekg(wep_pos + 445, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 445, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                        }
+                    }
+                }
+                if (affDecision == "Y") {
+                    if (has_equip > 0) {
+                        if (gem_count > 2) {
+                            if (balDecision == "Y") {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    stat = 0;
+                                }
+                                else {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                            }
+                            else {
+                                stat = dist_54(aGen);
+                            }
+                            enzon.seekg(wep_pos + 448, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 448, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    stat = 0;
+                                }
+                                else {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                            }
+                            else {
+                                stat = dist_55(aGen);
+                            }
+                            enzon.seekg(wep_pos + 449, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 449, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    stat = 0;
+                                }
+                                else {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                            }
+                            else {
+                                stat = dist_56(aGen);
+                            }
+                            enzon.seekg(wep_pos + 450, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 450, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    stat = 0;
+                                }
+                                else {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                            }
+                            else {
+                                stat = dist_57(aGen);
+                            }
+                            enzon.seekg(wep_pos + 451, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 451, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    stat = 0;
+                                }
+                                else {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                            }
+                            else {
+                                stat = dist_58(aGen);
+                            }
+                            enzon.seekg(wep_pos + 452, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 452, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    stat = 0;
+                                }
+                                else {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                            }
+                            else {
+                                stat = dist_59(aGen);
+                            }
+                            enzon.seekg(wep_pos + 453, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 453, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    stat = 0;
+                                }
+                                else {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        dist_20 = std::uniform_int_distribution<>(0, 30);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(241, 255);
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                            }
+                            else {
+                                stat = dist_60(aGen);
+                            }
+                            enzon.seekg(wep_pos + 454, ios::beg);
+                            map_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + 454, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                        }
+                    }
+                }
+                if (baseEquDecision == "Y") {
+                    if (has_equip > 0) {
+                        stat = dist_81(aGen);
+                        enzon.seekg(wep_pos + 456, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 456, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        stat = dist_82(aGen);
+                        enzon.seekg(wep_pos + 457, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 457, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                    }
                 }
                 enzon.seekg(wep_pos + 460, ios::beg);
                 stat_loc = enzon.tellg();
                 to_ass = enzon.get();
-                if (to_ass > 0) {
-                    stat = dist_83(aGen);
-                    enzon.seekg(wep_pos + 460, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 460, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    stat -= 222;
-                    enzon.seekg(wep_pos + 462, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 462, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    stat = dist_84(aGen);
-                    enzon.seekg(wep_pos + 465, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 465, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    stat = dist_85(aGen);
-                    enzon.seekg(wep_pos + 466, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 466, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    stat = dist_86(aGen);
-                    enzon.seekg(wep_pos + 467, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 467, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                            stat = 0;
-                        }
-                        else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
-                            dist_20 = std::uniform_int_distribution<>(0, 15);
-                            stat = dist_20(aGen);
-                        }
-                        else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                dist_20 = std::uniform_int_distribution<>(236, 255);
-                                stat = dist_20(aGen);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 20);
-                                stat = dist_20(aGen);
-                            }
-                        }
-                        else {
-                            dist_20 = std::uniform_int_distribution<>(0, 20);
-                            stat = dist_20(aGen);
-                        }
+                has_equip = to_ass;
+                if (baseEquDecision == "Y") {
+                    if (has_equip > 0) {
+                        stat = dist_83(aGen);
+                        enzon.seekg(wep_pos + 460, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 460, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        stat -= 222;
+                        enzon.seekg(wep_pos + 462, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 462, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        stat = dist_84(aGen);
+                        enzon.seekg(wep_pos + 465, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 465, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        stat = dist_85(aGen);
+                        enzon.seekg(wep_pos + 466, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 466, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        stat = dist_86(aGen);
+                        enzon.seekg(wep_pos + 467, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 467, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
                     }
-                    else {
-                        stat = dist_87(aGen);
-                    }
-                    enzon.seekg(wep_pos + 489, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 489, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                            stat = 0;
-                        }
-                        else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
-                            dist_20 = std::uniform_int_distribution<>(0, 15);
-                            stat = dist_20(aGen);
-                        }
-                        else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                dist_20 = std::uniform_int_distribution<>(236, 255);
-                                stat = dist_20(aGen);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 20);
-                                stat = dist_20(aGen);
-                            }
-                        }
-                        else {
-                            dist_20 = std::uniform_int_distribution<>(0, 20);
-                            stat = dist_20(aGen);
-                        }
-                    }
-                    else {
-                        stat = dist_88(aGen);
-                    }
-                    enzon.seekg(wep_pos + 490, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 490, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                            stat = 0;
-                        }
-                        else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
-                            dist_20 = std::uniform_int_distribution<>(0, 15);
-                            stat = dist_20(aGen);
-                        }
-                        else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                dist_20 = std::uniform_int_distribution<>(236, 255);
-                                stat = dist_20(aGen);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 20);
-                                stat = dist_20(aGen);
-                            }
-                        }
-                        else {
-                            dist_20 = std::uniform_int_distribution<>(0, 20);
-                            stat = dist_20(aGen);
-                        }
-                    }
-                    else {
-                        stat = dist_89(aGen);
-                    }
-                    enzon.seekg(wep_pos + 491, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 491, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 10);
-                            }
-                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 15);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 30);
-                            }
-                        }
-                        else {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND" || *ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(246, 255);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(244, 255);
-                            }
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_90(aGen);
-                    }
-                    enzon.seekg(wep_pos + 492, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 492, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 10);
-                            }
-                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 15);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 30);
-                            }
-                        }
-                        else {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND" || *ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(246, 255);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(244, 255);
-                            }
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_91(aGen);
-                    }
-                    enzon.seekg(wep_pos + 493, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 493, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 10);
-                            }
-                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 15);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 30);
-                            }
-                        }
-                        else {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND" || *ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(246, 255);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(244, 255);
-                            }
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_92(aGen);
-                    }
-                    enzon.seekg(wep_pos + 494, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 494, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 10);
-                            }
-                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 15);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 30);
-                            }
-                        }
-                        else {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND" || *ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(246, 255);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(244, 255);
-                            }
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_93(aGen);
-                    }
-                    enzon.seekg(wep_pos + 495, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 495, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 10);
-                            }
-                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 15);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 30);
-                            }
-                        }
-                        else {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND" || *ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(246, 255);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(244, 255);
-                            }
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_94(aGen);
-                    }
-                    enzon.seekg(wep_pos + 496, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 496, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 10);
-                            }
-                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 15);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 30);
-                            }
-                        }
-                        else {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND" || *ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(246, 255);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(244, 255);
-                            }
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_95(aGen);
-                    }
-                    enzon.seekg(wep_pos + 497, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 497, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 10);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 30);
-                            }
-                        }
-                        else {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(251, 255);
-                            }
-                            else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(231, 255);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(246, 255);
-                            }
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_96(aGen);
-                    }
-                    enzon.seekg(wep_pos + 500, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 500, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 10);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 30);
-                            }
-                        }
-                        else {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(251, 255);
-                            }
-                            else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(231, 255);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(246, 255);
-                            }
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_97(aGen);
-                    }
-                    enzon.seekg(wep_pos + 501, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 501, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 10);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 30);
-                            }
-                        }
-                        else {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(251, 255);
-                            }
-                            else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(231, 255);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(246, 255);
-                            }
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_98(aGen);
-                    }
-                    enzon.seekg(wep_pos + 502, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 502, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 10);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 30);
-                            }
-                        }
-                        else {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(251, 255);
-                            }
-                            else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(231, 255);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(246, 255);
-                            }
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_99(aGen);
-                    }
-                    enzon.seekg(wep_pos + 503, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 503, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 10);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 30);
-                            }
-                        }
-                        else {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(251, 255);
-                            }
-                            else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(231, 255);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(246, 255);
-                            }
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_100(aGen);
-                    }
-                    enzon.seekg(wep_pos + 504, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 504, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 10);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 30);
-                            }
-                        }
-                        else {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(251, 255);
-                            }
-                            else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(231, 255);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(246, 255);
-                            }
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_101(aGen);
-                    }
-                    enzon.seekg(wep_pos + 505, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 505, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 10);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 30);
-                            }
-                        }
-                        else {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(251, 255);
-                            }
-                            else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(231, 255);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(246, 255);
-                            }
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_102(aGen);
-                    }
-                    enzon.seekg(wep_pos + 506, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 506, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    stat = dist_103(aGen);
-                    enzon.seekg(wep_pos + 508, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + 508, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
+
                 }
-                loop_diff = 513;
-                for (int i = 0; i < 6; i++) {
-                    if (i == 0 || i == 1) {
-                        dist_104 = std::uniform_int_distribution<>(0, (ene_hp_stat / 2));
+                if (BEPDecision == "Y") {
+                    if (has_equip > 0) {
+                        if (balDecision == "Y") {
+                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                stat = 0;
+                            }
+                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
+                                dist_20 = std::uniform_int_distribution<>(0, 15);
+                                stat = dist_20(aGen);
+                            }
+                            else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    dist_20 = std::uniform_int_distribution<>(236, 255);
+                                    stat = dist_20(aGen);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(0, 20);
+                                    stat = dist_20(aGen);
+                                }
+                            }
+                            else {
+                                dist_20 = std::uniform_int_distribution<>(0, 20);
+                                stat = dist_20(aGen);
+                            }
+                        }
+                        else {
+                            stat = dist_87(aGen);
+                        }
+                        enzon.seekg(wep_pos + 489, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 489, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        if (balDecision == "Y") {
+                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                stat = 0;
+                            }
+                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
+                                dist_20 = std::uniform_int_distribution<>(0, 15);
+                                stat = dist_20(aGen);
+                            }
+                            else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    dist_20 = std::uniform_int_distribution<>(236, 255);
+                                    stat = dist_20(aGen);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(0, 20);
+                                    stat = dist_20(aGen);
+                                }
+                            }
+                            else {
+                                dist_20 = std::uniform_int_distribution<>(0, 20);
+                                stat = dist_20(aGen);
+                            }
+                        }
+                        else {
+                            stat = dist_88(aGen);
+                        }
+                        enzon.seekg(wep_pos + 490, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 490, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        if (balDecision == "Y") {
+                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                stat = 0;
+                            }
+                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
+                                dist_20 = std::uniform_int_distribution<>(0, 15);
+                                stat = dist_20(aGen);
+                            }
+                            else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    dist_20 = std::uniform_int_distribution<>(236, 255);
+                                    stat = dist_20(aGen);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(0, 20);
+                                    stat = dist_20(aGen);
+                                }
+                            }
+                            else {
+                                dist_20 = std::uniform_int_distribution<>(0, 20);
+                                stat = dist_20(aGen);
+                            }
+                        }
+                        else {
+                            stat = dist_89(aGen);
+                        }
+                        enzon.seekg(wep_pos + 491, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 491, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
                     }
-                    else if (i == 2) {
-                        dist_104 = std::uniform_int_distribution<>(0, (ene_hp_stat / 3));
+                }
+                if (classDecision == "Y") {
+                    if (has_equip > 0) {
+                        if (balDecision == "Y") {
+                            stat = dist_11(aGen);
+                            if (stat == 1) {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 10);
+                                }
+                                else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 15);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                }
+                            }
+                            else {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND" || *ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(246, 255);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(244, 255);
+                                }
+                            }
+                            stat = dist_20(aGen);
+                        }
+                        else {
+                            stat = dist_90(aGen);
+                        }
+                        enzon.seekg(wep_pos + 492, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 492, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        if (balDecision == "Y") {
+                            stat = dist_11(aGen);
+                            if (stat == 1) {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 10);
+                                }
+                                else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 15);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                }
+                            }
+                            else {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND" || *ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(246, 255);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(244, 255);
+                                }
+                            }
+                            stat = dist_20(aGen);
+                        }
+                        else {
+                            stat = dist_91(aGen);
+                        }
+                        enzon.seekg(wep_pos + 493, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 493, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        if (balDecision == "Y") {
+                            stat = dist_11(aGen);
+                            if (stat == 1) {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 10);
+                                }
+                                else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 15);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                }
+                            }
+                            else {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND" || *ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(246, 255);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(244, 255);
+                                }
+                            }
+                            stat = dist_20(aGen);
+                        }
+                        else {
+                            stat = dist_92(aGen);
+                        }
+                        enzon.seekg(wep_pos + 494, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 494, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        if (balDecision == "Y") {
+                            stat = dist_11(aGen);
+                            if (stat == 1) {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 10);
+                                }
+                                else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 15);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                }
+                            }
+                            else {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND" || *ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(246, 255);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(244, 255);
+                                }
+                            }
+                            stat = dist_20(aGen);
+                        }
+                        else {
+                            stat = dist_93(aGen);
+                        }
+                        enzon.seekg(wep_pos + 495, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 495, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        if (balDecision == "Y") {
+                            stat = dist_11(aGen);
+                            if (stat == 1) {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 10);
+                                }
+                                else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 15);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                }
+                            }
+                            else {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND" || *ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(246, 255);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(244, 255);
+                                }
+                            }
+                            stat = dist_20(aGen);
+                        }
+                        else {
+                            stat = dist_94(aGen);
+                        }
+                        enzon.seekg(wep_pos + 496, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 496, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        if (balDecision == "Y") {
+                            stat = dist_11(aGen);
+                            if (stat == 1) {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 10);
+                                }
+                                else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 15);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                }
+                            }
+                            else {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND" || *ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(246, 255);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(244, 255);
+                                }
+                            }
+                            stat = dist_20(aGen);
+                        }
+                        else {
+                            stat = dist_95(aGen);
+                        }
+                        enzon.seekg(wep_pos + 497, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 497, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
                     }
-                    else if (i == 3) {
-                        dist_104 = std::uniform_int_distribution<>(0, ene_hp_stat / (100 / 75));
+                }
+                if (affDecision == "Y") {
+                    if (has_equip > 0) {
+                        if (balDecision == "Y") {
+                            stat = dist_11(aGen);
+                            if (stat == 1) {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 10);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                }
+                            }
+                            else {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(251, 255);
+                                }
+                                else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(231, 255);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(246, 255);
+                                }
+                            }
+                            stat = dist_20(aGen);
+                        }
+                        else {
+                            stat = dist_96(aGen);
+                        }
+                        enzon.seekg(wep_pos + 500, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 500, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        if (balDecision == "Y") {
+                            stat = dist_11(aGen);
+                            if (stat == 1) {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 10);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                }
+                            }
+                            else {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(251, 255);
+                                }
+                                else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(231, 255);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(246, 255);
+                                }
+                            }
+                            stat = dist_20(aGen);
+                        }
+                        else {
+                            stat = dist_97(aGen);
+                        }
+                        enzon.seekg(wep_pos + 501, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 501, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        if (balDecision == "Y") {
+                            stat = dist_11(aGen);
+                            if (stat == 1) {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 10);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                }
+                            }
+                            else {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(251, 255);
+                                }
+                                else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(231, 255);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(246, 255);
+                                }
+                            }
+                            stat = dist_20(aGen);
+                        }
+                        else {
+                            stat = dist_98(aGen);
+                        }
+                        enzon.seekg(wep_pos + 502, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 502, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        if (balDecision == "Y") {
+                            stat = dist_11(aGen);
+                            if (stat == 1) {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 10);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                }
+                            }
+                            else {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(251, 255);
+                                }
+                                else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(231, 255);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(246, 255);
+                                }
+                            }
+                            stat = dist_20(aGen);
+                        }
+                        else {
+                            stat = dist_99(aGen);
+                        }
+                        enzon.seekg(wep_pos + 503, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 503, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        if (balDecision == "Y") {
+                            stat = dist_11(aGen);
+                            if (stat == 1) {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 10);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                }
+                            }
+                            else {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(251, 255);
+                                }
+                                else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(231, 255);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(246, 255);
+                                }
+                            }
+                            stat = dist_20(aGen);
+                        }
+                        else {
+                            stat = dist_100(aGen);
+                        }
+                        enzon.seekg(wep_pos + 504, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 504, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        if (balDecision == "Y") {
+                            stat = dist_11(aGen);
+                            if (stat == 1) {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 10);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                }
+                            }
+                            else {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(251, 255);
+                                }
+                                else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(231, 255);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(246, 255);
+                                }
+                            }
+                            stat = dist_20(aGen);
+                        }
+                        else {
+                            stat = dist_101(aGen);
+                        }
+                        enzon.seekg(wep_pos + 505, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 505, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        if (balDecision == "Y") {
+                            stat = dist_11(aGen);
+                            if (stat == 1) {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(0, 10);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(0, 30);
+                                }
+                            }
+                            else {
+                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(251, 255);
+                                }
+                                else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                    dist_20 = std::uniform_int_distribution<>(231, 255);
+                                }
+                                else {
+                                    dist_20 = std::uniform_int_distribution<>(246, 255);
+                                }
+                            }
+                            stat = dist_20(aGen);
+                        }
+                        else {
+                            stat = dist_102(aGen);
+                        }
+                        enzon.seekg(wep_pos + 506, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 506, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
                     }
-                    else if (i == 4) {
-                        dist_104 = std::uniform_int_distribution<>(0, ene_hp_stat / (100 / 60));
+                }
+                if (baseEquDecision == "Y") {
+                    if (has_equip > 0) {
+                        stat = dist_103(aGen);
+                        enzon.seekg(wep_pos + 508, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + 508, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
                     }
-                    else if (i == 5) {
+                }
+                if (appenDecision == "Y") {
+                    loop_diff = 513;
+                    for (int i = 0; i < 6; i++) {
+                        if (i == 0 || i == 1) {
+                            dist_104 = std::uniform_int_distribution<>(0, (ene_hp_stat / 2));
+                        }
+                        else if (i == 2) {
+                            dist_104 = std::uniform_int_distribution<>(0, (ene_hp_stat / 3));
+                        }
+                        else if (i == 3) {
+                            dist_104 = std::uniform_int_distribution<>(0, ene_hp_stat / (100 / 75));
+                        }
+                        else if (i == 4) {
+                            dist_104 = std::uniform_int_distribution<>(0, ene_hp_stat / (100 / 60));
+                        }
+                        else if (i == 5) {
+                            enzon.seekg(wep_pos + loop_diff, ios::beg);
+                            stat_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            enzon.seekg(wep_pos + loop_diff + 1, ios::beg);
+                            stat_loc = enzon.tellg();
+                            to_ass2 = enzon.get();
+                            if (to_ass == 0 && to_ass2 == 0) {
+                                break;
+                            }
+                            else {
+                                dist_104 = std::uniform_int_distribution<>(0, ene_hp_stat / (100 / 30));
+                            }
+                        }
+                        stat = dist_104(aGen);
+                        sprintf_s(rand_hp, "%X", stat);
+                        ss_rand_hp << rand_hp;
+                        ss_rand_hp >> s_rand_hp;
+                        ss_rand_hp.clear();
+                        hs_rand_hp << std::hex << s_rand_hp;
+                        hs_rand_hp >> int_rand_hp;
+                        hs_rand_hp.clear();
+                        s1 = "0";
+                        if (stat > 255) {
+                            s2 = s_rand_hp.at(0);
+                            s3 = s_rand_hp.at(1);
+                            s4 = s_rand_hp.at(2);
+                        }
+                        else if (stat > 16) {
+                            s2 = "0";
+                            s3 = s_rand_hp.at(0);
+                            s4 = s_rand_hp.at(1);
+                        }
+                        else {
+                            s2 = "0";
+                            s3 = "0";
+                            s4 = s_rand_hp.at(0);
+                        }
+                        s_rand_hp2 = s1 + s2;
+                        s_rand_hp1 = s3 + s4;
+                        fin_rand_hp << std::hex << s_rand_hp2;
+                        fin_rand_hp >> stat;
+                        fin_rand_hp.clear();
                         enzon.seekg(wep_pos + loop_diff, ios::beg);
                         stat_loc = enzon.tellg();
                         to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + loop_diff, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        fin_rand_hp << std::hex << s_rand_hp1;
+                        fin_rand_hp >> stat;
+                        fin_rand_hp.clear();
+                        enzon.seekg(wep_pos + loop_diff - 1, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + loop_diff - 1, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        stat = dist_105(aGen);
                         enzon.seekg(wep_pos + loop_diff + 1, ios::beg);
                         stat_loc = enzon.tellg();
-                        to_ass2 = enzon.get();
-                        if (to_ass == 0 && to_ass2 == 0) {
-                            break;
-                        }
-                        else {
-                            dist_104 = std::uniform_int_distribution<>(0, ene_hp_stat / (100 / 30));
-                        }
-                    }
-                    stat = dist_104(aGen);
-                    sprintf_s(rand_hp, "%X", stat);
-                    ss_rand_hp << rand_hp;
-                    ss_rand_hp >> s_rand_hp;
-                    ss_rand_hp.clear();
-                    hs_rand_hp << std::hex << s_rand_hp;
-                    hs_rand_hp >> int_rand_hp;
-                    hs_rand_hp.clear();
-                    s1 = "0";
-                    if (stat > 255) {
-                        s2 = s_rand_hp.at(0);
-                        s3 = s_rand_hp.at(1);
-                        s4 = s_rand_hp.at(2);
-                    }
-                    else if (stat > 16) {
-                        s2 = "0";
-                        s3 = s_rand_hp.at(0);
-                        s4 = s_rand_hp.at(1);
-                    }
-                    else {
-                        s2 = "0";
-                        s3 = "0";
-                        s4 = s_rand_hp.at(0);
-                    }
-                    s_rand_hp2 = s1 + s2;
-                    s_rand_hp1 = s3 + s4;
-                    fin_rand_hp << std::hex << s_rand_hp2;
-                    fin_rand_hp >> stat;
-                    fin_rand_hp.clear();
-                    enzon.seekg(wep_pos + loop_diff, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + loop_diff, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    fin_rand_hp << std::hex << s_rand_hp1;
-                    fin_rand_hp >> stat;
-                    fin_rand_hp.clear();
-                    enzon.seekg(wep_pos + loop_diff - 1, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + loop_diff - 1, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    stat = dist_105(aGen);
-                    enzon.seekg(wep_pos + loop_diff + 1, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + loop_diff + 1, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    stat = dist_106(aGen);
-                    enzon.seekg(wep_pos + loop_diff + 2, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + loop_diff + 2, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 35);
-                            }
-                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 38);
-                            }      
-                            else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 60);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 55);
-                            }
-                        }
-                        else {
-                            dist_20 = std::uniform_int_distribution<>(226, 255);
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_107(aGen);
-                    }
-                    enzon.seekg(wep_pos + loop_diff + 4, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + loop_diff + 4, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 35);
-                            }
-                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 38);
-                            }
-                            else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 60);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 55);
-                            }
-                        }
-                        else {
-                            dist_20 = std::uniform_int_distribution<>(226, 255);
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_108(aGen);
-                    }
-                    enzon.seekg(wep_pos + loop_diff + 5, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + loop_diff + 5, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 35);
-                            }
-                            else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 38);
-                            }
-                            else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 60);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 55);
-                            }
-                        }
-                        else {
-                            dist_20 = std::uniform_int_distribution<>(226, 255);
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_109(aGen);
-                    }
-                    enzon.seekg(wep_pos + loop_diff + 6, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + loop_diff + 6, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 75);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 100);
-                            }
-                        }
-                        else {
-                            dist_20 = std::uniform_int_distribution<>(223, 255);
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_110(aGen);
-                    }
-                    enzon.seekg(wep_pos + loop_diff + 7, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + loop_diff + 7, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 75);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 100);
-                            }
-                        }
-                        else {
-                            dist_20 = std::uniform_int_distribution<>(223, 255);
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_111(aGen);
-                    }
-                    enzon.seekg(wep_pos + loop_diff + 8, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + loop_diff + 8, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 75);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 100);
-                            }
-                        }
-                        else {
-                            dist_20 = std::uniform_int_distribution<>(223, 255);
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_112(aGen);
-                    }
-                    enzon.seekg(wep_pos + loop_diff + 9, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + loop_diff + 9, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 75);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 100);
-                            }
-                        }
-                        else {
-                            dist_20 = std::uniform_int_distribution<>(223, 255);
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_113(aGen);
-                    }
-                    enzon.seekg(wep_pos + loop_diff + 10, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + loop_diff + 10, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 75);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 100);
-                            }
-                        }
-                        else {
-                            dist_20 = std::uniform_int_distribution<>(223, 255);
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_114(aGen);
-                    }
-                    enzon.seekg(wep_pos + loop_diff + 11, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + loop_diff + 11, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 75);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 100);
-                            }
-                        }
-                        else {
-                            dist_20 = std::uniform_int_distribution<>(223, 255);
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_115(aGen);
-                    }
-                    enzon.seekg(wep_pos + loop_diff + 12, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + loop_diff + 12, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    if (balDecision == "Y") {
-                        stat = dist_11(aGen);
-                        if (stat == 1) {
-                            if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                dist_20 = std::uniform_int_distribution<>(0, 75);
-                            }
-                            else {
-                                dist_20 = std::uniform_int_distribution<>(0, 100);
-                            }
-                        }
-                        else {
-                            dist_20 = std::uniform_int_distribution<>(223, 255);
-                        }
-                        stat = dist_20(aGen);
-                    }
-                    else {
-                        stat = dist_116(aGen);
-                    }
-                    enzon.seekg(wep_pos + loop_diff + 13, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    ch_val = new char(stat);
-                    enzon.seekp(wep_pos + loop_diff + 13, ios::beg);
-                    enzon.write(ch_val, 1);
-                    delete ch_val;
-                    enzon.seekg(wep_pos + loop_diff + 35, ios::beg);
-                    stat_loc = enzon.tellg();
-                    to_ass = enzon.get();
-                    if (to_ass > 0) {
-                        if (i == 0 || i == 1) {
-                            stat = dist_117(aGen);
-                        }
-                        else if (i == 2) {
-                            stat = dist_137(aGen);
-                        }
-                        else if (i == 3) {
-                            stat = dist_138(aGen);
-                        }
-                        else if (i == 4) {
-                            stat = dist_139(aGen);
-                        }
-                        enzon.seekg(wep_pos + loop_diff + 31, ios::beg);
+                        to_ass = enzon.get();
+                        ch_val = new char(stat);
+                        enzon.seekp(wep_pos + loop_diff + 1, ios::beg);
+                        enzon.write(ch_val, 1);
+                        delete ch_val;
+                        stat = dist_106(aGen);
+                        enzon.seekg(wep_pos + loop_diff + 2, ios::beg);
                         stat_loc = enzon.tellg();
                         to_ass = enzon.get();
                         ch_val = new char(stat);
-                        enzon.seekp(wep_pos + loop_diff + 31, ios::beg);
+                        enzon.seekp(wep_pos + loop_diff + 2, ios::beg);
                         enzon.write(ch_val, 1);
                         delete ch_val;
-                        stat -= 126;
-                        enzon.seekg(wep_pos + loop_diff + 33, ios::beg);
-                        stat_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + loop_diff + 33, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (i != 3) {
-                            stat = dist_118(aGen);
-                        }
-                        else {
-                            stat = dist_140(aGen);
-                        }
-                        enzon.seekg(wep_pos + loop_diff + 36, ios::beg);
-                        stat_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + loop_diff + 36, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (i != 3) {
-                            stat = dist_119(aGen);
-                        }
-                        else {
-                            stat = dist_141(aGen);
-                        }
-                        enzon.seekg(wep_pos + loop_diff + 37, ios::beg);
-                        stat_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + loop_diff + 37, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                stat = 0;
-                            }
-                            else {
-                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(253, 255);
+                        if (BEPDecision == "Y") {
+                            if (balDecision == "Y") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 35);
+                                    }
+                                    else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 38);
+                                    }
+                                    else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 60);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(0, 55);
+                                    }
                                 }
                                 else {
-                                    dist_20 = std::uniform_int_distribution<>(252, 255);
+                                    dist_20 = std::uniform_int_distribution<>(226, 255);
                                 }
                                 stat = dist_20(aGen);
                             }
-                        }
-                        else {
-                            stat = dist_120(aGen);
-                        }
-                        enzon.seekg(wep_pos + loop_diff + 38, ios::beg);
-                        stat_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + loop_diff + 38, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        stat = dist_67(aGen) * 100;
-                        sprintf_s(rand_dpm, "%X", stat);
-                        ss_rand_dpm << rand_dpm;
-                        ss_rand_dpm >> s_rand_dpm;
-                        ss_rand_dpm.clear();
-                        hs_rand_dpm << std::hex << s_rand_dpm;
-                        hs_rand_dpm >> int_rand_dpm;
-                        hs_rand_dpm.clear();
-                        dist_68 = std::uniform_int_distribution<>(41, round(int_rand_dpm / 100));
-                        stat = dist_68(aGen) * 100;
-                        sprintf_s(rand_dp, "%X", stat);
-                        ss_rand_dp << rand_dp;
-                        ss_rand_dp >> s_rand_dp;
-                        ss_rand_dp.clear();
-                        s1 = s_rand_dpm.at(0);
-                        s2 = s_rand_dpm.at(1);
-                        s3 = s_rand_dpm.at(2);
-                        s4 = s_rand_dpm.at(3);
-                        s_rand_dpm_1 = s1 + s2;
-                        s_rand_dpm_2 = s3 + s4;
-                        s1 = s_rand_dp.at(0);
-                        s2 = s_rand_dp.at(1);
-                        s3 = s_rand_dp.at(2);
-                        s4 = s_rand_dp.at(3);
-                        s_rand_dp_1 = s1 + s2;
-                        s_rand_dp_2 = s3 + s4;
-                        rand_dpm_fin << std::hex << s_rand_dpm_1;
-                        rand_dpm_fin >> stat;
-                        rand_dpm_fin.clear();
-                        enzon.seekg(wep_pos + loop_diff + 40, ios::beg);
-                        map_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + loop_diff + 40, ios::beg);
-                        enzon.write(ch_val, 1);
-                        enzon.seekg(wep_pos + loop_diff + 42, ios::beg);
-                        map_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + loop_diff + 42, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        rand_dpm_fin << std::hex << s_rand_dpm_2;
-                        rand_dpm_fin >> stat;
-                        rand_dpm_fin.clear();
-                        enzon.seekg(wep_pos + loop_diff + 39, ios::beg);
-                        map_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + loop_diff + 39, ios::beg);
-                        enzon.write(ch_val, 1);
-                        enzon.seekg(wep_pos + loop_diff + 41, ios::beg);
-                        map_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + loop_diff + 41, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        stat = dist_121(aGen);
-                        enzon.seekg(wep_pos + loop_diff + 60, ios::beg);
-                        stat_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + loop_diff + 60, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        stat = dist_122(aGen);
-                        enzon.seekg(wep_pos + loop_diff + 61, ios::beg);
-                        stat_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + loop_diff + 61, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        stat = dist_123(aGen);
-                        enzon.seekg(wep_pos + loop_diff + 62, ios::beg);
-                        stat_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + loop_diff + 62, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 1);
-                                }
-                                else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 20);
-                                }
-                                else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 27);
+                            else {
+                                stat = dist_107(aGen);
+                            }
+                            enzon.seekg(wep_pos + loop_diff + 4, ios::beg);
+                            stat_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + loop_diff + 4, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 35);
+                                    }
+                                    else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 38);
+                                    }
+                                    else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 60);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(0, 55);
+                                    }
                                 }
                                 else {
-                                    dist_20 = std::uniform_int_distribution<>(0, 24);
+                                    dist_20 = std::uniform_int_distribution<>(226, 255);
                                 }
+                                stat = dist_20(aGen);
                             }
                             else {
-                                dist_20 = std::uniform_int_distribution<>(251, 255);
+                                stat = dist_108(aGen);
                             }
-                            stat = dist_20(aGen);
-                        }
-                        else {
-                            stat = dist_124(aGen);
-                        }
-                        enzon.seekg(wep_pos + loop_diff + 63, ios::beg);
-                        stat_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + loop_diff + 63, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 1);
-                                }
-                                else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 20);
-                                }
-                                else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 27);
+                            enzon.seekg(wep_pos + loop_diff + 5, ios::beg);
+                            stat_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + loop_diff + 5, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 35);
+                                    }
+                                    else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 38);
+                                    }
+                                    else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 60);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(0, 55);
+                                    }
                                 }
                                 else {
-                                    dist_20 = std::uniform_int_distribution<>(0, 24);
+                                    dist_20 = std::uniform_int_distribution<>(226, 255);
                                 }
+                                stat = dist_20(aGen);
                             }
                             else {
-                                dist_20 = std::uniform_int_distribution<>(251, 255);
+                                stat = dist_109(aGen);
                             }
-                            stat = dist_20(aGen);
+                            enzon.seekg(wep_pos + loop_diff + 6, ios::beg);
+                            stat_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + loop_diff + 6, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
                         }
-                        else {
-                            stat = dist_125(aGen);
-                        }
-                        enzon.seekg(wep_pos + loop_diff + 64, ios::beg);
-                        stat_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + loop_diff + 64, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 1);
-                                }
-                                else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 20);
-                                }
-                                else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 27);
+                        if (affDecision == "Y") {
+                            if (balDecision == "Y") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 75);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(0, 100);
+                                    }
                                 }
                                 else {
-                                    dist_20 = std::uniform_int_distribution<>(0, 24);
+                                    dist_20 = std::uniform_int_distribution<>(223, 255);
                                 }
+                                stat = dist_20(aGen);
                             }
                             else {
-                                dist_20 = std::uniform_int_distribution<>(251, 255);
+                                stat = dist_110(aGen);
                             }
-                            stat = dist_20(aGen);
-                        }
-                        else {
-                            stat = dist_126(aGen);
-                        }
-                        enzon.seekg(wep_pos + loop_diff + 65, ios::beg);
-                        stat_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + loop_diff + 65, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 1);
-                                }
-                                else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 20);
-                                }
-                                else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 27);
+                            enzon.seekg(wep_pos + loop_diff + 7, ios::beg);
+                            stat_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + loop_diff + 7, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 75);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(0, 100);
+                                    }
                                 }
                                 else {
-                                    dist_20 = std::uniform_int_distribution<>(0, 24);
+                                    dist_20 = std::uniform_int_distribution<>(223, 255);
                                 }
+                                stat = dist_20(aGen);
                             }
                             else {
-                                dist_20 = std::uniform_int_distribution<>(251, 255);
+                                stat = dist_111(aGen);
                             }
-                            stat = dist_20(aGen);
-                        }
-                        else {
-                            stat = dist_127(aGen);
-                        }
-                        enzon.seekg(wep_pos + loop_diff + 66, ios::beg);
-                        stat_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + loop_diff + 66, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 1);
-                                }
-                                else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 20);
-                                }
-                                else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 27);
+                            enzon.seekg(wep_pos + loop_diff + 8, ios::beg);
+                            stat_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + loop_diff + 8, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 75);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(0, 100);
+                                    }
                                 }
                                 else {
-                                    dist_20 = std::uniform_int_distribution<>(0, 24);
+                                    dist_20 = std::uniform_int_distribution<>(223, 255);
                                 }
+                                stat = dist_20(aGen);
                             }
                             else {
-                                dist_20 = std::uniform_int_distribution<>(251, 255);
+                                stat = dist_112(aGen);
                             }
-                            stat = dist_20(aGen);
-                        }
-                        else {
-                            stat = dist_128(aGen);
-                        }
-                        enzon.seekg(wep_pos + loop_diff + 67, ios::beg);
-                        stat_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + loop_diff + 67, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 1);
-                                }
-                                else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 20);
-                                }
-                                else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 27);
+                            enzon.seekg(wep_pos + loop_diff + 9, ios::beg);
+                            stat_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + loop_diff + 9, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 75);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(0, 100);
+                                    }
                                 }
                                 else {
-                                    dist_20 = std::uniform_int_distribution<>(0, 24);
+                                    dist_20 = std::uniform_int_distribution<>(223, 255);
                                 }
+                                stat = dist_20(aGen);
                             }
                             else {
-                                dist_20 = std::uniform_int_distribution<>(251, 255);
+                                stat = dist_113(aGen);
                             }
-                            stat = dist_20(aGen);
-                        }
-                        else {
-                            stat = dist_129(aGen);
-                        }
-                        enzon.seekg(wep_pos + loop_diff + 68, ios::beg);
-                        stat_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + loop_diff + 68, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 10);
-                                }
-                                else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 24);
+                            enzon.seekg(wep_pos + loop_diff + 10, ios::beg);
+                            stat_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + loop_diff + 10, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 75);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(0, 100);
+                                    }
                                 }
                                 else {
-                                    dist_20 = std::uniform_int_distribution<>(0, 23);
+                                    dist_20 = std::uniform_int_distribution<>(223, 255);
                                 }
+                                stat = dist_20(aGen);
                             }
                             else {
-                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(251, 255);
-                                }
-                                else {
-                                    dist_20 = std::uniform_int_distribution<>(239, 255);
-                                }
+                                stat = dist_114(aGen);
                             }
-                            stat = dist_20(aGen);
-                        }
-                        else {
-                            stat = dist_130(aGen);
-                        }
-                        enzon.seekg(wep_pos + loop_diff + 71, ios::beg);
-                        stat_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + loop_diff + 71, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 10);
-                                }
-                                else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 24);
+                            enzon.seekg(wep_pos + loop_diff + 11, ios::beg);
+                            stat_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + loop_diff + 11, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 75);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(0, 100);
+                                    }
                                 }
                                 else {
-                                    dist_20 = std::uniform_int_distribution<>(0, 23);
+                                    dist_20 = std::uniform_int_distribution<>(223, 255);
                                 }
+                                stat = dist_20(aGen);
                             }
                             else {
-                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(251, 255);
-                                }
-                                else {
-                                    dist_20 = std::uniform_int_distribution<>(239, 255);
-                                }
+                                stat = dist_115(aGen);
                             }
-                            stat = dist_20(aGen);
-                        }
-                        else {
-                            stat = dist_131(aGen);
-                        }
-                        enzon.seekg(wep_pos + loop_diff + 72, ios::beg);
-                        stat_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + loop_diff + 72, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 10);
-                                }
-                                else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 24);
+                            enzon.seekg(wep_pos + loop_diff + 12, ios::beg);
+                            stat_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + loop_diff + 12, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
+                            if (balDecision == "Y") {
+                                stat = dist_11(aGen);
+                                if (stat == 1) {
+                                    if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                        dist_20 = std::uniform_int_distribution<>(0, 75);
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(0, 100);
+                                    }
                                 }
                                 else {
-                                    dist_20 = std::uniform_int_distribution<>(0, 23);
+                                    dist_20 = std::uniform_int_distribution<>(223, 255);
                                 }
+                                stat = dist_20(aGen);
                             }
                             else {
-                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(251, 255);
-                                }
-                                else {
-                                    dist_20 = std::uniform_int_distribution<>(239, 255);
-                                }
+                                stat = dist_116(aGen);
                             }
-                            stat = dist_20(aGen);
+                            enzon.seekg(wep_pos + loop_diff + 13, ios::beg);
+                            stat_loc = enzon.tellg();
+                            to_ass = enzon.get();
+                            ch_val = new char(stat);
+                            enzon.seekp(wep_pos + loop_diff + 13, ios::beg);
+                            enzon.write(ch_val, 1);
+                            delete ch_val;
                         }
-                        else {
-                            stat = dist_132(aGen);
-                        }
-                        enzon.seekg(wep_pos + loop_diff + 73, ios::beg);
-                        stat_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + loop_diff + 73, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 10);
-                                }
-                                else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 24);
-                                }
-                                else {
-                                    dist_20 = std::uniform_int_distribution<>(0, 23);
-                                }
-                            }
-                            else {
-                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(251, 255);
-                                }
-                                else {
-                                    dist_20 = std::uniform_int_distribution<>(239, 255);
-                                }
-                            }
-                            stat = dist_20(aGen);
-                        }
-                        else {
-                            stat = dist_133(aGen);
-                        }
-                        enzon.seekg(wep_pos + loop_diff + 74, ios::beg);
-                        stat_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + loop_diff + 74, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 10);
-                                }
-                                else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 24);
-                                }
-                                else {
-                                    dist_20 = std::uniform_int_distribution<>(0, 23);
-                                }
-                            }
-                            else {
-                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(251, 255);
-                                }
-                                else {
-                                    dist_20 = std::uniform_int_distribution<>(239, 255);
-                                }
-                            }
-                            stat = dist_20(aGen);
-                        }
-                        else {
-                            stat = dist_134(aGen);
-                        }
-                        enzon.seekg(wep_pos + loop_diff + 75, ios::beg);
-                        stat_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + loop_diff + 75, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 10);
-                                }
-                                else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 24);
-                                }
-                                else {
-                                    dist_20 = std::uniform_int_distribution<>(0, 23);
-                                }
-                            }
-                            else {
-                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(251, 255);
-                                }
-                                else {
-                                    dist_20 = std::uniform_int_distribution<>(239, 255);
-                                }
-                            }
-                            stat = dist_20(aGen);
-                        }
-                        else {
-                            stat = dist_135(aGen);
-                        }
-                        enzon.seekg(wep_pos + loop_diff + 76, ios::beg);
-                        stat_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + loop_diff + 76, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        if (balDecision == "Y") {
-                            stat = dist_11(aGen);
-                            if (stat == 1) {
-                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 10);
-                                }
-                                else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(0, 24);
-                                }
-                                else {
-                                    dist_20 = std::uniform_int_distribution<>(0, 23);
-                                }
-                            }
-                            else {
-                                if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
-                                    dist_20 = std::uniform_int_distribution<>(251, 255);
-                                }
-                                else {
-                                    dist_20 = std::uniform_int_distribution<>(239, 255);
-                                }
-                            }
-                            stat = dist_20(aGen);
-                        }
-                        else {
-                            stat = dist_136(aGen);
-                        }
-                        enzon.seekg(wep_pos + loop_diff + 77, ios::beg);
-                        stat_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + loop_diff + 77, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        stat = dist_81(aGen);
-                        enzon.seekg(wep_pos + loop_diff + 79, ios::beg);
-                        stat_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + loop_diff + 79, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
-                        stat = dist_82(aGen);
-                        enzon.seekg(wep_pos + loop_diff + 80, ios::beg);
-                        stat_loc = enzon.tellg();
-                        to_ass = enzon.get();
-                        ch_val = new char(stat);
-                        enzon.seekp(wep_pos + loop_diff + 80, ios::beg);
-                        enzon.write(ch_val, 1);
-                        delete ch_val;
+                        loop_diff += 92;
                     }
-                    loop_diff += 92;
                 }
+                if (baseEquDecision == "Y" || BEPDecision == "Y" || classDecision == "Y" || affDecision == "Y") {
+                    loop_diff = 513;
+                    for (int i = 0; i < 6; i++) {
+                        enzon.seekg(wep_pos + loop_diff + 35, ios::beg);
+                        stat_loc = enzon.tellg();
+                        to_ass = enzon.get();
+                        has_equip = to_ass;
+                        if (has_equip > 0) {
+                            if (baseEquDecision == "Y") {
+                                if (i == 0 || i == 1) {
+                                    stat = dist_117(aGen);
+                                }
+                                else if (i == 2) {
+                                    stat = dist_137(aGen);
+                                }
+                                else if (i == 3) {
+                                    stat = dist_138(aGen);
+                                }
+                                else if (i == 4) {
+                                    stat = dist_139(aGen);
+                                }
+                                enzon.seekg(wep_pos + loop_diff + 31, ios::beg);
+                                stat_loc = enzon.tellg();
+                                to_ass = enzon.get();
+                                ch_val = new char(stat);
+                                enzon.seekp(wep_pos + loop_diff + 31, ios::beg);
+                                enzon.write(ch_val, 1);
+                                delete ch_val;
+                                stat -= 126;
+                                enzon.seekg(wep_pos + loop_diff + 33, ios::beg);
+                                stat_loc = enzon.tellg();
+                                to_ass = enzon.get();
+                                ch_val = new char(stat);
+                                enzon.seekp(wep_pos + loop_diff + 33, ios::beg);
+                                enzon.write(ch_val, 1);
+                                delete ch_val;
+                                if (i != 3) {
+                                    stat = dist_118(aGen);
+                                }
+                                else {
+                                    stat = dist_140(aGen);
+                                }
+                                enzon.seekg(wep_pos + loop_diff + 36, ios::beg);
+                                stat_loc = enzon.tellg();
+                                to_ass = enzon.get();
+                                ch_val = new char(stat);
+                                enzon.seekp(wep_pos + loop_diff + 36, ios::beg);
+                                enzon.write(ch_val, 1);
+                                delete ch_val;
+                                if (i != 3) {
+                                    stat = dist_119(aGen);
+                                }
+                                else {
+                                    stat = dist_141(aGen);
+                                }
+                                enzon.seekg(wep_pos + loop_diff + 37, ios::beg);
+                                stat_loc = enzon.tellg();
+                                to_ass = enzon.get();
+                                ch_val = new char(stat);
+                                enzon.seekp(wep_pos + loop_diff + 37, ios::beg);
+                                enzon.write(ch_val, 1);
+                                delete ch_val;
+                                if (balDecision == "Y") {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        stat = 0;
+                                    }
+                                    else {
+                                        if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(253, 255);
+                                        }
+                                        else {
+                                            dist_20 = std::uniform_int_distribution<>(252, 255);
+                                        }
+                                        stat = dist_20(aGen);
+                                    }
+                                }
+                                else {
+                                    stat = dist_120(aGen);
+                                }
+                                enzon.seekg(wep_pos + loop_diff + 38, ios::beg);
+                                stat_loc = enzon.tellg();
+                                to_ass = enzon.get();
+                                ch_val = new char(stat);
+                                enzon.seekp(wep_pos + loop_diff + 38, ios::beg);
+                                enzon.write(ch_val, 1);
+                                delete ch_val;
+                                stat = dist_67(aGen) * 100;
+                                sprintf_s(rand_dpm, "%X", stat);
+                                ss_rand_dpm << rand_dpm;
+                                ss_rand_dpm >> s_rand_dpm;
+                                ss_rand_dpm.clear();
+                                hs_rand_dpm << std::hex << s_rand_dpm;
+                                hs_rand_dpm >> int_rand_dpm;
+                                hs_rand_dpm.clear();
+                                dist_68 = std::uniform_int_distribution<>(41, round(int_rand_dpm / 100));
+                                stat = dist_68(aGen) * 100;
+                                sprintf_s(rand_dp, "%X", stat);
+                                ss_rand_dp << rand_dp;
+                                ss_rand_dp >> s_rand_dp;
+                                ss_rand_dp.clear();
+                                s1 = s_rand_dpm.at(0);
+                                s2 = s_rand_dpm.at(1);
+                                s3 = s_rand_dpm.at(2);
+                                s4 = s_rand_dpm.at(3);
+                                s_rand_dpm_1 = s1 + s2;
+                                s_rand_dpm_2 = s3 + s4;
+                                s1 = s_rand_dp.at(0);
+                                s2 = s_rand_dp.at(1);
+                                s3 = s_rand_dp.at(2);
+                                s4 = s_rand_dp.at(3);
+                                s_rand_dp_1 = s1 + s2;
+                                s_rand_dp_2 = s3 + s4;
+                                rand_dpm_fin << std::hex << s_rand_dpm_1;
+                                rand_dpm_fin >> stat;
+                                rand_dpm_fin.clear();
+                                enzon.seekg(wep_pos + loop_diff + 40, ios::beg);
+                                map_loc = enzon.tellg();
+                                to_ass = enzon.get();
+                                ch_val = new char(stat);
+                                enzon.seekp(wep_pos + loop_diff + 40, ios::beg);
+                                enzon.write(ch_val, 1);
+                                enzon.seekg(wep_pos + loop_diff + 42, ios::beg);
+                                map_loc = enzon.tellg();
+                                to_ass = enzon.get();
+                                ch_val = new char(stat);
+                                enzon.seekp(wep_pos + loop_diff + 42, ios::beg);
+                                enzon.write(ch_val, 1);
+                                delete ch_val;
+                                rand_dpm_fin << std::hex << s_rand_dpm_2;
+                                rand_dpm_fin >> stat;
+                                rand_dpm_fin.clear();
+                                enzon.seekg(wep_pos + loop_diff + 39, ios::beg);
+                                map_loc = enzon.tellg();
+                                to_ass = enzon.get();
+                                ch_val = new char(stat);
+                                enzon.seekp(wep_pos + loop_diff + 39, ios::beg);
+                                enzon.write(ch_val, 1);
+                                enzon.seekg(wep_pos + loop_diff + 41, ios::beg);
+                                map_loc = enzon.tellg();
+                                to_ass = enzon.get();
+                                ch_val = new char(stat);
+                                enzon.seekp(wep_pos + loop_diff + 41, ios::beg);
+                                enzon.write(ch_val, 1);
+                                delete ch_val;
+                            }
+                            if (BEPDecision == "Y") {
+                                stat = dist_121(aGen);
+                                enzon.seekg(wep_pos + loop_diff + 60, ios::beg);
+                                stat_loc = enzon.tellg();
+                                to_ass = enzon.get();
+                                ch_val = new char(stat);
+                                enzon.seekp(wep_pos + loop_diff + 60, ios::beg);
+                                enzon.write(ch_val, 1);
+                                delete ch_val;
+                                stat = dist_122(aGen);
+                                enzon.seekg(wep_pos + loop_diff + 61, ios::beg);
+                                stat_loc = enzon.tellg();
+                                to_ass = enzon.get();
+                                ch_val = new char(stat);
+                                enzon.seekp(wep_pos + loop_diff + 61, ios::beg);
+                                enzon.write(ch_val, 1);
+                                delete ch_val;
+                                stat = dist_123(aGen);
+                                enzon.seekg(wep_pos + loop_diff + 62, ios::beg);
+                                stat_loc = enzon.tellg();
+                                to_ass = enzon.get();
+                                ch_val = new char(stat);
+                                enzon.seekp(wep_pos + loop_diff + 62, ios::beg);
+                                enzon.write(ch_val, 1);
+                                delete ch_val;
+                            }
+                            if (classDecision == "Y") {
+                                if (balDecision == "Y") {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(0, 1);
+                                        }
+                                        else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(0, 20);
+                                        }
+                                        else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(0, 27);
+                                        }
+                                        else {
+                                            dist_20 = std::uniform_int_distribution<>(0, 24);
+                                        }
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(251, 255);
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                                else {
+                                    stat = dist_124(aGen);
+                                }
+                                enzon.seekg(wep_pos + loop_diff + 63, ios::beg);
+                                stat_loc = enzon.tellg();
+                                to_ass = enzon.get();
+                                ch_val = new char(stat);
+                                enzon.seekp(wep_pos + loop_diff + 63, ios::beg);
+                                enzon.write(ch_val, 1);
+                                delete ch_val;
+                                if (balDecision == "Y") {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(0, 1);
+                                        }
+                                        else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(0, 20);
+                                        }
+                                        else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(0, 27);
+                                        }
+                                        else {
+                                            dist_20 = std::uniform_int_distribution<>(0, 24);
+                                        }
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(251, 255);
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                                else {
+                                    stat = dist_125(aGen);
+                                }
+                                enzon.seekg(wep_pos + loop_diff + 64, ios::beg);
+                                stat_loc = enzon.tellg();
+                                to_ass = enzon.get();
+                                ch_val = new char(stat);
+                                enzon.seekp(wep_pos + loop_diff + 64, ios::beg);
+                                enzon.write(ch_val, 1);
+                                delete ch_val;
+                                if (balDecision == "Y") {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(0, 1);
+                                        }
+                                        else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(0, 20);
+                                        }
+                                        else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(0, 27);
+                                        }
+                                        else {
+                                            dist_20 = std::uniform_int_distribution<>(0, 24);
+                                        }
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(251, 255);
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                                else {
+                                    stat = dist_126(aGen);
+                                }
+                                enzon.seekg(wep_pos + loop_diff + 65, ios::beg);
+                                stat_loc = enzon.tellg();
+                                to_ass = enzon.get();
+                                ch_val = new char(stat);
+                                enzon.seekp(wep_pos + loop_diff + 65, ios::beg);
+                                enzon.write(ch_val, 1);
+                                delete ch_val;
+                                if (balDecision == "Y") {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(0, 1);
+                                        }
+                                        else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(0, 20);
+                                        }
+                                        else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(0, 27);
+                                        }
+                                        else {
+                                            dist_20 = std::uniform_int_distribution<>(0, 24);
+                                        }
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(251, 255);
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                                else {
+                                    stat = dist_127(aGen);
+                                }
+                                enzon.seekg(wep_pos + loop_diff + 66, ios::beg);
+                                stat_loc = enzon.tellg();
+                                to_ass = enzon.get();
+                                ch_val = new char(stat);
+                                enzon.seekp(wep_pos + loop_diff + 66, ios::beg);
+                                enzon.write(ch_val, 1);
+                                delete ch_val;
+                                if (balDecision == "Y") {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(0, 1);
+                                        }
+                                        else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(0, 20);
+                                        }
+                                        else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(0, 27);
+                                        }
+                                        else {
+                                            dist_20 = std::uniform_int_distribution<>(0, 24);
+                                        }
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(251, 255);
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                                else {
+                                    stat = dist_128(aGen);
+                                }
+                                enzon.seekg(wep_pos + loop_diff + 67, ios::beg);
+                                stat_loc = enzon.tellg();
+                                to_ass = enzon.get();
+                                ch_val = new char(stat);
+                                enzon.seekp(wep_pos + loop_diff + 67, ios::beg);
+                                enzon.write(ch_val, 1);
+                                delete ch_val;
+                                if (balDecision == "Y") {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(0, 1);
+                                        }
+                                        else if (*ezp == "ZONE032.ZND" || *ezp == "ZONE036.ZND" || *ezp == "ZONE028.ZND" || *ezp == "ZONE048.ZND" || *ezp == "ZONE050.ZND" || *ezp == "ZONE040.ZND" || *ezp == "ZONE049.ZND" || *ezp == "ZONE051.ZND" || *ezp == "ZONE053.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(0, 20);
+                                        }
+                                        else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(0, 27);
+                                        }
+                                        else {
+                                            dist_20 = std::uniform_int_distribution<>(0, 24);
+                                        }
+                                    }
+                                    else {
+                                        dist_20 = std::uniform_int_distribution<>(251, 255);
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                                else {
+                                    stat = dist_129(aGen);
+                                }
+                                enzon.seekg(wep_pos + loop_diff + 68, ios::beg);
+                                stat_loc = enzon.tellg();
+                                to_ass = enzon.get();
+                                ch_val = new char(stat);
+                                enzon.seekp(wep_pos + loop_diff + 68, ios::beg);
+                                enzon.write(ch_val, 1);
+                                delete ch_val;
+                                if (balDecision == "Y") {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(0, 10);
+                                        }
+                                        else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(0, 24);
+                                        }
+                                        else {
+                                            dist_20 = std::uniform_int_distribution<>(0, 23);
+                                        }
+                                    }
+                                    else {
+                                        if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(251, 255);
+                                        }
+                                        else {
+                                            dist_20 = std::uniform_int_distribution<>(239, 255);
+                                        }
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                                else {
+                                    stat = dist_130(aGen);
+                                }
+                            }
+                            if (affDecision == "Y") {
+                                enzon.seekg(wep_pos + loop_diff + 71, ios::beg);
+                                stat_loc = enzon.tellg();
+                                to_ass = enzon.get();
+                                ch_val = new char(stat);
+                                enzon.seekp(wep_pos + loop_diff + 71, ios::beg);
+                                enzon.write(ch_val, 1);
+                                delete ch_val;
+                                if (balDecision == "Y") {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(0, 10);
+                                        }
+                                        else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(0, 24);
+                                        }
+                                        else {
+                                            dist_20 = std::uniform_int_distribution<>(0, 23);
+                                        }
+                                    }
+                                    else {
+                                        if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(251, 255);
+                                        }
+                                        else {
+                                            dist_20 = std::uniform_int_distribution<>(239, 255);
+                                        }
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                                else {
+                                    stat = dist_131(aGen);
+                                }
+                                enzon.seekg(wep_pos + loop_diff + 72, ios::beg);
+                                stat_loc = enzon.tellg();
+                                to_ass = enzon.get();
+                                ch_val = new char(stat);
+                                enzon.seekp(wep_pos + loop_diff + 72, ios::beg);
+                                enzon.write(ch_val, 1);
+                                delete ch_val;
+                                if (balDecision == "Y") {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(0, 10);
+                                        }
+                                        else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(0, 24);
+                                        }
+                                        else {
+                                            dist_20 = std::uniform_int_distribution<>(0, 23);
+                                        }
+                                    }
+                                    else {
+                                        if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(251, 255);
+                                        }
+                                        else {
+                                            dist_20 = std::uniform_int_distribution<>(239, 255);
+                                        }
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                                else {
+                                    stat = dist_132(aGen);
+                                }
+                                enzon.seekg(wep_pos + loop_diff + 73, ios::beg);
+                                stat_loc = enzon.tellg();
+                                to_ass = enzon.get();
+                                ch_val = new char(stat);
+                                enzon.seekp(wep_pos + loop_diff + 73, ios::beg);
+                                enzon.write(ch_val, 1);
+                                delete ch_val;
+                                if (balDecision == "Y") {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(0, 10);
+                                        }
+                                        else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(0, 24);
+                                        }
+                                        else {
+                                            dist_20 = std::uniform_int_distribution<>(0, 23);
+                                        }
+                                    }
+                                    else {
+                                        if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(251, 255);
+                                        }
+                                        else {
+                                            dist_20 = std::uniform_int_distribution<>(239, 255);
+                                        }
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                                else {
+                                    stat = dist_133(aGen);
+                                }
+                                enzon.seekg(wep_pos + loop_diff + 74, ios::beg);
+                                stat_loc = enzon.tellg();
+                                to_ass = enzon.get();
+                                ch_val = new char(stat);
+                                enzon.seekp(wep_pos + loop_diff + 74, ios::beg);
+                                enzon.write(ch_val, 1);
+                                delete ch_val;
+                                if (balDecision == "Y") {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(0, 10);
+                                        }
+                                        else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(0, 24);
+                                        }
+                                        else {
+                                            dist_20 = std::uniform_int_distribution<>(0, 23);
+                                        }
+                                    }
+                                    else {
+                                        if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(251, 255);
+                                        }
+                                        else {
+                                            dist_20 = std::uniform_int_distribution<>(239, 255);
+                                        }
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                                else {
+                                    stat = dist_134(aGen);
+                                }
+                                enzon.seekg(wep_pos + loop_diff + 75, ios::beg);
+                                stat_loc = enzon.tellg();
+                                to_ass = enzon.get();
+                                ch_val = new char(stat);
+                                enzon.seekp(wep_pos + loop_diff + 75, ios::beg);
+                                enzon.write(ch_val, 1);
+                                delete ch_val;
+                                if (balDecision == "Y") {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(0, 10);
+                                        }
+                                        else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(0, 24);
+                                        }
+                                        else {
+                                            dist_20 = std::uniform_int_distribution<>(0, 23);
+                                        }
+                                    }
+                                    else {
+                                        if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(251, 255);
+                                        }
+                                        else {
+                                            dist_20 = std::uniform_int_distribution<>(239, 255);
+                                        }
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                                else {
+                                    stat = dist_135(aGen);
+                                }
+                                enzon.seekg(wep_pos + loop_diff + 76, ios::beg);
+                                stat_loc = enzon.tellg();
+                                to_ass = enzon.get();
+                                ch_val = new char(stat);
+                                enzon.seekp(wep_pos + loop_diff + 76, ios::beg);
+                                enzon.write(ch_val, 1);
+                                delete ch_val;
+                                if (balDecision == "Y") {
+                                    stat = dist_11(aGen);
+                                    if (stat == 1) {
+                                        if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(0, 10);
+                                        }
+                                        else if (*ezp == "ZONE041.ZND" || *ezp == "ZONE052.ZND" || *ezp == "ZONE054.ZND" || *ezp == "ZONE055.ZND" || *ezp == "ZONE056.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(0, 24);
+                                        }
+                                        else {
+                                            dist_20 = std::uniform_int_distribution<>(0, 23);
+                                        }
+                                    }
+                                    else {
+                                        if (*ezp == "ZONE009.ZND" || *ezp == "ZONE011.ZND" || *ezp == "ZONE012.ZND" || *ezp == "ZONE013.ZND" || *ezp == "ZONE014.ZND" || *ezp == "ZONE015.ZND" || *ezp == "ZONE016.ZND" || *ezp == "ZONE017.ZND") {
+                                            dist_20 = std::uniform_int_distribution<>(251, 255);
+                                        }
+                                        else {
+                                            dist_20 = std::uniform_int_distribution<>(239, 255);
+                                        }
+                                    }
+                                    stat = dist_20(aGen);
+                                }
+                                else {
+                                    stat = dist_136(aGen);
+                                }
+                                enzon.seekg(wep_pos + loop_diff + 77, ios::beg);
+                                stat_loc = enzon.tellg();
+                                to_ass = enzon.get();
+                                ch_val = new char(stat);
+                                enzon.seekp(wep_pos + loop_diff + 77, ios::beg);
+                                enzon.write(ch_val, 1);
+                                delete ch_val;
+                            }
+                            if (baseEquDecision == "Y") {
+                                stat = dist_81(aGen);
+                                enzon.seekg(wep_pos + loop_diff + 79, ios::beg);
+                                stat_loc = enzon.tellg();
+                                to_ass = enzon.get();
+                                ch_val = new char(stat);
+                                enzon.seekp(wep_pos + loop_diff + 79, ios::beg);
+                                enzon.write(ch_val, 1);
+                                delete ch_val;
+                                stat = dist_82(aGen);
+                                enzon.seekg(wep_pos + loop_diff + 80, ios::beg);
+                                stat_loc = enzon.tellg();
+                                to_ass = enzon.get();
+                                ch_val = new char(stat);
+                                enzon.seekp(wep_pos + loop_diff + 80, ios::beg);
+                                enzon.write(ch_val, 1);
+                                delete ch_val;
+                            }
+                            
+                        }
+                        loop_diff += 92;
+                    }
+                }   
                 wep_pos += 1124;
             }
             enzon.close();

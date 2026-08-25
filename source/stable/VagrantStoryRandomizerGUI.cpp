@@ -56,9 +56,21 @@ HWND balBreak;
 HWND drops;
 HWND balance;
 HWND keep;
+HWND cheClass;
+HWND cheAff;
+HWND cheBEP;
+HWND ashClass;
+HWND ashAff;
+HWND ashBEP;
+HWND ashBase;
 HWND consEqu;
 HWND eneMod;
 HWND eneStat;
+HWND eneBaseEqu;
+HWND eneEquClass;
+HWND eneEquAff;
+HWND eneEquBEP;
+HWND eneEquApp;
 HWND balEneStat;
 HWND icyWolf;
 HWND riskChe;
@@ -68,6 +80,8 @@ HWND balAshley;
 HWND fandango;
 HWND chainL;
 HWND chainD;
+HWND ulSpell;
+HWND abFrame;
 HWND quant;
 HWND ashMisc;
 HWND ashMiscQua;
@@ -110,8 +124,8 @@ int runMisc;
 int runZen;
 int runMus;
 int point;
-int winWidth = 920;
-int winHeight = 510;
+int winWidth = 1110;
+int winHeight = 540;
 int g_liz;
 unsigned int cusSeedI = NULL;
 void placeButtons();
@@ -128,6 +142,11 @@ bool gamePathFound = false;
 bool pa_enemies = false;
 bool pa_models = false;
 bool pa_stats = false;
+bool pa_enebaseequ = false;
+bool pa_eneclass = false;
+bool pa_eneaff = false;
+bool pa_eneApp = false;
+bool pa_eneBEP = false;
 bool pa_balstats = false;
 bool pa_icy = false;
 bool pa_riskC = false;
@@ -144,6 +163,9 @@ bool pa_bossMus = false;
 bool pa_drops = false;
 bool pa_balance = false;
 bool pa_keep = false;
+bool pa_cheCla = false;
+bool pa_cheAff = false;
+bool pa_cheBEP = false;
 bool pa_cons = false;
 bool pa_ashley = false;
 bool pa_balAshley = false;
@@ -158,6 +180,8 @@ bool pa_ashMiscQua = false;
 bool pa_fandango = false;
 bool pa_quant = false;
 bool pa_chainL = false;
+bool pa_ulSpell = false;
+bool pa_abFrame = false;
 bool pa_chainD = false;
 bool is_lizard = false;
 //bool pa_cusAsh = false;
@@ -168,6 +192,7 @@ string choiceD = "N";
 string choiceE = "N";
 string choiceM = "N";
 string choiceSt = "N";
+string choiceEBE = "N";
 string choiceB = "N";
 string choiceBe = "N";
 string choiceK = "N";
@@ -182,6 +207,8 @@ string choiceAsh = "N";
 string choiceBalAsh = "N";
 string choiceFan = "N";
 string choiceChainL = "N";
+string choiceUlSpell = "N";
+string choiceAbFrame = "N";
 string choiceChainD = "N";
 string choiceQuant = "N";
 string choiceZenTel = "N";
@@ -199,7 +226,18 @@ string choiceCutRes = "N";
 string choiceBossMus = "N";
 string choiceIcy = "N";
 string choiceRiskC = "N";
+string choiceCheCla = "N";
+string choiceCheAff = "N";
+string choiceCheBEP = "N";
 string choiceRiskA = "N";
+string choiceEEC = "N";
+string choiceEEA = "N";
+string choiceEBEP = "N";
+string choiceAppen = "N";
+string choiceAshBase = "N"; 
+string choiceAshCla = "N";
+string choiceAshAff = "N"; 
+string choiceAshBEP = "N"; 
 string path;
 //string choiceCusAsh;
 string seedChoice;
@@ -242,6 +280,7 @@ TCHAR progtext[256];
 TCHAR ashtext[256];
 TCHAR zentext[256];
 TCHAR mustext[256];
+TCHAR abitext[256];
 double cur_dpi;
 UINT_PTR IDC_MENUCOMMAND1;
 UINT_PTR IDC_MENUCOMMAND2;
@@ -251,6 +290,7 @@ double ranBuY;
 double enBuX;
 double enBuY;
 double entBuX;
+double brArCoBuX;
 double entBuY;
 double cleBuX;
 double eneBuY;
@@ -263,14 +303,14 @@ double ashBuX;
 double zenBuX;
 double droBuY;
 double thresBuY;
-double miQuanBuY;
-double buiBuY;
+double ashBuiBuY;
+double fanCoBuY;
 double breakBuY;
 double balBrBuY;
 double chainDY;
 double chainLY;
 double modBuY;
-double balEneBuY;
+double baseEneEquY;
 double itStBuY;
 double enStBuY;
 double ashStBuY;
@@ -278,12 +318,17 @@ double balAshStBuY;
 double balItQuaBuY;
 double revBuX;
 double zenQuiBuY;
+double wolfBuY;
+double balEneBuY;
+double eneAppBuY;
+double eneAffBuY;
 double eneHeadX;
 double cheHeadX;
 double areaHeadX;
 double ashHeadX;
 double zenHeadX;
 double musHeadX;
+double abiHeadX;
 double areaMusBuX;
 double eneHeadY;
 double chestHeadY;
@@ -294,6 +339,7 @@ double mul;
 streampos liz_loc;
 
 char* ch_val;
+
 
 // Forward declarations of functions included in this code module:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -535,9 +581,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 LRESULT droticked = SendMessage(drops, BM_GETCHECK, NULL, NULL);
                 LRESULT blcticked = SendMessage(balance, BM_GETCHECK, NULL, NULL);
                 LRESULT keeticked = SendMessage(keep, BM_GETCHECK, NULL, NULL);
+                LRESULT cheClaticked = SendMessage(cheClass, BM_GETCHECK, NULL, NULL);
+                LRESULT cheAffticked = SendMessage(cheAff, BM_GETCHECK, NULL, NULL);
+                LRESULT cheBEPticked = SendMessage(cheBEP, BM_GETCHECK, NULL, NULL);
+                LRESULT ashBaseticked = SendMessage(ashBase, BM_GETCHECK, NULL, NULL);
+                LRESULT ashClaticked = SendMessage(ashClass, BM_GETCHECK, NULL, NULL);
+                LRESULT ashAffticked = SendMessage(ashAff, BM_GETCHECK, NULL, NULL);
+                LRESULT ashBEPticked = SendMessage(ashBEP, BM_GETCHECK, NULL, NULL);
                 LRESULT consticked = SendMessage(consEqu, BM_GETCHECK, NULL, NULL);
                 LRESULT modticked = SendMessage(eneMod, BM_GETCHECK, NULL, NULL);
                 LRESULT statticked = SendMessage(eneStat, BM_GETCHECK, NULL, NULL);
+                LRESULT eneBaseEquticked = SendMessage(eneBaseEqu, BM_GETCHECK, NULL, NULL);
+                LRESULT eneClassticked = SendMessage(eneEquClass, BM_GETCHECK, NULL, NULL);
+                LRESULT eneAffticked = SendMessage(eneEquAff, BM_GETCHECK, NULL, NULL);
+                LRESULT eneBEPticked = SendMessage(eneEquBEP, BM_GETCHECK, NULL, NULL);
+                LRESULT eneAppenticked = SendMessage(eneEquApp, BM_GETCHECK, NULL, NULL);
                 LRESULT balstatticked = SendMessage(balEneStat, BM_GETCHECK, NULL, NULL);
                 LRESULT icyticked = SendMessage(icyWolf, BM_GETCHECK, NULL, NULL);
                 LRESULT riskCticked = SendMessage(riskChe, BM_GETCHECK, NULL, NULL);
@@ -555,6 +613,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 LRESULT balAshticked = SendMessage(balAshley, BM_GETCHECK, NULL, NULL);
                 LRESULT fanTicked = SendMessage(fandango, BM_GETCHECK, NULL, NULL);
                 LRESULT chainTicked = SendMessage(chainL, BM_GETCHECK, NULL, NULL);
+                LRESULT ulSpellTicked = SendMessage(ulSpell, BM_GETCHECK, NULL, NULL);
+                LRESULT abFrameTicked = SendMessage(abFrame, BM_GETCHECK, NULL, NULL);
                 LRESULT chainDTicked = SendMessage(chainD, BM_GETCHECK, NULL, NULL);
                 LRESULT quanTicked = SendMessage(quant, BM_GETCHECK, NULL, NULL);
                 LRESULT zenTelTicked = SendMessage(zenTel, BM_GETCHECK, NULL, NULL);
@@ -616,8 +676,55 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 }
                 else {
                     pa_stats = false;
-                    EnableWindow(butRos[butRos.size() - 1], false);
                     choiceSt = "N";
+                }
+                if (eneBaseEquticked == BST_CHECKED) {
+                    pa_enebaseequ = true;
+                    EnableWindow(butRos[butRos.size() - 1], true);
+                    choiceEBE = "Y";
+                }
+                else {
+                    pa_enebaseequ = false;
+                    choiceEBE = "N";
+                }
+                if (eneClassticked == BST_CHECKED) {
+                    pa_eneclass = true;
+                    EnableWindow(butRos[butRos.size() - 1], true);
+                    choiceEEC = "Y";
+                }
+                else {
+                    pa_eneclass = false;
+                    choiceEEC = "N";
+                }
+                if (eneAffticked == BST_CHECKED) {
+                    pa_eneaff = true;
+                    EnableWindow(butRos[butRos.size() - 1], true);
+                    choiceEEA = "Y";
+                }
+                else {
+                    pa_eneaff = false;
+                    choiceEEA = "N";
+                }
+                if (eneBEPticked == BST_CHECKED) {
+                    pa_eneBEP = true;
+                    EnableWindow(butRos[butRos.size() - 1], true);
+                    choiceEBEP = "Y";
+                }
+                else {
+                    pa_eneBEP = false;
+                    choiceEBEP = "N";
+                }
+                if (eneAppenticked == BST_CHECKED) {
+                    pa_eneApp = true;
+                    EnableWindow(butRos[butRos.size() - 1], true);
+                    choiceAppen = "Y";
+                }
+                else {
+                    pa_eneApp = false;
+                    choiceAppen = "N";
+                }
+                if (statticked != BST_CHECKED && eneBaseEquticked != BST_CHECKED && eneClassticked != BST_CHECKED && eneAffticked != BST_CHECKED && eneBEPticked != BST_CHECKED && eneAppenticked != BST_CHECKED) {
+                    EnableWindow(butRos[butRos.size() - 1], false);
                 }
                 if (balstatticked == BST_CHECKED) {
                     pa_balstats = true;
@@ -632,7 +739,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     EnableWindow(butRos[butRos.size() - 7], true);
                     EnableWindow(butRos[butRos.size() - 3], true);
                     EnableWindow(butRos[butRos.size() - 2], true);
-                    EnableWindow(butRos[butRos.size() - 12], true);
+                    EnableWindow(butRos[butRos.size() - 14], true);
+                    EnableWindow(butRos[butRos.size() - 15], true);
+                    EnableWindow(butRos[butRos.size() - 16], true);
                     choiceChe = "Y";
                 }
                 else {
@@ -640,7 +749,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     EnableWindow(butRos[butRos.size() - 7], false);
                     EnableWindow(butRos[butRos.size() - 3], false);
                     EnableWindow(butRos[butRos.size() - 2], false);
-                    EnableWindow(butRos[butRos.size() - 12], false);
+                    EnableWindow(butRos[butRos.size() - 14], false);
+                    EnableWindow(butRos[butRos.size() - 15], false);
+                    EnableWindow(butRos[butRos.size() - 16], false);
                     choiceChe = "N";
                 }
                 if (rooticked == BST_CHECKED) {
@@ -717,9 +828,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     EnableWindow(butRos[butRos.size() - 13], true);
                 }
                 else {
-                    pa_ashley = false;
                     choiceAsh = "N";
-                    EnableWindow(butRos[butRos.size() - 6], false);
                     EnableWindow(butRos[butRos.size() - 5], false);
                     EnableWindow(butRos[butRos.size() - 13], false);
                 }
@@ -813,6 +922,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     pa_chainL = false;
                     choiceChainL = "N";
                 }
+                if (ulSpellTicked == BST_CHECKED) {
+                    pa_ulSpell = true;
+                    choiceUlSpell = "Y";
+                }
+                else {
+                    pa_ulSpell = false;
+                    choiceUlSpell = "N";
+                }
+                if (abFrameTicked == BST_CHECKED) {
+                    pa_abFrame = true;
+                    choiceAbFrame = "Y";
+                }
+                else {
+                    pa_abFrame = false;
+                    choiceAbFrame = "N";
+                }
                 if (chainDTicked == BST_CHECKED) {
                     pa_chainD = true;
                     choiceChainD = "Y";
@@ -854,10 +979,64 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 if (keeticked == BST_CHECKED && cheticked == BST_CHECKED) {
                     choiceK = "Y";
                     EnableWindow(butRos[butRos.size() - 4], true);
+                    EnableWindow(butRos[butRos.size() - 12], true);
                 }
                 else {
                     choiceK = "N";
                     EnableWindow(butRos[butRos.size() - 4], false);
+                    EnableWindow(butRos[butRos.size() - 12], false);
+                }
+                if (cheClaticked == BST_CHECKED && cheticked == BST_CHECKED) {
+                    choiceCheCla = "Y";
+                    EnableWindow(butRos[butRos.size() - 4], true);
+                }
+                else {
+                    choiceCheCla = "N";
+                }
+                if (cheAffticked == BST_CHECKED && cheticked == BST_CHECKED) {
+                    choiceCheAff = "Y";
+                    EnableWindow(butRos[butRos.size() - 4], true);
+                }
+                else {
+                    choiceCheAff = "N";
+                }
+                if (cheBEPticked == BST_CHECKED && cheticked == BST_CHECKED) {
+                    choiceCheBEP = "Y";
+                    EnableWindow(butRos[butRos.size() - 4], true);
+                }
+                else {
+                    choiceCheBEP = "N";
+                }
+                if (keeticked != BST_CHECKED && cheClaticked != BST_CHECKED && cheAffticked != BST_CHECKED && cheBEPticked != BST_CHECKED) {
+                    EnableWindow(butRos[butRos.size() - 4], false);
+                }
+                if (ashClaticked == BST_CHECKED) {
+                    pa_ashley = true;
+                    choiceAshCla = "Y";
+                    EnableWindow(butRos[butRos.size() - 6], true);
+                }
+                else {
+                    choiceAshCla = "N";
+                }
+                if (ashAffticked == BST_CHECKED) {
+                    pa_ashley = true;
+                    choiceAshAff = "Y";
+                    EnableWindow(butRos[butRos.size() - 6], true);
+                }
+                else {
+                    choiceAshAff = "N";
+                }
+                if (ashBEPticked == BST_CHECKED) {
+                    pa_ashley = true;
+                    choiceAshBEP = "Y";
+                    EnableWindow(butRos[butRos.size() - 6], true);
+                }
+                else {
+                    choiceAshBEP = "N";
+                }
+                if (ashticked != BST_CHECKED && ashClaticked != BST_CHECKED && ashAffticked != BST_CHECKED && ashBEPticked != BST_CHECKED) {
+                    EnableWindow(butRos[butRos.size() - 6], false);
+                    pa_ashley = false;
                 }
                 if (consticked == BST_CHECKED && cheticked == BST_CHECKED) {
                     choiceC = "Y";
@@ -871,7 +1050,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             case IDM_RANDOMIZE:
             {
                 bool changed = false;
-                choices = "." + choiceRiskA + choiceRiskC + choiceChainD + choiceChainL + choiceIcy + choiceBossMus + choiceCutRes + choiceAreaMus + choiceBalBr + choiceBr + choiceO + choiceMM + choiceAshBuild + choiceAshThres + choiceAshMiscQua + choiceAshMisc + choiceZenQui + choiceZenBoss + choiceZenDrop + choiceZenMan + choiceZenAnal + choiceZenTel + choiceQuant + choiceFan + choiceBalAsh + choiceAsh + choiceBe + choiceSt + choiceM + choiceE + choiceChe + choiceA + choiceD + choiceB + choiceK + choiceC;
+                choices = "." + choiceAbFrame + choiceUlSpell + choiceAshBEP + choiceAshAff + choiceAshCla + choiceCheBEP + choiceCheAff + choiceCheCla + choiceAppen + choiceEBEP + choiceEEA + choiceEEC + choiceEBE + choiceRiskA + choiceRiskC + choiceChainD + choiceChainL + choiceIcy + choiceBossMus + choiceCutRes + choiceAreaMus + choiceBalBr + choiceBr + choiceO + choiceMM + choiceAshBuild + choiceAshThres + choiceAshMiscQua + choiceAshMisc + choiceZenQui + choiceZenBoss + choiceZenDrop + choiceZenMan + choiceZenAnal + choiceZenTel + choiceQuant + choiceFan + choiceBalAsh + choiceAsh + choiceBe + choiceSt + choiceM + choiceE + choiceChe + choiceA + choiceD + choiceB + choiceK + choiceC;
                 int count = 0;
                 for (int i = 0; i < choices.length(); i++) {
                     if (choices[i] != 'N' && choices[i] != 'V') {
@@ -999,8 +1178,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     SetWindowTextA(hWnd, "Zenith feature(s) added");
                 }
                 if (pa_ashley) {
-                    SendMessage(prog, PBM_STEPIT, 0, 0);
                     if (choiceBalAsh == "Y") {
+                        SendMessage(prog, PBM_STEPIT, 0, 0);
+                    }
+                    if (choiceAsh == "Y") {
                         SendMessage(prog, PBM_STEPIT, 0, 0);
                     }
                     if (choiceFan == "Y") {
@@ -1012,15 +1193,48 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     if (choiceRiskA != "N") {
                         SendMessage(prog, PBM_STEPIT, 0, 0);
                     }
+                    if (choiceAshCla != "N") {
+                        SendMessage(prog, PBM_STEPIT, 0, 0);
+                    }
+                    if (choiceAshAff != "N") {
+                        SendMessage(prog, PBM_STEPIT, 0, 0);
+                    }
+                    if (choiceAshBEP != "N") {
+                        SendMessage(prog, PBM_STEPIT, 0, 0);
+                    }
                     changed = true;
                     remove("ashCmd.cmd");
                     Ashley ash_maker = Ashley();
                     SetCursor(LoadCursor(NULL, IDC_WAIT));
                     SetWindowTextA(hWnd, "Randomizing Ashley...");
-                    ash_maker.statIterate(rf, ag, finGen, choiceBalAsh, choiceFan, choiceAshThres, choiceRiskA);
+                    ash_maker.statIterate(rf, ag, finGen, choiceBalAsh, choiceFan, choiceAshThres, choiceRiskA, choiceAsh, choiceAshCla, choiceAshAff, choiceAshBEP);
                     runAsh = system("cmd.exe start /min /c ashCmd.cmd");
                     remove("ashCmd.cmd");
                     SetWindowTextA(hWnd, "Ashley Randomized");
+                }
+                if (pa_ulSpell) {
+                    SendMessage(prog, PBM_STEPIT, 0, 0);
+                    changed = true;
+                    remove("ulSpCmd.cmd");
+                    Ashley spell_set = Ashley();
+                    SetCursor(LoadCursor(NULL, IDC_WAIT));
+                    SetWindowTextA(hWnd, "Adding Ultimate Spells to Ashley...");
+                    spell_set.ultiSpells(rf, ag, finGen);
+                    runAsh = system("cmd.exe start /min /c ulSpCmd.cmd");
+                    remove("ulSpCmd.cmd");
+                    SetWindowTextA(hWnd, "Ultimate Spells Added to Ashley");
+                }
+                if (pa_abFrame) {
+                    SendMessage(prog, PBM_STEPIT, 0, 0);
+                    changed = true;
+                    remove("abFrCmd.cmd");
+                    Ashley ability_frames = Ashley();
+                    SetCursor(LoadCursor(NULL, IDC_WAIT));
+                    SetWindowTextA(hWnd, "Randomizing Ability Frames...");
+                    ability_frames.abiFrame(rf, ag, finGen);
+                    runAsh = system("cmd.exe start /min /c abFrCmd.cmd");
+                    remove("abFrCmd.cmd");
+                    SetWindowTextA(hWnd, "Ability Frames Randomized");
                 }
                 if (pa_chainL) {
                     SendMessage(prog, PBM_STEPIT, 0, 0);
@@ -1120,6 +1334,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     if (choiceK == "Y") {
                         SendMessage(prog, PBM_STEPIT, 0, 0);
                     }
+                    if (choiceCheCla == "Y") {
+                        SendMessage(prog, PBM_STEPIT, 0, 0);
+                    }
+                    if (choiceCheAff == "Y") {
+                        SendMessage(prog, PBM_STEPIT, 0, 0);
+                    }
+                    if (choiceCheBEP == "Y") {
+                        SendMessage(prog, PBM_STEPIT, 0, 0);
+                    }
                     if (choiceC == "Y") {
                         SendMessage(prog, PBM_STEPIT, 0, 0);
                     }
@@ -1134,12 +1357,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     Chests che_ran = Chests();
                     SetCursor(LoadCursor(NULL, IDC_WAIT));
                     SetWindowTextA(hWnd, "Randomizing chests...");
-                    che_ran.mapIterate(rf, ag, finGen, choiceB, choiceK, choiceC, choiceQuant, is_lizard, choiceRiskC);
+                    che_ran.mapIterate(rf, ag, finGen, choiceB, choiceK, choiceC, choiceQuant, is_lizard, choiceRiskC, choiceCheCla, choiceCheAff, choiceCheBEP);
                     runChe = system("cmd.exe start /min /c cheCmd.cmd");
                     remove("cheCmd.cmd");
                     SetWindowTextA(hWnd, "Chests randomized");
                 }
-                if (pa_enemies || pa_models || pa_stats || pa_drops || pa_icy) {
+                if (pa_enemies || pa_models || pa_stats || pa_drops || pa_icy || pa_enebaseequ || pa_eneclass || pa_eneaff || pa_eneBEP || pa_eneApp) {
                     if (choiceD == "Y") {
                         SendMessage(prog, PBM_STEPIT, 0, 0);
                     }
@@ -1158,12 +1381,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     if (choiceIcy == "Y") {
                         SendMessage(prog, PBM_STEPIT, 0, 0);
                     }
+                    if (choiceEBE == "Y") {
+                        SendMessage(prog, PBM_STEPIT, 0, 0);
+                    }
+                    if (choiceEEC == "Y") {
+                        SendMessage(prog, PBM_STEPIT, 0, 0);
+                    }
+                    if (choiceEEA == "Y") {
+                        SendMessage(prog, PBM_STEPIT, 0, 0);
+                    }
+                    if (choiceEBEP == "Y") {
+                        SendMessage(prog, PBM_STEPIT, 0, 0);
+                    }
+                    if (choiceAppen == "Y") {
+                        SendMessage(prog, PBM_STEPIT, 0, 0);
+                    }
                     changed = true;
                     remove("eneCmd.cmd");
                     Enemies ene_ran = Enemies();
                     SetCursor(LoadCursor(NULL, IDC_WAIT));
                     SetWindowTextA(hWnd, "Randomizing enemies...");
-                    ene_ran.mapIterate(rf, ag, choiceD, finGen, choiceM, choiceE, choiceSt, choiceBe, is_lizard, choiceIcy);
+                    ene_ran.mapIterate(rf, ag, choiceD, finGen, choiceM, choiceE, choiceSt, choiceBe, is_lizard, choiceIcy, choiceAppen, choiceEBE, choiceEBEP, choiceEEC, choiceEEA);
                     runEne = system("cmd.exe start /min /c eneCmd.cmd");
                     remove("eneCmd.cmd");
                     SetWindowTextA(hWnd, "Enemies randomized");
@@ -1252,6 +1490,191 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                         if (cusSeedS != "") {
                             istringstream iss(cusSeedS);
                             iss >> cusSeedI;
+                            seedFile.seekg(-51, ios::end);
+                            address = seedFile.tellg();
+                            point = seedFile.get();
+                            if (point == 89) {
+                                LRESULT tickabframe = SendMessage(abFrame, BM_SETCHECK, BST_CHECKED, 0);
+                                pa_abFrame = true;
+                                choiceAbFrame = "Y";
+                            }
+                            else {
+                                pa_abFrame = false;
+                                choiceAbFrame = "N";
+                            }
+                            seedFile.seekg(-50, ios::end);
+                            address = seedFile.tellg();
+                            point = seedFile.get();
+                            if (point == 89) {
+                                LRESULT tickulspell = SendMessage(ulSpell, BM_SETCHECK, BST_CHECKED, 0);
+                                pa_ulSpell = true;
+                                choiceUlSpell = "Y";
+                            }
+                            else {
+                                pa_ulSpell = false;
+                                choiceUlSpell = "N";
+                            }
+                            seedFile.seekg(-49, ios::end);
+                            address = seedFile.tellg();
+                            point = seedFile.get();
+                            if (point == 89) {
+                                LRESULT tickeashBEP = SendMessage(ashBEP, BM_SETCHECK, BST_CHECKED, 0);
+                                pa_ashley = true;
+                                choiceAshBEP = "Y";
+                                EnableWindow(butRos[butRos.size() - 6], true);
+                            }
+                            else {
+                                pa_ashley = false;
+                                choiceAshBEP = "N";
+                            }
+                            seedFile.seekg(-48, ios::end);
+                            address = seedFile.tellg();
+                            point = seedFile.get();
+                            if (point == 89) {
+                                LRESULT tickeashAff = SendMessage(ashAff, BM_SETCHECK, BST_CHECKED, 0);
+                                pa_ashley = true;
+                                choiceAshAff = "Y";
+                                EnableWindow(butRos[butRos.size() - 6], true);
+                            }
+                            else {
+                                pa_ashley = false;
+                                choiceAshAff = "N";
+                            }
+                            seedFile.seekg(-47, ios::end);
+                            address = seedFile.tellg();
+                            point = seedFile.get();
+                            if (point == 89) {
+                                LRESULT tickeashCla = SendMessage(ashClass, BM_SETCHECK, BST_CHECKED, 0);
+                                pa_ashley = true;
+                                choiceAshCla = "Y";
+                                EnableWindow(butRos[butRos.size() - 6], true);
+                            }
+                            else {
+                                pa_ashley = false;
+                                choiceAshCla = "N";
+                            }
+                            seedFile.seekg(-46, ios::end);
+                            address = seedFile.tellg();
+                            point = seedFile.get();
+                            if (point == 89) {
+                                LRESULT tickcheBEP = SendMessage(cheBEP, BM_SETCHECK, BST_CHECKED, 0);
+                                LRESULT tickche = SendMessage(chests, BM_SETCHECK, BST_CHECKED, 0);
+                                EnableWindow(butRos[butRos.size() - 7], true);
+                                EnableWindow(butRos[butRos.size() - 4], true);
+                                EnableWindow(butRos[butRos.size() - 3], true);
+                                EnableWindow(butRos[butRos.size() - 2], true);
+                                EnableWindow(butRos[butRos.size() - 14], true);
+                                EnableWindow(butRos[butRos.size() - 15], true);
+                                EnableWindow(butRos[butRos.size() - 16], true);
+                                choiceChe = "Y";
+                                choiceCheBEP = "Y";
+                            }
+                            else {
+                                choiceCheBEP = "N";
+                            }
+                            seedFile.seekg(-45, ios::end);
+                            address = seedFile.tellg();
+                            point = seedFile.get();
+                            if (point == 89) {
+                                LRESULT tickcheAff = SendMessage(cheAff, BM_SETCHECK, BST_CHECKED, 0);
+                                LRESULT tickche = SendMessage(chests, BM_SETCHECK, BST_CHECKED, 0);
+                                EnableWindow(butRos[butRos.size() - 7], true);
+                                EnableWindow(butRos[butRos.size() - 4], true);
+                                EnableWindow(butRos[butRos.size() - 3], true);
+                                EnableWindow(butRos[butRos.size() - 2], true);
+                                EnableWindow(butRos[butRos.size() - 14], true);
+                                EnableWindow(butRos[butRos.size() - 15], true);
+                                EnableWindow(butRos[butRos.size() - 16], true);
+                                choiceChe = "Y";
+                                choiceCheAff = "Y";
+                            }
+                            else {
+                                choiceCheAff = "N";
+                            }
+                            seedFile.seekg(-44, ios::end);
+                            address = seedFile.tellg();
+                            point = seedFile.get();
+                            if (point == 89) {
+                                LRESULT tickcheCla = SendMessage(cheClass, BM_SETCHECK, BST_CHECKED, 0);
+                                LRESULT tickche = SendMessage(chests, BM_SETCHECK, BST_CHECKED, 0);
+                                EnableWindow(butRos[butRos.size() - 7], true);
+                                EnableWindow(butRos[butRos.size() - 4], true);
+                                EnableWindow(butRos[butRos.size() - 3], true);
+                                EnableWindow(butRos[butRos.size() - 2], true);
+                                EnableWindow(butRos[butRos.size() - 14], true);
+                                EnableWindow(butRos[butRos.size() - 15], true);
+                                EnableWindow(butRos[butRos.size() - 16], true);
+                                choiceChe = "Y";
+                                choiceCheCla = "Y";
+                            }
+                            else {
+                                choiceCheCla = "N";
+                            }
+                            seedFile.seekg(-43, ios::end);
+                            address = seedFile.tellg();
+                            point = seedFile.get();
+                            if (point == 89) {
+                                LRESULT tickeneApp = SendMessage(eneEquApp, BM_SETCHECK, BST_CHECKED, 0);
+                                EnableWindow(butRos[butRos.size() - 1], true);
+                                pa_eneApp = true;
+                                choiceAppen = "Y";
+                            }
+                            else {
+                                pa_eneApp = false;
+                                choiceAppen = "N";
+                            }
+                            seedFile.seekg(-42, ios::end);
+                            address = seedFile.tellg();
+                            point = seedFile.get();
+                            if (point == 89) {
+                                LRESULT tickeneBEP = SendMessage(eneEquBEP, BM_SETCHECK, BST_CHECKED, 0);
+                                EnableWindow(butRos[butRos.size() - 1], true);
+                                pa_eneBEP = true;
+                                choiceEBEP = "Y";
+                            }
+                            else {
+                                pa_eneBEP = false;
+                                choiceEBEP = "N";
+                            }
+                            seedFile.seekg(-41, ios::end);
+                            address = seedFile.tellg();
+                            point = seedFile.get();
+                            if (point == 89) {
+                                LRESULT tickeneaff = SendMessage(eneEquAff, BM_SETCHECK, BST_CHECKED, 0);
+                                EnableWindow(butRos[butRos.size() - 1], true);
+                                pa_eneaff = true;
+                                choiceEEA = "Y";
+                            }
+                            else {
+                                pa_eneaff = false;
+                                choiceEEA = "N";
+                            }
+                            seedFile.seekg(-40, ios::end);
+                            address = seedFile.tellg();
+                            point = seedFile.get();
+                            if (point == 89) {
+                                LRESULT tickeneclass = SendMessage(eneEquClass, BM_SETCHECK, BST_CHECKED, 0);
+                                EnableWindow(butRos[butRos.size() - 1], true);
+                                pa_eneclass = true;
+                                choiceEEC = "Y";
+                            }
+                            else {
+                                pa_eneclass = false;
+                                choiceEEC = "N";
+                            }
+                            seedFile.seekg(-39, ios::end);
+                            address = seedFile.tellg();
+                            point = seedFile.get();
+                            if (point == 89) {
+                                LRESULT tickenebaseequ = SendMessage(eneBaseEqu, BM_SETCHECK, BST_CHECKED, 0);
+                                EnableWindow(butRos[butRos.size() - 1], true);
+                                pa_enebaseequ = true;
+                                choiceEBE = "Y";
+                            }
+                            else {
+                                pa_enebaseequ = false;
+                                choiceEBE = "N";
+                            }
                             seedFile.seekg(-38, ios::end);
                             address = seedFile.tellg();
                             point = seedFile.get();
@@ -1625,8 +2048,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                                 LRESULT tickeash = SendMessage(ashley, BM_SETCHECK, BST_CHECKED, 0);
                                 pa_balAshley = true;
                                 choiceBalAsh = "Y";
-                                pa_ashley = true;
-                                choiceAsh = "Y";
                                 EnableWindow(butRos[butRos.size() - 9], true);
                             }
                             else {
@@ -1648,7 +2069,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                             else {
                                 pa_ashley = false;
                                 choiceAsh = "N";
-                                EnableWindow(butRos[butRos.size() - 6], false);
                                 EnableWindow(butRos[butRos.size() - 5], false);
                                 EnableWindow(butRos[butRos.size() - 13], false);
                             }
@@ -1657,14 +2077,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                             point = seedFile.get();
                             if (point == 89) {
                                 LRESULT tickebalstat = SendMessage(balEneStat, BM_SETCHECK, BST_CHECKED, 0);
-                                LRESULT tickestat = SendMessage(eneStat, BM_SETCHECK, BST_CHECKED, 0);
-                                pa_stats = true;
                                 pa_balstats = true;
                                 choiceBe = "Y";
-                                choiceSt = "Y";
                             }
                             else {
-                                pa_stats = false;
+                                pa_balstats = false;
                                 choiceBe = "N";
                             }
                             seedFile.seekg(-11, ios::end);
@@ -1677,7 +2094,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                                 choiceSt = "Y";
                             }
                             else {
-                                EnableWindow(butRos[butRos.size() - 1], false);
                                 pa_stats = false;
                                 choiceSt = "N";
                             }
@@ -1705,7 +2121,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                             else {
                                 pa_enemies = false;
                                 choiceE = "N";
-                                EnableWindow(butRos[butRos.size() - 11], true);
+                                EnableWindow(butRos[butRos.size() - 11], false);
                             }
                             seedFile.seekg(-8, ios::end);
                             address = seedFile.tellg();
@@ -1717,6 +2133,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                                 EnableWindow(butRos[butRos.size() - 3], true);
                                 EnableWindow(butRos[butRos.size() - 2], true);
                                 EnableWindow(butRos[butRos.size() - 12], true);
+                                EnableWindow(butRos[butRos.size() - 14], true);
+                                EnableWindow(butRos[butRos.size() - 15], true);
+                                EnableWindow(butRos[butRos.size() - 16], true);
                                 choiceChe = "Y";
                             }
                             else {
@@ -1725,6 +2144,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                                 EnableWindow(butRos[butRos.size() - 3], false);
                                 EnableWindow(butRos[butRos.size() - 2], false);
                                 EnableWindow(butRos[butRos.size() - 12], false);
+                                EnableWindow(butRos[butRos.size() - 14], false);
+                                EnableWindow(butRos[butRos.size() - 15], false);
+                                EnableWindow(butRos[butRos.size() - 16], false);
                                 choiceChe = "N";
                             }
                             seedFile.seekg(-7, ios::end);
@@ -1761,6 +2183,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                                 EnableWindow(butRos[butRos.size() - 4], true);
                                 EnableWindow(butRos[butRos.size() - 3], true);
                                 EnableWindow(butRos[butRos.size() - 2], true);
+                                EnableWindow(butRos[butRos.size() - 14], true);
+                                EnableWindow(butRos[butRos.size() - 15], true);
+                                EnableWindow(butRos[butRos.size() - 16], true);
                                 choiceB = "Y";
                                 choiceChe = "Y";
                             }
@@ -1777,6 +2202,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                                 EnableWindow(butRos[butRos.size() - 4], true);
                                 EnableWindow(butRos[butRos.size() - 3], true);
                                 EnableWindow(butRos[butRos.size() - 2], true);
+                                EnableWindow(butRos[butRos.size() - 12], true);
+                                EnableWindow(butRos[butRos.size() - 14], true);
+                                EnableWindow(butRos[butRos.size() - 15], true);
+                                EnableWindow(butRos[butRos.size() - 16], true);
                                 choiceK = "Y";
                                 choiceChe = "Y";
                             }
@@ -1792,6 +2221,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                                 EnableWindow(butRos[butRos.size() - 7], true);
                                 EnableWindow(butRos[butRos.size() - 3], true);
                                 EnableWindow(butRos[butRos.size() - 2], true);
+                                EnableWindow(butRos[butRos.size() - 14], true);
+                                EnableWindow(butRos[butRos.size() - 15], true);
+                                EnableWindow(butRos[butRos.size() - 16], true);
                                 choiceC = "Y";
                                 choiceChe = "Y";
                             }
@@ -2008,12 +2440,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             swprintf_s(ashtext, 256, L"Ashley data:");
             swprintf_s(zentext, 256, L"Zenith options:");
             swprintf_s(mustext, 256, L"Music options:");
+            swprintf_s(abitext, 256, L"Ability options:");
             eneHeadX = 0.0325 * mul;
             cheHeadX = 0.2725 * mul;
             areaHeadX = 0.5125 * mul;
             ashHeadX = 0.7525 * mul;
             zenHeadX = 0.9925 * mul;
             musHeadX = 1.2325 * mul;
+            abiHeadX = 1.4725 * mul;
             eneHeadY = 0.15 * mul;
             //chestHeadY = 0.39 * mul;
             //miscHeadY = 0.63 * mul;
@@ -2023,6 +2457,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             TextOut(hdc, xCor * ashHeadX, yCor * eneHeadY, ashtext, wcslen(ashtext));
             TextOut(hdc, xCor* zenHeadX, yCor* eneHeadY, zentext, wcslen(zentext));
             TextOut(hdc, xCor* musHeadX, yCor* eneHeadY, mustext, wcslen(mustext));
+            TextOut(hdc, xCor* abiHeadX, yCor* eneHeadY, abitext, wcslen(abitext));
             EndPaint(hWnd, &ps);
         }
         break;
@@ -2114,7 +2549,15 @@ void placeButtons() {
     butRos.emplace_back(eneMod);
     butRos.emplace_back(drops);
     butRos.emplace_back(eneStat);
+    butRos.emplace_back(eneBaseEqu);
+    butRos.emplace_back(eneEquClass);
+    butRos.emplace_back(eneEquAff);
+    butRos.emplace_back(eneEquBEP);
+    butRos.emplace_back(eneEquApp);
     butRos.emplace_back(ashley);
+    butRos.emplace_back(ashClass);
+    butRos.emplace_back(ashAff);
+    butRos.emplace_back(ashBEP);
     butRos.emplace_back(ashBuild);
     butRos.emplace_back(zenTel);
     butRos.emplace_back(zenAnal);
@@ -2128,6 +2571,11 @@ void placeButtons() {
     butRos.emplace_back(cutRes);
     butRos.emplace_back(chainL);
     butRos.emplace_back(chainD);
+    butRos.emplace_back(ulSpell);
+    butRos.emplace_back(abFrame);
+    butRos.emplace_back(cheBEP);
+    butRos.emplace_back(cheAff);
+    butRos.emplace_back(cheClass);
     butRos.emplace_back(riskAsh);
     butRos.emplace_back(riskChe);
     butRos.emplace_back(icyWolf);
@@ -2152,7 +2600,7 @@ void makeButtons(HWND hWnd) {
     else {
         mul = 1.00;
     }
-    opBuX = 0.625 * mul;
+    opBuX = 0.725 * mul;
     progBaX = 0.6 * mul;
     opBuY = 0.05 * mul;
     ranBuY = 1.047 * mul;
@@ -2162,7 +2610,7 @@ void makeButtons(HWND hWnd) {
     entBuY = 0.946 * mul;
     cleBuX = 0.1825 * mul;
     cheBuY = 0.44 * mul;
-    balEneBuY = 0.43 * mul;
+    baseEneEquY = 0.43 * mul;
     rooBuY = 0.6725 * mul;
     cheBuX = 0.270 * mul;
     areaBuX = 0.5075 * mul;
@@ -2171,64 +2619,78 @@ void makeButtons(HWND hWnd) {
     areaMusBuX = 1.22 * mul;
     droBuX = 0.275 * mul;
     droBuY = 0.315 * mul; 
-    thresBuY = 0.320 * mul; 
-    miQuanBuY = 0.54 * mul; 
-    buiBuY = 0.6045 * mul; 
-    breakBuY = 0.657 * mul; 
-    balBrBuY = 0.7095 * mul; 
-    chainLY = 0.7620 * mul;
-    chainDY = 0.8145 * mul;  
+    thresBuY = 0.4925 * mul;
+    ashBuiBuY = 0.778 * mul;
+    eneAffBuY = 0.545 * mul;
+    fanCoBuY = 0.6045 * mul;
+    eneAppBuY = 0.66 * mul;
+    balEneBuY = 0.7155 * mul;
+    wolfBuY = 0.771 * mul;
     modBuY = 0.2575 * mul;
     itStBuY = 0.4975 * mul;
     enStBuY = 0.3725 * mul;
     ashStBuY = 0.73 * mul;
     balAshStBuY = 0.7875 * mul;
     balItQuaBuY = 0.5550 * mul;
-    entBuX = 0.4575 * mul;
-    revBuX = 0.7925 * mul;
+    entBuX = 0.5575 * mul;
+    revBuX = 0.8925 * mul;
     zenQuiBuY = 0.4875 * mul;
+    brArCoBuX = 1.4575 * mul;
 
     openGame = CreateWindow(L"BUTTON", L"Open Game", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * opBuX), (int)(yCor * opBuY), 90 * mul, 25 * mul, hWnd, (HMENU)101, hInst, NULL);
     randomizeButton = CreateWindow(L"BUTTON", L"Randomize", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * opBuX), (int)(yCor * ranBuY), 90 * mul, 25 * mul, hWnd, (HMENU)9003, hInst, NULL);
     seedButton = CreateWindow(L"BUTTON", L"Enter Seed", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * entBuX), (int)(yCor * entBuY), 90 * mul, 25 * mul, hWnd, (HMENU)9004, hInst, NULL);
     cSeedButton = CreateWindow(L"BUTTON", L"Clear Seed", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * opBuX), (int)(yCor * entBuY), 90 * mul, 25 * mul, hWnd, (HMENU)9005, hInst, NULL);
     revertButton = CreateWindow(L"BUTTON", L"Revert to Vanilla", WS_BORDER | WS_CHILD | WS_VISIBLE, (int)(xCor * revBuX), (int)(yCor * entBuY), 90 * mul, 25 * mul, hWnd, (HMENU)9006, hInst, NULL);
-    enemies = CreateWindow(L"BUTTON", L"Enemies", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * enBuX), (int)(yCor * enBuY), 110 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
+    enemies = CreateWindow(L"BUTTON", L"Enemy Placements", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * enBuX), (int)(yCor * enBuY), 110 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
     chests = CreateWindow(L"BUTTON", L"Chests", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * cheBuX), (int)(yCor * enBuY), 110 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
     rooms = CreateWindow(L"BUTTON", L"Area Progression", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * areaBuX), (int)(yCor * enBuY), 130 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
     maiden = CreateWindow(L"BUTTON", L"Mandatory Iron Maiden", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * areaBuX), (int)(yCor * modBuY), 130 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
     openW = CreateWindow(L"BUTTON", L"Open World", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * areaBuX), (int)(yCor * droBuY), 130 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
-    breakA = CreateWindow(L"BUTTON", L"Break Art Costs", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * ashBuX), (int)(yCor * breakBuY), 130 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
-    balBreak = CreateWindow(L"BUTTON", L"Balance Break Art Costs", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * ashBuX), (int)(yCor * balBrBuY), 130 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
+    breakA = CreateWindow(L"BUTTON", L"Break Art Costs", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * brArCoBuX), (int)(yCor * enBuY), 130 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
+    balBreak = CreateWindow(L"BUTTON", L"Balance Break Art Costs", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * brArCoBuX), (int)(yCor * modBuY), 130 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
     areaMusic = CreateWindow(L"BUTTON", L"Area Music", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * areaMusBuX), (int)(yCor * enBuY), 130 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
     bossMusic = CreateWindow(L"BUTTON", L"Boss Music", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * areaMusBuX), (int)(yCor * droBuY), 130 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
     cutRes = CreateWindow(L"BUTTON", L"Restore Cut Music", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * areaMusBuX), (int)(yCor * modBuY), 130 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
     drops = CreateWindow(L"BUTTON", L"Drops", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * enBuX), (int)(yCor * droBuY), 110 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
-    balance = CreateWindow(L"BUTTON", L"Balance Item Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * cheBuX), (int)(yCor * droBuY), 150 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
-    keep = CreateWindow(L"BUTTON", L"Item Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * cheBuX), (int)(yCor * modBuY), 110 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
-    consEqu = CreateWindow(L"BUTTON", L"Inconsistent Gear", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * cheBuX), (int)(yCor * balEneBuY), 150 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
-    riskChe = CreateWindow(L"BUTTON", L"Blade Cost Stat", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * cheBuX), (int)(yCor * zenQuiBuY), 150 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
-    riskAsh = CreateWindow(L"BUTTON", L"Fandango Cost Stat", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * ashBuX), (int)(yCor * balEneBuY), 150 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
+    balance = CreateWindow(L"BUTTON", L"Balance Item Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * cheBuX), (int)(yCor * zenQuiBuY), 150 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
+    keep = CreateWindow(L"BUTTON", L"Item Base Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * cheBuX), (int)(yCor * modBuY), 110 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
+    cheClass = CreateWindow(L"BUTTON", L"Item Class Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * cheBuX), (int)(yCor * droBuY), 110 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
+    cheAff = CreateWindow(L"BUTTON", L"Item Affinity Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * cheBuX), (int)(yCor * enStBuY), 110 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
+    cheBEP = CreateWindow(L"BUTTON", L"Item BEP Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * cheBuX), (int)(yCor * baseEneEquY), 110 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
+    consEqu = CreateWindow(L"BUTTON", L"Inconsistent Gear", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * cheBuX), (int)(yCor * fanCoBuY), 150 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
+    riskChe = CreateWindow(L"BUTTON", L"Blade Cost Stat", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * cheBuX), (int)(yCor * eneAppBuY), 150 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
+    riskAsh = CreateWindow(L"BUTTON", L"Fandango Cost Stat", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * ashBuX), (int)(yCor * fanCoBuY), 150 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
     eneMod = CreateWindow(L"BUTTON", L"Enemy Models (Unstable)", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * enBuX), (int)(yCor * modBuY), 140 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
-    eneStat = CreateWindow(L"BUTTON", L"Enemy Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * enBuX), (int)(yCor * enStBuY), 110 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
+    eneStat = CreateWindow(L"BUTTON", L"Enemy Base Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * enBuX), (int)(yCor * enStBuY), 110 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
+    eneBaseEqu = CreateWindow(L"BUTTON", L"Base Equipment Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * enBuX), (int)(yCor * baseEneEquY), 150 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
+    eneEquClass = CreateWindow(L"BUTTON", L"Equipment Class Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * enBuX), (int)(yCor * zenQuiBuY), 150 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
+    eneEquAff = CreateWindow(L"BUTTON", L"Equipment Affinity Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * enBuX), (int)(yCor * eneAffBuY), 150 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
+    eneEquBEP = CreateWindow(L"BUTTON", L"Equipment BEP Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * enBuX), (int)(yCor * fanCoBuY), 150 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
+    eneEquApp = CreateWindow(L"BUTTON", L"Appendages", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * enBuX), (int)(yCor * eneAppBuY), 150 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
     balEneStat = CreateWindow(L"BUTTON", L"Balance Enemy Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * enBuX), (int)(yCor * balEneBuY), 150 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
-    icyWolf = CreateWindow(L"BUTTON", L"Ice Wolf", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * enBuX), (int)(yCor * zenQuiBuY), 150 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
-    ashley = CreateWindow(L"BUTTON", L"Ashley's Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * ashBuX), (int)(yCor * enBuY), 110 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
-    balAshley = CreateWindow(L"BUTTON", L"Balance Ashley's Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * ashBuX), (int)(yCor * modBuY), 150 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
-    fandango = CreateWindow(L"BUTTON", L"Fandango Blade and Grip", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * ashBuX), (int)(yCor * enStBuY), 150 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
-    chainL = CreateWindow(L"BUTTON", L"Chain Ability Learning Costs", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * ashBuX), (int)(yCor * chainLY), 150 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
-    chainD = CreateWindow(L"BUTTON", L"Chain Ability Damage Costs", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * ashBuX), (int)(yCor * chainDY), 150 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
-    quant = CreateWindow(L"BUTTON", L"Balance Item Quantities", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * cheBuX), (int)(yCor * enStBuY), 180 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
+    icyWolf = CreateWindow(L"BUTTON", L"Ice Wolf", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * enBuX), (int)(yCor * wolfBuY), 150 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
+    ashley = CreateWindow(L"BUTTON", L"Ashley's Base Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * ashBuX), (int)(yCor * enBuY), 110 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
+    ashClass = CreateWindow(L"BUTTON", L"Ashley's Class Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * ashBuX), (int)(yCor * modBuY), 110 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
+    ashAff = CreateWindow(L"BUTTON", L"Ashley's Affinity Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * ashBuX), (int)(yCor * droBuY), 110 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
+    ashBEP = CreateWindow(L"BUTTON", L"Ashley's BEP Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * ashBuX), (int)(yCor * enStBuY), 110 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
+    balAshley = CreateWindow(L"BUTTON", L"Balance Ashley's Stats", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * ashBuX), (int)(yCor * baseEneEquY), 150 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
+    fandango = CreateWindow(L"BUTTON", L"Fandango Blade and Grip", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * ashBuX), (int)(yCor * eneAffBuY), 150 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
+    chainL = CreateWindow(L"BUTTON", L"Chain Ability Learning Costs", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * brArCoBuX), (int)(yCor * droBuY), 150 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
+    chainD = CreateWindow(L"BUTTON", L"Chain Ability Damage Costs", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * brArCoBuX), (int)(yCor * enStBuY), 150 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
+    ulSpell = CreateWindow(L"BUTTON", L"Learn Ultimate Spells", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * brArCoBuX), (int)(yCor * baseEneEquY), 150 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
+    abFrame = CreateWindow(L"BUTTON", L"Ability Time Frames", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * brArCoBuX), (int)(yCor * zenQuiBuY), 150 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
+    quant = CreateWindow(L"BUTTON", L"Balance Item Quantities", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * cheBuX), (int)(yCor * eneAffBuY), 180 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
     zenTel = CreateWindow(L"BUTTON", L"Free Teleport", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * zenBuX), (int)(yCor * enBuY), 120 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
     zenAnal = CreateWindow(L"BUTTON", L"Perfect Analyze Hit Rate", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * zenBuX), (int)(yCor * modBuY), 150 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
     zenMan = CreateWindow(L"BUTTON", L"Friendly Manabreaker", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * zenBuX), (int)(yCor * droBuY), 120 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
     zenDrop = CreateWindow(L"BUTTON", L"New Drop System", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * zenBuX), (int)(yCor * enStBuY), 180 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
-    zenBoss = CreateWindow(L"BUTTON", L"Warlock Grimoire Drops", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * zenBuX), (int)(yCor * balEneBuY), 180 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
+    zenBoss = CreateWindow(L"BUTTON", L"Warlock Grimoire Drops", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * zenBuX), (int)(yCor * baseEneEquY), 180 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
     zenQui = CreateWindow(L"BUTTON", L"Buffless Blades and Gremlins", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * zenBuX), (int)(yCor * zenQuiBuY), 180 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
-    ashMisc = CreateWindow(L"BUTTON", L"Ashley's Misc Items", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * ashBuX), (int)(yCor * zenQuiBuY), 150 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
-    ashMiscQua = CreateWindow(L"BUTTON", L"Misc Item Quantities", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * ashBuX), (int)(yCor * miQuanBuY), 150 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
+    ashMisc = CreateWindow(L"BUTTON", L"Ashley's Misc Items", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * ashBuX), (int)(yCor * eneAppBuY), 150 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
+    ashMiscQua = CreateWindow(L"BUTTON", L"Misc Item Quantities", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * ashBuX), (int)(yCor * balEneBuY), 150 * mul, 25 * mul, hWnd, (HMENU)9002, hInst, NULL);
     ashThres = CreateWindow(L"BUTTON", L"Ashley Stat Threshold", WS_CHILD | WS_VISIBLE | BS_SPLITBUTTON, (int)(xCor * ashBuX), (int)(yCor * thresBuY), 135 * mul, 20 * mul, hWnd, (HMENU)9007, hInst, NULL);
-    ashBuild = CreateWindow(L"BUTTON", L"Ashley Build", WS_CHILD | WS_VISIBLE | BS_SPLITBUTTON, (int)(xCor * ashBuX), (int)(yCor * buiBuY), 135 * mul, 20 * mul, hWnd, (HMENU)9012, hInst, NULL);
+    ashBuild = CreateWindow(L"BUTTON", L"Ashley Build", WS_CHILD | WS_VISIBLE | BS_SPLITBUTTON, (int)(xCor * ashBuX), (int)(yCor * ashBuiBuY), 135 * mul, 20 * mul, hWnd, (HMENU)9012, hInst, NULL);
     //cusAsh = CreateWindow(L"BUTTON", L"Add Gem and Shield Data", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, (int)(xCor * 0.275), (int)(yCor * 0.7375), 140, 25, hWnd, (HMENU)9002, hInst, NULL);
 }
 
@@ -2287,11 +2749,11 @@ void toolTipMaker(HWND hWnd) {
         "expect in the original game.";
     HWND quanTip = toolGen(quanDesc, hWnd, quant);
     char keepDesc[] =
-        "You can only access this once you\n"
-        "decide to randomize chests.\n"
         "This will let you randomize the\n"
         "stats of items such as equipment\n"
-        "and gems from chests.";
+        "and gems from chests, except for\n"
+        "class, affinity, and blunt/edged/piercing\n"
+        "values.";
     HWND keepTip = toolGen(keepDesc, hWnd, keep);
     char consDesc[] =
         "Equipment names, types and models\n"
@@ -2309,8 +2771,8 @@ void toolTipMaker(HWND hWnd) {
         "ACID test. Use this at risk.";
     HWND modTip = toolGen(modDesc, hWnd, eneMod);
     char statDesc[] =
-        "The stats and equipment of enemies\n"
-        "can be randomized.";
+        "Randomizes the enemy's HP, MP, STR, INT,\n"
+        "AGL, and speed.";
     HWND statTip = toolGen(statDesc, hWnd, eneStat);
     char balStatDesc[] =
         "The stats of the randomized enemies\n"
@@ -2319,7 +2781,8 @@ void toolTipMaker(HWND hWnd) {
     HWND balStatTip = toolGen(balStatDesc, hWnd, balEneStat);
     char ashDesc[] =
         "Randomizes the stats of both Ashley\n"
-        "and his starting equipment.";
+        "and his starting equipment, except for\n"
+        "class, affinity, and blunt/edged/piercing.";
     HWND ashTip = toolGen(ashDesc, hWnd, ashley);
     char fanDesc[] =
         "Randomizes the blade and grip\n"
@@ -2440,11 +2903,66 @@ void toolTipMaker(HWND hWnd) {
         "Randomizes the stat expended when the\n"
         "Fandango deals damage.";
     HWND rishATip = toolGen(riskADesc, hWnd, riskAsh);
+    char eneBaseEquTipDesc[] =
+        "Randomizes the values of enemy weapons,\n"
+        "shields, armor, accessories, and gems\n"
+        "which are not associated with\n"
+        "blunt/edged/piercing, class, or affinity\n"
+        "attributes.";
+    HWND eneBaseEquTip = toolGen(eneBaseEquTipDesc, hWnd, eneBaseEqu);
+    char eneEquClassTipDesc[] =
+        "Randomizes the class data values of\n"
+        "enemy equipment and gems.";
+    HWND eneEquClassTip = toolGen(eneEquClassTipDesc, hWnd, eneEquClass);
+    char eneEquAffTipDesc[] =
+        "Randomizes the affinity data values\n"
+        "of enemy equipment and gems.";
+    HWND eneEquAffTip = toolGen(eneEquAffTipDesc, hWnd, eneEquAff);
+    char eneEquBEPTipDesc[] =
+        "Randomizes the blunt/edged/piercing\n"
+        "values of enemy equipment and gems.";
+    HWND eneEquBEPTip = toolGen(eneEquBEPTipDesc, hWnd, eneEquBEP);
+    char eneAppTipDesc[] =
+        "Randomizes the stats of enemy\n"
+        "appendages.";
+    HWND eneAppTip = toolGen(eneAppTipDesc, hWnd, eneEquApp);
+    char cheClassTipDesc[] =
+        "Randomizes the class data values of\n"
+        "chest equipment and gems.";
+    HWND cheClassTip = toolGen(cheClassTipDesc, hWnd, cheClass);
+    char cheAffTipDesc[] =
+        "Randomizes the affinity data values of\n"
+        "chest equipment and gems.";
+    HWND cheAffTip = toolGen(cheAffTipDesc, hWnd, cheAff);
+    char cheBEPTipDesc[] =
+        "Randomizes the blunt/edged/piercing\n"
+        "values of chest equipment and gems.";
+    HWND cheBEPTip = toolGen(cheAffTipDesc, hWnd, cheBEP);
+    char ashClassTipDesc[] =
+        "Randomizes the class data values of\n"
+        "Ashley's starting stats and equipment.";
+    HWND ashClassTip = toolGen(ashClassTipDesc, hWnd, ashClass);
+    char ashAffTipDesc[] =
+        "Randomizes the affinity data values of\n"
+        "Ashley's starting stats and equipment.";
+    HWND ashAffTip = toolGen(ashAffTipDesc, hWnd, ashAff);
+    char ashBEPTipDesc[] =
+        "Randomizes the blunt/edged/piercing values\n"
+        "of Ashley's starting stats and equipment.";
+    HWND ashBEPTip = toolGen(ashBEPTipDesc, hWnd, ashBEP);
+    char ashUlSplTipDesc[] =
+        "Replaces the level 4 versions of elemental\n"
+        "spells with ultimate spells used by enemies.";
+    HWND ashUlSplTip = toolGen(ashUlSplTipDesc, hWnd, ulSpell);
+    char ashAbFraTipDesc[] =
+        "Randomizes the time window to react to chain\n"
+        "and defense abilities.";
+    HWND ashAbFraTip = toolGen(ashAbFraTipDesc, hWnd, abFrame);
 }
 
 void ranBoxLock() {
     bool checkFound = false;
-    for (int i = 5; i < butRos.size() - 13; i++) {
+    for (int i = 5; i < butRos.size() - 16; i++) {
         LRESULT boxticked = SendMessage(butRos[i], BM_GETCHECK, NULL, NULL);
         if ((boxticked == BST_CHECKED || choiceAshBuild != "V") && gamePathFound) {
             checkFound = true;
@@ -2466,7 +2984,7 @@ void checkBoxLock() {
     bool found;
     if (gamePathFound) {
         found = true;
-        for (int i = 1; i < butRos.size() - 13; i++) {
+        for (int i = 1; i < butRos.size() - 16; i++) {
             EnableWindow(butRos[i], found);
             ranBoxLock();
         }

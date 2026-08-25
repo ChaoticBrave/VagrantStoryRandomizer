@@ -19,7 +19,7 @@ Chests::Chests() {
 
 }
 
-void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen, string aChoice, string secondChoice, string thirdChoice, string fourthChoice, bool fifthChoice, string sixthChoice) {
+void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen, string aChoice, string secondChoice, string thirdChoice, string fourthChoice, bool fifthChoice, string sixthChoice, string seventhChoice, string eighthChoice, string ninthChoice) {
     vector<string> ml = aRF.getChestCheck();
     vector<string>::iterator mlp = ml.begin();
     list<string> mlks = aRF.getKSCheck();
@@ -66,6 +66,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
     int silver_zone;
     int iron_zone;
     int locMapList;
+    int has_equip;
 
     streampos map_loc;
 
@@ -200,424 +201,431 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
         acmap.seekg(size + 1, ios::beg);
         map_loc = acmap.tellg();
         to_ass = acmap.get();
-        if (to_ass == 3) {
-            acmap.seekg(size + 5, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            prop = dist_2(aGen);
-            if (thirdChoice == "N") {
-                bla_nam = prop;
-            }
-            ch_val = new char(prop);
-            acmap.seekp(size + 5, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            acmap.seekg(size + 6, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            if (thirdChoice == "N") {
-                prop = bla_nam;
-            }
-            else {
+        has_equip = to_ass;
+        // Weapon blade
+        if (secondChoice == "Y") {
+            if (has_equip == 3) {
+                acmap.seekg(size + 5, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
                 prop = dist_2(aGen);
-            }
-            ch_val = new char(prop);
-            acmap.seekp(size + 6, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            acmap.seekg(size + 7, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            if (thirdChoice == "N") {
-                prop = bla_nam;
-            }
-            else {
-                prop = dist_2(aGen);
-            }
-            ch_val = new char(prop);
-            acmap.seekp(size + 7, ios::beg);
-            acmap.write(ch_val, 1);
-            acmap.seekg(size + 8, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            if (thirdChoice == "N") {
-                if (bla_nam >= 1 && bla_nam <= 12) {
-                    prop = 1;
+                if (thirdChoice == "N") {
+                    bla_nam = prop;
                 }
-                if (bla_nam >= 13 && bla_nam <= 24) {
-                    prop = 2;
-                }
-                if (bla_nam >= 25 && bla_nam <= 34) {
-                    prop = 3;
-                }
-                if (bla_nam >= 35 && bla_nam <= 50) {
-                    prop = 4;
-                }
-                if (bla_nam >= 51 && bla_nam <= 56) {
-                    prop = 5;
-                }
-                if (bla_nam >= 57 && bla_nam <= 62) {
-                    prop = 6;
-                }
-                if (bla_nam >= 63 && bla_nam <= 70) {
-                    prop = 7;
-                }
-                if (bla_nam >= 71 && bla_nam <= 82) {
-                    prop = 8;
-                }
-                if (bla_nam >= 83 && bla_nam <= 90) {
-                    prop = 9;
-                }
-            }
-            else {
-                prop = dist_3(aGen);
-            }
-            cho_blade = prop;
-            cho_grip = prop;
-            ch_val = new char(prop);
-            acmap.seekp(size + 8, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            if (secondChoice == "Y") {
-                prop = dist_4(aGen) * 100;
-                sprintf_s(rand_dpm, "%X", prop);
-                ss_rand_dpm << rand_dpm;
-                ss_rand_dpm >> s_rand_dpm;
-                ss_rand_dpm.clear();
-                hs_rand_dpm << std::hex << s_rand_dpm;
-                hs_rand_dpm >> int_rand_dpm;
-                hs_rand_dpm.clear();
-                dist_5 = std::uniform_int_distribution<>(41, round(int_rand_dpm / 100));
-                prop = dist_5(aGen) * 100;
-                sprintf_s(rand_dp, "%X", prop);
-                ss_rand_dp << rand_dp;
-                ss_rand_dp >> s_rand_dp;
-                ss_rand_dp.clear();
-                sp1 = s_rand_dpm.at(0);
-                sp2 = s_rand_dpm.at(1);
-                sp3 = s_rand_dpm.at(2);
-                sp4 = s_rand_dpm.at(3);
-                s_rand_dpm_1 = sp1 + sp2;
-                s_rand_dpm_2 = sp3 + sp4;
-                sp1 = s_rand_dp.at(0);
-                sp2 = s_rand_dp.at(1);
-                sp3 = s_rand_dp.at(2);
-                sp4 = s_rand_dp.at(3);
-                s_rand_dp_1 = sp1 + sp2;
-                s_rand_dp_2 = sp3 + sp4;
-                rand_dpm_fin << std::hex << s_rand_dpm_1;
-                rand_dpm_fin >> prop;
-                rand_dpm_fin.clear();
-                acmap.seekg(size + 10, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
                 ch_val = new char(prop);
-                acmap.seekp(size + 10, ios::beg);
+                acmap.seekp(size + 5, ios::beg);
                 acmap.write(ch_val, 1);
                 delete ch_val;
-                rand_dpm_fin << std::hex << s_rand_dpm_2;
-                rand_dpm_fin >> prop;
-                rand_dpm_fin.clear();
-                acmap.seekg(size + 9, ios::beg);
+                acmap.seekg(size + 6, ios::beg);
                 map_loc = acmap.tellg();
                 to_ass = acmap.get();
-                ch_val = new char(prop);
-                acmap.seekp(size + 9, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                ppm = dist_6(aGen);
-                acmap.seekg(size + 11, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                ch_val = new char(ppm);
-                acmap.seekp(size + 11, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                rand_dpm_fin << std::hex << s_rand_dp_1;
-                rand_dpm_fin >> prop;
-                rand_dpm_fin.clear();
-                acmap.seekg(size + 14, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                ch_val = new char(prop);
-                acmap.seekp(size + 14, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                rand_dpm_fin << std::hex << s_rand_dpm_2;
-                rand_dpm_fin >> prop;
-                rand_dpm_fin.clear();
-                acmap.seekg(size + 13, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                ch_val = new char(prop);
-                acmap.seekp(size + 13, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                dist_7 = std::uniform_int_distribution<>(1, ppm);
-                pp = dist_7(aGen);
-                acmap.seekg(size + 15, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                ch_val = new char(pp);
-                acmap.seekp(size + 15, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-            }
-            acmap.seekg(size + 17, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            if (secondChoice == "Y") {
-                prop = dist_21(aGen);
-            }
-            else {
-                if (bla_nam == 57) {
-                    prop = 1;
-                }
-                else if (bla_nam == 58) {
-                    prop = 2;
-                }
-                else if (bla_nam == 59) {
-                    prop = 3;
-                }
-                else if (bla_nam == 1 || bla_nam == 60) {
-                    prop = 4;
-                }
-                else if (bla_nam == 13 || bla_nam == 61) {
-                    prop = 5;
-                }
-                else if (bla_nam == 2 || bla_nam == 35 || bla_nam == 43 || bla_nam == 62) {
-                    prop = 6;
-                }
-                else if (bla_nam == 14) {
-                    prop = 7;
-                }
-                else if (bla_nam == 3 || bla_nam == 15 || bla_nam == 36 || bla_nam == 44 || bla_nam == 71) {
-                    prop = 8;
-                }
-                else if (bla_nam == 83) {
-                    prop = 9;
-                }
-                else if (bla_nam == 4 || bla_nam == 25 || bla_nam == 37 || bla_nam == 45 || bla_nam == 63 || bla_nam == 72) {
-                    prop = 10;
-                }
-                else if (bla_nam == 16 || bla_nam == 51 || bla_nam == 84) {
-                    prop = 11;
-                }
-                else if (bla_nam == 5 || bla_nam == 26 || bla_nam == 73) {
-                    prop = 12;
-                }
-                else if (bla_nam == 17 || bla_nam == 38 || bla_nam == 46 || bla_nam == 85) {
-                    prop = 13;
-                }
-                else if (bla_nam == 6 || bla_nam == 64 || bla_nam == 74) {
-                    prop = 14;
-                }
-                else if (bla_nam == 18 || bla_nam == 86) {
-                    prop = 15;
-                }
-                else if (bla_nam == 7 || bla_nam == 27 || bla_nam == 39 || bla_nam == 47 || bla_nam == 52) {
-                    prop = 16;
-                }
-                else if (bla_nam == 19 || bla_nam == 75 || bla_nam == 87) {
-                    prop = 17;
-                }
-                else if (bla_nam == 8) {
-                    prop = 18;
-                }
-                else if (bla_nam == 20 || bla_nam == 28 || bla_nam == 40 || bla_nam == 48 || bla_nam == 65 || bla_nam == 76 || bla_nam == 88) {
-                    prop = 19;
-                }
-                else if (bla_nam == 9 || bla_nam == 53) {
-                    prop = 20;
-                }
-                else if (bla_nam == 21 || bla_nam == 77 || bla_nam == 89) {
-                    prop = 21;
-                }
-                else if (bla_nam == 10 || bla_nam == 29 || bla_nam == 41 || bla_nam == 49 || bla_nam == 78) {
-                    prop = 22;
-                }
-                else if (bla_nam == 22 || bla_nam == 66 || bla_nam == 90) {
-                    prop = 23;
-                }
-                else if (bla_nam == 11) {
-                    prop = 24;
-                }
-                else if (bla_nam == 23 || bla_nam == 30 || bla_nam == 42 || bla_nam == 50 || bla_nam == 54) {
-                    prop = 25;
-                }
-                else if (bla_nam == 12 || bla_nam == 79) {
-                    prop = 26;
-                }
-                else if (bla_nam == 24 || bla_nam == 31 || bla_nam == 67) {
-                    prop = 27;
-                }
-                else if (bla_nam == 80) {
-                    prop = 28;
-                }
-                else if (bla_nam == 70 || bla_nam == 81) {
-                    prop = 30;
-                }
-                else if (bla_nam == 32 || bla_nam == 55) {
-                    prop = 31;
-                }
-                else if (bla_nam == 68) {
-                    prop = 32;
-                }
-                else if (bla_nam == 33 || bla_nam == 82) {
-                    prop = 33;
-                }
-                else if (bla_nam == 34 || bla_nam == 56) {
-                    prop = 35;
-                }
-                else if (bla_nam == 69) {
-                    prop = 36;
-                }
-            }
-            ch_val = new char(prop);
-            acmap.seekp(size + 17, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            acmap.seekg(size + 18, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            if (secondChoice == "Y") {
-                prop = dist_22(aGen);
-            }
-            else {
-                if ((bla_nam >= 1 && bla_nam <= 56) || (bla_nam >= 63 && bla_nam <= 90)) {
-                    prop = 0;
-                }
-                else if (bla_nam == 57) {
-                    prop = 5;
-                }
-                else if (bla_nam == 58) {
-                    prop = 10;
-                }
-                else if (bla_nam == 59) {
-                    prop = 16;
-                }
-                else if (bla_nam == 60) {
-                    prop = 20;
-                }
-                else if (bla_nam == 61) {
-                    prop = 25;
-                }
-                else if (bla_nam == 62) {
-                    prop = 30;
-                }
-            }
-            ch_val = new char(prop);
-            acmap.seekp(size + 18, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            acmap.seekg(size + 19, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            if (secondChoice == "Y") {
-                if (aChoice == "Y") {
-                    if (cho_blade == 1) {
-                        dist_23 = std::uniform_int_distribution<>(254, 255);
-                    }
-                    else if (cho_blade == 2 || cho_blade == 5 || cho_blade == 8 || cho_blade == 9) {
-                        dist_23 = std::uniform_int_distribution<>(250, 255);
-                    }
-                    else if (cho_blade == 3) {
-                        dist_23 = std::uniform_int_distribution<>(249, 255);
-                    }
-                    else if (cho_blade == 4) {
-                        dist_23 = std::uniform_int_distribution<>(251, 255);
-                    }
-                    else if (cho_blade == 6) {
-                        dist_23 = std::uniform_int_distribution<>(252, 255);
-                    }
-                    else if (cho_blade == 7) {
-                        dist_23 = std::uniform_int_distribution<>(248, 255);
-                    }
-                }
-                prop = dist_23(aGen) - 255;
-            }
-            else {
-                if (bla_nam >= 1 && bla_nam <= 5) {
-                    prop = 0;
-                }
-                else if ((bla_nam >= 6 && bla_nam <= 15) || bla_nam == 35 || bla_nam == 36 || bla_nam == 43 || bla_nam == 44 || bla_nam == 57 || bla_nam == 58 || bla_nam == 84) {
-                    prop = 255;
-                }
-                else if ((bla_nam >= 16 && bla_nam <= 18) || bla_nam == 25 || bla_nam == 26 || bla_nam == 37 || bla_nam == 38 || bla_nam == 45 || bla_nam == 46 || bla_nam == 51 || bla_nam == 59 || bla_nam == 60 || bla_nam == 63 || (bla_nam >= 71 && bla_nam <= 73) || bla_nam == 83) {
-                    prop = 254;
-                }
-                else if ((bla_nam >= 19 && bla_nam <= 21) || bla_nam == 27 || bla_nam == 28 || bla_nam == 39 || bla_nam == 40 || bla_nam == 47 || bla_nam == 48 || bla_nam == 52 || bla_nam == 53 || bla_nam == 61 || bla_nam == 62 || bla_nam == 64 || bla_nam == 65 || (bla_nam >= 74 && bla_nam <= 76) || (bla_nam >= 85 && bla_nam <= 87)) {
-                    prop = 253;
-                }
-                else if (bla_nam == 22 || bla_nam == 23 || (bla_nam >= 29 && bla_nam <= 31) || bla_nam == 41 || bla_nam == 42 || bla_nam == 49 || bla_nam == 50 || bla_nam == 54 || bla_nam == 55 || bla_nam == 66 || bla_nam == 67 || (bla_nam >= 77 && bla_nam <= 79) || bla_nam == 88 || bla_nam == 89) {
-                    prop = 252;
-                }
-                else if (bla_nam == 24 || bla_nam == 32 || bla_nam == 33 || bla_nam == 56 || bla_nam == 68 || bla_nam == 69 || (bla_nam >= 80 && bla_nam <= 82) || bla_nam == 90) {
-                    prop = 251;
-                }
-                else if (bla_nam == 34) {
-                    prop = 250;
-                }
-                else if (bla_nam == 70) {
-                    prop = 249;
-                }
-            }
-            ch_val = new char(prop);
-            acmap.seekp(size + 19, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            acmap.seekg(size + 20, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            if (secondChoice == "Y") {
-                prop = dist_9(aGen);
-            }
-            else {
-                if ((bla_nam >= 1 && bla_nam <= 10) || (bla_nam >= 13 && bla_nam <= 18) || (bla_nam >= 25 && bla_nam <= 28) || (bla_nam >= 35 && bla_nam <= 44) || bla_nam == 51 || bla_nam == 52 || (bla_nam >= 57 && bla_nam <= 62) || bla_nam == 63 || bla_nam == 64 || bla_nam == 70 || (bla_nam >= 71 && bla_nam <= 74)) {
-                    prop = 1;
-                }
-                else if (bla_nam == 11 || bla_nam == 12 || (bla_nam >= 19 && bla_nam <= 23) || (bla_nam >= 29 && bla_nam <= 31) || bla_nam == 34 || (bla_nam >= 45 && bla_nam <= 50) || bla_nam == 53 || bla_nam == 54 || (bla_nam >= 65 && bla_nam <= 67) || (bla_nam >= 75 && bla_nam <= 78) || (bla_nam >= 83 && bla_nam <= 85)) {
-                    prop = 2;
-                }
-                else if (bla_nam == 24 || bla_nam == 32 || bla_nam == 33 || bla_nam == 55 || bla_nam == 56 || bla_nam == 68 || bla_nam == 69 || (bla_nam >= 79 && bla_nam <= 82) || (bla_nam >= 86 && bla_nam <= 88)) {
-                    prop = 3;
-                }
-                else if (bla_nam == 89 || bla_nam == 90) {
-                    prop = 4;
-                }
-            }
-            ch_val = new char(prop);
-            acmap.seekp(size + 20, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            if (secondChoice == "Y") {
-                if (sixthChoice == "Y") {
-                    prop = (4 * dist_10(aGen)) + dist_11(aGen);
+                if (thirdChoice == "N") {
+                    prop = bla_nam;
                 }
                 else {
-                    prop = (8 + dist_10(aGen));
+                    prop = dist_2(aGen);
                 }
-            }
-            else {
-                if ((bla_nam >= 43 && bla_nam <= 50) || (bla_nam >= 57 && bla_nam <= 70) || bla_nam == 73 || bla_nam == 80 || bla_nam == 85 || bla_nam == 87 || bla_nam == 89) {
-                    res = 1;
+                ch_val = new char(prop);
+                acmap.seekp(size + 6, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                acmap.seekg(size + 7, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                if (thirdChoice == "N") {
+                    prop = bla_nam;
                 }
-                else if (bla_nam == 1 || bla_nam == 3 || bla_nam == 5 || (bla_nam >= 8 && bla_nam <= 11) || bla_nam == 13 || bla_nam == 14 || (bla_nam >= 16 && bla_nam <= 42) || (bla_nam >= 51 && bla_nam <= 56) || bla_nam == 72 || bla_nam == 79 || bla_nam == 81) {
-                    res = 2;
+                else {
+                    prop = dist_2(aGen);
                 }
-                else if (bla_nam == 2 || bla_nam == 4 || bla_nam == 6 || bla_nam == 7 || bla_nam == 12 || bla_nam == 15 || bla_nam == 71 || (bla_nam >= 74 && bla_nam <= 78) || (bla_nam >= 82 && bla_nam <= 84) || bla_nam == 86 || bla_nam == 88 || bla_nam == 90) {
-                    res = 3;
+                ch_val = new char(prop);
+                acmap.seekp(size + 7, ios::beg);
+                acmap.write(ch_val, 1);
+                acmap.seekg(size + 8, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                if (thirdChoice == "N") {
+                    if (bla_nam >= 1 && bla_nam <= 12) {
+                        prop = 1;
+                    }
+                    if (bla_nam >= 13 && bla_nam <= 24) {
+                        prop = 2;
+                    }
+                    if (bla_nam >= 25 && bla_nam <= 34) {
+                        prop = 3;
+                    }
+                    if (bla_nam >= 35 && bla_nam <= 50) {
+                        prop = 4;
+                    }
+                    if (bla_nam >= 51 && bla_nam <= 56) {
+                        prop = 5;
+                    }
+                    if (bla_nam >= 57 && bla_nam <= 62) {
+                        prop = 6;
+                    }
+                    if (bla_nam >= 63 && bla_nam <= 70) {
+                        prop = 7;
+                    }
+                    if (bla_nam >= 71 && bla_nam <= 82) {
+                        prop = 8;
+                    }
+                    if (bla_nam >= 83 && bla_nam <= 90) {
+                        prop = 9;
+                    }
                 }
-                prop = 8 + res;
-            }
-            acmap.seekg(size + 21, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            ch_val = new char(prop);
-            acmap.seekp(size + 21, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            if (secondChoice == "Y") {
+                else {
+                    prop = dist_3(aGen);
+                }
+                cho_blade = prop;
+                cho_grip = prop;
+                ch_val = new char(prop);
+                acmap.seekp(size + 8, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                if (secondChoice == "Y") {
+                    prop = dist_4(aGen) * 100;
+                    sprintf_s(rand_dpm, "%X", prop);
+                    ss_rand_dpm << rand_dpm;
+                    ss_rand_dpm >> s_rand_dpm;
+                    ss_rand_dpm.clear();
+                    hs_rand_dpm << std::hex << s_rand_dpm;
+                    hs_rand_dpm >> int_rand_dpm;
+                    hs_rand_dpm.clear();
+                    dist_5 = std::uniform_int_distribution<>(41, round(int_rand_dpm / 100));
+                    prop = dist_5(aGen) * 100;
+                    sprintf_s(rand_dp, "%X", prop);
+                    ss_rand_dp << rand_dp;
+                    ss_rand_dp >> s_rand_dp;
+                    ss_rand_dp.clear();
+                    sp1 = s_rand_dpm.at(0);
+                    sp2 = s_rand_dpm.at(1);
+                    sp3 = s_rand_dpm.at(2);
+                    sp4 = s_rand_dpm.at(3);
+                    s_rand_dpm_1 = sp1 + sp2;
+                    s_rand_dpm_2 = sp3 + sp4;
+                    sp1 = s_rand_dp.at(0);
+                    sp2 = s_rand_dp.at(1);
+                    sp3 = s_rand_dp.at(2);
+                    sp4 = s_rand_dp.at(3);
+                    s_rand_dp_1 = sp1 + sp2;
+                    s_rand_dp_2 = sp3 + sp4;
+                    rand_dpm_fin << std::hex << s_rand_dpm_1;
+                    rand_dpm_fin >> prop;
+                    rand_dpm_fin.clear();
+                    acmap.seekg(size + 10, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 10, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    rand_dpm_fin << std::hex << s_rand_dpm_2;
+                    rand_dpm_fin >> prop;
+                    rand_dpm_fin.clear();
+                    acmap.seekg(size + 9, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 9, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    ppm = dist_6(aGen);
+                    acmap.seekg(size + 11, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    ch_val = new char(ppm);
+                    acmap.seekp(size + 11, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    rand_dpm_fin << std::hex << s_rand_dp_1;
+                    rand_dpm_fin >> prop;
+                    rand_dpm_fin.clear();
+                    acmap.seekg(size + 14, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 14, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    rand_dpm_fin << std::hex << s_rand_dpm_2;
+                    rand_dpm_fin >> prop;
+                    rand_dpm_fin.clear();
+                    acmap.seekg(size + 13, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 13, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    dist_7 = std::uniform_int_distribution<>(1, ppm);
+                    pp = dist_7(aGen);
+                    acmap.seekg(size + 15, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    ch_val = new char(pp);
+                    acmap.seekp(size + 15, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                }
+                acmap.seekg(size + 17, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                if (secondChoice == "Y") {
+                    prop = dist_21(aGen);
+                }
+                else {
+                    if (bla_nam == 57) {
+                        prop = 1;
+                    }
+                    else if (bla_nam == 58) {
+                        prop = 2;
+                    }
+                    else if (bla_nam == 59) {
+                        prop = 3;
+                    }
+                    else if (bla_nam == 1 || bla_nam == 60) {
+                        prop = 4;
+                    }
+                    else if (bla_nam == 13 || bla_nam == 61) {
+                        prop = 5;
+                    }
+                    else if (bla_nam == 2 || bla_nam == 35 || bla_nam == 43 || bla_nam == 62) {
+                        prop = 6;
+                    }
+                    else if (bla_nam == 14) {
+                        prop = 7;
+                    }
+                    else if (bla_nam == 3 || bla_nam == 15 || bla_nam == 36 || bla_nam == 44 || bla_nam == 71) {
+                        prop = 8;
+                    }
+                    else if (bla_nam == 83) {
+                        prop = 9;
+                    }
+                    else if (bla_nam == 4 || bla_nam == 25 || bla_nam == 37 || bla_nam == 45 || bla_nam == 63 || bla_nam == 72) {
+                        prop = 10;
+                    }
+                    else if (bla_nam == 16 || bla_nam == 51 || bla_nam == 84) {
+                        prop = 11;
+                    }
+                    else if (bla_nam == 5 || bla_nam == 26 || bla_nam == 73) {
+                        prop = 12;
+                    }
+                    else if (bla_nam == 17 || bla_nam == 38 || bla_nam == 46 || bla_nam == 85) {
+                        prop = 13;
+                    }
+                    else if (bla_nam == 6 || bla_nam == 64 || bla_nam == 74) {
+                        prop = 14;
+                    }
+                    else if (bla_nam == 18 || bla_nam == 86) {
+                        prop = 15;
+                    }
+                    else if (bla_nam == 7 || bla_nam == 27 || bla_nam == 39 || bla_nam == 47 || bla_nam == 52) {
+                        prop = 16;
+                    }
+                    else if (bla_nam == 19 || bla_nam == 75 || bla_nam == 87) {
+                        prop = 17;
+                    }
+                    else if (bla_nam == 8) {
+                        prop = 18;
+                    }
+                    else if (bla_nam == 20 || bla_nam == 28 || bla_nam == 40 || bla_nam == 48 || bla_nam == 65 || bla_nam == 76 || bla_nam == 88) {
+                        prop = 19;
+                    }
+                    else if (bla_nam == 9 || bla_nam == 53) {
+                        prop = 20;
+                    }
+                    else if (bla_nam == 21 || bla_nam == 77 || bla_nam == 89) {
+                        prop = 21;
+                    }
+                    else if (bla_nam == 10 || bla_nam == 29 || bla_nam == 41 || bla_nam == 49 || bla_nam == 78) {
+                        prop = 22;
+                    }
+                    else if (bla_nam == 22 || bla_nam == 66 || bla_nam == 90) {
+                        prop = 23;
+                    }
+                    else if (bla_nam == 11) {
+                        prop = 24;
+                    }
+                    else if (bla_nam == 23 || bla_nam == 30 || bla_nam == 42 || bla_nam == 50 || bla_nam == 54) {
+                        prop = 25;
+                    }
+                    else if (bla_nam == 12 || bla_nam == 79) {
+                        prop = 26;
+                    }
+                    else if (bla_nam == 24 || bla_nam == 31 || bla_nam == 67) {
+                        prop = 27;
+                    }
+                    else if (bla_nam == 80) {
+                        prop = 28;
+                    }
+                    else if (bla_nam == 70 || bla_nam == 81) {
+                        prop = 30;
+                    }
+                    else if (bla_nam == 32 || bla_nam == 55) {
+                        prop = 31;
+                    }
+                    else if (bla_nam == 68) {
+                        prop = 32;
+                    }
+                    else if (bla_nam == 33 || bla_nam == 82) {
+                        prop = 33;
+                    }
+                    else if (bla_nam == 34 || bla_nam == 56) {
+                        prop = 35;
+                    }
+                    else if (bla_nam == 69) {
+                        prop = 36;
+                    }
+                }
+                ch_val = new char(prop);
+                acmap.seekp(size + 17, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                acmap.seekg(size + 18, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                if (secondChoice == "Y") {
+                    prop = dist_22(aGen);
+                }
+                else {
+                    if ((bla_nam >= 1 && bla_nam <= 56) || (bla_nam >= 63 && bla_nam <= 90)) {
+                        prop = 0;
+                    }
+                    else if (bla_nam == 57) {
+                        prop = 5;
+                    }
+                    else if (bla_nam == 58) {
+                        prop = 10;
+                    }
+                    else if (bla_nam == 59) {
+                        prop = 16;
+                    }
+                    else if (bla_nam == 60) {
+                        prop = 20;
+                    }
+                    else if (bla_nam == 61) {
+                        prop = 25;
+                    }
+                    else if (bla_nam == 62) {
+                        prop = 30;
+                    }
+                }
+                ch_val = new char(prop);
+                acmap.seekp(size + 18, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                acmap.seekg(size + 19, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                if (secondChoice == "Y") {
+                    if (aChoice == "Y") {
+                        if (cho_blade == 1) {
+                            dist_23 = std::uniform_int_distribution<>(254, 255);
+                        }
+                        else if (cho_blade == 2 || cho_blade == 5 || cho_blade == 8 || cho_blade == 9) {
+                            dist_23 = std::uniform_int_distribution<>(250, 255);
+                        }
+                        else if (cho_blade == 3) {
+                            dist_23 = std::uniform_int_distribution<>(249, 255);
+                        }
+                        else if (cho_blade == 4) {
+                            dist_23 = std::uniform_int_distribution<>(251, 255);
+                        }
+                        else if (cho_blade == 6) {
+                            dist_23 = std::uniform_int_distribution<>(252, 255);
+                        }
+                        else if (cho_blade == 7) {
+                            dist_23 = std::uniform_int_distribution<>(248, 255);
+                        }
+                    }
+                    prop = dist_23(aGen) - 255;
+                }
+                else {
+                    if (bla_nam >= 1 && bla_nam <= 5) {
+                        prop = 0;
+                    }
+                    else if ((bla_nam >= 6 && bla_nam <= 15) || bla_nam == 35 || bla_nam == 36 || bla_nam == 43 || bla_nam == 44 || bla_nam == 57 || bla_nam == 58 || bla_nam == 84) {
+                        prop = 255;
+                    }
+                    else if ((bla_nam >= 16 && bla_nam <= 18) || bla_nam == 25 || bla_nam == 26 || bla_nam == 37 || bla_nam == 38 || bla_nam == 45 || bla_nam == 46 || bla_nam == 51 || bla_nam == 59 || bla_nam == 60 || bla_nam == 63 || (bla_nam >= 71 && bla_nam <= 73) || bla_nam == 83) {
+                        prop = 254;
+                    }
+                    else if ((bla_nam >= 19 && bla_nam <= 21) || bla_nam == 27 || bla_nam == 28 || bla_nam == 39 || bla_nam == 40 || bla_nam == 47 || bla_nam == 48 || bla_nam == 52 || bla_nam == 53 || bla_nam == 61 || bla_nam == 62 || bla_nam == 64 || bla_nam == 65 || (bla_nam >= 74 && bla_nam <= 76) || (bla_nam >= 85 && bla_nam <= 87)) {
+                        prop = 253;
+                    }
+                    else if (bla_nam == 22 || bla_nam == 23 || (bla_nam >= 29 && bla_nam <= 31) || bla_nam == 41 || bla_nam == 42 || bla_nam == 49 || bla_nam == 50 || bla_nam == 54 || bla_nam == 55 || bla_nam == 66 || bla_nam == 67 || (bla_nam >= 77 && bla_nam <= 79) || bla_nam == 88 || bla_nam == 89) {
+                        prop = 252;
+                    }
+                    else if (bla_nam == 24 || bla_nam == 32 || bla_nam == 33 || bla_nam == 56 || bla_nam == 68 || bla_nam == 69 || (bla_nam >= 80 && bla_nam <= 82) || bla_nam == 90) {
+                        prop = 251;
+                    }
+                    else if (bla_nam == 34) {
+                        prop = 250;
+                    }
+                    else if (bla_nam == 70) {
+                        prop = 249;
+                    }
+                }
+                ch_val = new char(prop);
+                acmap.seekp(size + 19, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                acmap.seekg(size + 20, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                if (secondChoice == "Y") {
+                    prop = dist_9(aGen);
+                }
+                else {
+                    if ((bla_nam >= 1 && bla_nam <= 10) || (bla_nam >= 13 && bla_nam <= 18) || (bla_nam >= 25 && bla_nam <= 28) || (bla_nam >= 35 && bla_nam <= 44) || bla_nam == 51 || bla_nam == 52 || (bla_nam >= 57 && bla_nam <= 62) || bla_nam == 63 || bla_nam == 64 || bla_nam == 70 || (bla_nam >= 71 && bla_nam <= 74)) {
+                        prop = 1;
+                    }
+                    else if (bla_nam == 11 || bla_nam == 12 || (bla_nam >= 19 && bla_nam <= 23) || (bla_nam >= 29 && bla_nam <= 31) || bla_nam == 34 || (bla_nam >= 45 && bla_nam <= 50) || bla_nam == 53 || bla_nam == 54 || (bla_nam >= 65 && bla_nam <= 67) || (bla_nam >= 75 && bla_nam <= 78) || (bla_nam >= 83 && bla_nam <= 85)) {
+                        prop = 2;
+                    }
+                    else if (bla_nam == 24 || bla_nam == 32 || bla_nam == 33 || bla_nam == 55 || bla_nam == 56 || bla_nam == 68 || bla_nam == 69 || (bla_nam >= 79 && bla_nam <= 82) || (bla_nam >= 86 && bla_nam <= 88)) {
+                        prop = 3;
+                    }
+                    else if (bla_nam == 89 || bla_nam == 90) {
+                        prop = 4;
+                    }
+                }
+                ch_val = new char(prop);
+                acmap.seekp(size + 20, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                if (secondChoice == "Y") {
+                    if (sixthChoice == "Y") {
+                        prop = (4 * dist_10(aGen)) + dist_11(aGen);
+                    }
+                    else {
+                        prop = (8 + dist_11(aGen));
+                    }
+                }
+                else {
+                    if ((bla_nam >= 43 && bla_nam <= 50) || (bla_nam >= 57 && bla_nam <= 70) || bla_nam == 73 || bla_nam == 80 || bla_nam == 85 || bla_nam == 87 || bla_nam == 89) {
+                        res = 1;
+                    }
+                    else if (bla_nam == 1 || bla_nam == 3 || bla_nam == 5 || (bla_nam >= 8 && bla_nam <= 11) || bla_nam == 13 || bla_nam == 14 || (bla_nam >= 16 && bla_nam <= 42) || (bla_nam >= 51 && bla_nam <= 56) || bla_nam == 72 || bla_nam == 79 || bla_nam == 81) {
+                        res = 2;
+                    }
+                    else if (bla_nam == 2 || bla_nam == 4 || bla_nam == 6 || bla_nam == 7 || bla_nam == 12 || bla_nam == 15 || bla_nam == 71 || (bla_nam >= 74 && bla_nam <= 78) || (bla_nam >= 82 && bla_nam <= 84) || bla_nam == 86 || bla_nam == 88 || bla_nam == 90) {
+                        res = 3;
+                    }
+                    if (sixthChoice == "Y") {
+                        prop = (4 * dist_10(aGen)) + res;
+                    }
+                    else {
+                        prop = 8 + res;
+                    }
+                }
+                acmap.seekg(size + 21, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                ch_val = new char(prop);
+                acmap.seekp(size + 21, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
                 for (int b = 25; b < 28; b++) {
                     acmap.seekg(size + b, ios::beg);
                     map_loc = acmap.tellg();
@@ -661,15 +669,19 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                     acmap.seekp(size + b, ios::beg);
                     acmap.write(ch_val, 1);
                     delete ch_val;
+                    acmap.seekg(size + 28, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    prop = dist_57(aGen);
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 28, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
                 }
-                acmap.seekg(size + 28, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                prop = dist_57(aGen);
-                ch_val = new char(prop);
-                acmap.seekp(size + 28, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
+            }
+        }
+        if (seventhChoice == "Y") {
+            if (has_equip == 3) {
                 for (int b = 29; b < 35; b++) {
                     acmap.seekg(size + b, ios::beg);
                     map_loc = acmap.tellg();
@@ -691,6 +703,10 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                     acmap.write(ch_val, 1);
                     delete ch_val;
                 }
+            }
+        }
+        if (eighthChoice == "Y") {
+            if (has_equip == 3) {
                 for (int b = 37; b < 44; b++) {
                     acmap.seekg(size + b, ios::beg);
                     map_loc = acmap.tellg();
@@ -712,6 +728,14 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                     acmap.write(ch_val, 1);
                     delete ch_val;
                 }
+            }
+        }
+        // Weapon grip
+        acmap.seekg(size + 53, ios::beg);
+        map_loc = acmap.tellg();
+        p_53 = acmap.get();
+        if (secondChoice == "Y") {
+            if (has_equip == 3) {
                 acmap.seekg(size + 45, ios::beg);
                 map_loc = acmap.tellg();
                 to_ass = acmap.get();
@@ -720,155 +744,179 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                 acmap.seekp(size + 45, ios::beg);
                 acmap.write(ch_val, 1);
                 delete ch_val;
-            }
-            acmap.seekg(size + 49, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            if (thirdChoice == "N") {
-                if (cho_grip >= 1 && cho_grip <= 3) {
-                    prop = dist_51(aGen);
+                acmap.seekg(size + 49, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                if (thirdChoice == "N") {
+                    if (cho_grip >= 1 && cho_grip <= 3) {
+                        prop = dist_51(aGen);
+                    }
+                    else if (cho_grip >= 4 && cho_grip <= 7) {
+                        prop = dist_52(aGen);
+                    }
+                    else if (cho_grip == 8) {
+                        prop = dist_53(aGen);
+                    }
+                    else if (cho_grip == 9) {
+                        prop = dist_54(aGen);
+                    }
+                    gri_nam = prop;
                 }
-                else if (cho_grip >= 4 && cho_grip <= 7) {
-                    prop = dist_52(aGen);
+                else {
+                    prop = dist_19(aGen);
                 }
-                else if (cho_grip == 8) {
-                    prop = dist_53(aGen);
-                }
-                else if (cho_grip == 9) {
-                    prop = dist_54(aGen);
-                }
-                gri_nam = prop;
-            }
-            else {
-                prop = dist_19(aGen);
-            }
-            ch_val = new char(prop);
-            acmap.seekp(size + 49, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            ch_val = new char(0);
-            acmap.seekg(size + 50, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            acmap.seekp(size + 50, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            acmap.seekg(size + 51, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            if (thirdChoice == "N") {
-                prop = gri_nam - 95;
-            }
-            else {
-                prop = dist_15(aGen);
-            }
-            ch_val = new char(prop);
-            acmap.seekp(size + 51, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            acmap.seekg(size + 52, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            if (thirdChoice == "N") {
-                if (gri_nam >= 96 && gri_nam <= 104) {
-                    prop = 1;
-                }
-                else if (gri_nam >= 105 && gri_nam <= 114) {
-                    prop = 2;
-                }
-                else if (gri_nam >= 115 && gri_nam <= 120) {
-                    prop = 3;
-                }
-                else if (gri_nam >= 121 && gri_nam <= 126) {
-                    prop = 4;
-                }
-            }
-            else {
-                if (cho_grip >= 1 && cho_grip <= 3) {
-                    prop = 1;
-                }
-                else if (cho_grip >= 4 && cho_grip <= 7) {
-                    prop = 2;
-                }
-                else if (cho_grip == 8) {
-                    prop = 3;
-                }
-                else if (cho_grip == 9) {
-                    prop = 4;
-                }
-            }
-            cho_grip = prop;
-            ch_val = new char(prop);
-            acmap.seekp(size + 52, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            acmap.seekg(size + 53, ios::beg);
-            map_loc = acmap.tellg();
-            p_53 = acmap.get();
-            if (secondChoice == "N") {
-                if (gri_nam == 96 || gri_nam == 97 || gri_nam == 105 || gri_nam == 107 || gri_nam == 115 || gri_nam == 117 || gri_nam == 121) {
-                    p_53 = 0;
-                }
-                else if (gri_nam == 98 || gri_nam == 100 || gri_nam == 106 || gri_nam == 108 || gri_nam == 110 || gri_nam == 116 || gri_nam == 119 || (gri_nam >= 122 && gri_nam <= 126)) {
-                    p_53 = 1;
-                }
-                else if (gri_nam == 99 || gri_nam == 101 || gri_nam == 103 || gri_nam == 113 || gri_nam == 109 || gri_nam == 11 || gri_nam == 118) {
-                    p_53 = 2;
-                }
-                else if (gri_nam == 102 || gri_nam == 104 || gri_nam == 112 || gri_nam == 114 || gri_nam == 120) {
-                    p_53 = 3;
-                }
-                ch_val = new char(p_53);
-                acmap.seekp(size + 53, ios::beg);
+                ch_val = new char(prop);
+                acmap.seekp(size + 49, ios::beg);
                 acmap.write(ch_val, 1);
                 delete ch_val;
-            }
-            if (p_53 > 0) {
-                if (secondChoice == "Y" || size + 63 == 3) {
-                    acmap.seekg(size + 65, ios::beg);
-                    map_loc = acmap.tellg();
-                    to_ass = acmap.get();
-                    prop = dist_36(aGen);
-                    if (prop == 47) {
-                        choice = dist_37(aGen);
-                        if (choice == 1) {
-                            prop = dist_38(aGen);
-                        }
-                        if (choice == 2) {
-                            prop = dist_39(aGen);
-                        }
+                ch_val = new char(0);
+                acmap.seekg(size + 50, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                acmap.seekp(size + 50, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                acmap.seekg(size + 51, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                if (thirdChoice == "N") {
+                    prop = gri_nam - 95;
+                }
+                else {
+                    prop = dist_15(aGen);
+                }
+                ch_val = new char(prop);
+                acmap.seekp(size + 51, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                acmap.seekg(size + 52, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                if (thirdChoice == "N") {
+                    if (gri_nam >= 96 && gri_nam <= 104) {
+                        prop = 1;
                     }
-                    ch_val = new char(prop);
-                    acmap.seekp(size + 65, ios::beg);
-                    acmap.write(ch_val, 1);
-                    delete ch_val;
-                    ch_val = new char(1);
-                    acmap.seekg(size + 66, ios::beg);
-                    map_loc = acmap.tellg();
-                    to_ass = acmap.get();
-                    acmap.seekp(size + 66, ios::beg);
-                    acmap.write(ch_val, 1);
-                    delete ch_val;
-                    acmap.seekg(size + 67, ios::beg);
-                    map_loc = acmap.tellg();
-                    to_ass = acmap.get();
-                    prop = dist_35(aGen);
-                    if (prop == 43) {
-                        choice = dist_37(aGen);
-                        if (choice == 1) {
-                            prop = dist_16(aGen);
-                        }
-                        if (choice == 2) {
-                            prop = dist_34(aGen);
-                        }
+                    else if (gri_nam >= 105 && gri_nam <= 114) {
+                        prop = 2;
                     }
-                    ch_val = new char(prop);
-                    acmap.seekp(size + 67, ios::beg);
+                    else if (gri_nam >= 115 && gri_nam <= 120) {
+                        prop = 3;
+                    }
+                    else if (gri_nam >= 121 && gri_nam <= 126) {
+                        prop = 4;
+                    }
+                }
+                else {
+                    if (cho_grip >= 1 && cho_grip <= 3) {
+                        prop = 1;
+                    }
+                    else if (cho_grip >= 4 && cho_grip <= 7) {
+                        prop = 2;
+                    }
+                    else if (cho_grip == 8) {
+                        prop = 3;
+                    }
+                    else if (cho_grip == 9) {
+                        prop = 4;
+                    }
+                }
+                cho_grip = prop;
+                ch_val = new char(prop);
+                acmap.seekp(size + 52, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                if (secondChoice == "N") {
+                    if (gri_nam == 96 || gri_nam == 97 || gri_nam == 105 || gri_nam == 107 || gri_nam == 115 || gri_nam == 117 || gri_nam == 121) {
+                        p_53 = 0;
+                    }
+                    else if (gri_nam == 98 || gri_nam == 100 || gri_nam == 106 || gri_nam == 108 || gri_nam == 110 || gri_nam == 116 || gri_nam == 119 || (gri_nam >= 122 && gri_nam <= 126)) {
+                        p_53 = 1;
+                    }
+                    else if (gri_nam == 99 || gri_nam == 101 || gri_nam == 103 || gri_nam == 113 || gri_nam == 109 || gri_nam == 11 || gri_nam == 118) {
+                        p_53 = 2;
+                    }
+                    else if (gri_nam == 102 || gri_nam == 104 || gri_nam == 112 || gri_nam == 114 || gri_nam == 120) {
+                        p_53 = 3;
+                    }
+                    ch_val = new char(p_53);
+                    acmap.seekp(size + 53, ios::beg);
                     acmap.write(ch_val, 1);
                     delete ch_val;
                 }
-                if (secondChoice == "Y") {
-                    for (int b = 70; b < 79; b++) {
+                if (p_53 > 0) {
+                    if (secondChoice == "Y" || size + 63 == 3) {
+                        acmap.seekg(size + 65, ios::beg);
+                        map_loc = acmap.tellg();
+                        to_ass = acmap.get();
+                        prop = dist_36(aGen);
+                        if (prop == 47) {
+                            choice = dist_37(aGen);
+                            if (choice == 1) {
+                                prop = dist_38(aGen);
+                            }
+                            if (choice == 2) {
+                                prop = dist_39(aGen);
+                            }
+                        }
+                        ch_val = new char(prop);
+                        acmap.seekp(size + 65, ios::beg);
+                        acmap.write(ch_val, 1);
+                        delete ch_val;
+                        ch_val = new char(1);
+                        acmap.seekg(size + 66, ios::beg);
+                        map_loc = acmap.tellg();
+                        to_ass = acmap.get();
+                        acmap.seekp(size + 66, ios::beg);
+                        acmap.write(ch_val, 1);
+                        delete ch_val;
+                        acmap.seekg(size + 67, ios::beg);
+                        map_loc = acmap.tellg();
+                        to_ass = acmap.get();
+                        prop = dist_35(aGen);
+                        if (prop == 43) {
+                            choice = dist_37(aGen);
+                            if (choice == 1) {
+                                prop = dist_16(aGen);
+                            }
+                            if (choice == 2) {
+                                prop = dist_34(aGen);
+                            }
+                        }
+                        ch_val = new char(prop);
+                        acmap.seekp(size + 67, ios::beg);
+                        acmap.write(ch_val, 1);
+                        delete ch_val;
+                    }
+                    if (secondChoice == "Y") {
+                        for (int b = 70; b < 73; b++) {
+                            acmap.seekg(size + b, ios::beg);
+                            map_loc = acmap.tellg();
+                            to_ass = acmap.get();
+                            if (aChoice == "N") {
+                                prop = dist_8(aGen);
+                            }
+                            else {
+                                choice = dist_37(aGen);
+                                if (choice == 1) {
+                                    prop = dist_49(aGen);
+                                }
+                                if (choice == 2) {
+                                    prop = dist_14(aGen);
+                                }
+                            }
+                            ch_val = new char(prop);
+                            acmap.seekp(size + b, ios::beg);
+                            acmap.write(ch_val, 1);
+                            delete ch_val;
+                        }
+                    }
+                }
+            }
+        }
+        if (seventhChoice == "Y") {
+            if (has_equip == 3) {
+                if (p_53 > 0) {
+                    for (int b = 73; b < 79; b++) {
                         acmap.seekg(size + b, ios::beg);
                         map_loc = acmap.tellg();
                         to_ass = acmap.get();
@@ -878,20 +926,10 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                         else {
                             choice = dist_37(aGen);
                             if (choice == 1) {
-                                if (b > 72) {
-                                    prop = dist_46(aGen);
-                                }
-                                else {
-                                    prop = dist_49(aGen);
-                                }
+                                prop = dist_46(aGen);
                             }
                             if (choice == 2) {
-                                if (b > 72) {
-                                    prop = dist_47(aGen);
-                                }
-                                else {
-                                    prop = dist_14(aGen);
-                                }
+                                prop = dist_47(aGen);
                             }
                         }
                         ch_val = new char(prop);
@@ -899,6 +937,12 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                         acmap.write(ch_val, 1);
                         delete ch_val;
                     }
+                }
+            }
+        }
+        if (eighthChoice == "Y") {
+            if (has_equip == 3) {
+                if (p_53 > 0) {
                     for (int b = 81; b < 88; b++) {
                         acmap.seekg(size + b, ios::beg);
                         map_loc = acmap.tellg();
@@ -921,6 +965,10 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                         delete ch_val;
                     }
                 }
+            }
+        }
+        if (secondChoice == "Y") {
+            if (has_equip == 3) {
                 if (p_53 > 1) {
                     if (secondChoice == "Y" || size + 91 == 3) {
                         acmap.seekg(size + 93, ios::beg);
@@ -966,7 +1014,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                         delete ch_val;
                     }
                     if (secondChoice == "Y") {
-                        for (int b = 98; b < 107; b++) {
+                        for (int b = 98; b < 101; b++) {
                             acmap.seekg(size + b, ios::beg);
                             map_loc = acmap.tellg();
                             to_ass = acmap.get();
@@ -976,20 +1024,10 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                             else {
                                 choice = dist_37(aGen);
                                 if (choice == 1) {
-                                    if (b > 100) {
-                                        prop = dist_46(aGen);
-                                    }
-                                    else {
-                                        prop = dist_49(aGen);
-                                    }
+                                    prop = dist_49(aGen);
                                 }
                                 if (choice == 2) {
-                                    if (b > 100) {
-                                        prop = dist_47(aGen);
-                                    }
-                                    else {
-                                        prop = dist_14(aGen);
-                                    }
+                                    prop = dist_14(aGen);
                                 }
                             }
                             ch_val = new char(prop);
@@ -997,7 +1035,112 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                             acmap.write(ch_val, 1);
                             delete ch_val;
                         }
-                        for (int b = 109; b < 116; b++) {
+                    }
+                }
+            }
+        }
+        if (seventhChoice == "Y") {
+            if (has_equip == 3) {
+                if (p_53 > 1) {
+                    for (int b = 101; b < 107; b++) {
+                        acmap.seekg(size + b, ios::beg);
+                        map_loc = acmap.tellg();
+                        to_ass = acmap.get();
+                        if (aChoice == "N") {
+                            prop = dist_8(aGen);
+                        }
+                        else {
+                            choice = dist_37(aGen);
+                            if (choice == 1) {
+                                prop = dist_46(aGen);
+                            }
+                            if (choice == 2) {
+                                prop = dist_47(aGen);
+                            }
+                        }
+                        ch_val = new char(prop);
+                        acmap.seekp(size + b, ios::beg);
+                        acmap.write(ch_val, 1);
+                        delete ch_val;
+                    }
+                }
+            }
+        }
+        if (eighthChoice == "Y") {
+            if (has_equip == 3) {
+                if (p_53 > 1) {
+                    for (int b = 109; b < 116; b++) {
+                        acmap.seekg(size + b, ios::beg);
+                        map_loc = acmap.tellg();
+                        to_ass = acmap.get();
+                        if (aChoice == "N") {
+                            prop = dist_8(aGen);
+                        }
+                        else {
+                            choice = dist_37(aGen);
+                            if (choice == 1) {
+                                prop = dist_46(aGen);
+                            }
+                            if (choice == 2) {
+                                prop = dist_47(aGen);
+                            }
+                        }
+                        ch_val = new char(prop);
+                        acmap.seekp(size + b, ios::beg);
+                        acmap.write(ch_val, 1);
+                        delete ch_val;
+                    }
+                }
+            }
+        }
+        if (secondChoice == "Y") {
+            if (has_equip == 3) {
+                if (p_53 > 2) {
+                    if (secondChoice == "Y" || size + 119 == 3) {
+                        acmap.seekg(size + 121, ios::beg);
+                        map_loc = acmap.tellg();
+                        to_ass = acmap.get();
+                        prop = dist_36(aGen);
+                        if (prop == 47) {
+                            choice = dist_37(aGen);
+                            if (choice == 1) {
+                                prop = dist_38(aGen);
+                            }
+                            if (choice == 2) {
+                                prop = dist_39(aGen);
+                            }
+                        }
+                        ch_val = new char(prop);
+                        acmap.seekp(size + 121, ios::beg);
+                        acmap.write(ch_val, 1);
+                        delete ch_val;
+                        ch_val = new char(1);
+                        acmap.seekg(size + 122, ios::beg);
+                        map_loc = acmap.tellg();
+                        to_ass = acmap.get();
+                        acmap.seekp(size + 122, ios::beg);
+                        acmap.write(ch_val, 1);
+                        delete ch_val;
+                        acmap.seekg(size + 123, ios::beg);
+                        map_loc = acmap.tellg();
+                        to_ass = acmap.get();
+                        prop = dist_35(aGen);
+                        if (prop == 43) {
+                            choice = dist_37(aGen);
+                            if (choice == 1) {
+                                prop = dist_16(aGen);
+                            }
+                            if (choice == 2) {
+                                prop = dist_34(aGen);
+                            }
+                        }
+                        ch_val = new char(prop);
+                        acmap.seekp(size + 123, ios::beg);
+                        acmap.write(ch_val, 1);
+                        delete ch_val;
+                    }
+                    if (secondChoice == "Y") {
+                        for (int b = 126; b < 129; b++) {
                             acmap.seekg(size + b, ios::beg);
                             map_loc = acmap.tellg();
                             to_ass = acmap.get();
@@ -1007,10 +1150,10 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                             else {
                                 choice = dist_37(aGen);
                                 if (choice == 1) {
-                                    prop = dist_46(aGen);
+                                    prop = dist_49(aGen);
                                 }
                                 if (choice == 2) {
-                                    prop = dist_47(aGen);
+                                    prop = dist_14(aGen);
                                 }
                             }
                             ch_val = new char(prop);
@@ -1019,211 +1162,172 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                             delete ch_val;
                         }
                     }
-                    if (p_53 > 2) {
-                        if (secondChoice == "Y" || size + 119 == 3) {
-                            acmap.seekg(size + 121, ios::beg);
-                            map_loc = acmap.tellg();
-                            to_ass = acmap.get();
-                            prop = dist_36(aGen);
-                            if (prop == 47) {
-                                choice = dist_37(aGen);
-                                if (choice == 1) {
-                                    prop = dist_38(aGen);
-                                }
-                                if (choice == 2) {
-                                    prop = dist_39(aGen);
-                                }
-                            }
-                            ch_val = new char(prop);
-                            acmap.seekp(size + 121, ios::beg);
-                            acmap.write(ch_val, 1);
-                            delete ch_val;
-                            ch_val = new char(1);
-                            acmap.seekg(size + 122, ios::beg);
-                            map_loc = acmap.tellg();
-                            to_ass = acmap.get();
-                            acmap.seekp(size + 122, ios::beg);
-                            acmap.write(ch_val, 1);
-                            delete ch_val;
-                            acmap.seekg(size + 123, ios::beg);
-                            map_loc = acmap.tellg();
-                            to_ass = acmap.get();
-                            prop = dist_35(aGen);
-                            if (prop == 43) {
-                                choice = dist_37(aGen);
-                                if (choice == 1) {
-                                    prop = dist_16(aGen);
-                                }
-                                if (choice == 2) {
-                                    prop = dist_34(aGen);
-                                }
-                            }
-                            ch_val = new char(prop);
-                            acmap.seekp(size + 123, ios::beg);
-                            acmap.write(ch_val, 1);
-                            delete ch_val;
+                }
+            }
+        }
+        if (seventhChoice == "Y") {
+            if (has_equip == 3) {
+                if (p_53 > 2) {
+                    for (int b = 129; b < 135; b++) {
+                        acmap.seekg(size + b, ios::beg);
+                        map_loc = acmap.tellg();
+                        to_ass = acmap.get();
+                        if (aChoice == "N") {
+                            prop = dist_8(aGen);
                         }
-                        if (secondChoice == "Y") {
-                            for (int b = 126; b < 135; b++) {
-                                acmap.seekg(size + b, ios::beg);
-                                map_loc = acmap.tellg();
-                                to_ass = acmap.get();
-                                if (aChoice == "N") {
-                                    prop = dist_8(aGen);
-                                }
-                                else {
-                                    choice = dist_37(aGen);
-                                    if (choice == 1) {
-                                        if (b > 128) {
-                                            prop = dist_46(aGen);
-                                        }
-                                        else {
-                                            prop = dist_49(aGen);
-                                        }
-                                    }
-                                    if (choice == 2) {
-                                        if (b > 128) {
-                                            prop = dist_47(aGen);
-                                        }
-                                        else {
-                                            prop = dist_14(aGen);
-                                        }
-                                    }
-                                }
-                                ch_val = new char(prop);
-                                acmap.seekp(size + b, ios::beg);
-                                acmap.write(ch_val, 1);
-                                delete ch_val;
+                        else {
+                            choice = dist_37(aGen);
+                            if (choice == 1) {
+                                prop = dist_46(aGen);
                             }
-                            for (int b = 137; b < 143; b++) {
-                                acmap.seekg(size + b, ios::beg);
-                                map_loc = acmap.tellg();
-                                to_ass = acmap.get();
-                                if (aChoice == "N") {
-                                    prop = dist_8(aGen);
-                                }
-                                else {
-                                    choice = dist_37(aGen);
-                                    if (choice == 1) {
-                                        prop = dist_46(aGen);
-                                    }
-                                    if (choice == 2) {
-                                        prop = dist_47(aGen);
-                                    }
-                                }
-                                ch_val = new char(prop);
-                                acmap.seekp(size + b, ios::beg);
-                                acmap.write(ch_val, 1);
-                                delete ch_val;
+                            if (choice == 2) {
+                                prop = dist_47(aGen);
                             }
                         }
+                        ch_val = new char(prop);
+                        acmap.seekp(size + b, ios::beg);
+                        acmap.write(ch_val, 1);
+                        delete ch_val;
                     }
                 }
             }
-            acmap.seekg(size + 54, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            if (secondChoice == "Y") {
-                prop = dist_24(aGen);
-            }
-            else {
-                if (gri_nam == 96 || gri_nam == 97 || gri_nam == 105 || gri_nam == 106 || gri_nam == 113 || gri_nam == 115 || gri_nam == 121) {
-                    prop = 1;
-                }
-                else if (gri_nam == 98 || gri_nam == 99 || gri_nam == 107 || gri_nam == 108 || gri_nam == 116 || gri_nam == 122 || gri_nam == 125) {
-                    prop = 2;
-                }
-                else if (gri_nam == 100 || gri_nam == 101 || gri_nam == 110 || gri_nam == 109 || gri_nam == 117 || gri_nam == 123) {
-                    prop = 3;
-                }
-                else if (gri_nam == 102 || gri_nam == 103 || gri_nam == 111 || gri_nam == 118 || gri_nam == 115 || gri_nam == 124 || gri_nam == 126) {
-                    prop = 4;
-                }
-                else if (gri_nam == 104 || gri_nam == 112 || gri_nam == 119) {
-                    prop = 5;
-                }
-                else if (gri_nam == 114 || gri_nam == 120) {
-                    prop = 6;
-                }
-            }
-            ch_val = new char(prop);
-            acmap.seekp(size + 54, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            acmap.seekg(size + 55, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            if (secondChoice == "Y") {
-                prop = dist_59(aGen);
-            }
-            else {
-                if (gri_nam == 96 || gri_nam == 105 || gri_nam == 115 || gri_nam == 121 || gri_nam == 122 || gri_nam == 125) {
-                    prop = 0;
-                }
-                else if (gri_nam == 97 || gri_nam == 98 || gri_nam == 107 || gri_nam == 110 || gri_nam == 112 || gri_nam == 116 || gri_nam == 123 || gri_nam == 124) {
-                    prop = 1;
-                }
-                else if (gri_nam == 99 || gri_nam == 100 || gri_nam == 106 || gri_nam == 108 || gri_nam == 109 || gri_nam == 117 || gri_nam == 119 || gri_nam == 126) {
-                    prop = 2;
-                }
-                else if (gri_nam == 101 || gri_nam == 102 || gri_nam == 111 || gri_nam == 114 || gri_nam == 118) {
-                    prop = 3;
-                }
-                else if (gri_nam == 103 || gri_nam == 104) {
-                    prop = 4;
-                }
-                else if (gri_nam == 120) {
-                    prop = 5;
-                }
-                else if (gri_nam == 113) {
-                    prop = 8;
-                }
-            }
-            ch_val = new char(prop);
-            acmap.seekp(size + 55, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            acmap.seekg(size + 56, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            if (secondChoice == "Y") {
-                if (aChoice == "Y") {
-                    if (cho_grip == 1) {
-                        dist_25 = std::uniform_int_distribution<>(252, 254);
-                    }
-                    else if (cho_grip == 2) {
-                        dist_25 = std::uniform_int_distribution<>(251, 253);
-                    }
-                    else if (cho_grip == 3) {
-                        dist_25 = std::uniform_int_distribution<>(250, 252);
-                    }
-                    else if (cho_grip == 4) {
-                        dist_25 = std::uniform_int_distribution<>(253, 254);
+        }
+        if (eighthChoice == "Y") {
+            if (has_equip == 3) {
+                if (p_53 > 2) {
+                    for (int b = 137; b < 143; b++) {
+                        acmap.seekg(size + b, ios::beg);
+                        map_loc = acmap.tellg();
+                        to_ass = acmap.get();
+                        if (aChoice == "N") {
+                            prop = dist_8(aGen);
+                        }
+                        else {
+                            choice = dist_37(aGen);
+                            if (choice == 1) {
+                                prop = dist_46(aGen);
+                            }
+                            if (choice == 2) {
+                                prop = dist_47(aGen);
+                            }
+                        }
+                        ch_val = new char(prop);
+                        acmap.seekp(size + b, ios::beg);
+                        acmap.write(ch_val, 1);
+                        delete ch_val;
                     }
                 }
-                prop = dist_25(aGen) - 255;
             }
-            else {
-                if ((gri_nam >= 96 && gri_nam <= 98) || gri_nam == 121 || gri_nam == 122 || gri_nam == 123 || gri_nam == 124) {
-                    prop = 255;
+        }
+        if (secondChoice == "Y") {
+            if (has_equip == 3) {
+                acmap.seekg(size + 54, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                if (secondChoice == "Y") {
+                    prop = dist_24(aGen);
                 }
-                else if ((gri_nam >= 99 && gri_nam <= 101) || gri_nam == 105 || gri_nam == 106 || gri_nam == 107 || gri_nam == 125 || gri_nam == 126) {
-                    prop = 254;
+                else {
+                    if (gri_nam == 96 || gri_nam == 97 || gri_nam == 105 || gri_nam == 106 || gri_nam == 113 || gri_nam == 115 || gri_nam == 121) {
+                        prop = 1;
+                    }
+                    else if (gri_nam == 98 || gri_nam == 99 || gri_nam == 107 || gri_nam == 108 || gri_nam == 116 || gri_nam == 122 || gri_nam == 125) {
+                        prop = 2;
+                    }
+                    else if (gri_nam == 100 || gri_nam == 101 || gri_nam == 110 || gri_nam == 109 || gri_nam == 117 || gri_nam == 123) {
+                        prop = 3;
+                    }
+                    else if (gri_nam == 102 || gri_nam == 103 || gri_nam == 111 || gri_nam == 118 || gri_nam == 115 || gri_nam == 124 || gri_nam == 126) {
+                        prop = 4;
+                    }
+                    else if (gri_nam == 104 || gri_nam == 112 || gri_nam == 119) {
+                        prop = 5;
+                    }
+                    else if (gri_nam == 114 || gri_nam == 120) {
+                        prop = 6;
+                    }
                 }
-                else if ((gri_nam >= 102 && gri_nam <= 104) || (gri_nam >= 109 && gri_nam <= 112) || gri_nam == 115 || gri_nam == 116) {
-                    prop = 253;
+                ch_val = new char(prop);
+                acmap.seekp(size + 54, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                acmap.seekg(size + 55, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                if (secondChoice == "Y") {
+                    prop = dist_59(aGen);
                 }
-                else if (gri_nam == 113 || gri_nam == 112 || gri_nam == 114 || gri_nam == 117 || gri_nam == 118) {
-                    prop = 252;
+                else {
+                    if (gri_nam == 96 || gri_nam == 105 || gri_nam == 115 || gri_nam == 121 || gri_nam == 122 || gri_nam == 125) {
+                        prop = 0;
+                    }
+                    else if (gri_nam == 97 || gri_nam == 98 || gri_nam == 107 || gri_nam == 110 || gri_nam == 112 || gri_nam == 116 || gri_nam == 123 || gri_nam == 124) {
+                        prop = 1;
+                    }
+                    else if (gri_nam == 99 || gri_nam == 100 || gri_nam == 106 || gri_nam == 108 || gri_nam == 109 || gri_nam == 117 || gri_nam == 119 || gri_nam == 126) {
+                        prop = 2;
+                    }
+                    else if (gri_nam == 101 || gri_nam == 102 || gri_nam == 111 || gri_nam == 114 || gri_nam == 118) {
+                        prop = 3;
+                    }
+                    else if (gri_nam == 103 || gri_nam == 104) {
+                        prop = 4;
+                    }
+                    else if (gri_nam == 120) {
+                        prop = 5;
+                    }
+                    else if (gri_nam == 113) {
+                        prop = 8;
+                    }
                 }
-                else if (gri_nam == 119 || gri_nam == 120) {
-                    prop = 251;
+                ch_val = new char(prop);
+                acmap.seekp(size + 55, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                acmap.seekg(size + 56, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                if (secondChoice == "Y") {
+                    if (aChoice == "Y") {
+                        if (cho_grip == 1) {
+                            dist_25 = std::uniform_int_distribution<>(252, 254);
+                        }
+                        else if (cho_grip == 2) {
+                            dist_25 = std::uniform_int_distribution<>(251, 253);
+                        }
+                        else if (cho_grip == 3) {
+                            dist_25 = std::uniform_int_distribution<>(250, 252);
+                        }
+                        else if (cho_grip == 4) {
+                            dist_25 = std::uniform_int_distribution<>(253, 254);
+                        }
+                    }
+                    prop = dist_25(aGen) - 255;
                 }
+                else {
+                    if ((gri_nam >= 96 && gri_nam <= 98) || gri_nam == 121 || gri_nam == 122 || gri_nam == 123 || gri_nam == 124) {
+                        prop = 255;
+                    }
+                    else if ((gri_nam >= 99 && gri_nam <= 101) || gri_nam == 105 || gri_nam == 106 || gri_nam == 107 || gri_nam == 125 || gri_nam == 126) {
+                        prop = 254;
+                    }
+                    else if ((gri_nam >= 102 && gri_nam <= 104) || (gri_nam >= 109 && gri_nam <= 112) || gri_nam == 115 || gri_nam == 116) {
+                        prop = 253;
+                    }
+                    else if (gri_nam == 113 || gri_nam == 112 || gri_nam == 114 || gri_nam == 117 || gri_nam == 118) {
+                        prop = 252;
+                    }
+                    else if (gri_nam == 119 || gri_nam == 120) {
+                        prop = 251;
+                    }
+                }
+                ch_val = new char(prop);
+                acmap.seekp(size + 56, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
             }
-            ch_val = new char(prop);
-            acmap.seekp(size + 56, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
+        }
+        if (ninthChoice == "Y") {
             if (secondChoice == "Y") {
                 for (int b = 58; b < 61; b++) {
                     acmap.seekg(size + b, ios::beg);
@@ -1303,10 +1407,10 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                 if (gri_nam == 115 || (gri_nam >= 121 && gri_nam <= 126)) {
                     prop = 0;
                 }
-                else if (gri_nam == 105 ) {
+                else if (gri_nam == 105) {
                     prop = 1;
                 }
-                else if (gri_nam == 97 ) {
+                else if (gri_nam == 97) {
                     prop = 2;
                 }
                 else if (gri_nam == 96 || gri_nam == 107 || gri_nam == 118) {
@@ -1406,471 +1510,475 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
         acmap.seekg(size + 173, ios::beg);
         map_loc = acmap.tellg();
         to_ass = acmap.get();
-        if (to_ass == 3) {
-            acmap.seekg(size + 177, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            prop = dist_2(aGen);
-            if (thirdChoice == "N") {
-                bla_nam = prop;
-            }
-            ch_val = new char(prop);
-            acmap.seekp(size + 177, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            acmap.seekg(size + 178, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            if (thirdChoice == "N") {
-                prop = bla_nam;
-            }
-            else {
+        has_equip = to_ass;
+        // Blade
+        if (secondChoice == "Y") {
+            if (has_equip == 3) {
+                acmap.seekg(size + 177, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
                 prop = dist_2(aGen);
-            }
-            ch_val = new char(prop);
-            acmap.seekp(size + 178, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            acmap.seekg(size + 179, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            if (thirdChoice == "N") {
-                prop = bla_nam;
-            }
-            else {
-                prop = dist_2(aGen);
-            }
-            ch_val = new char(prop);
-            acmap.seekp(size + 179, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            acmap.seekg(size + 180, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            if (thirdChoice == "N") {
-                if (bla_nam >= 1 && bla_nam <= 12) {
-                    prop = 1;
+                if (thirdChoice == "N") {
+                    bla_nam = prop;
                 }
-                if (bla_nam >= 13 && bla_nam <= 24) {
-                    prop = 2;
-                }
-                if (bla_nam >= 25 && bla_nam <= 34) {
-                    prop = 3;
-                }
-                if (bla_nam >= 35 && bla_nam <= 50) {
-                    prop = 4;
-                }
-                if (bla_nam >= 51 && bla_nam <= 56) {
-                    prop = 5;
-                }
-                if (bla_nam >= 57 && bla_nam <= 62) {
-                    prop = 6;
-                }
-                if (bla_nam >= 63 && bla_nam <= 70) {
-                    prop = 7;
-                }
-                if (bla_nam >= 71 && bla_nam <= 82) {
-                    prop = 8;
-                }
-                if (bla_nam >= 83 && bla_nam <= 90) {
-                    prop = 9;
-                }
-            }
-            else {
-                prop = dist_3(aGen);
-            }
-            ch_val = new char(prop);
-            acmap.seekp(size + 180, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            if (secondChoice == "Y") {
-                prop = dist_4(aGen) * 100;
-                sprintf_s(rand_dpm, "%X", prop);
-                ss_rand_dpm << rand_dpm;
-                ss_rand_dpm >> s_rand_dpm;
-                ss_rand_dpm.clear();
-                hs_rand_dpm << std::hex << s_rand_dpm;
-                hs_rand_dpm >> int_rand_dpm;
-                hs_rand_dpm.clear();
-                dist_5 = std::uniform_int_distribution<>(41, round(int_rand_dpm / 100));
-                prop = dist_5(aGen) * 100;
-                sprintf_s(rand_dp, "%X", prop);
-                ss_rand_dp << rand_dp;
-                ss_rand_dp >> s_rand_dp;
-                ss_rand_dp.clear();
-                sp1 = s_rand_dpm.at(0);
-                sp2 = s_rand_dpm.at(1);
-                sp3 = s_rand_dpm.at(2);
-                sp4 = s_rand_dpm.at(3);
-                s_rand_dpm_1 = sp1 + sp2;
-                s_rand_dpm_2 = sp3 + sp4;
-                sp1 = s_rand_dp.at(0);
-                sp2 = s_rand_dp.at(1);
-                sp3 = s_rand_dp.at(2);
-                sp4 = s_rand_dp.at(3);
-                s_rand_dp_1 = sp1 + sp2;
-                s_rand_dp_2 = sp3 + sp4;
-                rand_dpm_fin << std::hex << s_rand_dpm_1;
-                rand_dpm_fin >> prop;
-                rand_dpm_fin.clear();
-                acmap.seekg(size + 182, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
                 ch_val = new char(prop);
-                acmap.seekp(size + 182, ios::beg);
+                acmap.seekp(size + 177, ios::beg);
                 acmap.write(ch_val, 1);
                 delete ch_val;
-                rand_dpm_fin << std::hex << s_rand_dpm_2;
-                rand_dpm_fin >> prop;
-                rand_dpm_fin.clear();
-                acmap.seekg(size + 181, ios::beg);
+                acmap.seekg(size + 178, ios::beg);
                 map_loc = acmap.tellg();
                 to_ass = acmap.get();
-                ch_val = new char(prop);
-                acmap.seekp(size + 181, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                ppm = dist_6(aGen);
-                acmap.seekg(size + 183, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                ch_val = new char(ppm);
-                acmap.seekp(size + 183, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                rand_dpm_fin << std::hex << s_rand_dp_1;
-                rand_dpm_fin >> prop;
-                rand_dpm_fin.clear();
-                acmap.seekg(size + 186, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                ch_val = new char(prop);
-                acmap.seekp(size + 186, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                rand_dpm_fin << std::hex << s_rand_dpm_2;
-                rand_dpm_fin >> prop;
-                rand_dpm_fin.clear();
-                acmap.seekg(size + 185, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                ch_val = new char(prop);
-                acmap.seekp(size + 185, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                dist_7 = std::uniform_int_distribution<>(1, ppm);
-                pp = dist_7(aGen);
-                acmap.seekg(size + 187, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                ch_val = new char(pp);
-                acmap.seekp(size + 187, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-            }
-            acmap.seekg(size + 189, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            if (secondChoice == "Y") {
-                prop = dist_21(aGen);
-            }
-            else {
-                if (bla_nam == 57) {
-                    prop = 1;
-                }
-                else if (bla_nam == 58) {
-                    prop = 2;
-                }
-                else if (bla_nam == 59) {
-                    prop = 3;
-                }
-                else if (bla_nam == 1 || bla_nam == 60) {
-                    prop = 4;
-                }
-                else if (bla_nam == 13 || bla_nam == 61) {
-                    prop = 5;
-                }
-                else if (bla_nam == 2 || bla_nam == 35 || bla_nam == 43 || bla_nam == 62) {
-                    prop = 6;
-                }
-                else if (bla_nam == 14) {
-                    prop = 7;
-                }
-                else if (bla_nam == 3 || bla_nam == 15 || bla_nam == 36 || bla_nam == 44 || bla_nam == 71) {
-                    prop = 8;
-                }
-                else if (bla_nam == 83) {
-                    prop = 9;
-                }
-                else if (bla_nam == 4 || bla_nam == 25 || bla_nam == 37 || bla_nam == 45 || bla_nam == 63 || bla_nam == 72) {
-                    prop = 10;
-                }
-                else if (bla_nam == 16 || bla_nam == 51 || bla_nam == 84) {
-                    prop = 11;
-                }
-                else if (bla_nam == 5 || bla_nam == 26 || bla_nam == 73) {
-                    prop = 12;
-                }
-                else if (bla_nam == 17 || bla_nam == 38 || bla_nam == 46 || bla_nam == 85) {
-                    prop = 13;
-                }
-                else if (bla_nam == 6 || bla_nam == 64 || bla_nam == 74) {
-                    prop = 14;
-                }
-                else if (bla_nam == 18 || bla_nam == 86) {
-                    prop = 15;
-                }
-                else if (bla_nam == 7 || bla_nam == 27 || bla_nam == 39 || bla_nam == 47 || bla_nam == 52) {
-                    prop = 16;
-                }
-                else if (bla_nam == 19 || bla_nam == 75 || bla_nam == 87) {
-                    prop = 17;
-                }
-                else if (bla_nam == 8) {
-                    prop = 18;
-                }
-                else if (bla_nam == 20 || bla_nam == 28 || bla_nam == 40 || bla_nam == 48 || bla_nam == 65 || bla_nam == 76 || bla_nam == 88) {
-                    prop = 19;
-                }
-                else if (bla_nam == 9 || bla_nam == 53) {
-                    prop = 20;
-                }
-                else if (bla_nam == 21 || bla_nam == 77 || bla_nam == 89) {
-                    prop = 21;
-                }
-                else if (bla_nam == 10 || bla_nam == 29 || bla_nam == 41 || bla_nam == 49 || bla_nam == 78) {
-                    prop = 22;
-                }
-                else if (bla_nam == 22 || bla_nam == 66 || bla_nam == 90) {
-                    prop = 23;
-                }
-                else if (bla_nam == 11) {
-                    prop = 24;
-                }
-                else if (bla_nam == 23 || bla_nam == 30 || bla_nam == 42 || bla_nam == 50 || bla_nam == 54) {
-                    prop = 25;
-                }
-                else if (bla_nam == 12 || bla_nam == 79) {
-                    prop = 26;
-                }
-                else if (bla_nam == 24 || bla_nam == 31 || bla_nam == 67) {
-                    prop = 27;
-                }
-                else if (bla_nam == 80) {
-                    prop = 28;
-                }
-                else if (bla_nam == 70 || bla_nam == 81) {
-                    prop = 30;
-                }
-                else if (bla_nam == 32 || bla_nam == 55) {
-                    prop = 31;
-                }
-                else if (bla_nam == 68) {
-                    prop = 32;
-                }
-                else if (bla_nam == 33 || bla_nam == 82) {
-                    prop = 33;
-                }
-                else if (bla_nam == 34 || bla_nam == 56) {
-                    prop = 35;
-                }
-                else if (bla_nam == 69) {
-                    prop = 36;
-                }
-            }
-            ch_val = new char(prop);
-            acmap.seekp(size + 189, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            acmap.seekg(size + 190, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            if (secondChoice == "Y") {
-                prop = dist_22(aGen);
-            }
-            else {
-                if ((bla_nam >= 1 && bla_nam <= 56) || (bla_nam >= 63 && bla_nam <= 90)) {
-                    prop = 0;
-                }
-                else if (bla_nam == 57) {
-                    prop = 5;
-                }
-                else if (bla_nam == 58) {
-                    prop = 10;
-                }
-                else if (bla_nam == 59) {
-                    prop = 16;
-                }
-                else if (bla_nam == 60) {
-                    prop = 20;
-                }
-                else if (bla_nam == 61) {
-                    prop = 25;
-                }
-                else if (bla_nam == 62) {
-                    prop = 30;
-                }
-            }
-            ch_val = new char(prop);
-            acmap.seekp(size + 190, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            acmap.seekg(size + 191, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            if (secondChoice == "Y") {
-                if (aChoice == "Y") {
-                    if (cho_blade == 1) {
-                        dist_23 = std::uniform_int_distribution<>(254, 255);
-                    }
-                    else if (cho_blade == 2 || cho_blade == 5 || cho_blade == 8 || cho_blade == 9) {
-                        dist_23 = std::uniform_int_distribution<>(250, 255);
-                    }
-                    else if (cho_blade == 3) {
-                        dist_23 = std::uniform_int_distribution<>(249, 255);
-                    }
-                    else if (cho_blade == 4) {
-                        dist_23 = std::uniform_int_distribution<>(251, 255);
-                    }
-                    else if (cho_blade == 6) {
-                        dist_23 = std::uniform_int_distribution<>(252, 255);
-                    }
-                    else if (cho_blade == 7) {
-                        dist_23 = std::uniform_int_distribution<>(248, 255);
-                    }
-                }
-                prop = dist_23(aGen) - 255;
-            }
-            else {
-                if (bla_nam >= 1 && bla_nam <= 5) {
-                    prop = 0;
-                }
-                else if ((bla_nam >= 6 && bla_nam <= 15) || bla_nam == 35 || bla_nam == 36 || bla_nam == 43 || bla_nam == 44 || bla_nam == 57 || bla_nam == 58 || bla_nam == 84) {
-                    prop = 255;
-                }
-                else if ((bla_nam >= 16 && bla_nam <= 18) || bla_nam == 25 || bla_nam == 26 || bla_nam == 37 || bla_nam == 38 || bla_nam == 45 || bla_nam == 46 || bla_nam == 51 || bla_nam == 59 || bla_nam == 60 || bla_nam == 63 || (bla_nam >= 71 && bla_nam <= 73) || bla_nam == 83) {
-                    prop = 254;
-                }
-                else if ((bla_nam >= 19 && bla_nam <= 21) || bla_nam == 27 || bla_nam == 28 || bla_nam == 39 || bla_nam == 40 || bla_nam == 47 || bla_nam == 48 || bla_nam == 52 || bla_nam == 53 || bla_nam == 61 || bla_nam == 62 || bla_nam == 64 || bla_nam == 65 || (bla_nam >= 74 && bla_nam <= 76) || (bla_nam >= 85 && bla_nam <= 87)) {
-                    prop = 253;
-                }
-                else if (bla_nam == 22 || bla_nam == 23 || (bla_nam >= 29 && bla_nam <= 31) || bla_nam == 41 || bla_nam == 42 || bla_nam == 49 || bla_nam == 50 || bla_nam == 54 || bla_nam == 55 || bla_nam == 66 || bla_nam == 67 || (bla_nam >= 77 && bla_nam <= 79) || bla_nam == 88 || bla_nam == 89) {
-                    prop = 252;
-                }
-                else if (bla_nam == 24 || bla_nam == 32 || bla_nam == 33 || bla_nam == 56 || bla_nam == 68 || bla_nam == 69 || (bla_nam >= 80 && bla_nam <= 82) || bla_nam == 90) {
-                    prop = 251;
-                }
-                else if (bla_nam == 34) {
-                    prop = 250;
-                }
-                else if (bla_nam == 70) {
-                    prop = 249;
-                }
-            }
-            ch_val = new char(prop);
-            acmap.seekp(size + 191, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            acmap.seekg(size + 192, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            if (secondChoice == "Y") {
-                prop = dist_9(aGen);
-            }
-            else {
-                if ((bla_nam >= 1 && bla_nam <= 10) || (bla_nam >= 13 && bla_nam <= 18) || (bla_nam >= 25 && bla_nam <= 28) || (bla_nam >= 35 && bla_nam <= 44) || bla_nam == 51 || bla_nam == 52 || (bla_nam >= 57 && bla_nam <= 62) || bla_nam == 63 || bla_nam == 64 || bla_nam == 70 || (bla_nam >= 71 && bla_nam <= 74)) {
-                    prop = 1;
-                }
-                else if (bla_nam == 11 || bla_nam == 12 || (bla_nam >= 19 && bla_nam <= 23) || (bla_nam >= 29 && bla_nam <= 31) || bla_nam == 34 || (bla_nam >= 45 && bla_nam <= 50) || bla_nam == 53 || bla_nam == 54 || (bla_nam >= 65 && bla_nam <= 67) || (bla_nam >= 75 && bla_nam <= 78) || (bla_nam >= 83 && bla_nam <= 85)) {
-                    prop = 2;
-                }
-                else if (bla_nam == 24 || bla_nam == 32 || bla_nam == 33 || bla_nam == 55 || bla_nam == 56 || bla_nam == 68 || bla_nam == 69 || (bla_nam >= 79 && bla_nam <= 82) || (bla_nam >= 86 && bla_nam <= 88)) {
-                    prop = 3;
-                }
-                else if (bla_nam == 89 || bla_nam == 90) {
-                    prop = 4;
-                }
-            }
-            ch_val = new char(prop);
-            acmap.seekp(size + 192, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            if (secondChoice == "Y") {
-                if (sixthChoice == "Y") {
-                    prop = (4 * dist_10(aGen)) + dist_11(aGen);
+                if (thirdChoice == "N") {
+                    prop = bla_nam;
                 }
                 else {
-                    prop = (8 + dist_10(aGen));
+                    prop = dist_2(aGen);
                 }
-            }
-            else {
-                if ((bla_nam >= 43 && bla_nam <= 50) || (bla_nam >= 57 && bla_nam <= 70) || bla_nam == 73 || bla_nam == 80 || bla_nam == 85 || bla_nam == 87 || bla_nam == 89) {
-                    res = 1;
-                }
-                else if (bla_nam == 1 || bla_nam == 3 || bla_nam == 5 || (bla_nam >= 8 && bla_nam <= 11) || bla_nam == 13 || bla_nam == 14 || (bla_nam >= 16 && bla_nam <= 42) || (bla_nam >= 51 && bla_nam <= 56) || bla_nam == 72 || bla_nam == 79 || bla_nam == 81) {
-                    res = 2;
-                }
-                else if (bla_nam == 2 || bla_nam == 4 || bla_nam == 6 || bla_nam == 7 || bla_nam == 12 || bla_nam == 15 || bla_nam == 71 || (bla_nam >= 74 && bla_nam <= 78) || (bla_nam >= 82 && bla_nam <= 84) || bla_nam == 86 || bla_nam == 88 || bla_nam == 90) {
-                    res = 3;
-                }
-                if (sixthChoice == "Y") {
-                    prop = (4 * res) + dist_11(aGen);
+                ch_val = new char(prop);
+                acmap.seekp(size + 178, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                acmap.seekg(size + 179, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                if (thirdChoice == "N") {
+                    prop = bla_nam;
                 }
                 else {
-                    prop = 8 + res;
+                    prop = dist_2(aGen);
                 }
-            }
-            acmap.seekg(size + 193, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            ch_val = new char(prop);
-            acmap.seekp(size + 193, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            if (secondChoice == "Y") {
-                for (int b = 197; b < 200; b++) {
-                    acmap.seekg(size + b, ios::beg);
+                ch_val = new char(prop);
+                acmap.seekp(size + 179, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                acmap.seekg(size + 180, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                if (thirdChoice == "N") {
+                    if (bla_nam >= 1 && bla_nam <= 12) {
+                        prop = 1;
+                    }
+                    if (bla_nam >= 13 && bla_nam <= 24) {
+                        prop = 2;
+                    }
+                    if (bla_nam >= 25 && bla_nam <= 34) {
+                        prop = 3;
+                    }
+                    if (bla_nam >= 35 && bla_nam <= 50) {
+                        prop = 4;
+                    }
+                    if (bla_nam >= 51 && bla_nam <= 56) {
+                        prop = 5;
+                    }
+                    if (bla_nam >= 57 && bla_nam <= 62) {
+                        prop = 6;
+                    }
+                    if (bla_nam >= 63 && bla_nam <= 70) {
+                        prop = 7;
+                    }
+                    if (bla_nam >= 71 && bla_nam <= 82) {
+                        prop = 8;
+                    }
+                    if (bla_nam >= 83 && bla_nam <= 90) {
+                        prop = 9;
+                    }
+                }
+                else {
+                    prop = dist_3(aGen);
+                }
+                ch_val = new char(prop);
+                acmap.seekp(size + 180, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                if (secondChoice == "Y") {
+                    prop = dist_4(aGen) * 100;
+                    sprintf_s(rand_dpm, "%X", prop);
+                    ss_rand_dpm << rand_dpm;
+                    ss_rand_dpm >> s_rand_dpm;
+                    ss_rand_dpm.clear();
+                    hs_rand_dpm << std::hex << s_rand_dpm;
+                    hs_rand_dpm >> int_rand_dpm;
+                    hs_rand_dpm.clear();
+                    dist_5 = std::uniform_int_distribution<>(41, round(int_rand_dpm / 100));
+                    prop = dist_5(aGen) * 100;
+                    sprintf_s(rand_dp, "%X", prop);
+                    ss_rand_dp << rand_dp;
+                    ss_rand_dp >> s_rand_dp;
+                    ss_rand_dp.clear();
+                    sp1 = s_rand_dpm.at(0);
+                    sp2 = s_rand_dpm.at(1);
+                    sp3 = s_rand_dpm.at(2);
+                    sp4 = s_rand_dpm.at(3);
+                    s_rand_dpm_1 = sp1 + sp2;
+                    s_rand_dpm_2 = sp3 + sp4;
+                    sp1 = s_rand_dp.at(0);
+                    sp2 = s_rand_dp.at(1);
+                    sp3 = s_rand_dp.at(2);
+                    sp4 = s_rand_dp.at(3);
+                    s_rand_dp_1 = sp1 + sp2;
+                    s_rand_dp_2 = sp3 + sp4;
+                    rand_dpm_fin << std::hex << s_rand_dpm_1;
+                    rand_dpm_fin >> prop;
+                    rand_dpm_fin.clear();
+                    acmap.seekg(size + 182, ios::beg);
                     map_loc = acmap.tellg();
                     to_ass = acmap.get();
-                    if (aChoice == "Y") {
-                        if (cho_blade == 1) {
-                            prop = 1;
-                        }
-                        else if (cho_blade == 4) {
-                            prop = 3;
-                        }
-                        else if (cho_blade == 5) {
-                            prop = 4;
-                        }
-                        else {
-                            if (cho_blade == 2) {
-                                dist_12 = std::uniform_int_distribution<>(3, 5);
-                            }
-                            if (cho_blade == 3) {
-                                dist_12 = std::uniform_int_distribution<>(4, 6);
-                            }
-                            if (cho_blade == 6) {
-                                dist_12 = std::uniform_int_distribution<>(2, 3);
-                            }
-                            if (cho_blade == 7) {
-                                dist_12 = std::uniform_int_distribution<>(4, 7);
-                            }
-                            if (cho_blade == 8) {
-                                dist_12 = std::uniform_int_distribution<>(5, 6);
-                            }
-                            if (cho_blade == 9) {
-                                dist_12 = std::uniform_int_distribution<>(9, 12);
-                            }
-                            prop = dist_12(aGen);
-                        }
-                    }
-                    else {
-                        prop = dist_12(aGen);
-                    }
                     ch_val = new char(prop);
-                    acmap.seekp(size + b, ios::beg);
+                    acmap.seekp(size + 182, ios::beg);
                     acmap.write(ch_val, 1);
                     delete ch_val;
+                    rand_dpm_fin << std::hex << s_rand_dpm_2;
+                    rand_dpm_fin >> prop;
+                    rand_dpm_fin.clear();
+                    acmap.seekg(size + 181, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 181, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    ppm = dist_6(aGen);
+                    acmap.seekg(size + 183, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    ch_val = new char(ppm);
+                    acmap.seekp(size + 183, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    rand_dpm_fin << std::hex << s_rand_dp_1;
+                    rand_dpm_fin >> prop;
+                    rand_dpm_fin.clear();
+                    acmap.seekg(size + 186, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 186, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    rand_dpm_fin << std::hex << s_rand_dpm_2;
+                    rand_dpm_fin >> prop;
+                    rand_dpm_fin.clear();
+                    acmap.seekg(size + 185, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 185, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    dist_7 = std::uniform_int_distribution<>(1, ppm);
+                    pp = dist_7(aGen);
+                    acmap.seekg(size + 187, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    ch_val = new char(pp);
+                    acmap.seekp(size + 187, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                }
+                acmap.seekg(size + 189, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                if (secondChoice == "Y") {
+                    prop = dist_21(aGen);
+                }
+                else {
+                    if (bla_nam == 57) {
+                        prop = 1;
+                    }
+                    else if (bla_nam == 58) {
+                        prop = 2;
+                    }
+                    else if (bla_nam == 59) {
+                        prop = 3;
+                    }
+                    else if (bla_nam == 1 || bla_nam == 60) {
+                        prop = 4;
+                    }
+                    else if (bla_nam == 13 || bla_nam == 61) {
+                        prop = 5;
+                    }
+                    else if (bla_nam == 2 || bla_nam == 35 || bla_nam == 43 || bla_nam == 62) {
+                        prop = 6;
+                    }
+                    else if (bla_nam == 14) {
+                        prop = 7;
+                    }
+                    else if (bla_nam == 3 || bla_nam == 15 || bla_nam == 36 || bla_nam == 44 || bla_nam == 71) {
+                        prop = 8;
+                    }
+                    else if (bla_nam == 83) {
+                        prop = 9;
+                    }
+                    else if (bla_nam == 4 || bla_nam == 25 || bla_nam == 37 || bla_nam == 45 || bla_nam == 63 || bla_nam == 72) {
+                        prop = 10;
+                    }
+                    else if (bla_nam == 16 || bla_nam == 51 || bla_nam == 84) {
+                        prop = 11;
+                    }
+                    else if (bla_nam == 5 || bla_nam == 26 || bla_nam == 73) {
+                        prop = 12;
+                    }
+                    else if (bla_nam == 17 || bla_nam == 38 || bla_nam == 46 || bla_nam == 85) {
+                        prop = 13;
+                    }
+                    else if (bla_nam == 6 || bla_nam == 64 || bla_nam == 74) {
+                        prop = 14;
+                    }
+                    else if (bla_nam == 18 || bla_nam == 86) {
+                        prop = 15;
+                    }
+                    else if (bla_nam == 7 || bla_nam == 27 || bla_nam == 39 || bla_nam == 47 || bla_nam == 52) {
+                        prop = 16;
+                    }
+                    else if (bla_nam == 19 || bla_nam == 75 || bla_nam == 87) {
+                        prop = 17;
+                    }
+                    else if (bla_nam == 8) {
+                        prop = 18;
+                    }
+                    else if (bla_nam == 20 || bla_nam == 28 || bla_nam == 40 || bla_nam == 48 || bla_nam == 65 || bla_nam == 76 || bla_nam == 88) {
+                        prop = 19;
+                    }
+                    else if (bla_nam == 9 || bla_nam == 53) {
+                        prop = 20;
+                    }
+                    else if (bla_nam == 21 || bla_nam == 77 || bla_nam == 89) {
+                        prop = 21;
+                    }
+                    else if (bla_nam == 10 || bla_nam == 29 || bla_nam == 41 || bla_nam == 49 || bla_nam == 78) {
+                        prop = 22;
+                    }
+                    else if (bla_nam == 22 || bla_nam == 66 || bla_nam == 90) {
+                        prop = 23;
+                    }
+                    else if (bla_nam == 11) {
+                        prop = 24;
+                    }
+                    else if (bla_nam == 23 || bla_nam == 30 || bla_nam == 42 || bla_nam == 50 || bla_nam == 54) {
+                        prop = 25;
+                    }
+                    else if (bla_nam == 12 || bla_nam == 79) {
+                        prop = 26;
+                    }
+                    else if (bla_nam == 24 || bla_nam == 31 || bla_nam == 67) {
+                        prop = 27;
+                    }
+                    else if (bla_nam == 80) {
+                        prop = 28;
+                    }
+                    else if (bla_nam == 70 || bla_nam == 81) {
+                        prop = 30;
+                    }
+                    else if (bla_nam == 32 || bla_nam == 55) {
+                        prop = 31;
+                    }
+                    else if (bla_nam == 68) {
+                        prop = 32;
+                    }
+                    else if (bla_nam == 33 || bla_nam == 82) {
+                        prop = 33;
+                    }
+                    else if (bla_nam == 34 || bla_nam == 56) {
+                        prop = 35;
+                    }
+                    else if (bla_nam == 69) {
+                        prop = 36;
+                    }
+                }
+                ch_val = new char(prop);
+                acmap.seekp(size + 189, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                acmap.seekg(size + 190, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                if (secondChoice == "Y") {
+                    prop = dist_22(aGen);
+                }
+                else {
+                    if ((bla_nam >= 1 && bla_nam <= 56) || (bla_nam >= 63 && bla_nam <= 90)) {
+                        prop = 0;
+                    }
+                    else if (bla_nam == 57) {
+                        prop = 5;
+                    }
+                    else if (bla_nam == 58) {
+                        prop = 10;
+                    }
+                    else if (bla_nam == 59) {
+                        prop = 16;
+                    }
+                    else if (bla_nam == 60) {
+                        prop = 20;
+                    }
+                    else if (bla_nam == 61) {
+                        prop = 25;
+                    }
+                    else if (bla_nam == 62) {
+                        prop = 30;
+                    }
+                }
+                ch_val = new char(prop);
+                acmap.seekp(size + 190, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                acmap.seekg(size + 191, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                if (secondChoice == "Y") {
+                    if (aChoice == "Y") {
+                        if (cho_blade == 1) {
+                            dist_23 = std::uniform_int_distribution<>(254, 255);
+                        }
+                        else if (cho_blade == 2 || cho_blade == 5 || cho_blade == 8 || cho_blade == 9) {
+                            dist_23 = std::uniform_int_distribution<>(250, 255);
+                        }
+                        else if (cho_blade == 3) {
+                            dist_23 = std::uniform_int_distribution<>(249, 255);
+                        }
+                        else if (cho_blade == 4) {
+                            dist_23 = std::uniform_int_distribution<>(251, 255);
+                        }
+                        else if (cho_blade == 6) {
+                            dist_23 = std::uniform_int_distribution<>(252, 255);
+                        }
+                        else if (cho_blade == 7) {
+                            dist_23 = std::uniform_int_distribution<>(248, 255);
+                        }
+                    }
+                    prop = dist_23(aGen) - 255;
+                }
+                else {
+                    if (bla_nam >= 1 && bla_nam <= 5) {
+                        prop = 0;
+                    }
+                    else if ((bla_nam >= 6 && bla_nam <= 15) || bla_nam == 35 || bla_nam == 36 || bla_nam == 43 || bla_nam == 44 || bla_nam == 57 || bla_nam == 58 || bla_nam == 84) {
+                        prop = 255;
+                    }
+                    else if ((bla_nam >= 16 && bla_nam <= 18) || bla_nam == 25 || bla_nam == 26 || bla_nam == 37 || bla_nam == 38 || bla_nam == 45 || bla_nam == 46 || bla_nam == 51 || bla_nam == 59 || bla_nam == 60 || bla_nam == 63 || (bla_nam >= 71 && bla_nam <= 73) || bla_nam == 83) {
+                        prop = 254;
+                    }
+                    else if ((bla_nam >= 19 && bla_nam <= 21) || bla_nam == 27 || bla_nam == 28 || bla_nam == 39 || bla_nam == 40 || bla_nam == 47 || bla_nam == 48 || bla_nam == 52 || bla_nam == 53 || bla_nam == 61 || bla_nam == 62 || bla_nam == 64 || bla_nam == 65 || (bla_nam >= 74 && bla_nam <= 76) || (bla_nam >= 85 && bla_nam <= 87)) {
+                        prop = 253;
+                    }
+                    else if (bla_nam == 22 || bla_nam == 23 || (bla_nam >= 29 && bla_nam <= 31) || bla_nam == 41 || bla_nam == 42 || bla_nam == 49 || bla_nam == 50 || bla_nam == 54 || bla_nam == 55 || bla_nam == 66 || bla_nam == 67 || (bla_nam >= 77 && bla_nam <= 79) || bla_nam == 88 || bla_nam == 89) {
+                        prop = 252;
+                    }
+                    else if (bla_nam == 24 || bla_nam == 32 || bla_nam == 33 || bla_nam == 56 || bla_nam == 68 || bla_nam == 69 || (bla_nam >= 80 && bla_nam <= 82) || bla_nam == 90) {
+                        prop = 251;
+                    }
+                    else if (bla_nam == 34) {
+                        prop = 250;
+                    }
+                    else if (bla_nam == 70) {
+                        prop = 249;
+                    }
+                }
+                ch_val = new char(prop);
+                acmap.seekp(size + 191, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                acmap.seekg(size + 192, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                if (secondChoice == "Y") {
+                    prop = dist_9(aGen);
+                }
+                else {
+                    if ((bla_nam >= 1 && bla_nam <= 10) || (bla_nam >= 13 && bla_nam <= 18) || (bla_nam >= 25 && bla_nam <= 28) || (bla_nam >= 35 && bla_nam <= 44) || bla_nam == 51 || bla_nam == 52 || (bla_nam >= 57 && bla_nam <= 62) || bla_nam == 63 || bla_nam == 64 || bla_nam == 70 || (bla_nam >= 71 && bla_nam <= 74)) {
+                        prop = 1;
+                    }
+                    else if (bla_nam == 11 || bla_nam == 12 || (bla_nam >= 19 && bla_nam <= 23) || (bla_nam >= 29 && bla_nam <= 31) || bla_nam == 34 || (bla_nam >= 45 && bla_nam <= 50) || bla_nam == 53 || bla_nam == 54 || (bla_nam >= 65 && bla_nam <= 67) || (bla_nam >= 75 && bla_nam <= 78) || (bla_nam >= 83 && bla_nam <= 85)) {
+                        prop = 2;
+                    }
+                    else if (bla_nam == 24 || bla_nam == 32 || bla_nam == 33 || bla_nam == 55 || bla_nam == 56 || bla_nam == 68 || bla_nam == 69 || (bla_nam >= 79 && bla_nam <= 82) || (bla_nam >= 86 && bla_nam <= 88)) {
+                        prop = 3;
+                    }
+                    else if (bla_nam == 89 || bla_nam == 90) {
+                        prop = 4;
+                    }
+                }
+                ch_val = new char(prop);
+                acmap.seekp(size + 192, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                if (secondChoice == "Y") {
+                    if (sixthChoice == "Y") {
+                        prop = (4 * dist_10(aGen)) + dist_11(aGen);
+                    }
+                    else {
+                        prop = (8 + dist_11(aGen));
+                    }
+                }
+                else {
+                    if ((bla_nam >= 43 && bla_nam <= 50) || (bla_nam >= 57 && bla_nam <= 70) || bla_nam == 73 || bla_nam == 80 || bla_nam == 85 || bla_nam == 87 || bla_nam == 89) {
+                        res = 1;
+                    }
+                    else if (bla_nam == 1 || bla_nam == 3 || bla_nam == 5 || (bla_nam >= 8 && bla_nam <= 11) || bla_nam == 13 || bla_nam == 14 || (bla_nam >= 16 && bla_nam <= 42) || (bla_nam >= 51 && bla_nam <= 56) || bla_nam == 72 || bla_nam == 79 || bla_nam == 81) {
+                        res = 2;
+                    }
+                    else if (bla_nam == 2 || bla_nam == 4 || bla_nam == 6 || bla_nam == 7 || bla_nam == 12 || bla_nam == 15 || bla_nam == 71 || (bla_nam >= 74 && bla_nam <= 78) || (bla_nam >= 82 && bla_nam <= 84) || bla_nam == 86 || bla_nam == 88 || bla_nam == 90) {
+                        res = 3;
+                    }
+                    if (sixthChoice == "Y") {
+                        prop = (4 * dist_10(aGen)) + res;
+                    }
+                    else {
+                        prop = 8 + res;
+                    }
+                }
+                acmap.seekg(size + 193, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                ch_val = new char(prop);
+                acmap.seekp(size + 193, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                if (secondChoice == "Y") {
+                    for (int b = 197; b < 200; b++) {
+                        acmap.seekg(size + b, ios::beg);
+                        map_loc = acmap.tellg();
+                        to_ass = acmap.get();
+                        if (aChoice == "Y") {
+                            if (cho_blade == 1) {
+                                prop = 1;
+                            }
+                            else if (cho_blade == 4) {
+                                prop = 3;
+                            }
+                            else if (cho_blade == 5) {
+                                prop = 4;
+                            }
+                            else {
+                                if (cho_blade == 2) {
+                                    dist_12 = std::uniform_int_distribution<>(3, 5);
+                                }
+                                if (cho_blade == 3) {
+                                    dist_12 = std::uniform_int_distribution<>(4, 6);
+                                }
+                                if (cho_blade == 6) {
+                                    dist_12 = std::uniform_int_distribution<>(2, 3);
+                                }
+                                if (cho_blade == 7) {
+                                    dist_12 = std::uniform_int_distribution<>(4, 7);
+                                }
+                                if (cho_blade == 8) {
+                                    dist_12 = std::uniform_int_distribution<>(5, 6);
+                                }
+                                if (cho_blade == 9) {
+                                    dist_12 = std::uniform_int_distribution<>(9, 12);
+                                }
+                                prop = dist_12(aGen);
+                            }
+                        }
+                        else {
+                            prop = dist_12(aGen);
+                        }
+                        ch_val = new char(prop);
+                        acmap.seekp(size + b, ios::beg);
+                        acmap.write(ch_val, 1);
+                        delete ch_val;
+                    }
                 }
                 acmap.seekg(size + 200, ios::beg);
                 map_loc = acmap.tellg();
@@ -1880,6 +1988,10 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                 acmap.seekp(size + 200, ios::beg);
                 acmap.write(ch_val, 1);
                 delete ch_val;
+            }
+        }
+        if (seventhChoice == "Y") {
+            if (has_equip == 3) {
                 for (int b = 201; b < 207; b++) {
                     acmap.seekg(size + b, ios::beg);
                     map_loc = acmap.tellg();
@@ -1901,6 +2013,10 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                     acmap.write(ch_val, 1);
                     delete ch_val;
                 }
+            }
+        }
+        if (eighthChoice == "Y") {
+            if (has_equip == 3) {
                 for (int b = 209; b < 216; b++) {
                     acmap.seekg(size + b, ios::beg);
                     map_loc = acmap.tellg();
@@ -1922,6 +2038,10 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                     acmap.write(ch_val, 1);
                     delete ch_val;
                 }
+            }
+        }
+        if (secondChoice == "Y") {
+            if (has_equip == 3) {
                 acmap.seekg(size + 217, ios::beg);
                 map_loc = acmap.tellg();
                 to_ass = acmap.get();
@@ -1930,565 +2050,582 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                 acmap.seekp(size + 217, ios::beg);
                 acmap.write(ch_val, 1);
                 delete ch_val;
-            }                   
+            }
         }
         acmap.seekg(size + 221, ios::beg);
         map_loc = acmap.tellg();
         to_ass = acmap.get();
-        if (to_ass == 3) {
-            acmap.seekg(size + 225, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            prop = dist_19(aGen);
-            if (thirdChoice == "N") {
-                gri_nam = prop;
-            }
-            ch_val = new char(prop);
-            acmap.seekp(size + 225, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            ch_val = new char(0);
-            acmap.seekg(size + 226, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            acmap.seekp(size + 226, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            acmap.seekg(size + 227, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            if (thirdChoice == "N") {
-                prop = gri_nam - 95;
-            }
-            else {
-                prop = dist_15(aGen);
-            }
-            ch_val = new char(prop);
-            acmap.seekp(size + 227, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            acmap.seekg(size + 228, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            if (thirdChoice == "N") {
-                if (gri_nam >= 96 && gri_nam <= 104) {
-                    prop = 1;
-                }
-                else if (gri_nam >= 105 && gri_nam <= 114) {
-                    prop = 2;
-                }
-                else if (gri_nam >= 115 && gri_nam <= 120) {
-                    prop = 3;
-                }
-                else if (gri_nam >= 121 && gri_nam <= 126) {
-                    prop = 4;
-                }
-            }
-            else {
-                prop = dist_10(aGen);
-            }
-            cho_grip = prop;
-            ch_val = new char(prop);
-            acmap.seekp(size + 228, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            acmap.seekg(size + 229, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            if (secondChoice == "N") {
-                if (gri_nam == 96 || gri_nam == 97 || gri_nam == 105 || gri_nam == 107 || gri_nam == 115 || gri_nam == 117 || gri_nam == 121) {
-                    prop = 0;
-                }
-                else if (gri_nam == 98 || gri_nam == 100 || gri_nam == 106 || gri_nam == 108 || gri_nam == 110 || gri_nam == 116 || gri_nam == 119 || (gri_nam >= 122 && gri_nam <= 126)) {
-                    prop = 1;
-                }
-                else if (gri_nam == 99 || gri_nam == 101 || gri_nam == 103 || gri_nam == 113 || gri_nam == 109 || gri_nam == 111 || gri_nam == 118) {
-                    prop = 2;
-                }
-                else if (gri_nam == 102 || gri_nam == 104 || gri_nam == 112 || gri_nam == 114 || gri_nam == 120) {
-                    prop = 3;
-                }
-            }
-            else {
-                prop = dist_33(aGen);
-            }
-            ch_val = new char(prop);
-            acmap.seekp(size + 229, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            acmap.seekg(size + 230, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            if (secondChoice == "Y") {
-                prop = dist_24(aGen);
-            }
-            else {
-                if (gri_nam == 96 || gri_nam == 97 || gri_nam == 105 || gri_nam == 106 || gri_nam == 113 || gri_nam == 115 || gri_nam == 121) {
-                    prop = 1;
-                }
-                else if (gri_nam == 98 || gri_nam == 99 || gri_nam == 107 || gri_nam == 108 || gri_nam == 116 || gri_nam == 122 || gri_nam == 125) {
-                    prop = 2;
-                }
-                else if (gri_nam == 100 || gri_nam == 101 || gri_nam == 110 || gri_nam == 109 || gri_nam == 117 || gri_nam == 123) {
-                    prop = 3;
-                }
-                else if (gri_nam == 102 || gri_nam == 103 || gri_nam == 111 || gri_nam == 118 || gri_nam == 115 || gri_nam == 124 || gri_nam == 126) {
-                    prop = 4;
-                }
-                else if (gri_nam == 104 || gri_nam == 112 || gri_nam == 119) {
-                    prop = 5;
-                }
-                else if (gri_nam == 114 || gri_nam == 120) {
-                    prop = 6;
-                }
-            }
-            ch_val = new char(prop);
-            acmap.seekp(size + 230, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            acmap.seekg(size + 231, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            if (secondChoice == "Y") {
-                prop = dist_59(aGen);
-            }
-            else {
-                if (gri_nam == 96 || gri_nam == 105 || gri_nam == 115 || gri_nam == 121 || gri_nam == 122 || gri_nam == 125) {
-                    prop = 0;
-                }
-                else if (gri_nam == 97 || gri_nam == 98 || gri_nam == 107 || gri_nam == 110 || gri_nam == 112 || gri_nam == 116 || gri_nam == 123 || gri_nam == 124) {
-                    prop = 1;
-                }
-                else if (gri_nam == 99 || gri_nam == 100 || gri_nam == 106 || gri_nam == 108 || gri_nam == 109 || gri_nam == 117 || gri_nam == 119 || gri_nam == 126) {
-                    prop = 2;
-                }
-                else if (gri_nam == 101 || gri_nam == 102 || gri_nam == 111 || gri_nam == 114 || gri_nam == 118) {
-                    prop = 3;
-                }
-                else if (gri_nam == 103 || gri_nam == 104) {
-                    prop = 4;
-                }
-                else if (gri_nam == 120) {
-                    prop = 5;
-                }
-                else if (gri_nam == 113) {
-                    prop = 8;
-                }
-            }
-            ch_val = new char(prop);
-            acmap.seekp(size + 231, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            acmap.seekg(size + 232, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            if (secondChoice == "Y") {
-                if (aChoice == "Y") {
-                    if (cho_grip == 1) {
-                        dist_25 = std::uniform_int_distribution<>(252, 254);
-                    }
-                    else if (cho_grip == 2) {
-                        dist_25 = std::uniform_int_distribution<>(251, 253);
-                    }
-                    else if (cho_grip == 3) {
-                        dist_25 = std::uniform_int_distribution<>(250, 252);
-                    }
-                    else if (cho_grip == 4) {
-                        dist_25 = std::uniform_int_distribution<>(253, 254);
-                    }
-                }
-                prop = dist_25(aGen) - 255;
-            }
-            else {
-                if ((gri_nam >= 96 && gri_nam <= 98) || gri_nam == 121 || gri_nam == 122 || gri_nam == 123 || gri_nam == 124) {
-                    prop = 255;
-                }
-                else if ((gri_nam >= 99 && gri_nam <= 101) || gri_nam == 105 || gri_nam == 106 || gri_nam == 107 || gri_nam == 125 || gri_nam == 126) {
-                    prop = 254;
-                }
-                else if ((gri_nam >= 102 && gri_nam <= 104) || (gri_nam >= 109 && gri_nam <= 112) || gri_nam == 115 || gri_nam == 116) {
-                    prop = 253;
-                }
-                else if (gri_nam == 113 || gri_nam == 112 || gri_nam == 114 || gri_nam == 117 || gri_nam == 118) {
-                    prop = 252;
-                }
-                else if (gri_nam == 119 || gri_nam == 120) {
-                    prop = 251;
-                }
-            }
-            ch_val = new char(prop);
-            acmap.seekp(size + 232, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            if (secondChoice == "Y") {
-                for (int b = 234; b < 237; b++) {
-                    acmap.seekg(size + b, ios::beg);
-                    map_loc = acmap.tellg();
-                    to_ass = acmap.get();
-                    if (aChoice == "N") {
-                        prop = dist_8(aGen);
-                    }
-                    else {
-                        prop = dist_48(aGen);
-                    }
-                    ch_val = new char(prop);
-                    acmap.seekp(size + b, ios::beg);
-                    acmap.write(ch_val, 1);
-                    delete ch_val;
-                }
-            }
-            else {
-                acmap.seekg(size + 234, ios::beg);
+        has_equip = to_ass;
+        // Grip
+        if (secondChoice == "Y") {
+            if (has_equip == 3) {
+                acmap.seekg(size + 225, ios::beg);
                 map_loc = acmap.tellg();
                 to_ass = acmap.get();
-                if (gri_nam == 96 || gri_nam == 97 || gri_nam == 99 || gri_nam == 100 || gri_nam == 102 || gri_nam == 103) {
-                    prop = 0;
-                }
-                else if (gri_nam == 121) {
-                    prop = 1;
-                }
-                else if (gri_nam == 116 || gri_nam == 117 || gri_nam == 122) {
-                    prop = 2;
-                }
-                else if (gri_nam == 106 || gri_nam == 124) {
-                    prop = 3;
-                }
-                else if (gri_nam == 105 || gri_nam == 126) {
-                    prop = 5;
-                }
-                else if (gri_nam == 108 || gri_nam == 110) {
-                    prop = 6;
-                }
-                else if (gri_nam == 98 || gri_nam == 107 || gri_nam == 112) {
-                    prop = 8;
-                }
-                else if (gri_nam == 101 || gri_nam == 119) {
-                    prop = 10;
-                }
-                else if (gri_nam == 114 || gri_nam == 115) {
-                    prop = 11;
-                }
-                else if (gri_nam == 109) {
-                    prop = 13;
-                }
-                else if (gri_nam == 120) {
-                    prop = 15;
-                }
-                else if (gri_nam == 118) {
-                    prop = 16;
-                }
-                else if (gri_nam == 111 || gri_nam == 123) {
-                    prop = 17;
-                }
-                else if (gri_nam == 104) {
-                    prop = 20;
-                }
-                else if (gri_nam == 113) {
-                    prop = 21;
-                }
-                else if (gri_nam == 125) {
-                    prop = 23;
+                prop = dist_19(aGen);
+                if (thirdChoice == "N") {
+                    gri_nam = prop;
                 }
                 ch_val = new char(prop);
-                acmap.seekp(size + 234, ios::beg);
+                acmap.seekp(size + 225, ios::beg);
                 acmap.write(ch_val, 1);
                 delete ch_val;
-                acmap.seekg(size + 235, ios::beg);
+                ch_val = new char(0);
+                acmap.seekg(size + 226, ios::beg);
                 map_loc = acmap.tellg();
                 to_ass = acmap.get();
-                if (gri_nam == 115 || (gri_nam >= 121 && gri_nam <= 126)) {
-                    prop = 0;
-                }
-                else if (gri_nam == 105) {
-                    prop = 1;
-                }
-                else if (gri_nam == 97) {
-                    prop = 2;
-                }
-                else if (gri_nam == 96 || gri_nam == 107 || gri_nam == 118) {
-                    prop = 4;
-                }
-                else if (gri_nam == 99 || gri_nam == 109) {
-                    prop = 5;
-                }
-                else if (gri_nam == 98 || gri_nam == 106 || gri_nam == 117 || gri_nam == 120) {
-                    prop = 6;
-                }
-                else if (gri_nam == 111) {
-                    prop = 7;
-                }
-                else if (gri_nam == 100) {
-                    prop = 8;
-                }
-                else if (gri_nam == 113 || gri_nam == 108) {
-                    prop = 9;
-                }
-                else if (gri_nam == 101 || gri_nam == 116) {
-                    prop = 12;
-                }
-                else if (gri_nam == 103) {
-                    prop = 13;
-                }
-                else if (gri_nam == 119) {
-                    prop = 14;
-                }
-                else if (gri_nam == 102 || gri_nam == 110) {
-                    prop = 15;
-                }
-                else if (gri_nam == 112) {
-                    prop = 19;
-                }
-                else if (gri_nam == 104) {
-                    prop = 20;
-                }
-                else if (gri_nam == 114) {
-                    prop = 22;
-                }
-                ch_val = new char(prop);
-                acmap.seekp(size + 235, ios::beg);
+                acmap.seekp(size + 226, ios::beg);
                 acmap.write(ch_val, 1);
                 delete ch_val;
-                acmap.seekg(size + 236, ios::beg);
+                acmap.seekg(size + 227, ios::beg);
                 map_loc = acmap.tellg();
                 to_ass = acmap.get();
-                if (gri_nam >= 105 && gri_nam <= 114) {
-                    prop = 0;
+                if (thirdChoice == "N") {
+                    prop = gri_nam - 95;
                 }
-                else if (gri_nam == 96 || gri_nam == 115) {
-                    prop = 1;
-                }
-                else if (gri_nam == 98 || gri_nam == 123) {
-                    prop = 2;
-                }
-                else if (gri_nam == 97 || gri_nam == 116 || gri_nam == 125) {
-                    prop = 4;
-                }
-                else if (gri_nam == 100) {
-                    prop = 7;
-                }
-                else if (gri_nam == 99) {
-                    prop = 9;
-                }
-                else if (gri_nam == 101 || gri_nam == 118 || gri_nam == 121) {
-                    prop = 10;
-                }
-                else if (gri_nam == 102 || gri_nam == 119) {
-                    prop = 12;
-                }
-                else if (gri_nam == 122) {
-                    prop = 13;
-                }
-                else if (gri_nam == 117) {
-                    prop = 16;
-                }
-                else if (gri_nam == 103) {
-                    prop = 17;
-                }
-                else if (gri_nam == 104 || gri_nam == 124) {
-                    prop = 20;
-                }
-                else if (gri_nam == 120) {
-                    prop = 21;
-                }
-                else if (gri_nam == 126) {
-                    prop = 25;
+                else {
+                    prop = dist_15(aGen);
                 }
                 ch_val = new char(prop);
-                acmap.seekp(size + 236, ios::beg);
+                acmap.seekp(size + 227, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                acmap.seekg(size + 228, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                if (thirdChoice == "N") {
+                    if (gri_nam >= 96 && gri_nam <= 104) {
+                        prop = 1;
+                    }
+                    else if (gri_nam >= 105 && gri_nam <= 114) {
+                        prop = 2;
+                    }
+                    else if (gri_nam >= 115 && gri_nam <= 120) {
+                        prop = 3;
+                    }
+                    else if (gri_nam >= 121 && gri_nam <= 126) {
+                        prop = 4;
+                    }
+                }
+                else {
+                    prop = dist_10(aGen);
+                }
+                cho_grip = prop;
+                ch_val = new char(prop);
+                acmap.seekp(size + 228, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                acmap.seekg(size + 229, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                if (secondChoice == "N") {
+                    if (gri_nam == 96 || gri_nam == 97 || gri_nam == 105 || gri_nam == 107 || gri_nam == 115 || gri_nam == 117 || gri_nam == 121) {
+                        prop = 0;
+                    }
+                    else if (gri_nam == 98 || gri_nam == 100 || gri_nam == 106 || gri_nam == 108 || gri_nam == 110 || gri_nam == 116 || gri_nam == 119 || (gri_nam >= 122 && gri_nam <= 126)) {
+                        prop = 1;
+                    }
+                    else if (gri_nam == 99 || gri_nam == 101 || gri_nam == 103 || gri_nam == 113 || gri_nam == 109 || gri_nam == 111 || gri_nam == 118) {
+                        prop = 2;
+                    }
+                    else if (gri_nam == 102 || gri_nam == 104 || gri_nam == 112 || gri_nam == 114 || gri_nam == 120) {
+                        prop = 3;
+                    }
+                }
+                else {
+                    prop = dist_33(aGen);
+                }
+                ch_val = new char(prop);
+                acmap.seekp(size + 229, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                acmap.seekg(size + 230, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                if (secondChoice == "Y") {
+                    prop = dist_24(aGen);
+                }
+                else {
+                    if (gri_nam == 96 || gri_nam == 97 || gri_nam == 105 || gri_nam == 106 || gri_nam == 113 || gri_nam == 115 || gri_nam == 121) {
+                        prop = 1;
+                    }
+                    else if (gri_nam == 98 || gri_nam == 99 || gri_nam == 107 || gri_nam == 108 || gri_nam == 116 || gri_nam == 122 || gri_nam == 125) {
+                        prop = 2;
+                    }
+                    else if (gri_nam == 100 || gri_nam == 101 || gri_nam == 110 || gri_nam == 109 || gri_nam == 117 || gri_nam == 123) {
+                        prop = 3;
+                    }
+                    else if (gri_nam == 102 || gri_nam == 103 || gri_nam == 111 || gri_nam == 118 || gri_nam == 115 || gri_nam == 124 || gri_nam == 126) {
+                        prop = 4;
+                    }
+                    else if (gri_nam == 104 || gri_nam == 112 || gri_nam == 119) {
+                        prop = 5;
+                    }
+                    else if (gri_nam == 114 || gri_nam == 120) {
+                        prop = 6;
+                    }
+                }
+                ch_val = new char(prop);
+                acmap.seekp(size + 230, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                acmap.seekg(size + 231, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                if (secondChoice == "Y") {
+                    prop = dist_59(aGen);
+                }
+                else {
+                    if (gri_nam == 96 || gri_nam == 105 || gri_nam == 115 || gri_nam == 121 || gri_nam == 122 || gri_nam == 125) {
+                        prop = 0;
+                    }
+                    else if (gri_nam == 97 || gri_nam == 98 || gri_nam == 107 || gri_nam == 110 || gri_nam == 112 || gri_nam == 116 || gri_nam == 123 || gri_nam == 124) {
+                        prop = 1;
+                    }
+                    else if (gri_nam == 99 || gri_nam == 100 || gri_nam == 106 || gri_nam == 108 || gri_nam == 109 || gri_nam == 117 || gri_nam == 119 || gri_nam == 126) {
+                        prop = 2;
+                    }
+                    else if (gri_nam == 101 || gri_nam == 102 || gri_nam == 111 || gri_nam == 114 || gri_nam == 118) {
+                        prop = 3;
+                    }
+                    else if (gri_nam == 103 || gri_nam == 104) {
+                        prop = 4;
+                    }
+                    else if (gri_nam == 120) {
+                        prop = 5;
+                    }
+                    else if (gri_nam == 113) {
+                        prop = 8;
+                    }
+                }
+                ch_val = new char(prop);
+                acmap.seekp(size + 231, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                acmap.seekg(size + 232, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                if (secondChoice == "Y") {
+                    if (aChoice == "Y") {
+                        if (cho_grip == 1) {
+                            dist_25 = std::uniform_int_distribution<>(252, 254);
+                        }
+                        else if (cho_grip == 2) {
+                            dist_25 = std::uniform_int_distribution<>(251, 253);
+                        }
+                        else if (cho_grip == 3) {
+                            dist_25 = std::uniform_int_distribution<>(250, 252);
+                        }
+                        else if (cho_grip == 4) {
+                            dist_25 = std::uniform_int_distribution<>(253, 254);
+                        }
+                    }
+                    prop = dist_25(aGen) - 255;
+                }
+                else {
+                    if ((gri_nam >= 96 && gri_nam <= 98) || gri_nam == 121 || gri_nam == 122 || gri_nam == 123 || gri_nam == 124) {
+                        prop = 255;
+                    }
+                    else if ((gri_nam >= 99 && gri_nam <= 101) || gri_nam == 105 || gri_nam == 106 || gri_nam == 107 || gri_nam == 125 || gri_nam == 126) {
+                        prop = 254;
+                    }
+                    else if ((gri_nam >= 102 && gri_nam <= 104) || (gri_nam >= 109 && gri_nam <= 112) || gri_nam == 115 || gri_nam == 116) {
+                        prop = 253;
+                    }
+                    else if (gri_nam == 113 || gri_nam == 112 || gri_nam == 114 || gri_nam == 117 || gri_nam == 118) {
+                        prop = 252;
+                    }
+                    else if (gri_nam == 119 || gri_nam == 120) {
+                        prop = 251;
+                    }
+                }
+                ch_val = new char(prop);
+                acmap.seekp(size + 232, ios::beg);
                 acmap.write(ch_val, 1);
                 delete ch_val;
             }
         }
-        acmap.seekg(size + 241, ios::beg);
-        map_loc = acmap.tellg();
-        to_ass = acmap.get();
-        //Shields
-        if (to_ass == 3) {
-            acmap.seekg(size + 245, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            prop = dist_40(aGen);
-            if (thirdChoice == "N") {
-                shi_nam = prop;
-            }
-            ch_val = new char(prop);
-            acmap.seekp(size + 245, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            acmap.seekg(size + 246, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            if (thirdChoice == "N") {
-                prop = shi_nam - 126;
-            }
-            else {
-                prop = dist_17(aGen);
-            }
-            ch_val = new char(prop);
-            acmap.seekp(size + 246, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            acmap.seekg(size + 247, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            if (thirdChoice == "N") {
-                prop = shi_nam - 31;
-            }
-            else {
-                prop = dist_17(aGen) + 95;
-            }
-            ch_val = new char(prop);
-            acmap.seekp(size + 247, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            if (secondChoice == "Y") {
-                prop = dist_4(aGen) * 100;
-                sprintf_s(rand_dpm, "%X", prop);
-                ss_rand_dpm << rand_dpm;
-                ss_rand_dpm >> s_rand_dpm;
-                ss_rand_dpm.clear();
-                hs_rand_dpm << std::hex << s_rand_dpm;
-                hs_rand_dpm >> int_rand_dpm;
-                hs_rand_dpm.clear();
-                dist_5 = std::uniform_int_distribution<>(41, round(int_rand_dpm / 100));
-                prop = dist_5(aGen) * 100;
-                sprintf_s(rand_dp, "%X", prop);
-                ss_rand_dp << rand_dp;
-                ss_rand_dp >> s_rand_dp;
-                ss_rand_dp.clear();
-                sp1 = s_rand_dpm.at(0);
-                sp2 = s_rand_dpm.at(1);
-                sp3 = s_rand_dpm.at(2);
-                sp4 = s_rand_dpm.at(3);
-                s_rand_dpm_1 = sp1 + sp2;
-                s_rand_dpm_2 = sp3 + sp4;
-                sp1 = s_rand_dp.at(0);
-                sp2 = s_rand_dp.at(1);
-                sp3 = s_rand_dp.at(2);
-                sp4 = s_rand_dp.at(3);
-                s_rand_dp_1 = sp1 + sp2;
-                s_rand_dp_2 = sp3 + sp4;
-                rand_dpm_fin << std::hex << s_rand_dpm_1;
-                rand_dpm_fin >> prop;
-                rand_dpm_fin.clear();
-                acmap.seekg(size + 250, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                ch_val = new char(prop);
-                acmap.seekp(size + 250, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                rand_dpm_fin << std::hex << s_rand_dpm_2;
-                rand_dpm_fin >> prop;
-                rand_dpm_fin.clear();
-                acmap.seekg(size + 249, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                ch_val = new char(prop);
-                acmap.seekp(size + 249, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                ppm = dist_6(aGen);
-                acmap.seekg(size + 251, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                ch_val = new char(ppm);
-                acmap.seekp(size + 251, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                rand_dpm_fin << std::hex << s_rand_dp_1;
-                rand_dpm_fin >> prop;
-                rand_dpm_fin.clear();
-                acmap.seekg(size + 254, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                ch_val = new char(prop);
-                acmap.seekp(size + 254, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                rand_dpm_fin << std::hex << s_rand_dpm_2;
-                rand_dpm_fin >> prop;
-                rand_dpm_fin.clear();
-                acmap.seekg(size + 253, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                ch_val = new char(prop);
-                acmap.seekp(size + 253, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                dist_7 = std::uniform_int_distribution<>(1, ppm);
-                pp = dist_7(aGen);
-                acmap.seekg(size + 255, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                ch_val = new char(pp);
-                acmap.seekp(size + 255, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-            }
-            acmap.seekg(size + 257, ios::beg);
-            map_loc = acmap.tellg();
-            p_257 = acmap.get();
-            if (p_257 > 0) {
-                if (secondChoice == "Y" || size + 283 == 3) {
-                    acmap.seekg(size + 285, ios::beg);
-                    map_loc = acmap.tellg();
-                    to_ass = acmap.get();
-                    prop = dist_36(aGen);
-                    if (prop == 47) {
-                        choice = dist_37(aGen);
-                        if (choice == 1) {
-                            prop = dist_38(aGen);
-                        }
-                        if (choice == 2) {
-                            prop = dist_39(aGen);
-                        }
-                    }
-                    ch_val = new char(prop);
-                    acmap.seekp(size + 285, ios::beg);
-                    acmap.write(ch_val, 1);
-                    delete ch_val;
-                    ch_val = new char(1);
-                    acmap.seekg(size + 286, ios::beg);
-                    map_loc = acmap.tellg();
-                    to_ass = acmap.get();
-                    acmap.seekp(size + 286, ios::beg);
-                    acmap.write(ch_val, 1);
-                    delete ch_val;
-                    acmap.seekg(size + 287, ios::beg);
-                    map_loc = acmap.tellg();
-                    to_ass = acmap.get();
-                    prop = dist_35(aGen);
-                    if (prop == 43) {
-                        choice = dist_37(aGen);
-                        if (choice == 1) {
-                            prop = dist_16(aGen);
-                        }
-                        if (choice == 2) {
-                            prop = dist_34(aGen);
-                        }
-                    }
-                    ch_val = new char(prop);
-                    acmap.seekp(size + 287, ios::beg);
-                    acmap.write(ch_val, 1);
-                    delete ch_val;
-                }
+        if (ninthChoice == "Y") {
+            if (has_equip == 3) {
                 if (secondChoice == "Y") {
-                    for (int b = 290; b < 293; b++) {
+                    for (int b = 234; b < 237; b++) {
                         acmap.seekg(size + b, ios::beg);
                         map_loc = acmap.tellg();
                         to_ass = acmap.get();
                         if (aChoice == "N") {
-                            prop = dist_55(aGen);
+                            prop = dist_8(aGen);
                         }
                         else {
-                            prop = dist_56(aGen);
+                            prop = dist_48(aGen);
                         }
                         ch_val = new char(prop);
                         acmap.seekp(size + b, ios::beg);
                         acmap.write(ch_val, 1);
                         delete ch_val;
                     }
+                }
+                else {
+                    acmap.seekg(size + 234, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    if (gri_nam == 96 || gri_nam == 97 || gri_nam == 99 || gri_nam == 100 || gri_nam == 102 || gri_nam == 103) {
+                        prop = 0;
+                    }
+                    else if (gri_nam == 121) {
+                        prop = 1;
+                    }
+                    else if (gri_nam == 116 || gri_nam == 117 || gri_nam == 122) {
+                        prop = 2;
+                    }
+                    else if (gri_nam == 106 || gri_nam == 124) {
+                        prop = 3;
+                    }
+                    else if (gri_nam == 105 || gri_nam == 126) {
+                        prop = 5;
+                    }
+                    else if (gri_nam == 108 || gri_nam == 110) {
+                        prop = 6;
+                    }
+                    else if (gri_nam == 98 || gri_nam == 107 || gri_nam == 112) {
+                        prop = 8;
+                    }
+                    else if (gri_nam == 101 || gri_nam == 119) {
+                        prop = 10;
+                    }
+                    else if (gri_nam == 114 || gri_nam == 115) {
+                        prop = 11;
+                    }
+                    else if (gri_nam == 109) {
+                        prop = 13;
+                    }
+                    else if (gri_nam == 120) {
+                        prop = 15;
+                    }
+                    else if (gri_nam == 118) {
+                        prop = 16;
+                    }
+                    else if (gri_nam == 111 || gri_nam == 123) {
+                        prop = 17;
+                    }
+                    else if (gri_nam == 104) {
+                        prop = 20;
+                    }
+                    else if (gri_nam == 113) {
+                        prop = 21;
+                    }
+                    else if (gri_nam == 125) {
+                        prop = 23;
+                    }
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 234, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    acmap.seekg(size + 235, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    if (gri_nam == 115 || (gri_nam >= 121 && gri_nam <= 126)) {
+                        prop = 0;
+                    }
+                    else if (gri_nam == 105) {
+                        prop = 1;
+                    }
+                    else if (gri_nam == 97) {
+                        prop = 2;
+                    }
+                    else if (gri_nam == 96 || gri_nam == 107 || gri_nam == 118) {
+                        prop = 4;
+                    }
+                    else if (gri_nam == 99 || gri_nam == 109) {
+                        prop = 5;
+                    }
+                    else if (gri_nam == 98 || gri_nam == 106 || gri_nam == 117 || gri_nam == 120) {
+                        prop = 6;
+                    }
+                    else if (gri_nam == 111) {
+                        prop = 7;
+                    }
+                    else if (gri_nam == 100) {
+                        prop = 8;
+                    }
+                    else if (gri_nam == 113 || gri_nam == 108) {
+                        prop = 9;
+                    }
+                    else if (gri_nam == 101 || gri_nam == 116) {
+                        prop = 12;
+                    }
+                    else if (gri_nam == 103) {
+                        prop = 13;
+                    }
+                    else if (gri_nam == 119) {
+                        prop = 14;
+                    }
+                    else if (gri_nam == 102 || gri_nam == 110) {
+                        prop = 15;
+                    }
+                    else if (gri_nam == 112) {
+                        prop = 19;
+                    }
+                    else if (gri_nam == 104) {
+                        prop = 20;
+                    }
+                    else if (gri_nam == 114) {
+                        prop = 22;
+                    }
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 235, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    acmap.seekg(size + 236, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    if (gri_nam >= 105 && gri_nam <= 114) {
+                        prop = 0;
+                    }
+                    else if (gri_nam == 96 || gri_nam == 115) {
+                        prop = 1;
+                    }
+                    else if (gri_nam == 98 || gri_nam == 123) {
+                        prop = 2;
+                    }
+                    else if (gri_nam == 97 || gri_nam == 116 || gri_nam == 125) {
+                        prop = 4;
+                    }
+                    else if (gri_nam == 100) {
+                        prop = 7;
+                    }
+                    else if (gri_nam == 99) {
+                        prop = 9;
+                    }
+                    else if (gri_nam == 101 || gri_nam == 118 || gri_nam == 121) {
+                        prop = 10;
+                    }
+                    else if (gri_nam == 102 || gri_nam == 119) {
+                        prop = 12;
+                    }
+                    else if (gri_nam == 122) {
+                        prop = 13;
+                    }
+                    else if (gri_nam == 117) {
+                        prop = 16;
+                    }
+                    else if (gri_nam == 103) {
+                        prop = 17;
+                    }
+                    else if (gri_nam == 104 || gri_nam == 124) {
+                        prop = 20;
+                    }
+                    else if (gri_nam == 120) {
+                        prop = 21;
+                    }
+                    else if (gri_nam == 126) {
+                        prop = 25;
+                    }
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 236, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                }
+            }
+        }
+        acmap.seekg(size + 241, ios::beg);
+        map_loc = acmap.tellg();
+        to_ass = acmap.get();
+        has_equip = to_ass;
+        // Shield
+        acmap.seekg(size + 257, ios::beg);
+        map_loc = acmap.tellg();
+        p_257 = acmap.get();
+        if (secondChoice == "Y") {
+            if (has_equip == 3) {
+                acmap.seekg(size + 245, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                prop = dist_40(aGen);
+                if (thirdChoice == "N") {
+                    shi_nam = prop;
+                }
+                ch_val = new char(prop);
+                acmap.seekp(size + 245, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                acmap.seekg(size + 246, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                if (thirdChoice == "N") {
+                    prop = shi_nam - 126;
+                }
+                else {
+                    prop = dist_17(aGen);
+                }
+                ch_val = new char(prop);
+                acmap.seekp(size + 246, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                acmap.seekg(size + 247, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                if (thirdChoice == "N") {
+                    prop = shi_nam - 31;
+                }
+                else {
+                    prop = dist_17(aGen) + 95;
+                }
+                ch_val = new char(prop);
+                acmap.seekp(size + 247, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                if (secondChoice == "Y") {
+                    prop = dist_4(aGen) * 100;
+                    sprintf_s(rand_dpm, "%X", prop);
+                    ss_rand_dpm << rand_dpm;
+                    ss_rand_dpm >> s_rand_dpm;
+                    ss_rand_dpm.clear();
+                    hs_rand_dpm << std::hex << s_rand_dpm;
+                    hs_rand_dpm >> int_rand_dpm;
+                    hs_rand_dpm.clear();
+                    dist_5 = std::uniform_int_distribution<>(41, round(int_rand_dpm / 100));
+                    prop = dist_5(aGen) * 100;
+                    sprintf_s(rand_dp, "%X", prop);
+                    ss_rand_dp << rand_dp;
+                    ss_rand_dp >> s_rand_dp;
+                    ss_rand_dp.clear();
+                    sp1 = s_rand_dpm.at(0);
+                    sp2 = s_rand_dpm.at(1);
+                    sp3 = s_rand_dpm.at(2);
+                    sp4 = s_rand_dpm.at(3);
+                    s_rand_dpm_1 = sp1 + sp2;
+                    s_rand_dpm_2 = sp3 + sp4;
+                    sp1 = s_rand_dp.at(0);
+                    sp2 = s_rand_dp.at(1);
+                    sp3 = s_rand_dp.at(2);
+                    sp4 = s_rand_dp.at(3);
+                    s_rand_dp_1 = sp1 + sp2;
+                    s_rand_dp_2 = sp3 + sp4;
+                    rand_dpm_fin << std::hex << s_rand_dpm_1;
+                    rand_dpm_fin >> prop;
+                    rand_dpm_fin.clear();
+                    acmap.seekg(size + 250, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 250, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    rand_dpm_fin << std::hex << s_rand_dpm_2;
+                    rand_dpm_fin >> prop;
+                    rand_dpm_fin.clear();
+                    acmap.seekg(size + 249, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 249, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    ppm = dist_6(aGen);
+                    acmap.seekg(size + 251, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    ch_val = new char(ppm);
+                    acmap.seekp(size + 251, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    rand_dpm_fin << std::hex << s_rand_dp_1;
+                    rand_dpm_fin >> prop;
+                    rand_dpm_fin.clear();
+                    acmap.seekg(size + 254, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 254, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    rand_dpm_fin << std::hex << s_rand_dpm_2;
+                    rand_dpm_fin >> prop;
+                    rand_dpm_fin.clear();
+                    acmap.seekg(size + 253, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 253, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    dist_7 = std::uniform_int_distribution<>(1, ppm);
+                    pp = dist_7(aGen);
+                    acmap.seekg(size + 255, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    ch_val = new char(pp);
+                    acmap.seekp(size + 255, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                }
+                if (p_257 > 0) {
+                    if (secondChoice == "Y" || size + 283 == 3) {
+                        acmap.seekg(size + 285, ios::beg);
+                        map_loc = acmap.tellg();
+                        to_ass = acmap.get();
+                        prop = dist_36(aGen);
+                        if (prop == 47) {
+                            choice = dist_37(aGen);
+                            if (choice == 1) {
+                                prop = dist_38(aGen);
+                            }
+                            if (choice == 2) {
+                                prop = dist_39(aGen);
+                            }
+                        }
+                        ch_val = new char(prop);
+                        acmap.seekp(size + 285, ios::beg);
+                        acmap.write(ch_val, 1);
+                        delete ch_val;
+                        ch_val = new char(1);
+                        acmap.seekg(size + 286, ios::beg);
+                        map_loc = acmap.tellg();
+                        to_ass = acmap.get();
+                        acmap.seekp(size + 286, ios::beg);
+                        acmap.write(ch_val, 1);
+                        delete ch_val;
+                        acmap.seekg(size + 287, ios::beg);
+                        map_loc = acmap.tellg();
+                        to_ass = acmap.get();
+                        prop = dist_35(aGen);
+                        if (prop == 43) {
+                            choice = dist_37(aGen);
+                            if (choice == 1) {
+                                prop = dist_16(aGen);
+                            }
+                            if (choice == 2) {
+                                prop = dist_34(aGen);
+                            }
+                        }
+                        ch_val = new char(prop);
+                        acmap.seekp(size + 287, ios::beg);
+                        acmap.write(ch_val, 1);
+                        delete ch_val;
+                    }
+                    if (secondChoice == "Y") {
+                        for (int b = 290; b < 293; b++) {
+                            acmap.seekg(size + b, ios::beg);
+                            map_loc = acmap.tellg();
+                            to_ass = acmap.get();
+                            if (aChoice == "N") {
+                                prop = dist_55(aGen);
+                            }
+                            else {
+                                prop = dist_56(aGen);
+                            }
+                            ch_val = new char(prop);
+                            acmap.seekp(size + b, ios::beg);
+                            acmap.write(ch_val, 1);
+                            delete ch_val;
+                        }
+                    }
+                }
+            }
+        }
+        if (seventhChoice == "Y") {
+            if (has_equip == 3) {
+                if (p_257 > 0) {
                     for (int b = 293; b < 299; b++) {
                         acmap.seekg(size + b, ios::beg);
                         map_loc = acmap.tellg();
@@ -2510,6 +2647,12 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                         acmap.write(ch_val, 1);
                         delete ch_val;
                     }
+                }
+            }
+        }
+        if (eighthChoice == "Y") {
+            if (has_equip == 3) {
+                if (p_257 > 0) {
                     for (int b = 301; b < 308; b++) {
                         acmap.seekg(size + b, ios::beg);
                         map_loc = acmap.tellg();
@@ -2532,6 +2675,10 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                         delete ch_val;
                     }
                 }
+            }
+        }
+        if (secondChoice == "Y") {
+            if (has_equip == 3) {
                 if (p_257 > 1) {
                     if (secondChoice == "Y" || size + 311 == 3) {
                         acmap.seekg(size + 313, ios::beg);
@@ -2578,7 +2725,7 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                     }
 
                     if (secondChoice == "Y") {
-                        for (int b = 318; b < 327; b++) {
+                        for (int b = 318; b < 321; b++) {
                             acmap.seekg(size + b, ios::beg);
                             map_loc = acmap.tellg();
                             to_ass = acmap.get();
@@ -2588,20 +2735,10 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                             else {
                                 choice = dist_37(aGen);
                                 if (choice == 1) {
-                                    if (b > 320) {
-                                        prop = dist_46(aGen);
-                                    }
-                                    else {
-                                        prop = dist_49(aGen);
-                                    }
+                                    prop = dist_49(aGen);
                                 }
                                 if (choice == 2) {
-                                    if (b > 320) {
-                                        prop = dist_47(aGen);
-                                    }
-                                    else {
-                                        prop = dist_14(aGen);
-                                    }
+                                    prop = dist_14(aGen);
                                 }
                             }
                             ch_val = new char(prop);
@@ -2609,130 +2746,192 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                             acmap.write(ch_val, 1);
                             delete ch_val;
                         }
-                        for (int b = 329; b < 336; b++) {
-                            acmap.seekg(size + b, ios::beg);
-                            map_loc = acmap.tellg();
-                            to_ass = acmap.get();
-                            if (aChoice == "N") {
-                                prop = dist_8(aGen);
-                            }
-                            else {
-                                choice = dist_37(aGen);
-                                if (choice == 1) {
-                                    prop = dist_46(aGen);
-                                }
-                                if (choice == 2) {
-                                    prop = dist_47(aGen);
-                                }
-                            }
-                            ch_val = new char(prop);
-                            acmap.seekp(size + b, ios::beg);
-                            acmap.write(ch_val, 1);
-                            delete ch_val;
-                        }
-                    }
-                    if (p_257 > 2) {
-                        if (secondChoice == "Y" || size + 339 == 3) {
-                            acmap.seekg(size + 341, ios::beg);
-                            map_loc = acmap.tellg();
-                            to_ass = acmap.get();
-                            prop = dist_36(aGen);
-                            if (prop == 47) {
-                                choice = dist_37(aGen);
-                                if (choice == 1) {
-                                    prop = dist_38(aGen);
-                                }
-                                if (choice == 2) {
-                                    prop = dist_39(aGen);
-                                }
-                            }
-                            ch_val = new char(prop);
-                            acmap.seekp(size + 341, ios::beg);
-                            acmap.write(ch_val, 1);
-                            delete ch_val;
-                            ch_val = new char(1);
-                            acmap.seekg(size + 342, ios::beg);
-                            map_loc = acmap.tellg();
-                            to_ass = acmap.get();
-                            acmap.seekp(size + 342, ios::beg);
-                            acmap.write(ch_val, 1);
-                            delete ch_val;
-                            acmap.seekg(size + 343, ios::beg);
-                            map_loc = acmap.tellg();
-                            to_ass = acmap.get();
-                            prop = dist_35(aGen);
-                            if (prop == 43) {
-                                choice = dist_37(aGen);
-                                if (choice == 1) {
-                                    prop = dist_16(aGen);
-                                }
-                                if (choice == 2) {
-                                    prop = dist_34(aGen);
-                                }
-                            }
-                            ch_val = new char(prop);
-                            acmap.seekp(size + 343, ios::beg);
-                            acmap.write(ch_val, 1);
-                            delete ch_val;
-                        }
-                        if (secondChoice == "Y") {
-                            for (int b = 346; b < 355; b++) {
-                                acmap.seekg(size + b, ios::beg);
-                                map_loc = acmap.tellg();
-                                to_ass = acmap.get();
-                                if (aChoice == "N") {
-                                    prop = dist_8(aGen);
-                                }
-                                else {
-                                    choice = dist_37(aGen);
-                                    if (choice == 1) {
-                                        if (b > 348) {
-                                            prop = dist_46(aGen);
-                                        }
-                                        else {
-                                            prop = dist_49(aGen);
-                                        }
-                                    }
-                                    if (choice == 2) {
-                                        if (b > 348) {
-                                            prop = dist_47(aGen);
-                                        }
-                                        else {
-                                            prop = dist_14(aGen);
-                                        }
-                                    }
-                                }
-                                ch_val = new char(prop);
-                                acmap.seekp(size + b, ios::beg);
-                                acmap.write(ch_val, 1);
-                                delete ch_val;
-                            }
-                            for (int b = 357; b < 363; b++) {
-                                acmap.seekg(size + b, ios::beg);
-                                map_loc = acmap.tellg();
-                                to_ass = acmap.get();
-                                if (aChoice == "N") {
-                                    prop = dist_8(aGen);
-                                }
-                                else {
-                                    choice = dist_37(aGen);
-                                    if (choice == 1) {
-                                        prop = dist_46(aGen);
-                                    }
-                                    if (choice == 2) {
-                                        prop = dist_47(aGen);
-                                    }
-                                }
-                                ch_val = new char(prop);
-                                acmap.seekp(size + b, ios::beg);
-                                acmap.write(ch_val, 1);
-                                delete ch_val;
-                            }
-                        }   
                     }
                 }
             }
-            if (secondChoice == "Y") {
+        }
+        if (seventhChoice == "Y") {
+            if (has_equip == 3) {
+                if (p_257 > 1) {
+                    for (int b = 321; b < 327; b++) {
+                        acmap.seekg(size + b, ios::beg);
+                        map_loc = acmap.tellg();
+                        to_ass = acmap.get();
+                        if (aChoice == "N") {
+                            prop = dist_8(aGen);
+                        }
+                        else {
+                            choice = dist_37(aGen);
+                            if (choice == 1) {
+                                prop = dist_46(aGen);
+                            }
+                            if (choice == 2) {
+                                prop = dist_47(aGen);
+                            }
+                        }
+                        ch_val = new char(prop);
+                        acmap.seekp(size + b, ios::beg);
+                        acmap.write(ch_val, 1);
+                        delete ch_val;
+                    }
+                }
+            }
+        }
+        if (eighthChoice == "Y") {
+            if (has_equip == 3) {
+                if (p_257 > 1) {
+                    for (int b = 329; b < 336; b++) {
+                        acmap.seekg(size + b, ios::beg);
+                        map_loc = acmap.tellg();
+                        to_ass = acmap.get();
+                        if (aChoice == "N") {
+                            prop = dist_8(aGen);
+                        }
+                        else {
+                            choice = dist_37(aGen);
+                            if (choice == 1) {
+                                prop = dist_46(aGen);
+                            }
+                            if (choice == 2) {
+                                prop = dist_47(aGen);
+                            }
+                        }
+                        ch_val = new char(prop);
+                        acmap.seekp(size + b, ios::beg);
+                        acmap.write(ch_val, 1);
+                        delete ch_val;
+                    }
+                }
+            }
+        }
+        if (secondChoice == "Y") {
+            if (has_equip == 3) {
+                if (p_257 > 2) {
+                    if (secondChoice == "Y" || size + 339 == 3) {
+                        acmap.seekg(size + 341, ios::beg);
+                        map_loc = acmap.tellg();
+                        to_ass = acmap.get();
+                        prop = dist_36(aGen);
+                        if (prop == 47) {
+                            choice = dist_37(aGen);
+                            if (choice == 1) {
+                                prop = dist_38(aGen);
+                            }
+                            if (choice == 2) {
+                                prop = dist_39(aGen);
+                            }
+                        }
+                        ch_val = new char(prop);
+                        acmap.seekp(size + 341, ios::beg);
+                        acmap.write(ch_val, 1);
+                        delete ch_val;
+                        ch_val = new char(1);
+                        acmap.seekg(size + 342, ios::beg);
+                        map_loc = acmap.tellg();
+                        to_ass = acmap.get();
+                        acmap.seekp(size + 342, ios::beg);
+                        acmap.write(ch_val, 1);
+                        delete ch_val;
+                        acmap.seekg(size + 343, ios::beg);
+                        map_loc = acmap.tellg();
+                        to_ass = acmap.get();
+                        prop = dist_35(aGen);
+                        if (prop == 43) {
+                            choice = dist_37(aGen);
+                            if (choice == 1) {
+                                prop = dist_16(aGen);
+                            }
+                            if (choice == 2) {
+                                prop = dist_34(aGen);
+                            }
+                        }
+                        ch_val = new char(prop);
+                        acmap.seekp(size + 343, ios::beg);
+                        acmap.write(ch_val, 1);
+                        delete ch_val;
+                    }
+                    if (secondChoice == "Y") {
+                        for (int b = 346; b < 349; b++) {
+                            acmap.seekg(size + b, ios::beg);
+                            map_loc = acmap.tellg();
+                            to_ass = acmap.get();
+                            if (aChoice == "N") {
+                                prop = dist_8(aGen);
+                            }
+                            else {
+                                choice = dist_37(aGen);
+                                if (choice == 1) {
+                                    prop = dist_49(aGen);
+                                }
+                                if (choice == 2) {
+                                    prop = dist_14(aGen);
+                                }
+                            }
+                            ch_val = new char(prop);
+                            acmap.seekp(size + b, ios::beg);
+                            acmap.write(ch_val, 1);
+                            delete ch_val;
+                        }
+                    }
+                }
+            }
+        }
+        if (seventhChoice == "Y") {
+            if (has_equip == 3) {
+                if (p_257 > 2) {
+                    for (int b = 349; b < 355; b++) {
+                        acmap.seekg(size + b, ios::beg);
+                        map_loc = acmap.tellg();
+                        to_ass = acmap.get();
+                        if (aChoice == "N") {
+                            prop = dist_8(aGen);
+                        }
+                        else {
+                            choice = dist_37(aGen);
+                            if (choice == 1) {
+                                prop = dist_46(aGen);
+                            }
+                            if (choice == 2) {
+                                prop = dist_47(aGen);
+                            }
+                        }
+                        ch_val = new char(prop);
+                        acmap.seekp(size + b, ios::beg);
+                        acmap.write(ch_val, 1);
+                        delete ch_val;
+                    }
+                }
+            }
+        }
+        if (eighthChoice == "Y") {
+            if (has_equip == 3) {
+                if (p_257 > 2) {
+                    for (int b = 357; b < 363; b++) {
+                        acmap.seekg(size + b, ios::beg);
+                        map_loc = acmap.tellg();
+                        to_ass = acmap.get();
+                        if (aChoice == "N") {
+                            prop = dist_8(aGen);
+                        }
+                        else {
+                            choice = dist_37(aGen);
+                            if (choice == 1) {
+                                prop = dist_46(aGen);
+                            }
+                            if (choice == 2) {
+                                prop = dist_47(aGen);
+                            }
+                        }
+                        ch_val = new char(prop);
+                        acmap.seekp(size + b, ios::beg);
+                        acmap.write(ch_val, 1);
+                        delete ch_val;
+                    }
+                }
+            }
+        }
+        if (secondChoice == "Y") {
+            if (has_equip == 3) {
                 acmap.seekg(size + 258, ios::beg);
                 map_loc = acmap.tellg();
                 to_ass = acmap.get();
@@ -2757,7 +2956,11 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                 acmap.seekp(size + 260, ios::beg);
                 acmap.write(ch_val, 1);
                 delete ch_val;
-                for (int b = 262; b < 271; b++) {
+            }
+        }
+        if (ninthChoice == "Y") {
+            if (has_equip == 3) {
+                for (int b = 262; b < 265; b++) {
                     acmap.seekg(size + b, ios::beg);
                     map_loc = acmap.tellg();
                     to_ass = acmap.get();
@@ -2778,6 +2981,35 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                     acmap.write(ch_val, 1);
                     delete ch_val;
                 }
+            }
+        }
+        if (seventhChoice == "Y") {
+            if (has_equip == 3) {
+                for (int b = 265; b < 271; b++) {
+                    acmap.seekg(size + b, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    if (aChoice == "N") {
+                        prop = dist_8(aGen);
+                    }
+                    else {
+                        choice = dist_37(aGen);
+                        if (choice == 1) {
+                            prop = dist_46(aGen);
+                        }
+                        if (choice == 2) {
+                            prop = dist_47(aGen);
+                        }
+                    }
+                    ch_val = new char(prop);
+                    acmap.seekp(size + b, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                }
+            }
+        }
+        if (eighthChoice == "Y") {
+            if (has_equip == 3) {
                 for (int b = 273; b < 280; b++) {
                     acmap.seekg(size + b, ios::beg);
                     map_loc = acmap.tellg();
@@ -2799,6 +3031,10 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                     acmap.write(ch_val, 1);
                     delete ch_val;
                 }
+            }
+        }
+        if (secondChoice == "Y") {
+            if (has_equip == 3) {
                 acmap.seekg(size + 281, ios::beg);
                 map_loc = acmap.tellg();
                 to_ass = acmap.get();
@@ -2812,172 +3048,180 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
         acmap.seekg(size + 369, ios::beg);
         map_loc = acmap.tellg();
         to_ass = acmap.get();
-        if (to_ass == 3) {
-            acmap.seekg(size + 376, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            acmap.seekg(size + 373, ios::beg);
-            map_loc = acmap.tellg();
-            if (to_ass == 2) {
+        has_equip = to_ass;
+        // Armour 1
+        if (secondChoice == "Y") {
+            if (has_equip == 3) {
+                acmap.seekg(size + 376, ios::beg);
+                map_loc = acmap.tellg();
                 to_ass = acmap.get();
-                prop = dist_41(aGen);
+                acmap.seekg(size + 373, ios::beg);
+                map_loc = acmap.tellg();
+                if (to_ass == 2) {
+                    to_ass = acmap.get();
+                    prop = dist_41(aGen);
+                    if (thirdChoice == "N") {
+                        arm_nam = prop;
+                    }
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 373, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    if (thirdChoice == "Y") {
+                        dist_18 = std::uniform_int_distribution<>(17, 32);
+                    }
+                }
+                else if (to_ass == 3) {
+                    to_ass = acmap.get();
+                    prop = dist_42(aGen);
+                    if (thirdChoice == "N") {
+                        arm_nam = prop;
+                    }
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 373, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    if (thirdChoice == "Y") {
+                        dist_18 = std::uniform_int_distribution<>(33, 48);
+                    }
+                }
+                else if (to_ass == 4) {
+                    to_ass = acmap.get();
+                    prop = dist_43(aGen);
+                    if (thirdChoice == "N") {
+                        arm_nam = prop;
+                    }
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 373, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    if (thirdChoice == "Y") {
+                        dist_18 = std::uniform_int_distribution<>(49, 64);
+                    }
+                }
+                else if (to_ass == 5) {
+                    to_ass = acmap.get();
+                    prop = dist_44(aGen);
+                    if (thirdChoice == "N") {
+                        arm_nam = prop;
+                    }
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 373, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    if (thirdChoice == "Y") {
+                        dist_18 = std::uniform_int_distribution<>(65, 80);
+                    }
+                }
                 if (thirdChoice == "N") {
-                    arm_nam = prop;
+                    prop = arm_nam - 126;
+                }
+                else {
+                    prop = dist_18(aGen);
                 }
                 ch_val = new char(prop);
-                acmap.seekp(size + 373, ios::beg);
+                acmap.seekg(size + 374, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                acmap.seekp(size + 374, ios::beg);
                 acmap.write(ch_val, 1);
                 delete ch_val;
-                if (thirdChoice == "Y") {
-                    dist_18 = std::uniform_int_distribution<>(17, 32);
+                if (secondChoice == "Y") {
+                    prop = dist_4(aGen) * 100;
+                    sprintf_s(rand_dpm, "%X", prop);
+                    ss_rand_dpm << rand_dpm;
+                    ss_rand_dpm >> s_rand_dpm;
+                    ss_rand_dpm.clear();
+                    hs_rand_dpm << std::hex << s_rand_dpm;
+                    hs_rand_dpm >> int_rand_dpm;
+                    hs_rand_dpm.clear();
+                    dist_5 = std::uniform_int_distribution<>(41, round(int_rand_dpm / 100));
+                    prop = dist_5(aGen) * 100;
+                    sprintf_s(rand_dp, "%X", prop);
+                    ss_rand_dp << rand_dp;
+                    ss_rand_dp >> s_rand_dp;
+                    ss_rand_dp.clear();
+                    sp1 = s_rand_dpm.at(0);
+                    sp2 = s_rand_dpm.at(1);
+                    sp3 = s_rand_dpm.at(2);
+                    sp4 = s_rand_dpm.at(3);
+                    s_rand_dpm_1 = sp1 + sp2;
+                    s_rand_dpm_2 = sp3 + sp4;
+                    sp1 = s_rand_dp.at(0);
+                    sp2 = s_rand_dp.at(1);
+                    sp3 = s_rand_dp.at(2);
+                    sp4 = s_rand_dp.at(3);
+                    s_rand_dp_1 = sp1 + sp2;
+                    s_rand_dp_2 = sp3 + sp4;
+                    rand_dpm_fin << std::hex << s_rand_dpm_1;
+                    rand_dpm_fin >> prop;
+                    rand_dpm_fin.clear();
+                    acmap.seekg(size + 378, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 378, ios::beg);
+                    acmap.write(ch_val, 1);
+                    rand_dpm_fin << std::hex << s_rand_dpm_2;
+                    rand_dpm_fin >> prop;
+                    rand_dpm_fin.clear();
+                    acmap.seekg(size + 377, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 377, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    rand_dpm_fin << std::hex << s_rand_dp_1;
+                    rand_dpm_fin >> prop;
+                    rand_dpm_fin.clear();
+                    acmap.seekg(size + 382, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 382, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    rand_dpm_fin << std::hex << s_rand_dpm_2;
+                    rand_dpm_fin >> prop;
+                    rand_dpm_fin.clear();
+                    acmap.seekg(size + 381, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 381, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    acmap.seekg(size + 386, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    prop = dist_30(aGen);
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 386, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    acmap.seekg(size + 387, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    prop = dist_31(aGen);
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 387, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    acmap.seekg(size + 388, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    prop = dist_32(aGen) - 255;
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 388, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
                 }
             }
-            else if (to_ass == 3) {
-                to_ass = acmap.get();
-                prop = dist_42(aGen);
-                if (thirdChoice == "N") {
-                    arm_nam = prop;
-                }
-                ch_val = new char(prop);
-                acmap.seekp(size + 373, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                if (thirdChoice == "Y") {
-                    dist_18 = std::uniform_int_distribution<>(33, 48);
-                }
-            }
-            else if (to_ass == 4) {
-                to_ass = acmap.get();
-                prop = dist_43(aGen);
-                if (thirdChoice == "N") {
-                    arm_nam = prop;
-                }
-                ch_val = new char(prop);
-                acmap.seekp(size + 373, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                if (thirdChoice == "Y") {
-                    dist_18 = std::uniform_int_distribution<>(49, 64);
-                }
-            }
-            else if (to_ass == 5) {
-                to_ass = acmap.get();
-                prop = dist_44(aGen);
-                if (thirdChoice == "N") {
-                    arm_nam = prop;
-                }
-                ch_val = new char(prop);
-                acmap.seekp(size + 373, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                if (thirdChoice == "Y") {
-                    dist_18 = std::uniform_int_distribution<>(65, 80);
-                }
-            }
-            if (thirdChoice == "N") {
-                prop = arm_nam - 126;
-            }
-            else {
-                prop = dist_18(aGen);
-            }
-            ch_val = new char(prop);
-            acmap.seekg(size + 374, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            acmap.seekp(size + 374, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            if (secondChoice == "Y") {
-                prop = dist_4(aGen) * 100;
-                sprintf_s(rand_dpm, "%X", prop);
-                ss_rand_dpm << rand_dpm;
-                ss_rand_dpm >> s_rand_dpm;
-                ss_rand_dpm.clear();
-                hs_rand_dpm << std::hex << s_rand_dpm;
-                hs_rand_dpm >> int_rand_dpm;
-                hs_rand_dpm.clear();
-                dist_5 = std::uniform_int_distribution<>(41, round(int_rand_dpm / 100));
-                prop = dist_5(aGen) * 100;
-                sprintf_s(rand_dp, "%X", prop);
-                ss_rand_dp << rand_dp;
-                ss_rand_dp >> s_rand_dp;
-                ss_rand_dp.clear();
-                sp1 = s_rand_dpm.at(0);
-                sp2 = s_rand_dpm.at(1);
-                sp3 = s_rand_dpm.at(2);
-                sp4 = s_rand_dpm.at(3);
-                s_rand_dpm_1 = sp1 + sp2;
-                s_rand_dpm_2 = sp3 + sp4;
-                sp1 = s_rand_dp.at(0);
-                sp2 = s_rand_dp.at(1);
-                sp3 = s_rand_dp.at(2);
-                sp4 = s_rand_dp.at(3);
-                s_rand_dp_1 = sp1 + sp2;
-                s_rand_dp_2 = sp3 + sp4;
-                rand_dpm_fin << std::hex << s_rand_dpm_1;
-                rand_dpm_fin >> prop;
-                rand_dpm_fin.clear();
-                acmap.seekg(size + 378, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                ch_val = new char(prop);
-                acmap.seekp(size + 378, ios::beg);
-                acmap.write(ch_val, 1);
-                rand_dpm_fin << std::hex << s_rand_dpm_2;
-                rand_dpm_fin >> prop;
-                rand_dpm_fin.clear();
-                acmap.seekg(size + 377, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                ch_val = new char(prop);
-                acmap.seekp(size + 377, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                rand_dpm_fin << std::hex << s_rand_dp_1;
-                rand_dpm_fin >> prop;
-                rand_dpm_fin.clear();
-                acmap.seekg(size + 382, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                ch_val = new char(prop);
-                acmap.seekp(size + 382, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                rand_dpm_fin << std::hex << s_rand_dpm_2;
-                rand_dpm_fin >> prop;
-                rand_dpm_fin.clear();
-                acmap.seekg(size + 381, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                ch_val = new char(prop);
-                acmap.seekp(size + 381, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                acmap.seekg(size + 386, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                prop = dist_30(aGen);
-                ch_val = new char(prop);
-                acmap.seekp(size + 386, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                acmap.seekg(size + 387, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                prop = dist_31(aGen);
-                ch_val = new char(prop);
-                acmap.seekp(size + 387, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                acmap.seekg(size + 388, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                prop = dist_32(aGen) - 255;
-                ch_val = new char(prop);
-                acmap.seekp(size + 388, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                for (int b = 390; b < 399; b++) {
+        }
+        if (ninthChoice == "Y") {
+            if (has_equip == 3) {
+                for (int b = 390; b < 393; b++) {
                     acmap.seekg(size + b, ios::beg);
                     map_loc = acmap.tellg();
                     to_ass = acmap.get();
@@ -2998,6 +3242,35 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                     acmap.write(ch_val, 1);
                     delete ch_val;
                 }
+            }
+        }
+        if (seventhChoice == "Y") {
+            if (has_equip == 3) {
+                for (int b = 393; b < 399; b++) {
+                    acmap.seekg(size + b, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    if (aChoice == "N") {
+                        prop = dist_8(aGen);
+                    }
+                    else {
+                        choice = dist_37(aGen);
+                        if (choice == 1) {
+                            prop = dist_46(aGen);
+                        }
+                        if (choice == 2) {
+                            prop = dist_47(aGen);
+                        }
+                    }
+                    ch_val = new char(prop);
+                    acmap.seekp(size + b, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                }
+            }
+        }
+        if (eighthChoice == "Y") {
+            if (has_equip == 3) {
                 for (int b = 401; b < 408; b++) {
                     acmap.seekg(size + b, ios::beg);
                     map_loc = acmap.tellg();
@@ -3019,6 +3292,10 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                     acmap.write(ch_val, 1);
                     delete ch_val;
                 }
+            }
+        }
+        if (secondChoice == "Y") {
+            if (has_equip == 3) {
                 acmap.seekg(size + 409, ios::beg);
                 map_loc = acmap.tellg();
                 to_ass = acmap.get();
@@ -3032,171 +3309,179 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
         acmap.seekg(size + 413, ios::beg);
         map_loc = acmap.tellg();
         to_ass = acmap.get();
-        if (to_ass == 3) {
-            acmap.seekg(size + 420, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            acmap.seekg(size + 417, ios::beg);
-            map_loc = acmap.tellg();
-            if (to_ass == 2) {
+        has_equip = to_ass;
+        // Armour 2
+        if (secondChoice == "Y") {
+            if (has_equip == 3) {
+                acmap.seekg(size + 420, ios::beg);
+                map_loc = acmap.tellg();
                 to_ass = acmap.get();
-                prop = dist_41(aGen);
+                acmap.seekg(size + 417, ios::beg);
+                map_loc = acmap.tellg();
+                if (to_ass == 2) {
+                    to_ass = acmap.get();
+                    prop = dist_41(aGen);
+                    if (thirdChoice == "N") {
+                        arm_nam = prop;
+                    }
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 417, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    if (thirdChoice == "Y") {
+                        dist_18 = std::uniform_int_distribution<>(17, 32);
+                    }
+                }
+                else if (to_ass == 3) {
+                    to_ass = acmap.get();
+                    prop = dist_42(aGen);
+                    if (thirdChoice == "N") {
+                        arm_nam = prop;
+                    }
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 417, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    dist_18 = std::uniform_int_distribution<>(33, 48);
+                }
+                else if (to_ass == 4) {
+                    to_ass = acmap.get();
+                    prop = dist_43(aGen);
+                    if (thirdChoice == "N") {
+                        arm_nam = prop;
+                    }
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 417, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    if (thirdChoice == "Y") {
+                        dist_18 = std::uniform_int_distribution<>(49, 64);
+                    }
+                }
+                else if (to_ass == 5) {
+                    to_ass = acmap.get();
+                    prop = dist_44(aGen);
+                    if (thirdChoice == "N") {
+                        arm_nam = prop;
+                    }
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 417, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    if (thirdChoice == "Y") {
+                        dist_18 = std::uniform_int_distribution<>(65, 80);
+                    }
+                }
                 if (thirdChoice == "N") {
-                    arm_nam = prop;
+                    prop = arm_nam - 126;
+                }
+                else {
+                    prop = dist_18(aGen);
                 }
                 ch_val = new char(prop);
-                acmap.seekp(size + 417, ios::beg);
+                acmap.seekg(size + 418, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                acmap.seekp(size + 418, ios::beg);
                 acmap.write(ch_val, 1);
                 delete ch_val;
-                if (thirdChoice == "Y") {
-                    dist_18 = std::uniform_int_distribution<>(17, 32);
+                if (secondChoice == "Y") {
+                    prop = dist_4(aGen) * 100;
+                    sprintf_s(rand_dpm, "%X", prop);
+                    ss_rand_dpm << rand_dpm;
+                    ss_rand_dpm >> s_rand_dpm;
+                    ss_rand_dpm.clear();
+                    hs_rand_dpm << std::hex << s_rand_dpm;
+                    hs_rand_dpm >> int_rand_dpm;
+                    hs_rand_dpm.clear();
+                    dist_5 = std::uniform_int_distribution<>(41, round(int_rand_dpm / 100));
+                    prop = dist_5(aGen) * 100;
+                    sprintf_s(rand_dp, "%X", prop);
+                    ss_rand_dp << rand_dp;
+                    ss_rand_dp >> s_rand_dp;
+                    ss_rand_dp.clear();
+                    sp1 = s_rand_dpm.at(0);
+                    sp2 = s_rand_dpm.at(1);
+                    sp3 = s_rand_dpm.at(2);
+                    sp4 = s_rand_dpm.at(3);
+                    s_rand_dpm_1 = sp1 + sp2;
+                    s_rand_dpm_2 = sp3 + sp4;
+                    sp1 = s_rand_dp.at(0);
+                    sp2 = s_rand_dp.at(1);
+                    sp3 = s_rand_dp.at(2);
+                    sp4 = s_rand_dp.at(3);
+                    s_rand_dp_1 = sp1 + sp2;
+                    s_rand_dp_2 = sp3 + sp4;
+                    rand_dpm_fin << std::hex << s_rand_dpm_1;
+                    rand_dpm_fin >> prop;
+                    rand_dpm_fin.clear();
+                    acmap.seekg(size + 422, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 422, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    rand_dpm_fin << std::hex << s_rand_dpm_2;
+                    rand_dpm_fin >> prop;
+                    rand_dpm_fin.clear();
+                    acmap.seekg(size + 421, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 421, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    rand_dpm_fin << std::hex << s_rand_dp_1;
+                    rand_dpm_fin >> prop;
+                    rand_dpm_fin.clear();
+                    acmap.seekg(size + 426, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 426, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    rand_dpm_fin << std::hex << s_rand_dpm_2;
+                    rand_dpm_fin >> prop;
+                    rand_dpm_fin.clear();
+                    acmap.seekg(size + 425, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 425, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    acmap.seekg(size + 430, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    prop = dist_30(aGen);
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 430, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    acmap.seekg(size + 431, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    prop = dist_31(aGen);
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 431, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                    acmap.seekg(size + 432, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    prop = dist_32(aGen) - 255;
+                    ch_val = new char(prop);
+                    acmap.seekp(size + 432, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
                 }
             }
-            else if (to_ass == 3) {
-                to_ass = acmap.get();
-                prop = dist_42(aGen);
-                if (thirdChoice == "N") {
-                    arm_nam = prop;
-                }
-                ch_val = new char(prop);
-                acmap.seekp(size + 417, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                dist_18 = std::uniform_int_distribution<>(33, 48);
-            }
-            else if (to_ass == 4) {
-                to_ass = acmap.get();
-                prop = dist_43(aGen);
-                if (thirdChoice == "N") {
-                    arm_nam = prop;
-                }
-                ch_val = new char(prop);
-                acmap.seekp(size + 417, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                if (thirdChoice == "Y") {
-                    dist_18 = std::uniform_int_distribution<>(49, 64);
-                }
-            }
-            else if (to_ass == 5) {
-                to_ass = acmap.get();
-                prop = dist_44(aGen);
-                if (thirdChoice == "N") {
-                    arm_nam = prop;
-                }
-                ch_val = new char(prop);
-                acmap.seekp(size + 417, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                if (thirdChoice == "Y") {
-                    dist_18 = std::uniform_int_distribution<>(65, 80);
-                }
-            }
-            if (thirdChoice == "N") {
-                prop = arm_nam - 126;
-            }
-            else {
-                prop = dist_18(aGen);
-            }
-            ch_val = new char(prop);
-            acmap.seekg(size + 418, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            acmap.seekp(size + 418, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            if (secondChoice == "Y") {
-                prop = dist_4(aGen) * 100;
-                sprintf_s(rand_dpm, "%X", prop);
-                ss_rand_dpm << rand_dpm;
-                ss_rand_dpm >> s_rand_dpm;
-                ss_rand_dpm.clear();
-                hs_rand_dpm << std::hex << s_rand_dpm;
-                hs_rand_dpm >> int_rand_dpm;
-                hs_rand_dpm.clear();
-                dist_5 = std::uniform_int_distribution<>(41, round(int_rand_dpm / 100));
-                prop = dist_5(aGen) * 100;
-                sprintf_s(rand_dp, "%X", prop);
-                ss_rand_dp << rand_dp;
-                ss_rand_dp >> s_rand_dp;
-                ss_rand_dp.clear();
-                sp1 = s_rand_dpm.at(0);
-                sp2 = s_rand_dpm.at(1);
-                sp3 = s_rand_dpm.at(2);
-                sp4 = s_rand_dpm.at(3);
-                s_rand_dpm_1 = sp1 + sp2;
-                s_rand_dpm_2 = sp3 + sp4;
-                sp1 = s_rand_dp.at(0);
-                sp2 = s_rand_dp.at(1);
-                sp3 = s_rand_dp.at(2);
-                sp4 = s_rand_dp.at(3);
-                s_rand_dp_1 = sp1 + sp2;
-                s_rand_dp_2 = sp3 + sp4;
-                rand_dpm_fin << std::hex << s_rand_dpm_1;
-                rand_dpm_fin >> prop;
-                rand_dpm_fin.clear();
-                acmap.seekg(size + 422, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                ch_val = new char(prop);
-                acmap.seekp(size + 422, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                rand_dpm_fin << std::hex << s_rand_dpm_2;
-                rand_dpm_fin >> prop;
-                rand_dpm_fin.clear();
-                acmap.seekg(size + 421, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                ch_val = new char(prop);
-                acmap.seekp(size + 421, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                rand_dpm_fin << std::hex << s_rand_dp_1;
-                rand_dpm_fin >> prop;
-                rand_dpm_fin.clear();
-                acmap.seekg(size + 426, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                ch_val = new char(prop);
-                acmap.seekp(size + 426, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                rand_dpm_fin << std::hex << s_rand_dpm_2;
-                rand_dpm_fin >> prop;
-                rand_dpm_fin.clear();
-                acmap.seekg(size + 425, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                ch_val = new char(prop);
-                acmap.seekp(size + 425, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                acmap.seekg(size + 430, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                prop = dist_30(aGen);
-                ch_val = new char(prop);
-                acmap.seekp(size + 430, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                acmap.seekg(size + 431, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                prop = dist_31(aGen);
-                ch_val = new char(prop);
-                acmap.seekp(size + 431, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                acmap.seekg(size + 432, ios::beg);
-                map_loc = acmap.tellg();
-                to_ass = acmap.get();
-                prop = dist_32(aGen) - 255;
-                ch_val = new char(prop);
-                acmap.seekp(size + 432, ios::beg);
-                acmap.write(ch_val, 1);
-                delete ch_val;
-                for (int b = 434; b < 443; b++) {
+        }
+        if (ninthChoice == "Y") {
+            if (has_equip == 3) {
+                for (int b = 434; b < 437; b++) {
                     acmap.seekg(size + b, ios::beg);
                     map_loc = acmap.tellg();
                     to_ass = acmap.get();
@@ -3217,6 +3502,35 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                     acmap.write(ch_val, 1);
                     delete ch_val;
                 }
+            }
+        }
+        if (seventhChoice == "Y") {
+            if (has_equip == 3) {
+                for (int b = 437; b < 443; b++) {
+                    acmap.seekg(size + b, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    if (aChoice == "N") {
+                        prop = dist_8(aGen);
+                    }
+                    else {
+                        choice = dist_37(aGen);
+                        if (choice == 1) {
+                            prop = dist_46(aGen);
+                        }
+                        if (choice == 2) {
+                            prop = dist_47(aGen);
+                        }
+                    }
+                    ch_val = new char(prop);
+                    acmap.seekp(size + b, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                }
+            }
+        }
+        if (eighthChoice == "Y") {
+            if (has_equip == 3) {
                 for (int b = 445; b < 452; b++) {
                     acmap.seekg(size + b, ios::beg);
                     map_loc = acmap.tellg();
@@ -3238,6 +3552,10 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                     acmap.write(ch_val, 1);
                     delete ch_val;
                 }
+            }
+        }
+        if (secondChoice == "Y") {
+            if (has_equip == 3) {
                 acmap.seekg(size + 453, ios::beg);
                 map_loc = acmap.tellg();
                 to_ass = acmap.get();
@@ -3251,43 +3569,51 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
         acmap.seekg(size + 457, ios::beg);
         map_loc = acmap.tellg();
         to_ass = acmap.get();
-        if (to_ass == 3) {
-            acmap.seekg(size + 461, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            prop = dist_45(aGen);
-            if (thirdChoice == "N") {
-                arm_nam = prop;
-            }
-            ch_val = new char(prop);
-            acmap.seekp(size + 461, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            acmap.seekg(size + 462, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            if (thirdChoice == "N") {
-                prop = arm_nam - 222;
-            }
-            else {
-                prop = dist_22(aGen);
-            }
-            ch_val = new char(prop);
-            acmap.seekp(size + 462, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            if (secondChoice == "Y") {
-                for (int b = 474; b < 477; b++) {
-                    acmap.seekg(size + b, ios::beg);
-                    map_loc = acmap.tellg();
-                    to_ass = acmap.get();
-                    prop = dist_29(aGen);
-                    ch_val = new char(prop);
-                    acmap.seekp(size + b, ios::beg);
-                    acmap.write(ch_val, 1);
-                    delete ch_val;
+        has_equip = to_ass;
+        // Accessory
+        if (secondChoice == "Y") {
+            if (has_equip == 3) {
+                acmap.seekg(size + 461, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                prop = dist_45(aGen);
+                if (thirdChoice == "N") {
+                    arm_nam = prop;
                 }
-                for (int b = 478; b < 487; b++) {
+                ch_val = new char(prop);
+                acmap.seekp(size + 461, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                acmap.seekg(size + 462, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                if (thirdChoice == "N") {
+                    prop = arm_nam - 126;
+                }
+                else {
+                    prop = dist_22(aGen);
+                }
+                ch_val = new char(prop);
+                acmap.seekp(size + 462, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                if (secondChoice == "Y") {
+                    for (int b = 474; b < 477; b++) {
+                        acmap.seekg(size + b, ios::beg);
+                        map_loc = acmap.tellg();
+                        to_ass = acmap.get();
+                        prop = dist_29(aGen);
+                        ch_val = new char(prop);
+                        acmap.seekp(size + b, ios::beg);
+                        acmap.write(ch_val, 1);
+                        delete ch_val;
+                    }
+                }
+            }
+        }
+        if (ninthChoice == "Y") {
+            if (has_equip == 3) {
+                for (int b = 478; b < 481; b++) {
                     acmap.seekg(size + b, ios::beg);
                     map_loc = acmap.tellg();
                     to_ass = acmap.get();
@@ -3308,6 +3634,35 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                     acmap.write(ch_val, 1);
                     delete ch_val;
                 }
+            }
+        }
+        if (seventhChoice == "Y") {
+            if (has_equip == 3) {
+                for (int b = 481; b < 487; b++) {
+                    acmap.seekg(size + b, ios::beg);
+                    map_loc = acmap.tellg();
+                    to_ass = acmap.get();
+                    if (aChoice == "N") {
+                        prop = dist_8(aGen);
+                    }
+                    else {
+                        choice = dist_37(aGen);
+                        if (choice == 1) {
+                            prop = dist_46(aGen);
+                        }
+                        if (choice == 2) {
+                            prop = dist_47(aGen);
+                        }
+                    }
+                    ch_val = new char(prop);
+                    acmap.seekp(size + b, ios::beg);
+                    acmap.write(ch_val, 1);
+                    delete ch_val;
+                }
+            }
+        }
+        if (eighthChoice == "Y") {
+            if (has_equip == 3) {
                 for (int b = 489; b < 496; b++) {
                     acmap.seekg(size + b, ios::beg);
                     map_loc = acmap.tellg();
@@ -3334,50 +3689,80 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
         acmap.seekg(size + 501, ios::beg);
         map_loc = acmap.tellg();
         to_ass = acmap.get();
-        if (to_ass == 3) {
-            acmap.seekg(size + 505, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            prop = dist_36(aGen);
-            if (prop == 47) {
-                choice = dist_37(aGen);
-                if (choice == 1) {
-                    prop = dist_38(aGen);
+        has_equip = to_ass;
+        // Gem
+        if (secondChoice == "Y") {
+            if (has_equip == 3) {
+                acmap.seekg(size + 505, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                prop = dist_36(aGen);
+                if (prop == 47) {
+                    choice = dist_37(aGen);
+                    if (choice == 1) {
+                        prop = dist_38(aGen);
+                    }
+                    if (choice == 2) {
+                        prop = dist_39(aGen);
+                    }
                 }
-                if (choice == 2) {
-                    prop = dist_39(aGen);
+                ch_val = new char(prop);
+                acmap.seekp(size + 505, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                ch_val = new char(1);
+                acmap.seekg(size + 506, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                acmap.seekp(size + 506, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                acmap.seekg(size + 507, ios::beg);
+                map_loc = acmap.tellg();
+                to_ass = acmap.get();
+                prop = dist_35(aGen);
+                if (prop == 43) {
+                    choice = dist_37(aGen);
+                    if (choice == 1) {
+                        prop = dist_16(aGen);
+                    }
+                    if (choice == 2) {
+                        prop = dist_34(aGen);
+                    }
+                }
+                ch_val = new char(prop);
+                acmap.seekp(size + 507, ios::beg);
+                acmap.write(ch_val, 1);
+                delete ch_val;
+                if (secondChoice == "Y") {
+                    for (int b = 510; b < 513; b++) {
+                        acmap.seekg(size + b, ios::beg);
+                        map_loc = acmap.tellg();
+                        to_ass = acmap.get();
+                        if (aChoice == "N") {
+                            prop = dist_8(aGen);
+                        }
+                        else {
+                            choice = dist_37(aGen);
+                            if (choice == 1) {
+                                prop = dist_49(aGen);
+                            }
+                            if (choice == 2) {
+                                prop = dist_14(aGen);
+                            }
+                        }
+                        ch_val = new char(prop);
+                        acmap.seekp(size + b, ios::beg);
+                        acmap.write(ch_val, 1);
+                        delete ch_val;
+                    }
                 }
             }
-            ch_val = new char(prop);
-            acmap.seekp(size + 505, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            ch_val = new char(1);
-            acmap.seekg(size + 506, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            acmap.seekp(size + 506, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            acmap.seekg(size + 507, ios::beg);
-            map_loc = acmap.tellg();
-            to_ass = acmap.get();
-            prop = dist_35(aGen);
-            if (prop == 43) {
-                choice = dist_37(aGen);
-                if (choice == 1) {
-                    prop = dist_16(aGen);
-                }
-                if (choice == 2) {
-                    prop = dist_34(aGen);
-                }
-            }
-            ch_val = new char(prop);
-            acmap.seekp(size + 507, ios::beg);
-            acmap.write(ch_val, 1);
-            delete ch_val;
-            if (secondChoice == "Y") {
-                for (int b = 510; b < 519; b++) {
+
+        }
+        if (seventhChoice == "Y") {
+            if (has_equip == 3) {
+                for (int b = 513; b < 519; b++) {
                     acmap.seekg(size + b, ios::beg);
                     map_loc = acmap.tellg();
                     to_ass = acmap.get();
@@ -3387,20 +3772,10 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                     else {
                         choice = dist_37(aGen);
                         if (choice == 1) {
-                            if (b > 512) {
-                                prop = dist_46(aGen);
-                            }
-                            else {
-                                prop = dist_49(aGen);
-                            }
+                            prop = dist_46(aGen);
                         }
                         if (choice == 2) {
-                            if (b > 512) {
-                                prop = dist_47(aGen);
-                            }
-                            else {
-                                prop = dist_14(aGen);
-                            }
+                            prop = dist_47(aGen);
                         }
                     }
                     ch_val = new char(prop);
@@ -3408,6 +3783,10 @@ void Chests::mapIterate(Reference_Files aRF, Add_Game& aGame, std::mt19937 aGen,
                     acmap.write(ch_val, 1);
                     delete ch_val;
                 }
+            }
+        }
+        if (eighthChoice == "Y") {
+            if (has_equip == 3) {
                 for (int b = 521; b < 528; b++) {
                     acmap.seekg(size + b, ios::beg);
                     map_loc = acmap.tellg();
